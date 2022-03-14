@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/template.xhtml">
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{systemConfigController.initData()}"/>
+    </f:metadata>
+
+    <ui:define name="title">Cấu hình hệ thống</ui:define>
+
+    <ui:define name="content">
+        <div class="ui-fluid ui-g-12">
+            <div style="display: flex">
+                <div style="width: 100%; font-size: 28px;">
+                    <p:link styleClass="title-color-right">Cấu hình hệ thống</p:link>
+                </div>
+            </div>
+
+            <hr class="hr-class"/>
+
+            <h:form id="dlForm" prependId="false">
+
+                <ui:repeat value="#{systemConfigController.systemConfigList}" var="item">
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
+                                 columnClasses="ui-grid-col-3, ui-grid-col-6">
+
+                        <p:outputLabel value="#{item.title}:" styleClass="requireLabel"/>
+
+                        <p:inputText value="#{item.value}" placeholder="Nhập giá trị cho #{item.title.toLowerCase()}"
+                                     onchange="this.value = this.value.trim()" maxlength="50"
+                                     onkeyup="this.value = this.value.replace(/\D/g, '');"/>
+                    </p:panelGrid>
+                </ui:repeat>
+
+
+                <hr class="hr-class"/>
+                <p:commandButton value="Lưu thông tin" styleClass="border-btn"
+                                 icon="fa fa-save" style="width: auto;" update="dlForm growl"
+                                 actionListener="#{systemConfigController.onSave()}"/>
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

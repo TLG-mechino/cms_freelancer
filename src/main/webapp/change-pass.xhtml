@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{authorizationController.initPass()}"/>
+    </f:metadata>
+
+    <ui:define name="head">
+        <style>
+            .margin-bottom-10 {
+                margin-bottom: 10px;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="title">Đổi mật khẩu</ui:define>
+
+    <ui:define name="content">
+        <div class="ui-md-12 change-password-container">
+            <h:form id="dlForm" prependId="false">
+                <p:link styleClass="title-color-left">Đổi mật khẩu</p:link>
+
+                <hr class="hr-class"/>
+
+                <p:focus context="basicPanel1"/>
+
+                <p:panelGrid id="basicPanel1" columns="2"
+                             columnClasses="ui-grid-col-2 margin-bottom-10, ui-grid-col-6 margin-bottom-10"
+                             styleClass="ui-panelgrid-blank" layout="grid">
+
+                    <p:outputLabel value="Mật khẩu cũ:" for="oldPassword" styleClass="requireLabel"/>
+                    <p:password id="oldPassword" placeholder="Nhập mật khẩu cũ"
+                                style="width: 80%" maxlength="50"
+                                value="#{authorizationController.password}"/>
+
+                    <p:outputLabel value="Mật khẩu mới:" styleClass="requireLabel" for="newPass"/>
+                    <p:password id="newPass" type="password" placeholder="Nhập mật khẩu mới" style="width: 80%"
+                                value="#{authorizationController.newPassword}" feedback="true" maxlength="50"
+                                promptLabel="Bạn vui lòng nhập mật khẩu có độ dài từ 6 đến 50 ký tự"
+                                weakLabel="Yếu" goodLabel="Trung bình" strongLabel="Tốt"/>
+
+                    <p:outputLabel value="Nhập lại mật khẩu:" styleClass="requireLabel" for="renewPass"/>
+                    <p:password id="renewPass" type="password" placeholder="Nhập lại mật khẩu mới" style="width: 80%"
+                                value="#{authorizationController.reNewPassword}" feedback="true" maxlength="50"
+                                promptLabel="Bạn vui lòng nhập mật khẩu có độ dài từ 6 đến 50 ký tự"
+                                weakLabel="Yếu" goodLabel="Trung bình" strongLabel="Tốt"/>
+                </p:panelGrid>
+
+                <hr class="hr-class"/>
+
+                <p:commandButton value="Đổi mật khẩu" update="growl" styleClass="btn" style="border-radius: 5px"
+                                 icon="fa fa-save" actionListener="#{authorizationController.changePassword()}"/>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

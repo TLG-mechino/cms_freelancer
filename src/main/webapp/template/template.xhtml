@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view locale="#{languageController.currentLocale}">
+    <p:importConstants type="vn.compedia.website.util.Constant" var="Constant"/>
+    <p:importConstants type="vn.compedia.website.util.DbConstant" var="DbConstant"/>
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes"/>
+        </f:facet>
+        <title><ui:insert name="title">Hệ thống quản trị</ui:insert></title>
+        <link rel="shortcut icon" type="image/x-icon" href="#{resource['/apollo-layout/images/favicon.png']}"/>
+        <h:outputStylesheet name="css/nanoscroller.css" library="apollo-layout"/>
+        <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="apollo-layout"/>
+        <h:outputStylesheet name="theme.css" library="primefaces-apollo-green-light"/>
+        <h:outputStylesheet name="css/custom.css" library="apollo-layout"/>
+        <ui:insert name="head"/>
+    </h:head>
+
+    <h:body>
+        <div class="layout-wrapper layout-#{guestPreferences.layoutMode}" id = "layoutWrapper">
+            <div style="float: left;">
+                <ui:include src="topbar.xhtml"/>
+                <ui:include src="menu.xhtml"/>
+            </div>
+
+            <div class="layout-content" style="display: flex; overflow: auto">
+                <p:growl id="growl" life="3000"/>
+                <div id = "left-side" style="border: 1px solid #E5E5E5;border-radius: 10px;float: right;width: 100%; margin-right: 10px !important;margin-left: 10px !important">
+                    <div class="layout-content-container" style="padding: 10px !important;overflow: auto;height: calc(100vh - 40px);display:flex;flex-direction:column; ">
+                        <div>
+                            <ui:insert name="content"/>
+                        </div>
+                        <ui:include src="footer.xhtml"/>
+                    </div>
+                </div>
+            </div>
+            <div class="layout-mask"></div>
+        </div>
+
+        <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+            <f:facet name="start">
+                <i class="ajax-status-icon fa fa-spinner fa-spin"/>
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText/>
+            </f:facet>
+        </p:ajaxStatus>
+
+        <ui:include src="common.xhtml"/>
+
+        <h:outputScript name="js/nanoscroller.js" library="apollo-layout"/>
+        <h:outputScript name="js/layout.js" library="apollo-layout"/>
+        <h:outputScript name="custom-selectonemenu.js" library="myjs"/>
+        <h:outputScript name="custom-mobilemenu.js" library="myjs"/>
+        <h:outputScript name="custom.js" library="myjs"/>
+    </h:body>
+</f:view>
+
+</html>

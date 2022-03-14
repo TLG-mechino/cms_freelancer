@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:ajaxStatus styleClass="ajax-status-loading">
+        <f:facet name="start">
+            <i class="ajax-status-icon fa fa-spinner fa-spin"/>
+        </f:facet>
+
+        <f:facet name="complete">
+            <h:outputText/>
+        </f:facet>
+    </p:ajaxStatus>
+
+    <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
+
+    <p:dialog modal="true" widgetVar="statusDialog" showHeader="false" resizable="false" draggable="false"
+              closable="false">
+        <p:graphicImage value="/resources/images/arico-loading.gif" width="50" height="50"/>
+    </p:dialog>
+
+    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="Hủy bỏ" type="button" styleClass="close-btn ui-confirmdialog-no" icon="fa fa-close"/>
+        <p:commandButton value="Xác nhận" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"
+                         style="border-radius: 5px"/>
+    </p:confirmDialog>
+
+    <script type="text/javascript">
+        //<![CDATA[
+        function start() {
+            PF('statusDialog').show();
+        }
+
+        function stop() {
+            PF('statusDialog').hide();
+        }
+
+        //]]>
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!--    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146720894-3"></script>-->
+    <!--    <script>-->
+    <!--        window.dataLayer = window.dataLayer || [];-->
+    <!--        function gtag(){dataLayer.push(arguments);}-->
+    <!--        gtag('js', new Date());-->
+
+    <!--        gtag('config', 'UA-146720894-3');-->
+    <!--    </script>-->
+</ui:composition>

@@ -1,0 +1,240 @@
+.hr-class {
+  margin: 15px 0 15px 0;
+  height: 1px;
+  color: #E5E5E5;
+  background-color: #E5E5E5;
+  border: none;
+}
+
+.hr-custom {
+  height: 1px;
+  color: #E5E5E5;
+  background-color: #E5E5E5;
+  border: none;
+}
+
+.border-input {
+  border-radius: 5px !important;
+}
+
+.border-btn {
+  border-radius: 5px !important;
+}
+
+.total-row {
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-size: 14px !important;
+  line-height: 16px !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  text-align: right;
+}
+
+.title-color-left {
+  color: #000000 !important;
+  font-weight: normal !important;
+  font-size: 28px !important;
+  line-height: 33px !important;
+  font-style: normal !important;
+  font-family: Roboto Condensed, serif !important;
+}
+
+.text-title {
+  color: #000000 !important;
+  font-weight: bold !important;
+  font-size: 18px !important;
+  line-height: 33px !important;
+  font-style: normal !important;
+  font-family: Roboto Condensed, serif !important;
+}
+
+.title-color-right {
+  color: #000000 !important;
+  font-weight: normal !important;
+  font-size: 28px !important;
+  line-height: 19px !important;
+  font-style: normal !important;
+  font-family: Roboto Condensed, serif !important;
+}
+
+.border-btn-export {
+  border-radius: 5px !important;
+  color: #828282 !important;
+  background-color: #ffffff !important;
+  border-color: #828282 !important;
+}
+
+.filter {
+  clear: both;
+  border-radius: 5px !important;
+  color: #FF4921 !important;
+  background-color: #ffffff !important;
+  border-color: #FF4921 !important;
+}
+.export {
+  clear: both;
+  border-radius: 5px !important;
+  color: #FF4921 !important;
+  background-color: #ffffff !important;
+  border-color: #FF4921 !important;
+  width: 130px !important;
+  float: right;
+  margin-right: 10px !important;
+}
+
+.requireLabel::after {
+  content: "*";
+  color: red;
+  padding-left: 5px;
+}
+
+.ui-menubutton .ui-button {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.txt-center {
+  text-align: center !important;
+}
+
+.padding-10 {
+  padding: 10px !important;
+}
+
+.filter-item {
+  width: 92%;
+  margin: 10px 0 10px 0;
+}
+
+.filter-item-label {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.filter-panel {
+  width: 350px;
+  margin: 10px 0 10px 0;
+}
+
+.filter-btn {
+  width: 80px;
+  float: right;
+  margin: 10px 0 10px 0;
+  border-radius: 5px !important;
+}
+
+.filter-btn-left {
+  width: 110px;
+  margin: 10px 0 10px 0;
+  border-radius: 5px !important;
+}
+
+.filter-button-left {
+  width: 110px !important;
+  border-radius: 5px !important;
+}
+
+.save-btn {
+  clear: both;
+  font-weight: normal !important;
+  width: auto !important;
+  margin-right: 10px !important;
+  border-radius: 5px !important;
+}
+
+.close-btn {
+  clear: both;
+  font-weight: normal !important;
+  width: auto !important;
+  border-radius: 5px !important;
+  background-color: #828282 !important;
+}
+
+.input-new-style {
+  border-width: 0 0 1px 0 !important;
+  resize: none;
+  border-radius: 0 !important;
+}
+
+.panel-grid-no-border {
+  .ui-panelgrid-content {
+    border: none !important;
+  }
+}
+
+.border-panel {
+  border: 1px solid #E5E5E5 !important;
+  border-radius: 5px 5px 5px 0;
+}
+
+.label-panel-right {
+  text-decoration: underline;
+  padding: 10px 0 10px 0;
+  font-size: 22px;
+}
+
+.turns-of-game::after {
+  content: "\f11b" !important;
+  padding-left: 5px !important;
+}
+
+.category-label {
+  border: 1px solid #828282;
+  border-radius: 5px 5px 5px 0;
+  padding: 10px;
+  margin-right: 5px;
+}
+
+.margin-right-10 {
+  margin-right: 10px !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.padding-right-10 {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 10px !important;
+}
+
+.btn-extra {
+  clear: both;
+  border-radius: 5px !important;
+  color: #FF4921 !important;
+  background-color: #ffffff !important;
+  border-color: #FF4921 !important;
+  width: auto !important;
+}
+
+.ui-fileupload-choose {
+  border-radius: 5px !important;
+  color: #FF4921 !important;
+  background-color: #ffffff !important;
+  border-color: #FF4921 !important;
+  padding-top: 2px !important;
+  font-weight: normal !important;
+}
+
+.ui-picker-up {
+  margin-left: -3px;
+  margin-bottom: 5px;
+}
+
+.ui-picker-down {
+  margin-left: -3px;
+}
+
+.custom-label {
+  font-weight: 600;
+  color: #212529;
+}
+
+.cmdlink-custom {
+  color: #000000;
+  line-height: 34px;
+  font-size: 15px;
+  font-weight: 700;
+}

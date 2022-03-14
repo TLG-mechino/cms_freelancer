@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pa="http://primefaces.org/apollo">
+
+    <div class="layout-menu-container render_menu" id="menu-mobile">
+        <div class="nano" id="nano">
+            <div class="nano-content menu-scroll-content" id="menu-form" style="overflow-y: unset">
+                <div class="layout-menu-title" style="display: flex;">
+                    <p:graphicImage name="images/avatar.png" width="60px" height="60px" style="margin-top: 10px"/>
+
+                    <div class="topbar-user">
+                        <p:outputLabel value="Hệ thống quản trị" style="font-size: 12px"/>
+
+                        <div style="margin: 10px 0 0 0">
+                            <a href="#" class="profile">
+                                <p:outputLabel value="#{authorizationController.accountDto.fullName}">
+                                    <i class="fa fa-caret-down"/>
+                                </p:outputLabel>
+                            </a>
+                        </div>
+
+                        <ul class="topbar-menu fadeInDown" style="top: 76px;">
+                            <li class="padding-li">
+                                <p:commandLink
+                                        actionListener="#{authorizationController.redirectPage('/change-pass.xhtml')}">
+                                    <i class="fa fa-lock"/>
+                                    <span>Đổi mật khẩu</span>
+                                </p:commandLink>
+                            </li>
+
+                            <li class="padding-li">
+                                <p:commandLink actionListener="#{authorizationController.logout()}">
+                                    <i class="fa fa-power-off"/>
+                                    <span>Đăng xuất</span>
+                                </p:commandLink>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h:form id="menuform" style="font-weight: bold;" prependId="false">
+                    <pa:menu widgetVar="menuWidget">
+                        <p:menuitem id="id-1" value="Tổng quan thông tin" outcome="/dashboard.xhtml"/>
+
+                        <p:submenu id="id-2" label="Quản lý thông tin">
+                            <p:menuitem id="id-2-1" value="Quản lý thị trường"
+                                        outcome="/mn-market.xhtml"/>
+
+                            <p:menuitem id="id-2-2" value="Quản lý tài khoản"
+                                        outcome="/mn-account.xhtml"/>
+                        </p:submenu>
+
+                        <p:menuitem id="id-5" value="Cấu hình hệ thống" outcome="/sys-config.xhtml"/>
+                    </pa:menu>
+                </h:form>
+
+                <div class="layout-menu-footer"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('.profile').on('click', function () {
+            $('.topbar-menu').toggleClass('topbar-menu-visible');
+            return false;
+        })
+    </script>
+
+</ui:composition>

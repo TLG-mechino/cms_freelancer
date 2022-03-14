@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:fileUpload id="fileUploadAudio" mode="advanced"
+                  auto="true" label="Tải file"
+                  onstart="PF('statusDialog').show();"
+                  oncomplete="PF('statusDialog').hide();"
+                  listener="#{uploadSingleFileAudioController.onUploadFile}"
+                  update="singleFileAudio #{Constant.ERROR_GROWL_ID}"/>
+
+    <p:outputLabel styleClass="label-note"
+                   value="(*) Hệ thống chỉ hỗ trợ upload file có định dạng: wav, sample, rate, WAV, SAMPLE, RATE. Dung lượng tối đa 50 Mb"/>
+
+    <p:outputPanel id="singleFileAudio">
+        <p:outputPanel styleClass="my-card-image-border ui-g-12"
+                       rendered="#{not empty uploadSingleFileAudioController.filePath}">
+
+            <i class="fa fa-fw fa-file"/>
+
+            <p:spacer width="10"/>
+
+            <p:commandLink value="#{uploadSingleFileAudioController.filePath}" immediate="true" ajax="false"
+                           style="text-overflow: ellipsis; width: 80%; word-break: break-word">
+                <p:fileDownload
+                        value="#{uploadSingleFileAudioController.getFileDownload(uploadSingleFileAudioController.filePath)}"/>
+            </p:commandLink>
+
+            <p:commandButton process="@this" icon="ui-icon-trash"
+                             actionListener="#{uploadSingleFileAudioController.onRemoveFile()}"
+                             update="singleFileAudio" style="width:34px; margin-top: -8px; float: right">
+                <p:confirm header="Xác nhận xóa file" message="Bạn chắc chắn muốn xóa file này?"/>
+            </p:commandButton>
+
+        </p:outputPanel>
+    </p:outputPanel>
+
+</ui:composition>

@@ -1,0 +1,17 @@
+.metadata
+bin/
+tmp/
+.settings/
+target/
+
+system.iml
+
+# Eclipse Core
+.project
+.classpath
+
+.idea
+
+out/
+
+.gradle

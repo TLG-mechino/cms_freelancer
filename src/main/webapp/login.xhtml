@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <f:facet name="first">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+    </f:facet>
+    <title>Đăng nhập hệ thống</title>
+    <link rel="shortcut icon" type="image/x-icon" href="#{resource['/apollo-layout/images/favicon.png']}"/>
+    <h:outputStylesheet name="css/custom.css" library="apollo-layout"/>
+</h:head>
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{authorizationController.initData()}"/>
+</f:metadata>
+
+<h:body styleClass="login-body">
+    <div class="body-container">
+        <p:growl id="growl" life="3000"/>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-lg-6 right-side" style="background-color: #00182B; margin: auto">
+                <div class="login-wrapper">
+                    <div class="login-container">
+                        <h:form prependId="false">
+                            <div class="ui-g ui-fluid">
+                                <div class="ui-g-12 txt-center">
+                                    <h2 class="title txt-center">
+                                        Đăng nhập hệ thống
+                                    </h2>
+                                    <p>Hệ thống quản trị</p>
+                                </div>
+                            </div>
+                            <div class="ui-g ui-fluid">
+                                <div class="ui-g-12">
+                                    <p:outputLabel value="Tên đăng nhập" for="userName"/>
+                                    <p:inputText id="userName" value="#{authorizationController.accountDto.username}"
+                                                 autofocus="" style="margin-top: 10px"/>
+                                </div>
+                                <div class="ui-g-12">
+                                    <p:outputLabel value="Mật khẩu" for="password"/>
+                                    <p:password id="password" value="#{authorizationController.accountDto.password}"
+                                                autocomplete="off" feedback="false" style="margin-top: 10px"/>
+                                    <span onclick="togglePass()" id="button-toggle" class="toggle-password">
+                                        <i id="icon-eye" class="fa fa-eye"/>
+                                    </span>
+                                </div>
+
+                                <div class="ui-g-6" style="width: 100%">
+                                    <p:commandButton id="login-button" value="Đăng nhập"
+                                                     actionListener="#{authorizationController.login()}"
+                                                     update="growl" styleClass="padding-10"
+                                                     style="height: 50px; margin-top: 10px"/>
+                                </div>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            function togglePass() {
+                var field = $('#password');
+                var button = $('#button-toggle');
+                var icon = $('#icon-eye');
+                icon.hide();
+                if (field.attr('type') === 'password') {
+                    field.attr('type', 'text');
+                    button.removeClass('fa fa-eye');
+                    button.addClass('fa fa-eye-slash');
+                } else {
+                    field.attr('type', 'password');
+                    button.removeClass('fa fa-eye-slash');
+                    button.addClass('fa fa-eye');
+                }
+            }
+        </script>
+    </div>
+
+    <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
+
+    <p:dialog modal="true" widgetVar="statusDialog" showHeader="false" resizable="false" draggable="false" closable="false">
+        <p:graphicImage value="/resources/images/arico-loading.gif" width="50" height="50"/>
+    </p:dialog>
+
+    <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="apollo-layout"/>
+</h:body>
+</html>

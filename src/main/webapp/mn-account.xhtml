@@ -1,0 +1,183 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/template.xhtml">
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{mnAccountController.initData()}"/>
+    </f:metadata>
+
+    <ui:define name="title">Quản lý tài khoản</ui:define>
+
+    <ui:define name="content">
+        <p:dialog widgetVar="inforDialog" width="600" header="#{mnAccountController.titleDialog} thông tin tài khoản"
+                  modal="true" id="inforDialogId">
+            <h:form id="dlForm" prependId="false">
+                <p:scrollPanel mode="native" style="width: 100%; max-height: 500px; border: none">
+                    <div class="ui-fluid">
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
+                                     layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
+                            <p:outputLabel value="Họ và tên:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập họ và tên tài khoản" maxlength="50"
+                                         onchange="this.value = this.value.trim()"
+                                         value="#{mnAccountController.accountDto.fullName}"/>
+
+                            <p:outputLabel value="Địa chỉ email:" styleClass="requireLabel"/>
+                            <p:inputText id="email" onchange="this.value = this.value.trim()"
+                                         onkeyup="this.value=this.value.replace(' ', '').toLowerCase()"
+                                         placeholder="Nhập địa chỉ email"
+                                         maxlength="50" value="#{mnAccountController.accountDto.email}"
+                                         validatorMessage="Địa chỉ email không đúng định dạng">
+                                <f:validateRegex
+                                        pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                            </p:inputText>
+
+                            <p:outputLabel value="Số điện thoại:" styleClass="requireLabel"/>
+                            <p:inputText id="phone" maxlength="20" placeholder="Nhập số điện thoại"
+                                         onchange="this.value = this.value.trim()"
+                                         onkeyup="this.value = this.value.replace(/\D/g, '');"
+                                         value="#{mnAccountController.accountDto.phone}"/>
+
+                            <p:outputLabel value="Tên đăng nhập:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập tên đăng nhập" maxlength="200"
+                                         onchange="this.value = this.value.trim()"
+                                         onkeyup="this.value=this.value.replace(/[^\w\d\.\_]/g, '').toLowerCase();"
+                                         disabled="#{mnAccountController.accountDto.accountId ne null}"
+                                         value="#{mnAccountController.accountDto.username}"/>
+
+                            <p:outputLabel value="Trạng thái:" styleClass="requireLabel"/>
+                            <p:selectOneMenu value="#{mnAccountController.accountDto.status}">
+                                <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
+                                <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+
+                        <p:outputPanel style="margin: 10px 0 10px 0">
+                            <p:commandButton value="Lưu" styleClass="save-btn"
+                                             icon="fa fa-save" update="dlForm tblSearchResult growl"
+                                             actionListener="#{mnAccountController.onSave()}"/>
+
+                            <p:commandButton value="Hủy bỏ" styleClass="close-btn" icon="fa fa-close"
+                                             oncomplete="PF('inforDialog').hide()"
+                                             update="dlForm searchForm growl"
+                                             actionListener="#{mnAccountController.resetAll()}"/>
+                        </p:outputPanel>
+                    </div>
+                </p:scrollPanel>
+            </h:form>
+        </p:dialog>
+
+        <h:form styleClass="ui-g-12" id="searchForm" prependId="false">
+            <p:outputPanel>
+                <p:link styleClass="title-color-left ui-sm-12">Quản lý tài khoản</p:link>
+
+                <div style="float: right" class="ui-sm-12">
+                    <p:commandButton value="Thêm mới" styleClass="border-btn" icon="fa fa-plus"
+                                     oncomplete="PF('inforDialog').show()" update="dlForm"
+                                     actionListener="#{mnAccountController.resetDialog()}"/>
+                </div>
+            </p:outputPanel>
+
+            <hr class="hr-class"/>
+
+            <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
+                         columnClasses="ui-grid-col-11 ui-no-margin-padding margin-right-10, ui-grid-col-1 ui-no-margin-padding">
+                <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
+                    <div class="ui-input-icon-left" style="width: 100%; display: flex;">
+                        <i class="fa fa-search"/>
+                        <p:inputText placeholder="Nhập họ và tên, địa chỉ email, số điện thoại, tên đăng nhập" style="width: 97%"
+                                     onblur="this.value = this.value.trim()" maxlength="100"
+                                     onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
+                                     value="#{mnAccountController.searchDto.keyword}"
+                                     styleClass="border-input" onchange="this.value = this.value.trim()">
+                            <p:ajax event="change" update="searchForm"
+                                    listener="#{mnAccountController.onSearch()}"/>
+                        </p:inputText>
+                    </div>
+                </p:outputPanel>
+
+                <p:commandButton id="basic" value="Bộ lọc" type="button" iconPos="right" icon="fa fa-caret-down"
+                                 styleClass="filter-search ui-sm-12"/>
+
+                <p:overlayPanel for="basic" styleClass="filter-panel">
+                    <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
+                    <p:selectOneMenu styleClass="filter-item" value="#{mnAccountController.searchDto.status}">
+                        <f:selectItem itemLabel="Tất cả" itemValue=""/>
+                        <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
+                        <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Bỏ lọc" update="searchForm"
+                                     icon="fa fa-refresh" styleClass="filter-btn"
+                                     actionListener="#{mnAccountController.resetAll()}"/>
+
+                    <p:commandButton value="Lọc" update="tblSearchResult"
+                                     icon="fa fa-search" styleClass="margin-right-10 filter-btn" id="search"
+                                     actionListener="#{mnAccountController.onSearch()}"/>
+                </p:overlayPanel>
+            </p:panelGrid>
+
+            <p:dataTable id="tblSearchResult" styleClass="margin-top-15 search-panel" tableStyle="table-layout: auto;"
+                         widgetVar="dataTable" resizableColumns="true" paginator="true" rows="20"
+                         lazy="true" pageLinks="5" var="resultDto" paginatorPosition="bottom"
+                         paginatorAlwaysVisible="true" rowsPerPageTemplate="20,50,100"
+                         value="#{mnAccountController.lazyDataModel}" rowKey="#{resultDto.accountId}"
+                         paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                         emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
+                         currentPageReportTemplate="Tổng số bản ghi: #{mnAccountController.lazyDataModel.rowCount}">
+
+                <p:column headerText="STT" width="30" style="text-align: center">
+                    <p:outputLabel value="#{rowIndex + 1}"/>
+                </p:column>
+
+                <p:column headerText="Họ và tên" style="text-align: left" sortBy="#{resultDto.fullName}">
+                    <p:outputLabel value="#{resultDto.fullName}"/>
+                </p:column>
+
+                <p:column headerText="Địa chỉ email" style="text-align: left" sortBy="#{resultDto.email}">
+                    <p:outputLabel value="#{resultDto.email}"/>
+                </p:column>
+
+                <p:column headerText="Số điện thoại" style="text-align: left" sortBy="#{resultDto.phone}">
+                    <p:outputLabel value="#{resultDto.phone}"/>
+                </p:column>
+
+                <p:column headerText="Tên đăng nhập" style="text-align: left" sortBy="#{resultDto.username}">
+                    <p:outputLabel value="#{resultDto.username}"/>
+                </p:column>
+
+                <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
+                    <p:outputLabel value="Hoạt động" rendered="#{resultDto.status eq DbConstant.ACTIVE_STATUS}"/>
+                    <p:outputLabel value="Không hoạt động"
+                                   rendered="#{resultDto.status eq DbConstant.INACTIVE_STATUS}"/>
+                </p:column>
+
+                <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">
+                    <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
+                        <p:menuitem value="Cấp lại mật khẩu" icon="fa fa-refresh" process="@this"
+                                    update="tblSearchResult growl"
+                                    actionListener="#{mnAccountController.resetPassword(resultDto)}">
+                            <p:confirm header="Xác nhận thông tin" escape="false"
+                                       message="Bạn có chắc chắn muốn cấp lại mật khẩu cho tài khoản?"
+                                       icon="fa fa-question-circle"/>
+                        </p:menuitem>
+
+                        <p:menuitem value="Sửa thông tin" icon="fa fa-edit" oncomplete="PF('inforDialog').show()"
+                                    update="dlForm" actionListener="#{mnAccountController.onEdit(resultDto)}"/>
+
+                        <p:menuitem value="Xóa thông tin" icon="fa fa-remove" process="@this"
+                                    update="tblSearchResult growl"
+                                    actionListener="#{mnAccountController.onDelete(resultDto)}">
+                            <p:confirm header="Xác nhận thông tin" escape="false"
+                                       message="Bạn có chắc chắn muốn xóa tài khoản?"
+                                       icon="fa fa-question-circle"/>
+                        </p:menuitem>
+                    </p:menuButton>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

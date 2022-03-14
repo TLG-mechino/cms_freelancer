@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{authorizationController.initInfo()}"/>
+    </f:metadata>
+
+    <ui:define name="title">Mi información</ui:define>
+
+    <ui:define name="head">
+        <style>
+            .margin-bottom-10 {
+                margin-bottom: 10px;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="ui-md-12 change-password-container">
+            <h:form id="dlForm" prependId="false">
+                <p:link styleClass="title-color-left">Mi información</p:link>
+
+                <hr class="hr-class"/>
+                <p:panelGrid  id="basicPanel1" columns="4"
+                              columnClasses="ui-grid-col-2 margin-bottom-10, ui-grid-col-4 margin-bottom-10, ui-grid-col-2 margin-bottom-10, ui-grid-col-4 margin-bottom-10"
+                              styleClass="ui-panelgrid-blank " layout="grid">
+
+                    <p:outputLabel value="Nombre completo:" for="fullName" style="line-height: 33px" styleClass="requireLabel"/>
+                    <p:inputText id="fullName" style="width: 95%" maxlength="50"  onblur="this.value = this.value.trim()"
+                                 value="#{authorizationController.accountDto.fullName}"/>
+
+                    <p:outputLabel value="Correo electrónico:" style="line-height: 33px" styleClass="requireLabel" for="email"/>
+                    <p:inputText id="email" placeholder="Ingrese correo electrónico" maxlength="50"
+                                 style="width: 95%"
+                                 onblur="this.value = this.value.trim()"
+                                 value="#{authorizationController.accountDto.email}">
+                    </p:inputText>
+
+                    <p:outputLabel value="Ingrese nombre de usuario:" styleClass="requireLabel" for="username"/>
+                    <p:outputLabel id="username"
+                                   value="#{authorizationController.accountDto.username}"/>
+
+                    <p:outputLabel value="Cargo:" styleClass="requireLabel" for="role"/>
+                    <p:outputLabel id="role"
+                                   value="#{authorizationController.accountDto.roleName}"/>
+
+                    <p:outputLabel style="text-align: left" value="Estatus:" styleClass="requireLabel"/>
+                    <p:outputLabel value="Activo" style="color: #09BC1B"
+                                   rendered="#{authorizationController.accountDto.status eq 1}"/>
+                    <p:outputLabel value="Inactivo" style="color: red"
+                                   rendered="#{authorizationController.accountDto.status eq 0}"/>
+                </p:panelGrid>
+                <hr class="hr-class"/>
+                <p:commandButton value="Guardar" update="dlForm growl" ajax="false"
+                                 icon="fa fa-save"
+                                 actionListener="#{authorizationController.saveChangeInFor(authorizationController.accountDto)}"
+                                 styleClass="btn" style="border-radius: 5px"/>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

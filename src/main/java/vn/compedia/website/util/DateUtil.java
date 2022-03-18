@@ -324,10 +324,10 @@ public class DateUtil {
     }
 
 
-    public static int yearsBetween ( Date fromDate , Date toDate){
+    public static int yearsBetween(Date fromDate, Date toDate) {
         LocalDateTime fDate = convertToLocalDateTimeViaInstant(fromDate);
         LocalDateTime tDate = convertToLocalDateTimeViaInstant(toDate);
-        return (int)ChronoUnit.YEARS.between(tDate, tDate);
+        return (int) ChronoUnit.YEARS.between(tDate, tDate);
     }
 
 
@@ -350,7 +350,6 @@ public class DateUtil {
         }
         return j;
     }
-
 
 
     public static Long betweenDate(LocalDateTime fromDate, LocalDateTime toDate) {
@@ -417,10 +416,11 @@ public class DateUtil {
         return calendar.getTime();
     }
 
-    public static boolean validateDateRegex(String date){
+    public static boolean validateDateRegex(String date) {
         return date.matches(regexDate);
     }
-    public static boolean validateTimeRegex(String time){
+
+    public static boolean validateTimeRegex(String time) {
         return time.matches(regexTime);
     }
 }

@@ -1,7 +1,5 @@
 package vn.compedia.website.util;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.Date;
 
 public class ValueUtil {
@@ -57,11 +55,11 @@ public class ValueUtil {
     }
 
 
-    public static boolean isNumber(String value){
-        try{
+    public static boolean isNumber(String value) {
+        try {
             Long.valueOf(value);
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
             return false;
         }
     }

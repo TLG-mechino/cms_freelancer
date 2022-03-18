@@ -6,49 +6,46 @@
                 template="/template/template.xhtml">
 
     <f:metadata>
-        <f:event type="preRenderView" listener="#{mnAccountController.initData()}"/>
+        <f:event type="preRenderView" listener="#{mnHashtagController.initData()}"/>
     </f:metadata>
 
-    <ui:define name="title">Quản lý hastag</ui:define>
+    <ui:define name="title">Quản lý hashtag</ui:define>
 
     <ui:define name="content">
-        <p:dialog widgetVar="inforDialog" width="600" header="#{mnHastagController.titleDialog} thông tin hastag"
+        <p:dialog widgetVar="inforDialog" width="600" header="#{mnHashtagController.titleDialog} thông tin hashtag"
                   modal="true" id="inforDialogId">
             <h:form id="dlForm" prependId="false">
                 <p:scrollPanel mode="native" style="width: 100%; max-height: 500px; border: none">
                     <div class="ui-fluid">
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
                                      layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
-                            <p:outputLabel value="Tiêu đề:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập Tiêu đề hastag" maxlength="50"
+                            <p:outputLabel value="Mã hashtag:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập mã hashtag" maxlength="50"
                                          onchange="this.value = this.value.trim()"
-                                         value="#{mnAccountController.accountDto.fullName}"/>
+                                         value="#{mnHashtagController.hashtagDto.code}"/>
 
-                            <p:outputLabel value="Địa chỉ email:" styleClass="requireLabel"/>
-                            <p:inputText id="email" onchange="this.value = this.value.trim()"
-                                         onkeyup="this.value=this.value.replace(' ', '').toLowerCase()"
-                                         placeholder="Nhập địa chỉ email"
-                                         maxlength="50" value="#{mnAccountController.accountDto.email}"
-                                         validatorMessage="Địa chỉ email không đúng định dạng">
-                                <f:validateRegex
-                                        pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
-                            </p:inputText>
-
-                            <p:outputLabel value="Số điện thoại:" styleClass="requireLabel"/>
-                            <p:inputText id="phone" maxlength="20" placeholder="Nhập số điện thoại"
+                            <p:outputLabel value="Tiêu đề tiếng việt:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập tiêu đề tiếng việt" maxlength="50"
                                          onchange="this.value = this.value.trim()"
-                                         onkeyup="this.value = this.value.replace(/\D/g, '');"
-                                         value="#{mnAccountController.accountDto.phone}"/>
+                                         value="#{mnHashtagController.hashtagDto.titleVn}"/>
 
-                            <p:outputLabel value="Tên đăng nhập:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập tên đăng nhập" maxlength="200"
+                            <p:outputLabel value="Tiêu đề tiếng anh:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập tiêu đề tiếng anh" maxlength="50"
                                          onchange="this.value = this.value.trim()"
-                                         onkeyup="this.value=this.value.replace(/[^\w\d\.\_]/g, '').toLowerCase();"
-                                         disabled="#{mnAccountController.accountDto.accountId ne null}"
-                                         value="#{mnAccountController.accountDto.username}"/>
+                                         value="#{mnHashtagController.hashtagDto.titleEn}"/>
+
+                            <p:outputLabel value="Mô tả tiếng việt:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập tiêu đề tiếng việt" maxlength="50"
+                                         onchange="this.value = this.value.trim()"
+                                         value="#{mnHashtagController.hashtagDto.descriptionVn}"/>
+
+                            <p:outputLabel value="Mô tả tiếng anh:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập mô tả tiếng anh" maxlength="50"
+                                         onchange="this.value = this.value.trim()"
+                                         value="#{mnHashtagController.hashtagDto.descriptionEn}"/>
 
                             <p:outputLabel value="Trạng thái:" styleClass="requireLabel"/>
-                            <p:selectOneMenu value="#{mnAccountController.accountDto.status}">
+                            <p:selectOneMenu value="#{mnHashtagController.hashtag.status}">
                                 <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
                                 <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
                             </p:selectOneMenu>
@@ -57,12 +54,12 @@
                         <p:outputPanel style="margin: 10px 0 10px 0">
                             <p:commandButton value="Lưu" styleClass="save-btn"
                                              icon="fa fa-save" update="dlForm tblSearchResult growl"
-                                             actionListener="#{mnAccountController.onSave()}"/>
+                                             actionListener="#{mnHashtagController.onSave()}"/>
 
                             <p:commandButton value="Hủy bỏ" styleClass="close-btn" icon="fa fa-close"
                                              oncomplete="PF('inforDialog').hide()"
                                              update="dlForm searchForm growl"
-                                             actionListener="#{mnAccountController.resetAll()}"/>
+                                             actionListener="#{mnHashtagController.resetAll()}"/>
                         </p:outputPanel>
                     </div>
                 </p:scrollPanel>
@@ -71,12 +68,12 @@
 
         <h:form styleClass="ui-g-12" id="searchForm" prependId="false">
             <p:outputPanel>
-                <p:link styleClass="title-color-left ui-sm-12">Quản lý hastag</p:link>
+                <p:link styleClass="title-color-left ui-sm-12">Quản lý hashtag</p:link>
 
                 <div style="float: right" class="ui-sm-12">
                     <p:commandButton value="Thêm mới" styleClass="border-btn" icon="fa fa-plus"
                                      oncomplete="PF('inforDialog').show()" update="dlForm"
-                                     actionListener="#{mnAccountController.resetDialog()}"/>
+                                     actionListener="#{mnHashtagController.resetDialog()}"/>
                 </div>
             </p:outputPanel>
 
@@ -87,13 +84,13 @@
                 <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
                     <div class="ui-input-icon-left" style="width: 100%; display: flex;">
                         <i class="fa fa-search"/>
-                        <p:inputText placeholder="Nhập tiêu đề, mã hastag, mô tả, người tạo" style="width: 97%"
+                        <p:inputText placeholder="Nhập tiêu đề, mã hashtag, mô tả, người tạo" style="width: 97%"
                                      onblur="this.value = this.value.trim()" maxlength="100"
                                      onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
-                                     value="#{mnAccountController.searchDto.keyword}"
+                                     value="#{mnHashtagController.searchDto.keyword}"
                                      styleClass="border-input" onchange="this.value = this.value.trim()">
                             <p:ajax event="change" update="searchForm"
-                                    listener="#{mnAccountController.onSearch()}"/>
+                                    listener="#{mnHashtagController.onSearch()}"/>
                         </p:inputText>
                     </div>
                 </p:outputPanel>
@@ -103,7 +100,7 @@
 
                 <p:overlayPanel for="basic" styleClass="filter-panel">
                     <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
-                    <p:selectOneMenu styleClass="filter-item" value="#{mnAccountController.searchDto.status}">
+                    <p:selectOneMenu styleClass="filter-item" value="#{mnHashtagController.searchDto.status}">
                         <f:selectItem itemLabel="Tất cả" itemValue=""/>
                         <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
                         <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
@@ -111,11 +108,11 @@
 
                     <p:commandButton value="Bỏ lọc" update="searchForm"
                                      icon="fa fa-refresh" styleClass="filter-btn"
-                                     actionListener="#{mnAccountController.resetAll()}"/>
+                                     actionListener="#{mnHashtagController.resetAll()}"/>
 
                     <p:commandButton value="Lọc" update="tblSearchResult"
                                      icon="fa fa-search" styleClass="margin-right-10 filter-btn" id="search"
-                                     actionListener="#{mnAccountController.onSearch()}"/>
+                                     actionListener="#{mnHashtagController.onSearch()}"/>
                 </p:overlayPanel>
             </p:panelGrid>
 
@@ -123,29 +120,37 @@
                          widgetVar="dataTable" resizableColumns="true" paginator="true" rows="20"
                          lazy="true" pageLinks="5" var="resultDto" paginatorPosition="bottom"
                          paginatorAlwaysVisible="true" rowsPerPageTemplate="20,50,100"
-                         value="#{mnAccountController.lazyDataModel}" rowKey="#{resultDto.hastagId}"
+                         value="#{mnHashtagController.lazyDataModel}" rowKey="#{resultDto.hashtagId}"
                          paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                          emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
-                         currentPageReportTemplate="Tổng số bản ghi: #{mnAccountController.lazyDataModel.rowCount}">
+                         currentPageReportTemplate="Tổng số bản ghi: #{mnHashtagController.lazyDataModel.rowCount}">
 
                 <p:column headerText="STT" width="30" style="text-align: center">
                     <p:outputLabel value="#{rowIndex + 1}"/>
                 </p:column>
 
-                <p:column headerText="Tiêu đề" style="text-align: left" sortBy="#{resultDto.title}">
-                    <p:outputLabel value="#{resultDto.title}"/>
-                </p:column>
-
-                <p:column headerText="Mã hastag" style="text-align: left" sortBy="#{resultDto.code}">
+                <p:column headerText="Mã hashtag" style="text-align: left" sortBy="#{resultDto.code}">
                     <p:outputLabel value="#{resultDto.code}"/>
                 </p:column>
 
-                <p:column headerText="Mô tả" style="text-align: left" sortBy="#{resultDto.discription}">
-                    <p:outputLabel value="#{resultDto.discription}"/>
+                <p:column headerText="Tiêu đề tiếng việt" style="text-align: left" sortBy="#{resultDto.titleVn}">
+                    <p:outputLabel value="#{resultDto.titleVn}"/>
                 </p:column>
 
-                <p:column headerText="Người tạo" style="text-align: left" sortBy="#{resultDto.createUser}">
-                    <p:outputLabel value="#{resultDto.createUser}"/>
+                <p:column headerText="Tiêu đề tiếng anh" style="text-align: left" sortBy="#{resultDto.titleEn}">
+                    <p:outputLabel value="#{resultDto.titleEn}"/>
+                </p:column>
+
+                <p:column headerText="Mô tả tiếng việt" style="text-align: left" sortBy="#{resultDto.descriptionVn}">
+                    <p:outputLabel value="#{resultDto.descriptionVn}"/>
+                </p:column>
+
+                <p:column headerText="Mô tả tiếng anh" style="text-align: left" sortBy="#{resultDto.descriptionEn}">
+                    <p:outputLabel value="#{resultDto.descriptionEn}"/>
+                </p:column>
+
+                <p:column headerText="Người tạo" style="text-align: left" sortBy="#{resultDto.createBy}">
+                    <p:outputLabel value="#{resultDto.createBy}"/>
                 </p:column>
 
                 <p:column headerText="Ngày tạo" style="text-align: left" sortBy="#{resultDto.createDate}">
@@ -164,11 +169,11 @@
                     <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
                         <p:menuitem value="Sửa thông tin" icon="fa fa-edit"
                                     oncomplete="PF('inforDialog').show()" update="dlForm"
-                                    actionListener="#{mnMarketController.onEdit(resultDto)}"/>
+                                    actionListener="#{mnHashtagController.onEdit(resultDto)}"/>
 
                         <p:menuitem value="Xóa thông tin" icon="fa fa-close"
                                     update="searchForm growl" process="@this"
-                                    actionListener="#{mnMarketController.onDelete(resultDto.marketId)}">
+                                    actionListener="#{mnHashtagController.onDelete(resultDto.hashtagId)}">
                             <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"
                                        message="Bạn có chắc chắn muốn xóa thông tin?"/>
                         </p:menuitem>

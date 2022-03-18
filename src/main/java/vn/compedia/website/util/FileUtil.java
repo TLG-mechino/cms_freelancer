@@ -410,15 +410,16 @@ public class FileUtil {
     public static boolean isAcceptFileAudioType(UploadedFile uploadedFile) {
         return isAudioFileExt(uploadedFile.getFileName().toLowerCase());
     }
-    public static String createPathFileError(){
+
+    public static String createPathFileError() {
         String fileId = FileUtil.generateFileIdTime() + RandomStringUtils.randomAlphanumeric(16);
         String folder = FileUtil.buildFolderUpload(FileUtil.FOLDER_NAME_FILE);
         File inFiles = new File(folder);
         if (!inFiles.exists() && !inFiles.mkdirs()) {
             log.error("Can't create folder");
         }
-        pathReturn = pathReturn + fileId + "."+ FILE_EXCEL[1];
-        return folder + fileId + "."+ FILE_EXCEL[1];
+        pathReturn = pathReturn + fileId + "." + FILE_EXCEL[1];
+        return folder + fileId + "." + FILE_EXCEL[1];
     }
 
     public static String generateFileIdTime() {

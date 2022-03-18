@@ -114,16 +114,16 @@ public class CommonController implements Serializable {
         try {
             switch (type) {
                 case 1:
-                    object = cell.getStringCellValue().trim().replaceAll("'","");
+                    object = cell.getStringCellValue().trim().replaceAll("'", "");
                     break;
                 case 2:
-                    object = Integer.valueOf(cell.getStringCellValue().trim().replaceAll("'",""));
+                    object = Integer.valueOf(cell.getStringCellValue().trim().replaceAll("'", ""));
                     break;
                 case 3:
-                    object = Long.valueOf(cell.getStringCellValue().trim().replaceAll("'",""));
+                    object = Long.valueOf(cell.getStringCellValue().trim().replaceAll("'", ""));
                     break;
                 case 4:
-                    object = DateUtil.formatDatePattern(cell.getStringCellValue().trim().replaceAll("'",""), DateUtil.DDMMYYYY);
+                    object = DateUtil.formatDatePattern(cell.getStringCellValue().trim().replaceAll("'", ""), DateUtil.DDMMYYYY);
                     break;
                 default:
                     object = null;

@@ -15,16 +15,16 @@ import java.util.Date;
 @NoArgsConstructor
 @MappedSuperclass
 public class BaseModel {
-    @Column(name = "create_by")
-    private Long createBy;
+    @Column(name = "CREATE_BY")
+    private String createBy;
 
-    @Column(name = "create_date")
+    @Column(name = "CREATE_DATE")
     private Date createDate;
 
-    @Column(name = "update_by")
-    private Long updateBy;
+    @Column(name = "UPDATE_BY")
+    private String updateBy;
 
-    @Column(name = "update_date")
+    @Column(name = "UPDATE_DATE")
     private Date updateDate;
 }
 

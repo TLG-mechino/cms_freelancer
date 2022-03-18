@@ -43,9 +43,6 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
         appendQuery(sb, searchDto);
 
         if (searchDto.getSortField() != null) {
-            if (searchDto.getSortField().equals("fullName")) {
-                sb.append(" ORDER BY a.FULL_NAME ");
-            }
             if (searchDto.getSortField().equals("username")) {
                 sb.append(" ORDER BY a.USER_NAME ");
             }

@@ -7,15 +7,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.dto.AccountDto;
+import vn.compedia.website.jsf.CookieHelper;
 import vn.compedia.website.model.Account;
 import vn.compedia.website.repository.AccountRepository;
-import vn.compedia.website.util.Constant;
-import vn.compedia.website.util.DbConstant;
-import vn.compedia.website.util.FacesUtil;
-import vn.compedia.website.util.StringUtil;
+import vn.compedia.website.util.*;
 
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +30,8 @@ public class AuthorizationController implements Serializable {
     @Autowired
     private AccountRepository accountRepository;
 
-    private String password;
-    private String newPassword;
     private List<String> myMenus;
-    private String reNewPassword;
-    private String roleName = "";
+    private boolean saveCookie;
     private AccountDto accountDto;
     private boolean checkNotify = false;
     private int role = Constant.NOT_LOGIN_ID;
@@ -51,9 +47,9 @@ public class AuthorizationController implements Serializable {
         if (checkNotify) {
             FacesUtil.addSuccessMessage("Đổi mật khẩu thành công. Bạn vui lòng đăng nhập lại hệ thống");
         }
-
         accountDto = new AccountDto();
         myMenus = new ArrayList<>();
+        saveCookie = false;
         role = Constant.NOT_LOGIN_ID;
         checkNotify = false;
     }
@@ -80,7 +76,7 @@ public class AuthorizationController implements Serializable {
         }
         Account account = accountRepository.getByUsername(accountDto.getUsername());
         if (account == null) {
-            FacesUtil.addErrorMessage("Tên đăng nhập hoặc mật khẩu không chính xác bạn vui lòng kiểm tra lại");
+            FacesUtil.addErrorMessage("Tài khoản không tồn tại");
             return;
         }
         if (!account.getStatus().equals(DbConstant.ACTIVE_STATUS)) {
@@ -91,13 +87,22 @@ public class AuthorizationController implements Serializable {
             FacesUtil.addErrorMessage("Tên đăng nhập hoặc mật khẩu không chính xác bạn vui lòng kiểm tra lại");
             return;
         }
-        processLogin(account);
+        processLogin(account, saveCookie);
     }
 
-    public void processLogin(Account account) {
+    public void processLogin(Account account, Boolean saveCookie) {
         role = Constant.LOGIN_ID;
-        roleName = DbConstant.DEFAULT_ROLE;
         updateMenuByRole();
+        if (saveCookie) {
+            CookieHelper.setCookie((HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse(),
+                    Constant.COOKIE_ACCOUNT,
+                    account.getUsername(),
+                    Integer.parseInt(PropertiesUtil.getProperty("cookie.auth.expire")));
+            CookieHelper.setCookie((HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse(),
+                    Constant.COOKIE_PASSWORD,
+                    StringUtil.encryptPassword(account.getPassword()+account.getSalt()+account.getCreateDate()),
+                    Integer.parseInt(PropertiesUtil.getProperty("cookie.auth.expire")));
+        }
         accountDto = new AccountDto();
         BeanUtils.copyProperties(account, accountDto);
         FacesUtil.redirect("/dashboard.xhtml");
@@ -112,6 +117,8 @@ public class AuthorizationController implements Serializable {
     }
 
     public void logout() {
+        CookieHelper.removeCookie(Constant.COOKIE_ACCOUNT);
+        CookieHelper.removeCookie(Constant.COOKIE_PASSWORD);
         resetAll();
         FacesUtil.redirect("/login.xhtml");
     }
@@ -121,9 +128,9 @@ public class AuthorizationController implements Serializable {
             FacesUtil.redirect("/login.xhtml");
             return;
         }
-        password = "";
-        newPassword = "";
-        reNewPassword = "";
+        accountDto.setOldPassword("");
+        accountDto.setNewPassword("");
+        accountDto.setRePassword("");
     }
 
     public boolean isValidatePassword(String password) {
@@ -139,23 +146,23 @@ public class AuthorizationController implements Serializable {
     }
 
     public Boolean isValidate() {
-        if (StringUtils.isEmpty(password)) {
+        if (StringUtils.isEmpty(accountDto.getOldPassword())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập mật khẩu cũ");
             return false;
         }
-        if (StringUtils.isEmpty(newPassword)) {
+        if (StringUtils.isEmpty(accountDto.getNewPassword())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập mật khẩu mới");
             return false;
         }
-        if (StringUtils.isEmpty(reNewPassword)) {
+        if (StringUtils.isEmpty(accountDto.getRePassword())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập lại mật khẩu mới");
             return false;
         }
-        if (!isValidatePassword(newPassword)) {
+        if (!isValidatePassword(accountDto.getNewPassword())) {
             FacesUtil.addErrorMessage("Mật khẩu phải từ 6 đến 50 ký  bao gồm chữ cái in thường, chữ cái in hoa, số, ký tự đặc biệt");
             return false;
         }
-        if (password.equals(newPassword)) {
+        if (accountDto.getOldPassword().equals(accountDto.getNewPassword())) {
             FacesUtil.addErrorMessage("Mật khẩu mới không được phép trùng với mật khẩu cũ");
             return false;
         }
@@ -167,23 +174,25 @@ public class AuthorizationController implements Serializable {
             return;
         }
 
-        String pass = StringUtil.encryptPassword(password + accountDto.getSalt());
+        String pass = StringUtil.encryptPassword(accountDto.getNewPassword() + accountDto.getSalt());
         if (!pass.equals(accountDto.getPassword())) {
             FacesUtil.addErrorMessage("Mật khẩu cũ không chính xác");
             return;
         }
 
-        if (newPassword.equals(reNewPassword)) {
-            String newPass = StringUtil.encryptPassword(reNewPassword + accountDto.getSalt());
+        if (accountDto.getNewPassword().equals(accountDto.getRePassword())) {
+            String newPass = StringUtil.encryptPassword(accountDto.getRePassword() + accountDto.getSalt());
             accountDto.setPassword(newPass);
 
             Account account = new Account();
             BeanUtils.copyProperties(accountDto, account);
-
+            account.setSalt(StringUtil.generateSalt());
+            account.setPassword(StringUtil.encryptPassword(accountDto.getNewPassword(), account.getSalt()));
             accountRepository.save(account);
             initPass();
             checkNotify = true;
             FacesUtil.redirect("/login.xhtml");
+            logout();
         } else {
             FacesUtil.addErrorMessage("Mật khẩu mới và nhập lại mật khẩu không trùng nhau");
         }

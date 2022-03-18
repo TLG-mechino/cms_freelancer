@@ -16,13 +16,13 @@ import java.util.Date;
 @MappedSuperclass
 public class BaseModel {
     @Column(name = "create_by")
-    private Long createBy;
+    private String createBy;
 
     @Column(name = "create_date")
     private Date createDate;
 
     @Column(name = "update_by")
-    private Long updateBy;
+    private String updateBy;
 
     @Column(name = "update_date")
     private Date updateDate;

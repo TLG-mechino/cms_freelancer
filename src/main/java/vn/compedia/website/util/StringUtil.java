@@ -24,6 +24,10 @@ public class StringUtil {
         return sha256;
     }
 
+    public static String encryptPassword(String password, String salt) {
+        return encryptPassword(password + salt);
+    }
+
     private static String byteToHex(final byte[] hash) {
         Formatter formatter = new Formatter();
         for (byte b : hash) {

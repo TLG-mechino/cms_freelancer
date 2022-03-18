@@ -12,10 +12,8 @@ import vn.compedia.website.model.Account;
 @AllArgsConstructor
 public class AccountDto extends Account {
     private String rePassword;
-    private String roleName;
 
-    public AccountDto(Long accountId, Long roleId, String fullName, String email, String username, String password, String salt, Integer status, String roleName) {
-        super(accountId, roleId, fullName, email, username, password, salt, status);
-        this.roleName = roleName;
+    public AccountDto(Long accountId,  String email, String username, String password, String salt, Integer status) {
+        super(accountId, email, username, password, salt, status);
     }
 }

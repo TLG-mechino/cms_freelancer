@@ -6,9 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.controller.common.BaseController;
-import vn.compedia.website.model.Market;
 import vn.compedia.website.util.Constant;
-import vn.compedia.website.util.FacesUtil;
 
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;

@@ -22,7 +22,7 @@ public interface AccountRepository extends CrudRepository<Account, Long>, Accoun
     @Query("select ac from Account ac where ac.accountId <> :accountId and ac.email = :email")
     List<Account> findAccountByEmailExists(@Param("accountId") Long accountId, @Param("email") String email);
 
-    @Query("SELECT new vn.compedia.website.dto.AccountDto(ac.accountId, ac.roleId, ac.fullName, ac.email, ac.username, ac.password, ac.salt, ac.status, rl.name )" +
-            " from Account ac, Role  rl where ac.accountId =:id and ac.roleId = rl.roleId")
+    @Query("SELECT new vn.compedia.website.dto.AccountDto(ac.accountId, ac.email, ac.username, ac.password, ac.salt, ac.status )" +
+            " from Account ac where ac.accountId =:id ")
     AccountDto getAccountInfo(Long id);
 }

@@ -12,7 +12,6 @@ import java.util.Date;
 @Entity
 @Table(name = "account")
 @NoArgsConstructor
-@AllArgsConstructor
 @Setter
 @Getter
 public class Account extends BaseModel {
@@ -22,17 +21,8 @@ public class Account extends BaseModel {
     @Column(name = "account_id")
     private Long accountId;
 
-    @Column(name = "role_id")
-    private Long roleId;
-
-    @Column(name = "full_name")
-    private String fullName;
-
-    @Column(name = "user_name")
+    @Column(name = "username")
     private String username;
-
-    @Column(name = "phone")
-    private String phone;
 
     @Column(name = "email")
     private String email;
@@ -46,10 +36,8 @@ public class Account extends BaseModel {
     @Column(name = "status")
     private Integer status;
 
-    public Account(Long accountId, Long roleId, String fullName, String email, String username, String password, String salt, Integer status) {
+    public Account(Long accountId, String email, String username, String password, String salt, Integer status) {
         this.accountId = accountId;
-        this.roleId = roleId;
-        this.fullName = fullName;
         this.username = username;
         this.email = email;
         this.password = password;

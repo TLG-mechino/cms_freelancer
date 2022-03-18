@@ -33,9 +33,7 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
     public List<AccountDto> search(AccountSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT a.ACCOUNT_ID, " +
-                "       a.ROLE_ID, " +
-                "       a.FULL_NAME, " +
-                "       a.USER_NAME, " +
+                "       a.USERNAME, " +
                 "       a.PHONE, " +
                 "       a.EMAIL, " +
                 "       a.PASSWORD, " +
@@ -48,9 +46,6 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
         appendQuery(sb, searchDto);
 
         if (searchDto.getSortField() != null) {
-            if (searchDto.getSortField().equals("fullName")) {
-                sb.append(" ORDER BY a.FULL_NAME ");
-            }
             if (searchDto.getSortField().equals("username")) {
                 sb.append(" ORDER BY a.USER_NAME ");
             }
@@ -81,19 +76,15 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
         for (Object[] obj : resultList) {
             AccountDto accountDto = new AccountDto();
             accountDto.setAccountId(ValueUtil.getLongByObject(obj[0]));
-            accountDto.setRoleId(ValueUtil.getLongByObject(obj[1]));
-            accountDto.setFullName(ValueUtil.getStringByObject(obj[2]));
-            accountDto.setUsername(ValueUtil.getStringByObject(obj[3]));
-            accountDto.setPhone(ValueUtil.getStringByObject(obj[4]));
-            accountDto.setEmail(ValueUtil.getStringByObject(obj[5]));
-            accountDto.setPassword(ValueUtil.getStringByObject(obj[6]));
-            accountDto.setSalt(ValueUtil.getStringByObject(obj[7]));
-            accountDto.setStatus(ValueUtil.getIntegerByObject(obj[8]));
-            accountDto.setCreateDate(ValueUtil.getDateByObject(obj[9]));
-            accountDto.setCreateBy(ValueUtil.getLongByObject(obj[10]));
-            accountDto.setUpdateDate(ValueUtil.getDateByObject(obj[11]));
-            accountDto.setUpdateBy(ValueUtil.getLongByObject(obj[12]));
-            accountDto.setRoleName(DbConstant.DEFAULT_ROLE);
+            accountDto.setUsername(ValueUtil.getStringByObject(obj[1]));
+            accountDto.setEmail(ValueUtil.getStringByObject(obj[2]));
+            accountDto.setPassword(ValueUtil.getStringByObject(obj[3]));
+            accountDto.setSalt(ValueUtil.getStringByObject(obj[4]));
+            accountDto.setStatus(ValueUtil.getIntegerByObject(obj[5]));
+            accountDto.setCreateDate(ValueUtil.getDateByObject(obj[6]));
+            accountDto.setCreateBy(ValueUtil.getLongByObject(obj[7]));
+            accountDto.setUpdateDate(ValueUtil.getDateByObject(obj[8]));
+            accountDto.setUpdateBy(ValueUtil.getLongByObject(obj[9]));
             list.add(accountDto);
         }
         return list;

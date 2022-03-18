@@ -17,10 +17,7 @@ import vn.compedia.website.controller.common.BaseController;
 import vn.compedia.website.dto.AccountDto;
 import vn.compedia.website.dto.AccountSearchDto;
 import vn.compedia.website.model.Account;
-import vn.compedia.website.model.Market;
-import vn.compedia.website.model.Role;
 import vn.compedia.website.repository.AccountRepository;
-import vn.compedia.website.repository.RoleRepository;
 import vn.compedia.website.util.*;
 
 import javax.faces.context.FacesContext;
@@ -46,7 +43,6 @@ public class MnAccountController extends BaseController {
 
     private Account account;
     private String titleDialog;
-    private List<Role> listRoles;
     private AccountDto accountDto;
     private AccountSearchDto searchDto;
     private LazyDataModel<AccountDto> lazyDataModel;
@@ -73,22 +69,12 @@ public class MnAccountController extends BaseController {
     }
 
     public boolean validate() {
-        if (StringUtils.isBlank(accountDto.getFullName())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập họ và tên");
-            return false;
-        }
+
         if (StringUtils.isBlank(accountDto.getEmail())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập địa chỉ email");
             return false;
         }
-        if (StringUtils.isBlank(accountDto.getPhone())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập số điện thoại");
-            return false;
-        }
-        if (StringUtil.checkAllZero(accountDto.getPhone())) {
-            FacesUtil.addErrorMessage("Số điện thoại không đúng định dạng");
-            return false;
-        }
+
         if (StringUtils.isBlank(accountDto.getUsername())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập tên đăng nhập");
             return false;
@@ -134,7 +120,6 @@ public class MnAccountController extends BaseController {
         accountDto.setUpdateDate(new Date());
         accountDto.setUpdateBy(authorizationController.getAccountDto().getAccountId());
         BeanUtils.copyProperties(accountDto, account);
-        account.setRoleId(1L);
         accountRepository.save(account);
 
         if (accountDto.getAccountId() == null) {

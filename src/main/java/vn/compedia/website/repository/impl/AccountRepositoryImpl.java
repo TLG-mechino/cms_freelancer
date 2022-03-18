@@ -5,13 +5,11 @@ import org.springframework.stereotype.Repository;
 import vn.compedia.website.dto.AccountDto;
 import vn.compedia.website.dto.AccountSearchDto;
 import vn.compedia.website.repository.AccountRepositoryCustom;
-import vn.compedia.website.util.DbConstant;
 import vn.compedia.website.util.ValueUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +32,6 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT a.ACCOUNT_ID, " +
                 "       a.USERNAME, " +
-                "       a.PHONE, " +
                 "       a.EMAIL, " +
                 "       a.PASSWORD, " +
                 "       a.SALT, " +
@@ -46,14 +43,14 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
         appendQuery(sb, searchDto);
 
         if (searchDto.getSortField() != null) {
+            if (searchDto.getSortField().equals("fullName")) {
+                sb.append(" ORDER BY a.FULL_NAME ");
+            }
             if (searchDto.getSortField().equals("username")) {
                 sb.append(" ORDER BY a.USER_NAME ");
             }
             if (searchDto.getSortField().equals("email")) {
                 sb.append(" ORDER BY a.EMAIL ");
-            }
-            if (searchDto.getSortField().equals("phone")) {
-                sb.append(" ORDER BY a.PHONE ");
             }
             if (searchDto.getSortField().equals("status")) {
                 sb.append(" ORDER BY a.STATUS ");
@@ -82,9 +79,9 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
             accountDto.setSalt(ValueUtil.getStringByObject(obj[4]));
             accountDto.setStatus(ValueUtil.getIntegerByObject(obj[5]));
             accountDto.setCreateDate(ValueUtil.getDateByObject(obj[6]));
-            accountDto.setCreateBy(ValueUtil.getLongByObject(obj[7]));
+            accountDto.setCreateBy(ValueUtil.getStringByObject(obj[7]));
             accountDto.setUpdateDate(ValueUtil.getDateByObject(obj[8]));
-            accountDto.setUpdateBy(ValueUtil.getLongByObject(obj[9]));
+            accountDto.setUpdateBy(ValueUtil.getStringByObject(obj[9]));
             list.add(accountDto);
         }
         return list;
@@ -114,7 +111,7 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
     public void appendQuery(StringBuilder sb, AccountSearchDto searchDto) {
         sb.append(" FROM ACCOUNT a where a.ACCOUNT_ID <> :accountId ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
-            sb.append(" AND (lower(a.FULL_NAME) LIKE lower(:keyword) OR lower(a.USER_NAME) LIKE lower(:keyword) OR lower(a.EMAIL) LIKE lower(:keyword) OR lower(a.PHONE) LIKE lower(:keyword)) ");
+            sb.append(" AND (lower(a.USER_NAME) LIKE lower(:keyword) OR lower(a.EMAIL) LIKE lower(:keyword)) ");
         }
         if (searchDto.getStatus() != null) {
             sb.append(" AND a.STATUS =:status ");

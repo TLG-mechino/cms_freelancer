@@ -19,11 +19,6 @@
                     <div class="ui-fluid">
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
                                      layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
-                            <p:outputLabel value="Họ và tên:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập họ và tên tài khoản" maxlength="50"
-                                         onchange="this.value = this.value.trim()"
-                                         value="#{mnAccountController.accountDto.fullName}"/>
-
                             <p:outputLabel value="Địa chỉ email:" styleClass="requireLabel"/>
                             <p:inputText id="email" onchange="this.value = this.value.trim()"
                                          onkeyup="this.value=this.value.replace(' ', '').toLowerCase()"
@@ -33,12 +28,6 @@
                                 <f:validateRegex
                                         pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
                             </p:inputText>
-
-                            <p:outputLabel value="Số điện thoại:" styleClass="requireLabel"/>
-                            <p:inputText id="phone" maxlength="20" placeholder="Nhập số điện thoại"
-                                         onchange="this.value = this.value.trim()"
-                                         onkeyup="this.value = this.value.replace(/\D/g, '');"
-                                         value="#{mnAccountController.accountDto.phone}"/>
 
                             <p:outputLabel value="Tên đăng nhập:" styleClass="requireLabel"/>
                             <p:inputText placeholder="Nhập tên đăng nhập" maxlength="200"
@@ -132,16 +121,8 @@
                     <p:outputLabel value="#{rowIndex + 1}"/>
                 </p:column>
 
-                <p:column headerText="Họ và tên" style="text-align: left" sortBy="#{resultDto.fullName}">
-                    <p:outputLabel value="#{resultDto.fullName}"/>
-                </p:column>
-
                 <p:column headerText="Địa chỉ email" style="text-align: left" sortBy="#{resultDto.email}">
                     <p:outputLabel value="#{resultDto.email}"/>
-                </p:column>
-
-                <p:column headerText="Số điện thoại" style="text-align: left" sortBy="#{resultDto.phone}">
-                    <p:outputLabel value="#{resultDto.phone}"/>
                 </p:column>
 
                 <p:column headerText="Tên đăng nhập" style="text-align: left" sortBy="#{resultDto.username}">

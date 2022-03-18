@@ -13,7 +13,7 @@ import vn.compedia.website.model.Account;
 public class AccountDto extends Account {
     private String rePassword;
 
-    public AccountDto(Long accountId,  String email, String username, String password, String salt, Integer status) {
+    public AccountDto(Long accountId, String email, String username, String password, String salt, Integer status) {
         super(accountId, email, username, password, salt, status);
     }
 }

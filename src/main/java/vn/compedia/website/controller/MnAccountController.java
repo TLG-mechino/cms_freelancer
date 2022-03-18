@@ -18,7 +18,10 @@ import vn.compedia.website.dto.AccountDto;
 import vn.compedia.website.dto.AccountSearchDto;
 import vn.compedia.website.model.Account;
 import vn.compedia.website.repository.AccountRepository;
-import vn.compedia.website.util.*;
+import vn.compedia.website.util.Constant;
+import vn.compedia.website.util.EmailUtil;
+import vn.compedia.website.util.FacesUtil;
+import vn.compedia.website.util.StringUtil;
 
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -81,7 +84,7 @@ public class MnAccountController extends BaseController {
         }
         if (accountDto.getAccountId() == null) {
             List<Account> checkUserName = accountRepository.findAccountByUsername(accountDto.getUsername());
-            if (CollectionUtils.isNotEmpty(checkUserName )) {
+            if (CollectionUtils.isNotEmpty(checkUserName)) {
                 FacesUtil.addErrorMessage("Tên đăng nhập đã tồn tại");
                 return false;
             }
@@ -92,7 +95,7 @@ public class MnAccountController extends BaseController {
             }
         } else {
             List<Account> checkUserName = accountRepository.findAccountByUsernameExists(accountDto.getAccountId(), accountDto.getUsername());
-            if (CollectionUtils.isNotEmpty(checkUserName )) {
+            if (CollectionUtils.isNotEmpty(checkUserName)) {
                 FacesUtil.addErrorMessage("Tên đăng nhập đã tồn tại");
                 return false;
             }
@@ -115,10 +118,10 @@ public class MnAccountController extends BaseController {
             accountDto.setSalt(StringUtil.generateSalt());
             accountDto.setPassword(StringUtil.encryptPassword(password + accountDto.getSalt()));
             accountDto.setCreateDate(new Date());
-            accountDto.setCreateBy(authorizationController.getAccountDto().getAccountId());
+            accountDto.setCreateBy(authorizationController.getAccountDto().getUsername());
         }
         accountDto.setUpdateDate(new Date());
-        accountDto.setUpdateBy(authorizationController.getAccountDto().getAccountId());
+        accountDto.setUpdateBy(authorizationController.getAccountDto().getUsername());
         BeanUtils.copyProperties(accountDto, account);
         accountRepository.save(account);
 

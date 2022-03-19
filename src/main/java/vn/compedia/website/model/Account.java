@@ -34,6 +34,12 @@ public class Account extends BaseModel {
     @Column(name = "status")
     private Integer status;
 
+    @Column(name = "full_name")
+    private String fullName;
+
+    @Column(name = "phone")
+    private String phone;
+
     public Account(Long accountId, String email, String username, String password, String salt, Integer status) {
         this.accountId = accountId;
         this.username = username;

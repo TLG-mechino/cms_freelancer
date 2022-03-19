@@ -118,10 +118,10 @@ public class MnAccountController extends BaseController {
             accountDto.setSalt(StringUtil.generateSalt());
             accountDto.setPassword(StringUtil.encryptPassword(password + accountDto.getSalt()));
             accountDto.setCreateDate(new Date());
-            accountDto.setCreateBy(authorizationController.getAccountDto().getUsername());
+//            accountDto.setCreateBy(authorizationController.getAccountDto().getUsername());
         }
         accountDto.setUpdateDate(new Date());
-        accountDto.setUpdateBy(authorizationController.getAccountDto().getUsername());
+//        accountDto.setUpdateBy(authorizationController.getAccountDto().getUsername());
         BeanUtils.copyProperties(accountDto, account);
         accountRepository.save(account);
 

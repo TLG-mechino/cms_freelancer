@@ -35,17 +35,17 @@
                     <p:outputLabel value="Mật khẩu cũ:" for="oldPassword" styleClass="requireLabel"/>
                     <p:password id="oldPassword" placeholder="Nhập mật khẩu cũ"
                                 style="width: 80%" maxlength="50"
-                                value="#{authorizationController.password}"/>
+                                value="#{authorizationController.accountDto.oldPassword}"/>
 
                     <p:outputLabel value="Mật khẩu mới:" styleClass="requireLabel" for="newPass"/>
                     <p:password id="newPass" type="password" placeholder="Nhập mật khẩu mới" style="width: 80%"
-                                value="#{authorizationController.newPassword}" feedback="true" maxlength="50"
+                                value="#{authorizationController.accountDto.newPassword}" feedback="true" maxlength="50"
                                 promptLabel="Bạn vui lòng nhập mật khẩu có độ dài từ 6 đến 50 ký tự"
                                 weakLabel="Yếu" goodLabel="Trung bình" strongLabel="Tốt"/>
 
                     <p:outputLabel value="Nhập lại mật khẩu:" styleClass="requireLabel" for="renewPass"/>
                     <p:password id="renewPass" type="password" placeholder="Nhập lại mật khẩu mới" style="width: 80%"
-                                value="#{authorizationController.reNewPassword}" feedback="true" maxlength="50"
+                                value="#{authorizationController.accountDto.rePassword}" feedback="true" maxlength="50"
                                 promptLabel="Bạn vui lòng nhập mật khẩu có độ dài từ 6 đến 50 ký tự"
                                 weakLabel="Yếu" goodLabel="Trung bình" strongLabel="Tốt"/>
                 </p:panelGrid>

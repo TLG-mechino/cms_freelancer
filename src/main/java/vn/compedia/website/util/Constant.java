@@ -12,6 +12,10 @@ public class Constant {
     public static final String ERROR_MESSAGE_ID = "errorMsgDialog";
     public static final String TIME_ZONE_DEFAULT = "Asia/Ho_Chi_Minh";
 
+    // Cookie
+    public static final String COOKIE_ACCOUNT = "_JCA";
+    public static final String COOKIE_PASSWORD = "_JCP";
+
     // Role id
     public static final int NOT_LOGIN_ID = 0;
     public static final int LOGIN_ID = 1;

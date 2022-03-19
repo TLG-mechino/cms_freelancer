@@ -1,4 +1,4 @@
-package vn.compedia.website.dto;
+package vn.compedia.website.dto.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

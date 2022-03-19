@@ -15,6 +15,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_USER")
+    private Long id;
     @Column(name = "username")
     private String username;
 

@@ -10,7 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountSearchDto extends BaseSearchDto {
-    private String fullName;
     private String username;
     private Integer status;
     private Long accountId;

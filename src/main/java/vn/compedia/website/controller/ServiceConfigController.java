@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
@@ -15,14 +14,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.controller.common.BaseController;
-import vn.compedia.website.dto.AccountDto;
-import vn.compedia.website.dto.config.serviceConfigDto;
-import vn.compedia.website.dto.config.serviceConfigSearchDto;
-import vn.compedia.website.model.Hashtag;
+import vn.compedia.website.dto.config.ServiceConfigDto;
+import vn.compedia.website.dto.config.ServiceConfigSearchDto;
 import vn.compedia.website.model.PackageService;
 import vn.compedia.website.model.ServiceType;
 import vn.compedia.website.repository.ServiceTypeRepository;
-import vn.compedia.website.repository.config.serviceConfigRepository;
+import vn.compedia.website.repository.config.ServiceConfigRepository;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.FacesUtil;
 
@@ -46,16 +43,16 @@ public class ServiceConfigController extends BaseController {
     private AuthorizationController authorizationController;
 
     @Autowired
-    private serviceConfigRepository serviceConfigRepository;
+    private ServiceConfigRepository serviceConfigRepository;
     @Autowired
     private ServiceTypeRepository serviceTypeRepository;
 
     private PackageService packageService;
     private String titleDialog;
-    private serviceConfigSearchDto searchDto;
-    private serviceConfigDto serviceConfigDto;
+    private ServiceConfigSearchDto searchDto;
+    private ServiceConfigDto serviceConfigDto;
     private LazyDataModel<PackageService> lazyDataModel;
-    private serviceConfigSearchDto searchDtoTemp;
+    private ServiceConfigSearchDto searchDtoTemp;
     private List<ServiceType> serviceTypeList;
 
     public void initData() {
@@ -68,9 +65,9 @@ public class ServiceConfigController extends BaseController {
     public void resetAll() {
         serviceTypeList = new ArrayList<>();
         packageService = new PackageService();
-        serviceConfigDto = new serviceConfigDto();
-        searchDto = new serviceConfigSearchDto();
-        searchDtoTemp = new serviceConfigSearchDto();
+        serviceConfigDto = new ServiceConfigDto();
+        searchDto = new ServiceConfigSearchDto();
+        searchDtoTemp = new ServiceConfigSearchDto();
         serviceTypeList = (List<ServiceType>) serviceTypeRepository.findAll();
         onSearch();
     }

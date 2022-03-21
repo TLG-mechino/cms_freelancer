@@ -2,10 +2,9 @@ package vn.compedia.website.repository.config.impl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
-import vn.compedia.website.dto.config.serviceConfigDto;
-import vn.compedia.website.dto.config.serviceConfigSearchDto;
+import vn.compedia.website.dto.config.ServiceConfigSearchDto;
 import vn.compedia.website.model.PackageService;
-import vn.compedia.website.repository.config.serviceConfigRepositoryCustom;
+import vn.compedia.website.repository.config.ServiceConfigRepositoryCustom;
 import vn.compedia.website.util.ValueUtil;
 
 import javax.persistence.EntityManager;
@@ -17,13 +16,13 @@ import java.util.List;
 
 
 @Repository
-public class serviceConfigRepositoryImpl implements serviceConfigRepositoryCustom {
+public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
 
 
     @Override
-    public List<PackageService> search(serviceConfigSearchDto searchDto) {
+    public List<PackageService> search(ServiceConfigSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" select s.PACKAGE_SERVICE_ID, " +
                 "       s.CODE, " +
@@ -41,11 +40,11 @@ public class serviceConfigRepositoryImpl implements serviceConfigRepositoryCusto
             if (searchDto.getSortField().equals("code")) {
                 sb.append(" ORDER BY s.CODE ");
             }
-            if (searchDto.getSortField().equals("titleVn")) {
+            if (searchDto.getSortField().equals("name")) {
                 sb.append(" ORDER BY s.NAME ");
             }
-            if (searchDto.getSortField().equals("titleEn")) {
-                sb.append(" ORDER BY s.USERNAME ");
+            if (searchDto.getSortField().equals("money")) {
+                sb.append(" ORDER BY s.MONEY ");
             }
             if (searchDto.getSortField().equals("description")) {
                 sb.append(" ORDER BY s.DESCRIPTION ");
@@ -53,7 +52,7 @@ public class serviceConfigRepositoryImpl implements serviceConfigRepositoryCusto
             if (searchDto.getSortField().equals("status")) {
                 sb.append(" ORDER BY s.STATUS ");
             }
-            if (searchDto.getSortField().equals("username")) {
+            if (searchDto.getSortField().equals("userName")) {
                 sb.append(" ORDER BY s.USERNAME ");
             }
             if (searchDto.getSortField().equals("createDate")) {
@@ -93,7 +92,7 @@ public class serviceConfigRepositoryImpl implements serviceConfigRepositoryCusto
     }
 
     @Override
-    public BigInteger countSearch(serviceConfigSearchDto searchDto) {
+    public BigInteger countSearch(ServiceConfigSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(s.PACKAGE_SERVICE_ID) ");
         appendQuery(sb, searchDto);
@@ -101,7 +100,7 @@ public class serviceConfigRepositoryImpl implements serviceConfigRepositoryCusto
         return (BigInteger) query.getSingleResult();
     }
 
-    public Query createQuery(StringBuilder sb, serviceConfigSearchDto searchDto) {
+    public Query createQuery(StringBuilder sb, ServiceConfigSearchDto searchDto) {
         Query query = entityManager.createNativeQuery(sb.toString());
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             query.setParameter("keyword", "%" + searchDto.getKeyword().trim() + "%");
@@ -116,7 +115,7 @@ public class serviceConfigRepositoryImpl implements serviceConfigRepositoryCusto
 
     }
 
-    public void appendQuery(StringBuilder sb, serviceConfigSearchDto searchDto) {
+    public void appendQuery(StringBuilder sb, ServiceConfigSearchDto searchDto) {
         sb.append(" from PACKAGE_SERVICE s WHERE 1 = 1 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (lower(s.CODE) LIKE lower(:keyword) " +
@@ -124,10 +123,10 @@ public class serviceConfigRepositoryImpl implements serviceConfigRepositoryCusto
                     "OR lower(s.USERNAME) LIKE lower(:keyword))");
         }
         if (searchDto.getFillServiceType() != null) {
-            sb.append(" AND h.SERVICE_TYPE_ID =:fillServiceType ");
+            sb.append(" AND s.SERVICE_TYPE_ID =:fillServiceType ");
         }
         if (searchDto.getStatus() != null) {
-            sb.append(" AND h.STATUS =:status ");
+            sb.append(" AND s.STATUS =:status ");
         }
     }
 }

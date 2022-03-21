@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import vn.compedia.website.model.PackageService;
+import vn.compedia.website.dto.BaseSearchDto;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class serviceConfigDto extends PackageService {
-    private Long stt;
+public class ServiceConfigSearchDto extends BaseSearchDto {
+    private Integer status;
+    private Integer fillServiceType;
 }

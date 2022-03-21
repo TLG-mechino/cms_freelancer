@@ -15,7 +15,7 @@
 
                         <div style="margin: 10px 0 0 0">
                             <a href="#" class="profile">
-                                <p:outputLabel value="#{authorizationController.accountDto.email}">
+                                <p:outputLabel value="#{authorizationController.accountDto.fullName}">
                                     <i class="fa fa-caret-down"/>
                                 </p:outputLabel>
                             </a>
@@ -53,12 +53,12 @@
                                         outcome="/mn-hashtag.xhtml" />
 
                             <p:menuitem id="id-2-4" value="Quản lý người dùng"
-                                        outcome="/user/mn-user.xhtml" />
+                                        outcome="/mn-account-user.xhtml"/>
 
                             <p:menuitem id="id-2-5" value="Quản lý giao dịch"
                                         outcome="/mn-transaction.xhtml" />
                         </p:submenu>
-
+                        <p:menuitem id="id-4" value="Giải quyết khiếu nại" outcome="/mn-complain.xhtml"/>
                         <p:submenu id="id-3" label="Cấu hình hệ thống">
                             <p:menuitem id="id-3-1" value="Cấu hình thanh toán"></p:menuitem>
                             <p:menuitem id="id-3-2" value="Cấu hình hệ thống" outcome="/sys-config.xhtml"/>

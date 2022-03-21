@@ -9,7 +9,7 @@ import java.util.List;
 public interface AccountRepositoryCustom {
     boolean checkExistEmail(String email);
 
-    List<AccountDto> search(AccountSearchDto searchDto);
+    List<AccountDto> search(AccountSearchDto searchDto, Integer type);
 
-    BigInteger countSearch(AccountSearchDto searchDto);
+    BigInteger countSearch(AccountSearchDto searchDto, Integer type);
 }

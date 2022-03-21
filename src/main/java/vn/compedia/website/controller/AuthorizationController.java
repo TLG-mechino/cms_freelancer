@@ -60,7 +60,7 @@ public class AuthorizationController implements Serializable {
             return;
         }
         myMenus.add(Constant.DASHBOARD);
-        myMenus.add(Constant.MN_MARKET);
+        myMenus.add(Constant.MN_COMPLAIN);
         myMenus.add(Constant.MN_ACCOUNT);
         myMenus.add(Constant.MN_HASTAG);
         myMenus.add(Constant.SYS_CONFIG);
@@ -107,7 +107,13 @@ public class AuthorizationController implements Serializable {
         }
         accountDto = new AccountDto();
         BeanUtils.copyProperties(account, accountDto);
-        FacesUtil.redirect("/dashboard.xhtml");
+        if (accountDto.getFirstLogin() == DbConstant.FIRST_LOGIN) {
+            FacesUtil.redirect("/cms/change-password.xhtml");
+            account.setFirstLogin(DbConstant.NOT_FIRST_LOGIN);
+            accountRepository.save(account);
+        } else {
+            FacesUtil.redirect("/dashboard.xhtml");
+        }
     }
 
     public Boolean hasLogged() {
@@ -126,10 +132,6 @@ public class AuthorizationController implements Serializable {
     }
 
     public void initPass() {
-        if (!hasLogged()) {
-            FacesUtil.redirect("/login.xhtml");
-            return;
-        }
         accountDto.setOldPassword("");
         accountDto.setNewPassword("");
         accountDto.setRePassword("");
@@ -172,11 +174,28 @@ public class AuthorizationController implements Serializable {
     }
 
     public void changePassword() {
-        if (!isValidate()) {
+        if (StringUtils.isEmpty(accountDto.getOldPassword())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập mật khẩu cũ");
             return;
         }
-
-        String pass = StringUtil.encryptPassword(accountDto.getNewPassword() + accountDto.getSalt());
+        if (StringUtils.isEmpty(accountDto.getNewPassword())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập mật khẩu mới");
+            return;
+        }
+        if (StringUtils.isEmpty(accountDto.getRePassword())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập lại mật khẩu mới");
+            return;
+        }
+        if (!isValidatePassword(accountDto.getNewPassword())) {
+            FacesUtil.addErrorMessage("Mật khẩu phải từ 6 đến 50 ký  bao gồm chữ cái in thường, chữ cái in hoa, số, ký tự đặc biệt");
+            return;
+        }
+        if (accountDto.getOldPassword().equals(accountDto.getNewPassword())) {
+            FacesUtil.addErrorMessage("Mật khẩu mới không được phép trùng với mật khẩu cũ");
+            return;
+        }
+        accountDto.setFirstLogin(DbConstant.NOT_FIRST_LOGIN);
+        String pass = StringUtil.encryptPassword(accountDto.getOldPassword() + accountDto.getSalt());
         if (!pass.equals(accountDto.getPassword())) {
             FacesUtil.addErrorMessage("Mật khẩu cũ không chính xác");
             return;
@@ -193,8 +212,7 @@ public class AuthorizationController implements Serializable {
             accountRepository.save(account);
             initPass();
             checkNotify = true;
-            FacesUtil.redirect("/login.xhtml");
-            logout();
+            FacesUtil.redirect("/dashboard.xhtml");
         } else {
             FacesUtil.addErrorMessage("Mật khẩu mới và nhập lại mật khẩu không trùng nhau");
         }

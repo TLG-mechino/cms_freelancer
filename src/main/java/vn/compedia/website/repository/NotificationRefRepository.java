@@ -13,10 +13,10 @@ import java.util.*;
 @Repository
 public interface NotificationRefRepository extends CrudRepository<NotificationRef,Long> ,NotificationRefRepositoryCustom{
 
-    @Query(value = "select * from notification_ref noti_ref where noti_ref.USERNAME=:userName",nativeQuery = true)
-    Page<NotificationRef> getAllByUserName(@Param("userName") String userName, Pageable pageable);
-
-    @Query(value = "select * from notification_ref noti_ref where noti_ref.NOTIFICATION_REF_ID =:id",nativeQuery = true)
-    NotificationRef getNotificationRefById(@Param("id")Long id);
+//    @Query(value = "select * from notification_ref noti_ref where noti_ref.USERNAME=:userName",nativeQuery = true)
+//    Page<NotificationRef> getAllByUserName(@Param("userName") String userName, Pageable pageable);
+//
+//    @Query(value = "select * from notification_ref noti_ref where noti_ref.NOTIFICATION_REF_ID =:id",nativeQuery = true)
+//    NotificationRef getNotificationRefById(@Param("id")Long id);
 
 }

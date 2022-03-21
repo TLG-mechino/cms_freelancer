@@ -12,16 +12,16 @@ import java.util.List;
 
 @Repository
 public interface JobRepository extends CrudRepository<Job,Long>, JobRepositoryCustom {
-    @Query(value = "select *" +
-            " from job j" +
-            "         inner join (select u.USERNAME" +
-            "                     from user u," +
-            "                          account ac" +
-            "                     where u.USERNAME = ac.USERNAME" +
-            "                       and u.USERNAME = :userName) result1 on j.USERNAME = result1.USERNAME",nativeQuery = true)
-    Page<Job> getAllByUserName(@Param("userName")String userName, Pageable pageable);
+//    @Query(value = "select *" +
+//            " from job j" +
+//            "         inner join (select u.USERNAME" +
+//            "                     from user u," +
+//            "                          account ac" +
+//            "                     where u.USERNAME = ac.USERNAME" +
+//            "                       and u.USERNAME = :userName) result1 on j.USERNAME = result1.USERNAME",nativeQuery = true)
+//    Page<Job> getAllByUserName(@Param("userName") String userName, Pageable pageable);
 
-    @Query(value = "select * from job j where j.JOB_ID = :jobId",nativeQuery = true)
-    Job getJobByUserNameAndJobId(@Param("jobId")Long jobId);
+//    @Query(value = "select * from job j where j.JOB_ID = :jobId",nativeQuery = true)
+//    Job getJobByUserNameAndJobId(@Param("jobId")Long jobId);
 
 }

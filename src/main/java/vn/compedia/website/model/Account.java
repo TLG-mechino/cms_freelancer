@@ -28,6 +28,9 @@ public class Account extends BaseModel {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "first_login")
+    private int firstLogin;
+
     @Column(name = "salt")
     private String salt;
 
@@ -39,6 +42,9 @@ public class Account extends BaseModel {
 
     @Column(name = "phone")
     private String phone;
+
+    @Column(name = "type")
+    private int type;
 
     public Account(Long accountId, String email, String username, String password, String salt, Integer status) {
         this.accountId = accountId;

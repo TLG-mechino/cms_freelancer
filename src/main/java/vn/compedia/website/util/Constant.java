@@ -23,9 +23,14 @@ public class Constant {
     public static final int NOT_LOGIN_ID = 0;
     public static final int LOGIN_ID = 1;
 
+    // Regex
+    public static String EMAIL_PATTERN = "^(?=.{1,64}@)[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*@"
+            + "[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    public static String PHONE_PATTERN = "(84|0[3|5|7|8|9])+([0-9]{8})\\b";
+
     // Id screen
     public static final String DASHBOARD = "dashboard";
-    public static final String MN_MARKET = "mn-market";
+    public static final String MN_COMPLAIN = "mn-complain";
     public static final String MN_ACCOUNT = "mn-account";
     public static final String MN_HASHTAG = "mn-hashtag";
     public static final String MN_USER = "mn-user";

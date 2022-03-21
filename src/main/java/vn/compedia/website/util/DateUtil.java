@@ -1,6 +1,7 @@
 package vn.compedia.website.util;
 
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
@@ -271,6 +272,18 @@ public class DateUtil {
             return null;
         }
     }
+
+
+    public static Timestamp convertToTimestampFormat(String dateTime, String format) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+            Date parsedDate = dateFormat.parse(dateTime);
+            return new Timestamp(parsedDate.getTime());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 
     public static Long betweenDate(Date fromDate, Date toDate) {
         LocalDate fDate = toLocalDate(fromDate);

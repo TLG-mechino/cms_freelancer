@@ -9,7 +9,7 @@
         <f:event type="preRenderView" listener="#{mnAccountController.initData()}"/>
     </f:metadata>
 
-    <ui:define name="title">Quản lý tài khoản</ui:define>
+    <ui:define name="title">Quản lý tài khoản quản trị</ui:define>
 
     <ui:define name="content">
         <p:dialog widgetVar="inforDialog" width="600" header="#{mnAccountController.titleDialog} thông tin tài khoản"
@@ -19,15 +19,21 @@
                     <div class="ui-fluid">
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
                                      layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
+                            <p:outputLabel value="Họ và tên:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập họ và tên" maxlength="200"
+                                         onchange="this.value = this.value.trim()"
+                                         value="#{mnAccountController.accountDto.fullName}"/>
+
                             <p:outputLabel value="Địa chỉ email:" styleClass="requireLabel"/>
                             <p:inputText id="email" onchange="this.value = this.value.trim()"
                                          onkeyup="this.value=this.value.replace(' ', '').toLowerCase()"
                                          placeholder="Nhập địa chỉ email"
-                                         maxlength="50" value="#{mnAccountController.accountDto.email}"
-                                         validatorMessage="Địa chỉ email không đúng định dạng">
-                                <f:validateRegex
-                                        pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
-                            </p:inputText>
+                                         maxlength="50" value="#{mnAccountController.accountDto.email}"/>
+
+                            <p:outputLabel value="Số điện thoại:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập họ và tên" maxlength="200"
+                                         onchange="this.value = this.value.trim()"
+                                         value="#{mnAccountController.accountDto.phone}" />
 
                             <p:outputLabel value="Tên đăng nhập:" styleClass="requireLabel"/>
                             <p:inputText placeholder="Nhập tên đăng nhập" maxlength="200"
@@ -60,7 +66,7 @@
 
         <h:form styleClass="ui-g-12" id="searchForm" prependId="false">
             <p:outputPanel>
-                <p:link styleClass="title-color-left ui-sm-12">Quản lý tài khoản</p:link>
+                <p:link styleClass="title-color-left ui-sm-12">Quản lý tài khoản quản trị</p:link>
 
                 <div style="float: right" class="ui-sm-12">
                     <p:commandButton value="Thêm mới" styleClass="border-btn" icon="fa fa-plus"
@@ -121,12 +127,20 @@
                     <p:outputLabel value="#{rowIndex + 1}"/>
                 </p:column>
 
-                <p:column headerText="Địa chỉ email" style="text-align: left" sortBy="#{resultDto.email}">
-                    <p:outputLabel value="#{resultDto.email}"/>
+                <p:column headerText="Họ và tên" style="text-align: left" sortBy="#{resultDto.fullName}">
+                    <p:outputLabel value="#{resultDto.fullName}"/>
                 </p:column>
 
                 <p:column headerText="Tên đăng nhập" style="text-align: left" sortBy="#{resultDto.username}">
                     <p:outputLabel value="#{resultDto.username}"/>
+                </p:column>
+
+                <p:column headerText="Địa chỉ email" style="text-align: left" sortBy="#{resultDto.email}">
+                    <p:outputLabel value="#{resultDto.email}"/>
+                </p:column>
+
+                <p:column headerText="Số điện thoại" style="text-align: left" sortBy="#{resultDto.phone}">
+                    <p:outputLabel value="#{resultDto.phone}"/>
                 </p:column>
 
                 <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">

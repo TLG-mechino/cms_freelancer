@@ -18,10 +18,7 @@ import vn.compedia.website.dto.AccountDto;
 import vn.compedia.website.dto.AccountSearchDto;
 import vn.compedia.website.model.Account;
 import vn.compedia.website.repository.AccountRepository;
-import vn.compedia.website.util.Constant;
-import vn.compedia.website.util.EmailUtil;
-import vn.compedia.website.util.FacesUtil;
-import vn.compedia.website.util.StringUtil;
+import vn.compedia.website.util.*;
 
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -29,6 +26,7 @@ import javax.inject.Named;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Setter
 @Getter
@@ -44,11 +42,11 @@ public class MnAccountController extends BaseController {
     @Autowired
     private AccountRepository accountRepository;
 
-    private Account account;
     private String titleDialog;
     private AccountDto accountDto;
     private AccountSearchDto searchDto;
     private LazyDataModel<AccountDto> lazyDataModel;
+    private LazyDataModel<AccountDto> lazy;
 
     public void initData() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -58,7 +56,6 @@ public class MnAccountController extends BaseController {
     }
 
     public void resetAll() {
-        account = new Account();
         accountDto = new AccountDto();
         searchDto = new AccountSearchDto();
         searchDto.setAccountId(authorizationController.getAccountDto().getAccountId());
@@ -72,9 +69,28 @@ public class MnAccountController extends BaseController {
     }
 
     public boolean validate() {
+        if (StringUtils.isBlank(accountDto.getFullName())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập họ và tên");
+            return false;
+        }
 
         if (StringUtils.isBlank(accountDto.getEmail())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập địa chỉ email");
+            return false;
+        }
+
+        if (!accountDto.getEmail().matches(Constant.EMAIL_PATTERN)) {
+            FacesUtil.addErrorMessage("Địa chỉ email không đúng định dạng");
+            return false;
+        }
+
+        if (StringUtils.isBlank(accountDto.getPhone())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập số điện thoại");
+            return false;
+        }
+
+        if (!accountDto.getPhone().matches(Constant.PHONE_PATTERN)) {
+            FacesUtil.addErrorMessage("Số điện thoại không đúng định dạng");
             return false;
         }
 
@@ -82,30 +98,46 @@ public class MnAccountController extends BaseController {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập tên đăng nhập");
             return false;
         }
+
         if (accountDto.getAccountId() == null) {
-            List<Account> checkUserName = accountRepository.findAccountByUsername(accountDto.getUsername());
-            if (CollectionUtils.isNotEmpty(checkUserName)) {
+            Account checkUserName = accountRepository.findAccountByUsername(accountDto.getUsername());
+            if (checkUserName != null) {
                 FacesUtil.addErrorMessage("Tên đăng nhập đã tồn tại");
+                FacesUtil.updateView("growl");
                 return false;
             }
-            List<Account> checkEmail = accountRepository.findAccountByEmail(accountDto.getEmail());
-            if (CollectionUtils.isNotEmpty(checkEmail)) {
+            Account checkEmail = accountRepository.findAccountByEmail(accountDto.getEmail());
+            if (checkEmail != null) {
                 FacesUtil.addErrorMessage("Địa chỉ email đã tồn tại");
+                FacesUtil.updateView("growl");
+                return false;
+            }
+            Account checkPhone = accountRepository.findAccountByEmail(accountDto.getEmail());
+            if (checkPhone != null) {
+                FacesUtil.addErrorMessage("Số điện thoại đã tồn tại");
+                FacesUtil.updateView("growl");
                 return false;
             }
         } else {
-            List<Account> checkUserName = accountRepository.findAccountByUsernameExists(accountDto.getAccountId(), accountDto.getUsername());
-            if (CollectionUtils.isNotEmpty(checkUserName)) {
+            Account checkUserName = accountRepository.findAccountByUsernameExists(accountDto.getAccountId(), accountDto.getUsername());
+            if (checkUserName != null) {
                 FacesUtil.addErrorMessage("Tên đăng nhập đã tồn tại");
+                FacesUtil.updateView("growl");
                 return false;
             }
-            List<Account> checkEmail = accountRepository.findAccountByEmailExists(accountDto.getAccountId(), accountDto.getEmail());
-            if (CollectionUtils.isNotEmpty(checkEmail)) {
+            Account checkEmail = accountRepository.findAccountByEmailExists(accountDto.getAccountId(), accountDto.getEmail());
+            if (checkEmail != null) {
                 FacesUtil.addErrorMessage("Địa chỉ email đã tồn tại");
+                FacesUtil.updateView("growl");
+                return false;
+            }
+            Account checkPhone = accountRepository.findAccountByPhoneExists(accountDto.getAccountId(), accountDto.getPhone());
+            if (checkPhone != null) {
+                FacesUtil.addErrorMessage("Số điện thoại đã tồn tại");
+                FacesUtil.updateView("growl");
                 return false;
             }
         }
-
         return true;
     }
 
@@ -118,10 +150,13 @@ public class MnAccountController extends BaseController {
             accountDto.setSalt(StringUtil.generateSalt());
             accountDto.setPassword(StringUtil.encryptPassword(password + accountDto.getSalt()));
             accountDto.setCreateDate(new Date());
-//            accountDto.setCreateBy(authorizationController.getAccountDto().getUsername());
+            accountDto.setCreateBy(authorizationController.getAccountDto().getUsername());
+            accountDto.setType(DbConstant.ACCOUNT_CMS);
+        } else {
+            accountDto.setUpdateDate(new Date());
+            accountDto.setUpdateBy(authorizationController.getAccountDto().getUsername());
         }
-        accountDto.setUpdateDate(new Date());
-//        accountDto.setUpdateBy(authorizationController.getAccountDto().getUsername());
+        Account account = new Account();
         BeanUtils.copyProperties(accountDto, account);
         accountRepository.save(account);
 
@@ -152,7 +187,7 @@ public class MnAccountController extends BaseController {
                 }
 
                 searchDto.setSortOrder(sortOption);
-                return accountRepository.search(searchDto);
+                return accountRepository.search(searchDto, DbConstant.ACCOUNT_CMS);
             }
 
             @Override
@@ -167,17 +202,22 @@ public class MnAccountController extends BaseController {
                 return null;
             }
         };
-        int count = accountRepository.countSearch(searchDto).intValue();
+        int count = accountRepository.countSearch(searchDto, DbConstant.ACCOUNT_CMS).intValue();
         lazyDataModel.setRowCount(count);
         FacesUtil.updateView("searchForm");
     }
 
-    public void onDelete(AccountDto resultDto) {
+    public void changeStatus(AccountDto resultDto) {
         Account account = accountRepository.findById(resultDto.getAccountId()).orElse(null);
         if (account == null) {
             return;
         }
-        accountRepository.delete(account);
+        if (resultDto.getStatus() == DbConstant.ACTIVE_STATUS) {
+            account.setStatus(DbConstant.INACTIVE_STATUS);
+        } else {
+            account.setStatus(DbConstant.ACTIVE_STATUS);
+        }
+        accountRepository.save(account);
         FacesUtil.addSuccessMessage("Xóa thành công");
         FacesUtil.updateView("growl");
         onSearch();

@@ -6,8 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.Instant;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "package_service")
@@ -15,40 +14,44 @@ import java.util.Date;
 @AllArgsConstructor
 @Setter
 @Getter
-public class PackageService{
+public class PackageService {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PACKAGE_SERVICE_ID", nullable = false)
-    private Long serviceId;
+    @Column(name = "PACKAGE_SERVICE_ID")
+    private Long packageServiceId;
 
-    @Column(name = "NAME", length = 100)
+    @Column(name = "SERVICE_TYPE_ID")
+    private Integer serviceTypeId;
+
+    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "CODE", length = 20)
+    @Column(name = "CODE")
     private String code;
 
     @Column(name = "MONEY")
     private Double money;
 
-    @Lob
     @Column(name = "DESCRIPTION")
     private String description;
 
     @Column(name = "STATUS")
     private Integer status;
 
-    @Column(name = "USERNAME", length = 20)
-    private String username;
-
-    @Column(name = "SERVICE_TYPE_ID")
-    private Integer serviceTypeId;
+    @Column(name = "USERNAME")
+    private String userName;
 
     @Column(name = "CREATE_DATE")
-    private Date createDate;
+    private Timestamp createDate;
+
+    @Column(name = "UPDATE_DATE")
+    private Timestamp updateDate;
 
     @Column(name = "UPDATE_BY")
     private String updateBy;
 
-    @Column(name = "UPDATE_DATE")
-    private Date updateDate;
+    @Column(name = "EXPIRED_TIME")
+    private Integer expiredTime;
+
 }

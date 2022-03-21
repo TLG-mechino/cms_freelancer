@@ -10,4 +10,12 @@ public class DbConstant {
     // Default role
     public static final String DEFAULT_ROLE = "Admin";
 
+    // First login
+    public static final int FIRST_LOGIN = 1;
+    public static final int NOT_FIRST_LOGIN = 2;
+
+    // Type Account
+    public static final int ACCOUNT_CMS = 2;
+    public static final int ACCOUNT_USER = 1;
+
 }

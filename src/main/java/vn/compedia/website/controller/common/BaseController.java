@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import vn.compedia.website.controller.AuthorizationController;
 import vn.compedia.website.model.Account;
 import vn.compedia.website.repository.AccountRepository;
+import vn.compedia.website.util.DbConstant;
 import vn.compedia.website.util.FacesUtil;
 import vn.compedia.website.util.FileUtil;
 
@@ -37,6 +38,10 @@ public abstract class BaseController implements Serializable {
         if (!authorizationController.hasRole(getMenuId())) {
             FacesUtil.redirect("/errors/access.xhtml");
         }
+//
+//        if (authorizationController.getAccountDto().getFirstLogin() != DbConstant.NOT_FIRST_LOGIN) {
+//            FacesUtil.redirect("/login.xhtml");
+//        }
     }
 
     public StreamedContent getFileDownload(String filePath) {

@@ -28,7 +28,7 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
     }
 
     @Override
-    public List<AccountDto> search(AccountSearchDto searchDto) {
+    public List<AccountDto> search(AccountSearchDto searchDto, Integer type) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT a.ACCOUNT_ID, " +
                 "       a.USERNAME, " +
@@ -39,12 +39,14 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
                 "       a.CREATE_DATE, " +
                 "       a.CREATE_BY, " +
                 "       a.UPDATE_DATE, " +
-                "       a.UPDATE_BY ");
-        appendQuery(sb, searchDto);
+                "       a.UPDATE_BY, " +
+                "       a.FULL_NAME,  " +
+                "       a.PHONE");
+        appendQuery(sb, searchDto, type);
 
         if (searchDto.getSortField() != null) {
             if (searchDto.getSortField().equals("username")) {
-                sb.append(" ORDER BY a.USER_NAME ");
+                sb.append(" ORDER BY a.USERNAME ");
             }
             if (searchDto.getSortField().equals("email")) {
                 sb.append(" ORDER BY a.EMAIL ");
@@ -52,12 +54,18 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
             if (searchDto.getSortField().equals("status")) {
                 sb.append(" ORDER BY a.STATUS ");
             }
+            if (searchDto.getSortField().equals("phone")) {
+                sb.append(" ORDER BY a.PHONE ");
+            }
+            if (searchDto.getSortField().equals("fullName")) {
+                sb.append(" ORDER BY a.FULL_NAME ");
+            }
             sb.append(searchDto.getSortOrder());
         } else {
             sb.append(" ORDER BY a.ACCOUNT_ID DESC ");
         }
 
-        Query query = createQuery(sb, searchDto);
+        Query query = createQuery(sb, searchDto, type);
         if (searchDto.getPageSize() > 0) {
             query.setFirstResult(searchDto.getPageIndex());
             query.setMaxResults(searchDto.getPageSize());
@@ -79,39 +87,47 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
             accountDto.setCreateBy(ValueUtil.getStringByObject(obj[7]));
             accountDto.setUpdateDate(ValueUtil.getDateByObject(obj[8]));
             accountDto.setUpdateBy(ValueUtil.getStringByObject(obj[9]));
+            accountDto.setFullName(ValueUtil.getStringByObject(obj[10]));
+            accountDto.setPhone(ValueUtil.getStringByObject(obj[11]));
             list.add(accountDto);
         }
         return list;
     }
 
     @Override
-    public BigInteger countSearch(AccountSearchDto searchDto) {
+    public BigInteger countSearch(AccountSearchDto searchDto, Integer type) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(a.ACCOUNT_ID) ");
-        appendQuery(sb, searchDto);
-        Query query = createQuery(sb, searchDto);
+        appendQuery(sb, searchDto, type);
+        Query query = createQuery(sb, searchDto, type);
         return (BigInteger) query.getSingleResult();
     }
 
-    public Query createQuery(StringBuilder sb, AccountSearchDto searchDto) {
+    public Query createQuery(StringBuilder sb, AccountSearchDto searchDto, Integer type) {
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("accountId", searchDto.getAccountId());
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
-            query.setParameter("keyword", "%" + searchDto.getKeyword().trim() + "%");
+            query.setParameter("keyword", "%" + searchDto.getKeyword().trim().toLowerCase() + "%");
         }
         if (searchDto.getStatus() != null) {
             query.setParameter("status", searchDto.getStatus());
         }
+        if (null != type) {
+            query.setParameter("type", type);
+        }
         return query;
     }
 
-    public void appendQuery(StringBuilder sb, AccountSearchDto searchDto) {
+    public void appendQuery(StringBuilder sb, AccountSearchDto searchDto, Integer type) {
         sb.append(" FROM ACCOUNT a where a.ACCOUNT_ID <> :accountId ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
-            sb.append(" AND (lower(a.USER_NAME) LIKE lower(:keyword) OR lower(a.EMAIL) LIKE lower(:keyword)) ");
+            sb.append(" AND (lower(a.USERNAME) LIKE :keyword OR lower(a.FULL_NAME) LIKE :keyword or lower(a.PHONE) LIKE :keyword OR lower(a.EMAIL) LIKE :keyword) ");
         }
         if (searchDto.getStatus() != null) {
             sb.append(" AND a.STATUS =:status ");
+        }
+        if (null != type) {
+            sb.append(" AND a.TYPE = :type");
         }
     }
 }

@@ -1,0 +1,134 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/template.xhtml">
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{mnComplainController.initData()}"/>
+    </f:metadata>
+
+    <ui:define name="title">Quản lý khiếu nại</ui:define>
+
+    <ui:define name="content">
+        <h:form styleClass="ui-g-12" id="searchForm" prependId="false">
+            <p:outputPanel>
+                <p:link styleClass="title-color-left ui-sm-12">Quản lý khiếu nại</p:link>
+            </p:outputPanel>
+
+            <hr class="hr-class"/>
+
+            <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
+                         columnClasses="ui-grid-col-11 ui-no-margin-padding margin-right-10, ui-grid-col-1 ui-no-margin-padding">
+                <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
+                    <div class="ui-input-icon-left" style="width: 100%; display: flex;">
+                        <i class="fa fa-search"/>
+                        <p:inputText placeholder="Nhập tiêu đề, nội dung, người khiếu nại" style="width: 97%"
+                                     onblur="this.value = this.value.trim()" maxlength="100"
+                                     onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
+                                     value="#{mnComplainController.searchDto.keyword}"
+                                     styleClass="border-input" onchange="this.value = this.value.trim()">
+                            <p:ajax event="change" update="searchForm"
+                                    listener="#{mnComplainController.onSearch()}"/>
+                        </p:inputText>
+                    </div>
+                </p:outputPanel>
+
+                <p:commandButton id="basic" value="Bộ lọc" type="button" iconPos="right" icon="fa fa-caret-down"
+                                 styleClass="filter-search ui-sm-12"/>
+
+                <p:overlayPanel for="basic" styleClass="filter-panel">
+                    <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
+                    <p:selectOneMenu styleClass="filter-item" value="#{mnComplainController.searchDto.status}">
+                        <f:selectItem itemLabel="Tất cả" itemValue=""/>
+                        <f:selectItem itemLabel="Đã xử lý" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
+                        <f:selectItem itemLabel="Chưa xử lý" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Loại khiếu nại" styleClass="filter-item-label"/>
+                    <p:selectOneMenu styleClass="filter-item" value="#{mnComplainController.searchDto.complainType}">
+                        <f:selectItem itemLabel="Tất cả" itemValue=""/>
+                        <f:selectItems value="#{mnComplainController.complainTypes}" itemValue="#{complainType.complainId}" itemLabel="#{complainType.name}" var="complainType" />
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Bỏ lọc" update="searchForm"
+                                     icon="fa fa-refresh" styleClass="filter-btn"
+                                     actionListener="#{mnComplainController.resetAll()}"/>
+
+                    <p:commandButton value="Lọc" update="tblSearchResult"
+                                     icon="fa fa-search" styleClass="margin-right-10 filter-btn" id="search"
+                                     actionListener="#{mnComplainController.onSearch()}"/>
+                </p:overlayPanel>
+            </p:panelGrid>
+
+            <p:dataTable id="tblSearchResult" styleClass="margin-top-15 search-panel" tableStyle="table-layout: auto;"
+                         widgetVar="dataTable" resizableColumns="true" paginator="true" rows="20"
+                         lazy="true" pageLinks="5" var="resultDto" paginatorPosition="bottom"
+                         paginatorAlwaysVisible="true" rowsPerPageTemplate="20,50,100"
+                         value="#{mnComplainController.lazyDataModel}" rowKey="#{resultDto.complainId}"
+                         paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                         emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
+                         currentPageReportTemplate="Tổng số bản ghi: #{mnComplainController.lazyDataModel.rowCount}">
+
+                <p:column headerText="STT" width="30" style="text-align: center">
+                    <p:outputLabel value="#{rowIndex + 1}"/>
+                </p:column>
+
+                <p:column headerText="Tiêu đề" style="text-align: left" sortBy="#{resultDto.title}">
+                    <p:outputLabel value="#{resultDto.title}"/>
+                </p:column>
+
+                <p:column headerText="Nội dung" style="text-align: left" sortBy="#{resultDto.content}">
+                    <p:outputLabel value="#{resultDto.content}"/>
+                </p:column>
+
+                <p:column headerText="Người khiếu nại" style="text-align: left" sortBy="#{resultDto.fullName}">
+                    <p:outputLabel value="#{resultDto.fullName}"/>
+                </p:column>
+
+                <p:column headerText="Số điện thoại" style="text-align: left" sortBy="#{resultDto.phone}">
+                    <p:outputLabel value="#{resultDto.phone}"/>
+                </p:column>
+
+                <p:column headerText="Loại khiếu nại" style="text-align: left" sortBy="#{resultDto.complainTypeName}">
+                    <p:outputLabel value="#{resultDto.complainTypeName}"/>
+                </p:column>
+
+                <p:column headerText="Đối tượng khiếu nại" style="text-align: left" sortBy="#{resultDto.objectName}">
+                    <p:outputLabel value="#{resultDto.objectName}"/>
+                </p:column>
+
+                <p:column headerText="Ghi chú" style="text-align: left" sortBy="#{resultDto.note}">
+                    <p:outputLabel value="#{resultDto.note}"/>
+                </p:column>
+
+                <p:column headerText="Thời gian khiếu nại" style="text-align: left" sortBy="#{resultDto.createDate}">
+                    <p:outputLabel value="#{resultDto.createDate}"/>
+                </p:column>
+
+                <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
+                    <p:outputLabel value="Đã xử lý" rendered="#{resultDto.status eq DbConstant.ACTIVE_STATUS}"/>
+                    <p:outputLabel value="Chưa xử lý"
+                                   rendered="#{resultDto.status eq DbConstant.INACTIVE_STATUS}"/>
+                </p:column>
+
+                <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">
+                    <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
+                        <p:menuitem value="Xóa thông tin" icon="fa fa-remove" process="@this"
+                                    update="tblSearchResult growl"
+                                    actionListener="#{mnComplainController.onDelete(resultDto)}">
+                            <p:confirm header="Xác nhận thông tin" escape="false"
+                                       message="Bạn có chắc chắn muốn xóa tài khoản?"
+                                       icon="fa fa-question-circle"/>
+                        </p:menuitem>
+
+                        <p:menuitem value="Xóa thông tin" icon="fa fa-edit" process="@this"
+                                    update="tblSearchResult growl">
+                        </p:menuitem>
+                    </p:menuButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

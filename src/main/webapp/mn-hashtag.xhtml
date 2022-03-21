@@ -45,7 +45,7 @@
                                          value="#{mnHashtagController.hashtagDto.descriptionEn}"/>
 
                             <p:outputLabel value="Trạng thái:" styleClass="requireLabel"/>
-                            <p:selectOneMenu value="#{mnHashtagController.hashtag.status}">
+                            <p:selectOneMenu value="#{mnHashtagController.hashtagDto.status}">
                                 <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
                                 <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
                             </p:selectOneMenu>
@@ -160,9 +160,9 @@
                 </p:column>
 
                 <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
-                    <p:outputLabel value="Hoạt động" rendered="#{resultDto.status eq DbConstant.ACTIVE_STATUS}"/>
+                    <p:outputLabel value="Hoạt động" rendered="#{resultDto.status eq 1}"/>
                     <p:outputLabel value="Không hoạt động"
-                                   rendered="#{resultDto.status eq DbConstant.INACTIVE_STATUS}"/>
+                                   rendered="#{resultDto.status eq 0}"/>
                 </p:column>
 
                 <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">

@@ -9,55 +9,58 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
+@Getter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_USER")
-    private Long id;
-    @Column(name = "username")
-    private String username;
+    @Column(name = "USERNAME", nullable = false, length = 20)
+    private String id;
 
-    @Column(name = "image_path")
+    @Column(name = "IMAGE_PATH", length = 200)
     private String imagePath;
 
-    @Column(name = "address")
+    @Column(name = "FULL_NAME", nullable = false, length = 50)
+    private String fullName;
+
+    @Column(name = "PHONE", nullable = false)
+    private Integer phone;
+
+    @Column(name = "ADDRESS", length = 100)
     private String address;
 
-    @Column(name = "total_score")
+    @Column(name = "TOTAL_SCORE")
     private Integer totalScore;
 
-    @Column(name = "money_wallet")
-    private Double moneyWallet;
+    @Column(name = "MONEY_WALLET")
+    private Integer moneyWallet;
 
-    @Column(name = "province_id")
+    @Column(name = "PROVINCE_ID")
     private Integer provinceId;
 
-    @Column(name = "district_id")
+    @Column(name = "DISTRICT_ID")
     private Integer districtId;
 
-    @Column(name = "commune_id")
+    @Column(name = "COMMUNE_ID")
     private Integer communeId;
 
-    @Column(name = "experience_amount")
+    @Column(name = "EXPERIENCE_AMOUNT")
     private Integer experienceAmount;
 
-    @Column(name = "rent_cost")
-    private Double rentCost;
+    @Column(name = "RENT_COST")
+    private Integer rentCost;
 
-    @Column(name = "working_hours")
+    @Column(name = "WORKING_HOURS")
     private Integer workingHours;
 
-    @Column(name = "time_type_id")
-    private Integer timeTypeId;
+    @Column(name = "TIME_TYPE")
+    private Integer timeType;
 
-    @Column(name = "facebook_link")
+    @Column(name = "FACEBOOK_LINK", length = 200)
     private String facebookLink;
 
-    @Column(name = "type_login")
+    @Column(name = "TYPE_LOGIN", length = 20)
     private String typeLogin;
-
 }

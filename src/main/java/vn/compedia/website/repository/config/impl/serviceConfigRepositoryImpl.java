@@ -1,0 +1,133 @@
+package vn.compedia.website.repository.config.impl;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Repository;
+import vn.compedia.website.dto.config.serviceConfigDto;
+import vn.compedia.website.dto.config.serviceConfigSearchDto;
+import vn.compedia.website.model.PackageService;
+import vn.compedia.website.repository.config.serviceConfigRepositoryCustom;
+import vn.compedia.website.util.ValueUtil;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Repository
+public class serviceConfigRepositoryImpl implements serviceConfigRepositoryCustom {
+    @PersistenceContext
+    private EntityManager entityManager;
+
+
+    @Override
+    public List<PackageService> search(serviceConfigSearchDto searchDto) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" select s.PACKAGE_SERVICE_ID, " +
+                "       s.CODE, " +
+                "       s.NAME, " +
+                "       s.MONEY, " +
+                "       s.DESCRIPTION, " +
+                "       s.STATUS, " +
+                "       s.USERNAME, " +
+                "       s.CREATE_DATE, " +
+                "       s.UPDATE_DATE, " +
+                "       s.UPDATE_BY ");
+        appendQuery(sb, searchDto);
+
+        if (searchDto.getSortField() != null) {
+            if (searchDto.getSortField().equals("code")) {
+                sb.append(" ORDER BY s.CODE ");
+            }
+            if (searchDto.getSortField().equals("titleVn")) {
+                sb.append(" ORDER BY s.NAME ");
+            }
+            if (searchDto.getSortField().equals("titleEn")) {
+                sb.append(" ORDER BY s.USERNAME ");
+            }
+            if (searchDto.getSortField().equals("description")) {
+                sb.append(" ORDER BY s.DESCRIPTION ");
+            }
+            if (searchDto.getSortField().equals("status")) {
+                sb.append(" ORDER BY s.STATUS ");
+            }
+            if (searchDto.getSortField().equals("username")) {
+                sb.append(" ORDER BY s.USERNAME ");
+            }
+            if (searchDto.getSortField().equals("createDate")) {
+                sb.append(" ORDER BY s.CREATE_DATE ");
+            }
+
+            sb.append(searchDto.getSortOrder());
+        } else {
+            sb.append(" ORDER BY s.PACKAGE_SERVICE_ID DESC ");
+        }
+
+        Query query = createQuery(sb, searchDto);
+        if (searchDto.getPageSize() > 0) {
+            query.setFirstResult(searchDto.getPageIndex());
+            query.setMaxResults(searchDto.getPageSize());
+        } else {
+            query.setFirstResult(0);
+            query.setMaxResults(Integer.MAX_VALUE);
+        }
+        List<Object[]> resultList = query.getResultList();
+        List<PackageService> list = new ArrayList<>();
+        for (Object[] obj : resultList) {
+            PackageService dto = new PackageService();
+            dto.setServiceId(ValueUtil.getLongByObject(obj[0]));
+            dto.setCode(ValueUtil.getStringByObject(obj[1]));
+            dto.setName(ValueUtil.getStringByObject(obj[2]));
+            dto.setMoney(ValueUtil.getDoubleByObject(obj[3]));
+            dto.setDescription(ValueUtil.getStringByObject(obj[4]));
+            dto.setStatus(ValueUtil.getIntegerByObject(obj[5]));
+            dto.setUsername(ValueUtil.getStringByObject(obj[6]));
+            dto.setCreateDate(ValueUtil.getDateByObject(obj[7]));
+            dto.setUpdateDate(ValueUtil.getDateByObject(obj[8]));
+            dto.setUpdateBy(ValueUtil.getStringByObject(obj[9]));
+            list.add(dto);
+        }
+        return list;
+    }
+
+    @Override
+    public BigInteger countSearch(serviceConfigSearchDto searchDto) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT COUNT(s.PACKAGE_SERVICE_ID) ");
+        appendQuery(sb, searchDto);
+        Query query = createQuery(sb, searchDto);
+        return (BigInteger) query.getSingleResult();
+    }
+
+    public Query createQuery(StringBuilder sb, serviceConfigSearchDto searchDto) {
+        Query query = entityManager.createNativeQuery(sb.toString());
+        if (StringUtils.isNotBlank(searchDto.getKeyword())) {
+            query.setParameter("keyword", "%" + searchDto.getKeyword().trim() + "%");
+        }
+        if(searchDto.getFillServiceType() != null){
+            query.setParameter("fillServiceType", searchDto.getFillServiceType());
+        }
+        if (searchDto.getStatus() != null) {
+            query.setParameter("status", searchDto.getStatus());
+        }
+        return query;
+
+    }
+
+    public void appendQuery(StringBuilder sb, serviceConfigSearchDto searchDto) {
+        sb.append(" from PACKAGE_SERVICE s WHERE 1 = 1 ");
+        if (StringUtils.isNotBlank(searchDto.getKeyword())) {
+            sb.append(" AND (lower(s.CODE) LIKE lower(:keyword) " +
+                    "OR lower(s.NAME) LIKE lower(:keyword) " +
+                    "OR lower(s.USERNAME) LIKE lower(:keyword))");
+        }
+        if (searchDto.getFillServiceType() != null) {
+            sb.append(" AND h.SERVICE_TYPE_ID =:fillServiceType ");
+        }
+        if (searchDto.getStatus() != null) {
+            sb.append(" AND h.STATUS =:status ");
+        }
+    }
+}

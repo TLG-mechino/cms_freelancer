@@ -1,7 +1,9 @@
 package vn.compedia.website.controller;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +32,8 @@ import java.util.Map;
 
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Named
 @Scope(value = "session")
 public class MnHashtagController extends BaseController {
@@ -104,38 +108,38 @@ public class MnHashtagController extends BaseController {
     }
 
     public boolean validateDate() {
-        if (StringUtils.isBlank(hashtag.getCode().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập mã thị trường");
+        if (StringUtils.isBlank(hashtagDto.getCode().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập mã hashtag");
             return false;
         }
 
         long idCheck;
-        if (null == hashtag.getHashtagId()) {
+        if (null == hashtagDto.getHashtagId()) {
             idCheck = 0L;
         } else {
-            idCheck = hashtag.getHashtagId();
+            idCheck = hashtagDto.getHashtagId();
         }
 
-        List<Hashtag> checkCodeExists = hashtagRepository.findByCodeExists(hashtag.getCode(), idCheck);
+        List<Hashtag> checkCodeExists = hashtagRepository.findByCodeExists(hashtagDto.getCode(), idCheck);
         if (CollectionUtils.isNotEmpty(checkCodeExists)) {
             FacesUtil.addErrorMessage("Mã hashtag đã tồn tại");
             return false;
         }
 
-        if (StringUtils.isBlank(hashtag.getTitleEn().trim())) {
+        if (StringUtils.isBlank(hashtagDto.getTitleEn().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề tiếng anh ");
             return false;
         }
 
-        if (StringUtils.isBlank(hashtag.getTitleVn().trim())) {
+        if (StringUtils.isBlank(hashtagDto.getTitleVn().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề tiếng việt ");
             return false;
         }
-        if (StringUtils.isBlank(hashtag.getDescriptionVn().trim())) {
+        if (StringUtils.isBlank(hashtagDto.getDescriptionVn().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập mô tả tiếng việt ");
             return false;
         }
-        if (StringUtils.isBlank(hashtag.getDescriptionEn().trim())) {
+        if (StringUtils.isBlank(hashtagDto.getDescriptionEn().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập mô tả tiếng anh ");
             return false;
         }
@@ -147,13 +151,13 @@ public class MnHashtagController extends BaseController {
         if (!validateDate()) {
             return;
         }
-        if (hashtag.getHashtagId() == null) {
-            hashtag.setCreateDate(new Date());
-            hashtag.setCreateBy(authorizationController.getAccountDto().getUsername());
+        if (hashtagDto.getHashtagId() == null) {
+            hashtagDto.setCreateDate(new Date());
+            hashtagDto.setCreateBy(authorizationController.getAccountDto().getUsername());
         }
-        hashtag.setUpdateDate(new Date());
-        hashtag.setUpdateBy(authorizationController.getAccountDto().getUsername());
-
+        hashtagDto.setUpdateDate(new Date());
+        hashtagDto.setUpdateBy(authorizationController.getAccountDto().getUsername());
+        BeanUtils.copyProperties(hashtagDto, hashtag);
         hashtagRepository.save(hashtag);
         FacesUtil.addSuccessMessage("Lưu thành công");
         FacesUtil.closeDialog("inforDialog");
@@ -161,14 +165,14 @@ public class MnHashtagController extends BaseController {
         onSearch();
     }
 
-    public void onEdit(Hashtag object) {
+    public void onEdit(HashtagDto object) {
         if (object == null) {
             FacesUtil.addErrorMessage("Không tồn tại thông tin");
             FacesUtil.updateView("growl");
             return;
         }
-        hashtag = new Hashtag();
-        BeanUtils.copyProperties(object, hashtag);
+        hashtagDto = new HashtagDto();
+        BeanUtils.copyProperties(object, hashtagDto);
         titleDialog = "Sửa";
         FacesUtil.updateView("inforDialogId");
     }
@@ -187,6 +191,6 @@ public class MnHashtagController extends BaseController {
 
     @Override
     protected String getMenuId() {
-        return Constant.MN_HASTAG;
+        return Constant.MN_HASHTAG;
     }
 }

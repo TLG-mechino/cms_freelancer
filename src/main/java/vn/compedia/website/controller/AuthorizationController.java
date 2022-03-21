@@ -15,6 +15,7 @@ import vn.compedia.website.util.*;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,8 +63,9 @@ public class AuthorizationController implements Serializable {
         myMenus.add(Constant.DASHBOARD);
         myMenus.add(Constant.MN_MARKET);
         myMenus.add(Constant.MN_ACCOUNT);
-        myMenus.add(Constant.MN_HASTAG);
+        myMenus.add(Constant.MN_HASHTAG);
         myMenus.add(Constant.SYS_CONFIG);
+        myMenus.add(Constant.MN_TRANSACTION);
         myMenus.add(Constant.SERVICE_CONFIG);
     }
 

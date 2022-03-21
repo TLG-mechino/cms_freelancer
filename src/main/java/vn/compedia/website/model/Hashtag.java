@@ -19,19 +19,19 @@ public class Hashtag extends BaseModel {
     @Column(name = "HASHTAG_ID", nullable = false)
     private Long hashtagId;
 
-    @Column(name = "CODE", length = 20)
+    @Column(name = "CODE")
     private String code;
 
-    @Column(name = "TITLE_VN", length = 20)
+    @Column(name = "TITLE_VN")
     private String titleVn;
 
-    @Column(name = "TITLE_EN", length = 20)
+    @Column(name = "TITLE_EN")
     private String titleEn;
 
-    @Column(name = "DESCRIPTION_VN", length = 200)
+    @Column(name = "DESCRIPTION_VN")
     private String descriptionVn;
 
-    @Column(name = "DESCRIPTION_EN", length = 200)
+    @Column(name = "DESCRIPTION_EN")
     private String descriptionEn;
 
     @Column(name = "STATUS")

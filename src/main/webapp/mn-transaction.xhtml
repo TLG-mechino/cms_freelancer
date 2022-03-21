@@ -6,7 +6,7 @@
                 template="/template/template.xhtml">
 
    <f:metadata>
-      <f:event type="preRenderView" listener="#{mnAccountController.initData()}"/>
+      <f:event type="preRenderView" listener="#{mnTransactionController.initData()}"/>
    </f:metadata>
 
    <ui:define name="title">Quản lý giao dịch</ui:define>
@@ -17,7 +17,10 @@
             <p:link styleClass="title-color-left ui-sm-12">Quản lý giao dịch</p:link>
 
             <div style="float: right" class="ui-sm-12">
-               <p:commandButton value="Xuất dữ liệu" styleClass="btn-export-data filter" icon="fa fa-download"/>
+               <p:commandButton value="Xuất dữ liệu" styleClass="btn-export-data filter" icon="fa fa-download" ajax="false"
+                                disabled="#{mnTransactionController.lazyDataModel.rowCount == 0}">
+                  <p:fileDownload value="#{mnTransactionController.exportDataExcel()}"/>
+               </p:commandButton>
             </div>
          </p:outputPanel>
          <hr class="hr-class"/>
@@ -26,13 +29,13 @@
             <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
                <div class="ui-input-icon-left" style="width: 100%; display: flex;">
                   <i class="fa fa-search"/>
-                  <p:inputText placeholder="Nhập tài khoản giao dịch, mã giao dịch, mô tả, người tạo" style="width: 97%"
+                  <p:inputText placeholder="Nhập tài khoản giao dịch, mã giao dịch, người gửi, người nhận" style="width: 97%"
                                onblur="this.value = this.value.trim()" maxlength="100"
                                onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
-                               value="#{mnAccountController.searchDto.keyword}"
+                               value="#{mnTransactionController.searchDto.keyword}"
                                styleClass="border-input" onchange="this.value = this.value.trim()">
                      <p:ajax event="change" update="searchForm"
-                             listener="#{mnAccountController.onSearch()}"/>
+                             listener="#{mnTransactionController.onSearch()}"/>
                   </p:inputText>
                </div>
             </p:outputPanel>
@@ -42,23 +45,30 @@
 
             <p:overlayPanel for="basic" styleClass="filter-panel">
                <p:outputLabel value="Phương thức thanh toán" styleClass="filter-item-label"/>
-               <p:selectOneMenu styleClass="filter-item" value="">
-                  <f:selectItems var="item" itemValue="" itemLabel="" value="" />
+               <p:selectOneMenu styleClass="filter-item" value="#{mnTransactionController.searchDto.paymentTypeSearch}">
+                  <f:selectItems var="item" itemValue="#{item.paymentTypeId}" itemLabel="#{item.name}" value="#{mnTransactionController.paymentTypeList}" />
                </p:selectOneMenu>
 
                <p:outputLabel value="Số tiền giao dịch" styleClass="filter-item-label"/>
                <div class="filter-item">
-                  <p:inputNumber value="" placeholder="Từ" decimalPlaces="0" size="12"></p:inputNumber>
-                  <p:inputNumber value="" placeholder="Đến" decimalPlaces="0" size="12" style="margin-left: 20px"></p:inputNumber>
+                  <p:inputNumber value="#{mnTransactionController.searchDto.lessMoney}" placeholder="Từ" decimalPlaces="0" size="12"></p:inputNumber>
+                  <p:inputNumber value="#{mnTransactionController.searchDto.greatMoney}" placeholder="Đến" decimalPlaces="0" size="12" style="margin-left: 20px"></p:inputNumber>
                </div>
+
+               <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
+                                   <p:selectOneMenu styleClass="filter-item" value="#{mnTransactionController.searchDto.status}">
+                                       <f:selectItem itemLabel="Tất cả" itemValue=""/>
+                                       <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
+                                       <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
+                                   </p:selectOneMenu>
 
                <p:commandButton value="Bỏ lọc" update="searchForm"
                                 icon="fa fa-refresh" styleClass="filter-btn"
-                                actionListener="#{mnAccountController.resetAll()}"/>
+                                actionListener="#{mnTransactionController.resetAll()}"/>
 
                <p:commandButton value="Lọc" update="tblSearchResult"
                                 icon="fa fa-search" styleClass="margin-right-10 filter-btn" id="search"
-                                actionListener="#{mnAccountController.onSearch()}"/>
+                                actionListener="#{mnTransactionController.onSearch()}"/>
             </p:overlayPanel>
          </p:panelGrid>
 
@@ -66,53 +76,60 @@
                       widgetVar="dataTable" resizableColumns="true" paginator="true" rows="20"
                       lazy="true" pageLinks="5" var="resultDto" paginatorPosition="bottom"
                       paginatorAlwaysVisible="true" rowsPerPageTemplate="20,50,100"
-                      value="#{mnAccountController.lazyDataModel}" rowKey="#{resultDto.transactionId}"
+                      value="#{mnTransactionController.lazyDataModel}" rowKey="#{resultDto.transactionId}"
                       paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                       emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
-                      currentPageReportTemplate="Tổng số bản ghi: #{mnAccountController.lazyDataModel.rowCount}">
+                      currentPageReportTemplate="Tổng số bản ghi: #{mnTransactionController.lazyDataModel.rowCount}">
 
             <p:column headerText="STT" width="30" style="text-align: center">
                <p:outputLabel value="#{rowIndex + 1}"/>
-            </p:column>
-
-            <p:column headerText="Tài khoản giao dịch" style="text-align: left" sortBy="#{resultDto.title}">
-               <p:outputLabel value="#{resultDto.title}"/>
             </p:column>
 
             <p:column headerText="Mã giao dịch" style="text-align: left" sortBy="#{resultDto.code}">
                <p:outputLabel value="#{resultDto.code}"/>
             </p:column>
 
-            <p:column headerText="Thời gian giao dịch" style="text-align: left" sortBy="#{resultDto.discription}">
-               <p:outputLabel value="#{resultDto.discription}">
-                  <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>
-               </p:outputLabel>
+            <p:column headerText="Người gửi" style="text-align: left" sortBy="#{resultDto.sender}">
+               <p:outputLabel value="#{resultDto.sender}"/>
+            </p:column>
+
+            <p:column headerText="Người nhận" style="text-align: left" sortBy="#{resultDto.recipient}">
+               <p:outputLabel value="#{resultDto.recipient}"/>
             </p:column>
 
             <p:column headerText="Phương thức thanh toán" style="text-align: left" sortBy="#{resultDto.createUser}">
                <p:outputLabel value="#{resultDto.createUser}"/>
             </p:column>
 
-            <p:column headerText="Số tiền" style="text-align: left" sortBy="#{resultDto.money}">
-               <p:outputLabel value="#{resultDto.money}">
+            <p:column headerText="Số tiền giao dịch" style="text-align: left" sortBy="#{resultDto.amountOfMoney}">
+               <p:outputLabel value="#{resultDto.amountOfMoney}">
                   <f:convertNumber currencySymbol="đ" type="currency"/>
                </p:outputLabel>
             </p:column>
 
-<!--            <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">-->
-<!--               <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">-->
-<!--                  <p:menuitem value="Sửa thông tin" icon="fa fa-edit"-->
-<!--                              oncomplete="PF('inforDialog').show()" update="dlForm"-->
-<!--                              actionListener="#{mnMarketController.onEdit(resultDto)}"/>-->
+            <p:column headerText="Số tiền chiết khấu" style="text-align: left" sortBy="#{resultDto.discountMoney}">
+               <p:outputLabel value="#{resultDto.discountMoney}">
+                  <f:convertNumber currencySymbol="đ" type="currency"/>
+               </p:outputLabel>
+            </p:column>
 
-<!--                  <p:menuitem value="Xóa thông tin" icon="fa fa-close"-->
-<!--                              update="searchForm growl" process="@this"-->
-<!--                              actionListener="#{mnMarketController.onDelete(resultDto.marketId)}">-->
-<!--                     <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"-->
-<!--                                message="Bạn có chắc chắn muốn xóa thông tin?"/>-->
-<!--                  </p:menuitem>-->
-<!--               </p:menuButton>-->
-<!--            </p:column>-->
+            <p:column headerText="Số tiền nhận được" style="text-align: left" sortBy="#{resultDto.finalMoney}">
+               <p:outputLabel value="#{resultDto.finalMoney}">
+                  <f:convertNumber currencySymbol="đ" type="currency"/>
+               </p:outputLabel>
+            </p:column>
+
+            <p:column headerText="Thời gian giao dịch" style="text-align: left" sortBy="#{resultDto.transactionTime}">
+               <p:outputLabel value="#{resultDto.transactionTime}">
+                  <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>
+               </p:outputLabel>
+            </p:column>
+
+            <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
+               <p:outputLabel value="Hoạt động" rendered="#{resultDto.status eq DbConstant.ACTIVE_STATUS}"/>
+               <p:outputLabel value="Không hoạt động"
+                              rendered="#{resultDto.status eq DbConstant.INACTIVE_STATUS}"/>
+            </p:column>
 
          </p:dataTable>
       </h:form>

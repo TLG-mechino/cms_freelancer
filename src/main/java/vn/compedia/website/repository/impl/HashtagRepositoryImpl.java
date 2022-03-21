@@ -1,6 +1,7 @@
 package vn.compedia.website.repository.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Repository;
 import vn.compedia.website.dto.HashtagDto;
 import vn.compedia.website.dto.HashtagSearchDto;
 import vn.compedia.website.repository.HashtagRepositoryCustom;
@@ -13,6 +14,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class HashtagRepositoryImpl implements HashtagRepositoryCustom {
 
     @PersistenceContext

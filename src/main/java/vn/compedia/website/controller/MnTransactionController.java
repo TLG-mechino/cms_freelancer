@@ -110,6 +110,7 @@ public class MnTransactionController extends BaseController {
                 Long value = Long.valueOf(rowKey);
                 for (TransactionDto obj : requestRewardDtoList) {
                     if (obj.getTransactionId().equals(value)) {
+                        obj.setPaymentTypeName(paymentTypeRepository.findById(obj.getTransactionId()).get().getName());
                         return obj;
                     }
                 }

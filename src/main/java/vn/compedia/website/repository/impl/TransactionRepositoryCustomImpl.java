@@ -68,6 +68,13 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             sb.append(" ORDER BY t.TRANSACTION DESC ");
         }
         Query query = createQuery(sb, searchDto);
+        if (searchDto.getPageSize() > 0) {
+            query.setFirstResult(searchDto.getPageIndex());
+            query.setMaxResults(searchDto.getPageSize());
+        } else {
+            query.setFirstResult(0);
+            query.setMaxResults(Integer.MAX_VALUE);
+        }
 
         List<Object[]> resultList = query.getResultList();
         List<TransactionDto> list = new ArrayList<>();
@@ -200,6 +207,13 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         sb.append(" LIMIT :offset, :limit");
 
         Query query = createQueryExport(sb, SearchDto, offset, limit);
+        if (SearchDto.getPageSize() > 0) {
+            query.setFirstResult(SearchDto.getPageIndex());
+            query.setMaxResults(SearchDto.getPageSize());
+        } else {
+            query.setFirstResult(0);
+            query.setMaxResults(Integer.MAX_VALUE);
+        }
 
         List<Object[]> resultList = query.getResultList();
         List<TransactionDto> list = new ArrayList<>();

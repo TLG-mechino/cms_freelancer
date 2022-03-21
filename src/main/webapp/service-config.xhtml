@@ -100,9 +100,10 @@
 
                     <p:overlayPanel for="basic" styleClass="filter-panel">
                         <p:outputLabel value="Loại dịch vụ" styleClass="filter-item-label" />
-                        <p:selectOneMenu value="#{serviceConfigController.searchDto.fillServiceType}" >
+                        <p:selectOneMenu styleClass="filter-item" value="#{serviceConfigController.searchDto.fillServiceType}" >
                             <f:selectItems var="item" itemValue="#{item.serviceTypeId}" itemLabel="#{item.name}" value="#{serviceConfigController.serviceTypeList}" />
                         </p:selectOneMenu>
+
                         <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
                         <p:selectOneMenu styleClass="filter-item" value="#{serviceConfigController.searchDto.status}">
                             <f:selectItem itemLabel="Tất cả" itemValue=""/>
@@ -150,7 +151,9 @@
                     </p:column>
 
                     <p:column headerText="Phí dịch vụ" style="text-align: left" sortBy="#{resultDto.money}">
-                        <p:outputLabel value="#{resultDto.money}"/>
+                        <p:outputLabel value="#{resultDto.money}">
+                            <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"/>
+                        </p:outputLabel>
                     </p:column>
 
                     <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">

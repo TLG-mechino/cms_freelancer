@@ -13,4 +13,5 @@ import vn.compedia.website.model.Transaction;
 public class TransactionDto extends Transaction {
     private int stt;
     private String transactionTimeString;
+    private String paymentTypeName;
 }

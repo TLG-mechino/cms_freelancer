@@ -170,7 +170,7 @@ public class ServiceConfigController extends BaseController {
         onSearch();
     }
 
-    public void onEdit(Hashtag object) {
+    public void onEdit(PackageService object) {
         if (object == null) {
             FacesUtil.addErrorMessage("Không tồn tại thông tin");
             FacesUtil.updateView("growl");
@@ -182,13 +182,13 @@ public class ServiceConfigController extends BaseController {
         FacesUtil.updateView("inforDialogId");
     }
 
-    public void onDelete(Long hashtagId) {
-        if (hashtagId == null) {
+    public void onDelete(Long packageServiceId) {
+        if (packageServiceId == null) {
             FacesUtil.addErrorMessage("Không tồn tại thông tin");
             FacesUtil.updateView("growl");
             return;
         }
-        serviceConfigRepository.deleteById(hashtagId);
+        serviceConfigRepository.deleteById(packageServiceId);
         FacesUtil.addSuccessMessage("Xóa thành công");
         FacesUtil.updateView("growl");
         onSearch();

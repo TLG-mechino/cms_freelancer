@@ -97,25 +97,25 @@
                <p:outputLabel value="#{resultDto.recipient}"/>
             </p:column>
 
-            <p:column headerText="Phương thức thanh toán" style="text-align: left" sortBy="#{resultDto.createUser}">
-               <p:outputLabel value="#{resultDto.createUser}"/>
+            <p:column headerText="Phương thức thanh toán" style="text-align: left" sortBy="#{resultDto.paymentTypeId}">
+               <p:outputLabel value="#{resultDto.paymentTypeName}"/>
             </p:column>
 
             <p:column headerText="Số tiền giao dịch" style="text-align: left" sortBy="#{resultDto.amountOfMoney}">
                <p:outputLabel value="#{resultDto.amountOfMoney}">
-                  <f:convertNumber currencySymbol="đ" type="currency"/>
+                  <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"/>
                </p:outputLabel>
             </p:column>
 
             <p:column headerText="Số tiền chiết khấu" style="text-align: left" sortBy="#{resultDto.discountMoney}">
                <p:outputLabel value="#{resultDto.discountMoney}">
-                  <f:convertNumber currencySymbol="đ" type="currency"/>
+                  <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"/>
                </p:outputLabel>
             </p:column>
 
             <p:column headerText="Số tiền nhận được" style="text-align: left" sortBy="#{resultDto.finalMoney}">
                <p:outputLabel value="#{resultDto.finalMoney}">
-                  <f:convertNumber currencySymbol="đ" type="currency"/>
+                  <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"/>
                </p:outputLabel>
             </p:column>
 

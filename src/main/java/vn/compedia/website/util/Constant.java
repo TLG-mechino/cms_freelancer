@@ -4,7 +4,7 @@ public class Constant {
 
     // Common
     public static final int STATUS_OK = 0;
-    public static final int FIXED_ROW = 1000;
+    public static final int FIXED_ROW = 10;
     public static final int MAX_FILE_SIZE = 50000000;
     public static final String TEXT_MESSAGE = "Text";
     public static final String ENCODING_UTF8 = "UTF-8";

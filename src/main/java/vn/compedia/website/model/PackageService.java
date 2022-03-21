@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Setter
 @Getter
-public class PackageService {
+public class PackageService extends BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,17 +41,5 @@ public class PackageService {
 
     @Column(name = "USERNAME")
     private String userName;
-
-    @Column(name = "CREATE_DATE")
-    private Timestamp createDate;
-
-    @Column(name = "UPDATE_DATE")
-    private Timestamp updateDate;
-
-    @Column(name = "UPDATE_BY")
-    private String updateBy;
-
-    @Column(name = "EXPIRED_TIME")
-    private Integer expiredTime;
 
 }

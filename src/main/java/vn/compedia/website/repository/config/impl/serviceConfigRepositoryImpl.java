@@ -77,13 +77,13 @@ public class serviceConfigRepositoryImpl implements serviceConfigRepositoryCusto
         List<PackageService> list = new ArrayList<>();
         for (Object[] obj : resultList) {
             PackageService dto = new PackageService();
-            dto.setServiceId(ValueUtil.getLongByObject(obj[0]));
+            dto.setPackageServiceId(ValueUtil.getLongByObject(obj[0]));
             dto.setCode(ValueUtil.getStringByObject(obj[1]));
             dto.setName(ValueUtil.getStringByObject(obj[2]));
             dto.setMoney(ValueUtil.getDoubleByObject(obj[3]));
             dto.setDescription(ValueUtil.getStringByObject(obj[4]));
             dto.setStatus(ValueUtil.getIntegerByObject(obj[5]));
-            dto.setUsername(ValueUtil.getStringByObject(obj[6]));
+            dto.setUserName(ValueUtil.getStringByObject(obj[6]));
             dto.setCreateDate(ValueUtil.getDateByObject(obj[7]));
             dto.setUpdateDate(ValueUtil.getDateByObject(obj[8]));
             dto.setUpdateBy(ValueUtil.getStringByObject(obj[9]));

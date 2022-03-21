@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface serviceConfigRepository extends CrudRepository<PackageService, Long>, serviceConfigRepositoryCustom {
 
-    @Query("select p from PackageService p where p.code = :code and p.serviceId <> :serviceId")
+    @Query("select p from PackageService p where p.code = :code and p.packageServiceId <> :serviceId")
     List<PackageService> findByCodeExists(@Param("code") String code, @Param("serviceId") Long serviceId);
 }

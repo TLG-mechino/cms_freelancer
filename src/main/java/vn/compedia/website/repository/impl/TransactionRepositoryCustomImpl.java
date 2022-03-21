@@ -1,12 +1,9 @@
 package vn.compedia.website.repository.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import vn.compedia.website.dto.HashtagDto;
-import vn.compedia.website.dto.HashtagSearchDto;
 import vn.compedia.website.dto.TransactionDto;
 import vn.compedia.website.dto.TransactionSearchDto;
 import vn.compedia.website.repository.TransactionRepositoryCustom;
-import vn.compedia.website.util.DateUtil;
 import vn.compedia.website.util.ValueUtil;
 
 import javax.persistence.EntityManager;
@@ -75,18 +72,18 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         List<Object[]> resultList = query.getResultList();
         List<TransactionDto> list = new ArrayList<>();
         for (Object[] result : resultList) {
-            TransactionDto Dto = new TransactionDto();
-            Dto.setTransactionId(ValueUtil.getLongByObject(result[0]));
-            Dto.setSender(ValueUtil.getStringByObject(result[1]));
-            Dto.setRecipient(ValueUtil.getStringByObject(result[2]));
-            Dto.setTransactionTime(ValueUtil.getDateByObject(result[3]));
-            Dto.setAmountOfMoney(ValueUtil.getDoubleByObject(result[4]));
-            Dto.setDiscountMoney(ValueUtil.getDoubleByObject(result[5]));
-            Dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
-            Dto.setCode(ValueUtil.getStringByObject(result[7]));
-            Dto.setPaymentTypeId(ValueUtil.getIntegerByObject(result[8]));
-            Dto.setStatus(ValueUtil.getIntegerByObject(result[9]));
-            list.add(Dto);
+            TransactionDto dto = new TransactionDto();
+            dto.setTransactionId(ValueUtil.getLongByObject(result[0]));
+            dto.setSender(ValueUtil.getStringByObject(result[1]));
+            dto.setRecipient(ValueUtil.getStringByObject(result[2]));
+            dto.setTransactionTime(ValueUtil.getDateByObject(result[3]));
+            dto.setAmountOfMoney(ValueUtil.getDoubleByObject(result[4]));
+            dto.setDiscountMoney(ValueUtil.getDoubleByObject(result[5]));
+            dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
+            dto.setCode(ValueUtil.getStringByObject(result[7]));
+            dto.setPaymentTypeId(ValueUtil.getIntegerByObject(result[8]));
+            dto.setStatus(ValueUtil.getIntegerByObject(result[9]));
+            list.add(dto);
         }
         return list;
     }
@@ -99,6 +96,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         Query query = createQuery(sb, searchDto);
         return (BigInteger) query.getSingleResult();
     }
+
     public Query createQuery(StringBuilder sb, TransactionSearchDto searchDto) {
         Query query = entityManager.createNativeQuery(sb.toString());
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
@@ -206,18 +204,18 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         List<Object[]> resultList = query.getResultList();
         List<TransactionDto> list = new ArrayList<>();
         for (Object[] result : resultList) {
-            TransactionDto Dto = new TransactionDto();
-            Dto.setTransactionId(ValueUtil.getLongByObject(result[0]));
-            Dto.setSender(ValueUtil.getStringByObject(result[1]));
-            Dto.setRecipient(ValueUtil.getStringByObject(result[2]));
-            Dto.setTransactionTime(ValueUtil.getDateByObject(result[3]));
-            Dto.setAmountOfMoney(ValueUtil.getDoubleByObject(result[4]));
-            Dto.setDiscountMoney(ValueUtil.getDoubleByObject(result[5]));
-            Dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
-            Dto.setCode(ValueUtil.getStringByObject(result[7]));
-            Dto.setPaymentTypeId(ValueUtil.getIntegerByObject(result[8]));
-            Dto.setStatus(ValueUtil.getIntegerByObject(result[9]));
-            list.add(Dto);
+            TransactionDto dto = new TransactionDto();
+            dto.setTransactionId(ValueUtil.getLongByObject(result[0]));
+            dto.setSender(ValueUtil.getStringByObject(result[1]));
+            dto.setRecipient(ValueUtil.getStringByObject(result[2]));
+            dto.setTransactionTime(ValueUtil.getDateByObject(result[3]));
+            dto.setAmountOfMoney(ValueUtil.getDoubleByObject(result[4]));
+            dto.setDiscountMoney(ValueUtil.getDoubleByObject(result[5]));
+            dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
+            dto.setCode(ValueUtil.getStringByObject(result[7]));
+            dto.setPaymentTypeId(ValueUtil.getIntegerByObject(result[8]));
+            dto.setStatus(ValueUtil.getIntegerByObject(result[9]));
+            list.add(dto);
         }
         return list;
     }

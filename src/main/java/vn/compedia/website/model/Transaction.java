@@ -44,4 +44,7 @@ public class Transaction {
 
     @Column(name = "PAYMENT_TYPE_ID")
     private Integer paymentTypeId;
+
+    @Column(name = "STATUS")
+    private Integer status;
 }

@@ -104,7 +104,7 @@ public class ServiceConfigController extends BaseController {
                 List<PackageService> requestRewardDtoList = getWrappedData();
                 Long value = Long.valueOf(rowKey);
                 for (PackageService obj : requestRewardDtoList) {
-                    if (obj.getServiceId().equals(value)) {
+                    if (obj.getPackageServiceId().equals(value)) {
                         return obj;
                     }
                 }
@@ -123,10 +123,10 @@ public class ServiceConfigController extends BaseController {
         }
 
         long idCheck;
-        if (null == packageService.getServiceId()) {
+        if (null == packageService.getPackageServiceId()) {
             idCheck = 0L;
         } else {
-            idCheck = packageService.getServiceId();
+            idCheck = packageService.getPackageServiceId();
         }
 
 //        List<PackageService> checkCodeExists = serviceConfigRepository.findByCodeExists(packageService.getCode(), idCheck);
@@ -156,9 +156,9 @@ public class ServiceConfigController extends BaseController {
         if (!validateDate()) {
             return;
         }
-        if (packageService.getServiceId() == null) {
+        if (packageService.getPackageServiceId() == null) {
             packageService.setCreateDate(new Date());
-            packageService.setUsername(authorizationController.getAccountDto().getUsername());
+            packageService.setUserName(authorizationController.getAccountDto().getUsername());
         }
         packageService.setUpdateDate(new Date());
         packageService.setUpdateBy(authorizationController.getAccountDto().getUsername());

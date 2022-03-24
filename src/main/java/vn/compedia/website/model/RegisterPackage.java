@@ -23,4 +23,6 @@ public class RegisterPackage {
     private Double money;
     @Column(name = "PACKAGE_SERVICE_ID")
     private Long packageServiceId;
+    @Column(name = "STATUS")
+    private Integer status;
 }

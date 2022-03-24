@@ -15,6 +15,8 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "REVIEW_ID")
     private Long id;
+    @Column(name = "TITLE")
+    private String title;
     @Column(name = "USERNAME")
     private String userName;
     @Column(name = "JOB_ID")

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.CollectionUtils;
 import vn.compedia.website.dto.response.RegisterPackageResponseDto;
+import vn.compedia.website.dto.search.RegisterPackageSearchDto;
 import vn.compedia.website.repository.RegisterPackageRepositoryCustom;
 import vn.compedia.website.util.DateUtil;
 import vn.compedia.website.util.ValueUtil;
@@ -20,41 +21,87 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
 
 
     @Override
-    public List<RegisterPackageResponseDto> getAllRegisterPackageByUserName(String userName, Pageable pageable) {
+    public List<RegisterPackageResponseDto> getAllRegisterPackageByUserName(String userName, RegisterPackageSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
-        sb.append("select result1.REGISTER_PACKAGE_ID," +
-                "       result1.USERNAME," +
-                "       result1.REGISTRATION_TIME," +
-                "       result1.EXPIRED_TIME," +
-                "       ps.MONEY," +
+        sb.append("select rp.REGISTER_PACKAGE_ID," +
+                "       rp.USERNAME," +
+                "       rp.REGISTRATION_TIME," +
+                "       rp.EXPIRED_TIME," +
+                "       rp.MONEY," +
                 "       result1.PACKAGE_SERVICE_ID," +
-                "       ps.NAME" +
-                " from package_service ps" +
-                "         inner join (select * from register_package repackage where repackage.USERNAME = :userName) result1" +
-                "                    on ps.PACKAGE_SERVICE_ID = result1.PACKAGE_SERVICE_ID");
-        Query query = entityManager.createNativeQuery(sb.toString());
-        query.setParameter("userName", userName);
-        int positionStart = pageable.getPageNumber() * pageable.getPageSize();
-        query.setFirstResult(positionStart);
-        query.setMaxResults(pageable.getPageSize());
+                "       result1.NAME," +
+                "       rp.STATUS ");
+        appendQueryByUserName(sb,searchDto);
+        Query query = createQueryByUser(sb,userName,searchDto);
+        if (searchDto.getPageSize() > 0) {
+            query.setFirstResult(searchDto.getPageIndex() * searchDto.getPageSize());
+            query.setMaxResults(searchDto.getPageSize());
+        }
+        else {
+            query.setFirstResult(0);
+            query.setMaxResults(Integer.MAX_VALUE);
+        }
         List<RegisterPackageResponseDto> dtos = new ArrayList<>();
         List<Object[]> result = query.getResultList();
         if (!CollectionUtils.isEmpty(result)) {
             for (Object[] obj : result) {
                 RegisterPackageResponseDto responseDto = new RegisterPackageResponseDto();
-                responseDto.setRegisterId(null == ValueUtil.getLongByObject(obj[0]) ? 0L : ValueUtil.getLongByObject(obj[0]));
-                responseDto.setUserName(null == ValueUtil.getStringByObject(obj[1]) ? "" : ValueUtil.getStringByObject(obj[1]));
+                responseDto.setRegisterId(ValueUtil.getLongByObject(obj[0]));
+                responseDto.setUserName(ValueUtil.getStringByObject(obj[1]));
                 if (obj[2] != null) {
                     responseDto.setRegistrationTime(DateUtil.formatDatePattern(ValueUtil.getDateByObject(obj[2]), DateUtil.DATE_FORMAT));
                 }
                 if (obj[3] != null) {
                     responseDto.setExpiredTime(DateUtil.formatDatePattern(ValueUtil.getDateByObject(obj[3]), DateUtil.DATE_FORMAT));
                 }
-                responseDto.setMoney(null == ValueUtil.getDoubleByObject(obj[4]) ? null : ValueUtil.getDoubleByObject(obj[4]));
-                responseDto.setNamePackage(null == ValueUtil.getStringByObject(obj[6]) ? null : ValueUtil.getStringByObject(obj[6]));
+                responseDto.setMoney(ValueUtil.getDoubleByObject(obj[4]));
+                responseDto.setNamePackage(ValueUtil.getStringByObject(obj[6]));
+                responseDto.setStatus(ValueUtil.getIntegerByObject(obj[7]));
                 dtos.add(responseDto);
             }
         }
         return dtos;
+    }
+
+
+    private Query createQueryByUser(StringBuilder sb,String userName , RegisterPackageSearchDto searchDto) {
+        Query query = entityManager.createNativeQuery(sb.toString());
+        query.setParameter("userName",userName);
+        if (searchDto.getKeyword() != null) {
+            query.setParameter("keyword","%"+searchDto.getKeyword().trim()+"%");
+        }
+        if (searchDto.getStatus() != null) {
+            query.setParameter("status",searchDto.getStatus());
+        }
+        if (searchDto.getMoneyPackageService() != null ) {
+            query.setParameter("money",searchDto.getMoneyPackageService());
+        }
+        return query;
+    }
+
+
+    private void appendQueryByUserName (StringBuilder sb , RegisterPackageSearchDto dto) {
+        sb.append(" from register_package rp " +
+                "         inner join (select ps.NAME,ps.CODE,ps.PACKAGE_SERVICE_ID from package_service ps) result1 " +
+                "                    on rp.PACKAGE_SERVICE_ID = result1.PACKAGE_SERVICE_ID" +
+                " where rp.USERNAME=:userName ");
+        if (dto.getKeyword() != null) {
+            sb.append(" and result1.NAME like :keyword ");
+        }
+        if (dto.getStatus() != null) {
+            sb.append(" and rp.STATUS =:status ");
+        }
+        if (dto.getMoneyPackageService() != null) {
+            sb.append(" and rp.MONEY =:money");
+        }
+    }
+
+    @Override
+    public int countSearchByUserName(String userName, RegisterPackageSearchDto dto) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" select COUNT(rp.REGISTER_PACKAGE_ID) ");
+        appendQueryByUserName(sb,dto);
+        Query query = createQueryByUser(sb,userName,dto);
+        return ValueUtil.getIntegerByObject(query.getSingleResult());
     }
 }

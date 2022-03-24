@@ -4,11 +4,16 @@ import com.ocpsoft.pretty.faces.util.StringUtils;
 import vn.compedia.website.dto.entity.UserDto;
 import vn.compedia.website.dto.search.UserSearchDto;
 import vn.compedia.website.repository.UserRepositoryCustom;
+import vn.compedia.website.util.DateUtil;
+import vn.compedia.website.util.DbConstant;
 import vn.compedia.website.util.StringUtil;
+import vn.compedia.website.util.ValueUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +26,12 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     @Override
     public List<UserDto> search(UserSearchDto userSearchDto) {
         StringBuilder sb = new StringBuilder();
-        sb.append("select user.USERNAME," +
+        sb.append("select ac.ACCOUNT_ID," +
+                "       ac.FULL_NAME," +
+                "       ac.PHONE," +
+                "       ac.EMAIL," +
+                "       ac.CREATE_DATE," +
+                "       ac.STATUS," +
                 "       user.IMAGE_PATH," +
                 "       user.ADDRESS," +
                 "       user.TOTAL_SCORE," +
@@ -34,84 +44,138 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                 "       user.WORKING_HOURS," +
                 "       user.TIME_TYPE_ID," +
                 "       user.FACEBOOK_LINK," +
-                "       user.TYPE_LOGIN");
+                "       user.TYPE_LOGIN," +
+                "       user.IS_EDITOR," +
+                "       user.IS_USER," +
+                "       user.DATE_OF_BIRTH," +
+                "       user.DESCRIPTION_USER ");
         appendQuery(sb,userSearchDto);
+
         if (userSearchDto.getSortField() != null) {
-           if(userSearchDto.getSortField().equals("userName")) {
-               sb.append(" ORDER BY user.USERNAME");
-           }
-           if (userSearchDto.getSortField().equals("imagePath")) {
-               sb.append(" ORDER BY user.IMAGE_PATH");
-           }
-           if (userSearchDto.getSortField().equals("address")) {
-               sb.append(" ORDER BY user.ADDRESS");
-           }
-           if (userSearchDto.getSortField().equals("totalScore")) {
-               sb.append(" ORDER BY user.TOTAL_SCORE");
-           }
-           if (userSearchDto.getSortField().equals("moneyWallet")) {
-               sb.append(" ORDER BY user.MONEY_WALLET");
-           }
-           if (userSearchDto.getSortField().equals("provinceId")) {
-               sb.append(" ORDER BY user.PROVINCE_ID");
-           }
-           if (userSearchDto.getSortField().equals("districtId")) {
-               sb.append(" ORDER BY user.DISTRICT_ID");
-           }
-           if (userSearchDto.getSortField().equals("communeId")) {
-               sb.append(" ORDER BY user.COMMUNE_ID");
-           }
-           if (userSearchDto.getSortField().equals("experienceAmount")) {
-               sb.append(" ORDER BY user.EXPERIENCE_AMOUNT");
-           }
-           if (userSearchDto.getSortField().equals("rentCost")) {
-               sb.append(" ORDER BY user.RENT_COST");
-           }
-           if (userSearchDto.getSortField().equals("workingHours")) {
-               sb.append(" ORDER BY user.WORKING_HOURS");
-           }
-           if (userSearchDto.getSortField().equals("timeTypeId")) {
-               sb.append(" ORDER BY user.TIME_TYPE_ID");
-           }
-           if (userSearchDto.getSortField().equals("faceBookLink")) {
-               sb.append(" ORDER BY user.FACEBOOK_LINK");
-           }
-           if(userSearchDto.getSortField().equals("typeLogin")){
-               sb.append(" ORDER BY user.TYPE_LOGIN");
-           }
-           sb.append(userSearchDto.getSortOrder());
-        } else {
-            sb.append(" ORDER BY user.USERNAME DESC");
+            if (userSearchDto.getSortField().equals("fullName")) {
+                sb.append(" ORDER BY ac.FULL_NAME ");
+            }
+            if (userSearchDto.getSortField().equals("phone")) {
+                sb.append(" ORDER BY ac.PHONE ");
+            }
+            if (userSearchDto.getSortField().equals("email")) {
+                sb.append(" ORDER BY ac.EMAIL ");
+            }
+            if (userSearchDto.getSortField().equals("imagePath")) {
+                sb.append(" ORDER BY user.IMAGE_PATH ");
+            }
+            if (userSearchDto.getSortField().equals("address")) {
+                sb.append(" ORDER BY user.ADDRESS ");
+            }
+            if (userSearchDto.getSortField().equals("totalScore")) {
+                sb.append(" ORDER BY user.TOTAL_SCORE ");
+            }
+            if (userSearchDto.getSortField().equals("moneyWallet")) {
+                sb.append(" ORDER BY user.MONEY_WALLET ");
+            }
+            if (userSearchDto.getSortField().equals("experienceAmount")) {
+                sb.append(" ORDER BY user.EXPERIENCE_AMOUNT ");
+            }
+            if (userSearchDto.getSortField().equals("rentCost")) {
+                sb.append(" ORDER BY user.RENT_COST ");
+            }
+            if (userSearchDto.getSortField().equals("workingHours")) {
+                sb.append(" ORDER BY user.WORKING_HOURS ");
+            }
+            if (userSearchDto.getSortField().equals("facebookLink")) {
+                sb.append(" ORDER BY user.FACEBOOK_LINK ");
+            }
+            if (userSearchDto.getSortField().equals("typeLogin")) {
+                sb.append(" ORDER BY user.TYPE_LOGIN ");
+            }
+            if (userSearchDto.getSortField().equals("isEditor")) {
+                sb.append(" ORDER BY user.IS_EDITOR ");
+            }
+            if (userSearchDto.getSortField().equals("isUser")) {
+                sb.append(" ORDER BY user.IS_USER ");
+            }
+            if (userSearchDto.getSortField().equals("dateOfBirth")) {
+                sb.append(" ORDER BY user.DATE_OF_BIRTH ");
+            }
+            if (userSearchDto.getSortField().equals("descriptionUser")) {
+                sb.append(" ORDER BY user.DESCRIPTION_USER ");
+            }
+            sb.append(userSearchDto.getSortOrder());
         }
+        else {
+            sb.append(" ORDER BY ac.ACCOUNT_ID DESC ");
+        }
+
         Query query = createQuery(sb,userSearchDto);
         if(userSearchDto.getPageSize() > 0) {
-            query.setFirstResult(userSearchDto.getPageIndex());
+            query.setFirstResult(userSearchDto.getPageIndex()*userSearchDto.getPageSize());
             query.setMaxResults(userSearchDto.getPageSize());
         } else {
             query.setFirstResult(0);
             query.setMaxResults(Integer.MAX_VALUE);
         }
+
         List<Object[]> resultList = query.getResultList();
         List<UserDto> userDtos = new ArrayList<>();
-        for(Object[] obj : resultList){
-
+        for (Object[] obj : resultList) {
+            UserDto userDto = new UserDto();
+            userDto.setAccountId(null == ValueUtil.getLongByObject(obj[0]) ? null : ValueUtil.getLongByObject(obj[0]));
+            userDto.setFullName(null == ValueUtil.getStringByObject(obj[1]) ? null : ValueUtil.getStringByObject(obj[1]));
+            userDto.setPhone(null == ValueUtil.getStringByObject(obj[2]) ? null : ValueUtil.getStringByObject(obj[2]));
+            userDto.setEmail(null == ValueUtil.getStringByObject(obj[3]) ? null : ValueUtil.getStringByObject(obj[3]));
+            userDto.setCreateDate(null == ValueUtil.getDateByObject(obj[4]) ? null :
+                    DateUtil.formatDatePattern(ValueUtil.getDateByObject(obj[4]), DateUtil.DATE_FORMAT));
+            userDto.setStatus(null == ValueUtil.getIntegerByObject(obj[5]) ? null : ValueUtil.getIntegerByObject(obj[5]));
+            userDto.setImagePath(null == ValueUtil.getStringByObject(obj[6]) ? null : ValueUtil.getStringByObject(obj[6]));
+            userDto.setAddress(null == ValueUtil.getStringByObject(obj[7]) ? null : ValueUtil.getStringByObject(obj[7]));
+            userDto.setTotalScore(null == ValueUtil.getIntegerByObject(obj[8]) ? null : ValueUtil.getIntegerByObject(obj[8]));
+            userDto.setMoneyWallet(null == ValueUtil.getIntegerByObject(obj[9]) ? null : ValueUtil.getIntegerByObject(obj[9]));
+            userDto.setProvinceId(null == ValueUtil.getIntegerByObject(obj[10]) ? null : ValueUtil.getIntegerByObject(obj[10]));
+            userDto.setDistrictId(null == ValueUtil.getIntegerByObject(obj[11]) ? null : ValueUtil.getIntegerByObject(obj[11]));
+            userDto.setCommuneId(null == ValueUtil.getIntegerByObject(obj[12]) ? null : ValueUtil.getIntegerByObject(obj[12]));
+            userDto.setExperienceAmount(null == ValueUtil.getIntegerByObject(obj[13]) ? null : ValueUtil.getIntegerByObject(obj[13]));
+            userDto.setRentCost(null == ValueUtil.getIntegerByObject(obj[14]) ? null : ValueUtil.getIntegerByObject(obj[14]));
+            userDto.setWorkingHours(null == ValueUtil.getIntegerByObject(obj[15]) ? null : ValueUtil.getIntegerByObject(obj[15]));
+            userDto.setTimeTypeId(null == ValueUtil.getIntegerByObject(obj[16]) ? null : ValueUtil.getIntegerByObject(obj[16]));
+            userDto.setFacebookLink(null == ValueUtil.getStringByObject(obj[17]) ? null : ValueUtil.getStringByObject(obj[17]));
+            userDto.setTypeLogin(null == ValueUtil.getStringByObject(obj[18]) ? null : ValueUtil.getStringByObject(obj[18]));
+            userDto.setIsEditor(null == ValueUtil.getIntegerByObject(obj[19]) ? null : ValueUtil.getIntegerByObject(obj[19]));
+            userDto.setIsUser(null == ValueUtil.getIntegerByObject(obj[20]) ? null : ValueUtil.getIntegerByObject(obj[20]));
+            userDto.setDateOfBirth(null == ValueUtil.getDateByObject(obj[21]) ? null : ValueUtil.getDateByObject(obj[21]));
+            userDto.setDescriptionUser(null == ValueUtil.getStringByObject(obj[22]) ? null : ValueUtil.getStringByObject(obj[22]));
+            userDtos.add(userDto);
         }
+        return userDtos;
+    }
 
-
-        return null;
+    @Override
+    public int countSearch(UserSearchDto userSearchDto, int type) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT COUNT(ac.ACCOUNT_ID) ");
+        appendQuery(sb,userSearchDto);
+        Query query = createQuery(sb,userSearchDto);
+        return ValueUtil.getIntegerByObject(query.getSingleResult());
     }
 
     public Query createQuery(StringBuilder sb , UserSearchDto dto){
         Query query = entityManager.createNativeQuery(sb.toString());
-        query.setParameter("keyword","%" + dto.getKeyword().trim() + "%");
+        if(dto.getKeyword()!=null) {
+            query.setParameter("keyword", "%" + dto.getKeyword().trim() + "%");
+        }
+        query.setParameter("type", DbConstant.ACCOUNT_CMS);
+        if(dto.getStatus() != null) {
+            query.setParameter("status",dto.getStatus());
+        }
         return query;
     }
 
     public void appendQuery(StringBuilder sb,UserSearchDto dto) {
-        sb.append(" from user user where 1 = 1 ");
-        if(StringUtils.isNotBlank(dto.getKeyword())){
-            sb.append(" AND (lower(user.USERNAME) LIKE lower(:keyword)) "+
-                    " OR lower(user.ADDRESS) LIKE lower(:keyword))");
+        sb.append(" from ACCOUNT ac inner join USER user on ac.USERNAME = user.USERNAME where ac.TYPE = :type");
+        if (StringUtils.isNotBlank(dto.getKeyword())) {
+            sb.append(" and ( (ac.FULL_NAME like :keyword) or (ac.PHONE like :keyword) or (ac.EMAIL like :keyword))");
+        }
+        if (dto.getStatus() != null) {
+            sb.append("   and ac.STATUS = :status");
         }
     }
 }

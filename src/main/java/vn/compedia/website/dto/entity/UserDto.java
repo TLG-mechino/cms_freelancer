@@ -9,4 +9,10 @@ import vn.compedia.website.model.User;
 @Getter
 @Setter
 public class UserDto extends User {
+    private Long accountId;
+    private String fullName;
+    private String phone;
+    private String email;
+    private String createDate;
+    private Integer status;
 }

@@ -20,5 +20,6 @@ public class ReviewResponseDto {
     private Integer status;
     private String reviewTime;
     private String nameJob;
+    private String title;
 
 }

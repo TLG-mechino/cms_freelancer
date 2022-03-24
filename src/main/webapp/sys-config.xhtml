@@ -22,26 +22,42 @@
             <hr class="hr-class"/>
 
             <h:form id="dlForm" prependId="false">
+                <p:tabView>
+                    <p:tab title="Thông tin chiết khấu">
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-6"
+                                     layout="grid" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel value="Cấu hình thông tin chiết khấu:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập giá trị" maxlength="100"
+                                         onchange="this.value = this.value.trim()"
+                                         value=""/>
+                        </p:panelGrid>
+                        <hr class="hr-class"/>
+                        <p:commandButton value="Lưu thông tin" styleClass="border-btn" icon="fa fa-save"
+                                         style="width: auto" oncomplete="PF('inforDialog').show()" update="dlForm"/>
+                    </p:tab>
 
-                <ui:repeat value="#{systemConfigController.systemConfigList}" var="item">
-                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
-                                 columnClasses="ui-grid-col-3, ui-grid-col-6">
-
-                        <p:outputLabel value="#{item.title}:" styleClass="requireLabel"/>
-
-                        <p:inputText value="#{item.value}" placeholder="Nhập giá trị cho #{item.title.toLowerCase()}"
-                                     onchange="this.value = this.value.trim()" maxlength="50"
-                                     onkeyup="this.value = this.value.replace(/\D/g, '');"/>
-                    </p:panelGrid>
-                </ui:repeat>
-
-
-                <hr class="hr-class"/>
-                <p:commandButton value="Lưu thông tin" styleClass="border-btn"
-                                 icon="fa fa-save" style="width: auto;" update="dlForm growl"
-                                 actionListener="#{systemConfigController.onSave()}"/>
+                    <p:tab title="Tham số hệ thống">
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-6"
+                                     layout="grid" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel value="Tham số hệ thống 1:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập giá trị" maxlength="100"
+                                         onchange="this.value = this.value.trim()"
+                                         value=""/>
+                            <p:outputLabel value="Tham số hệ thống 2:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập giá trị" maxlength="100"
+                                         onchange="this.value = this.value.trim()"
+                                         value=""/>
+                            <p:outputLabel value="Tham số hệ thống 3:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập giá trị" maxlength="100"
+                                         onchange="this.value = this.value.trim()"
+                                         value=""/>
+                        </p:panelGrid>
+                        <hr class="hr-class"/>
+                        <p:commandButton value="Lưu thông tin" styleClass="border-btn" icon="fa fa-save"
+                                         style="width: auto" oncomplete="PF('inforDialog').show()" update="dlForm"/>
+                    </p:tab>
+                </p:tabView>
             </h:form>
         </div>
     </ui:define>
-
 </ui:composition>

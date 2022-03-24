@@ -23,21 +23,21 @@
 
                                 <p:outputLabel value="Mã dịch vụ:" styleClass="requireLabel"/>
                                 <p:inputText placeholder="Nhập mã dịch vụ" maxlength="20"
-                                             value="#{serviceConfigController.packageService.code}" id="code"
+                                             value="#{serviceConfigController.serviceConfigDto.code}" id="code"
                                              onchange="this.value = this.value.trim()"
                                              onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();"/>
 
                                 <p:outputLabel value="Tên dịch vụ:" styleClass="requireLabel"/>
                                 <p:inputText placeholder="Nhập tên dịch vụ" maxlength="50"
-                                             value="#{serviceConfigController.packageService.name}"/>
+                                             value="#{serviceConfigController.serviceConfigDto.name}"/>
 
                                 <p:outputLabel value="Mô tả thông tin:"/>
                                 <p:inputTextarea placeholder="Nhập mô tả thông tin dịch vụ" rows="5" maxlength="150"
-                                                 value="#{serviceConfigController.packageService.description}"/>
+                                                 value="#{serviceConfigController.serviceConfigDto.description}"/>
 
                                 <p:outputLabel value="Loại dịch vụ:"/>
-                                <p:selectOneMenu value="#{serviceConfigController.packageService.serviceTypeId}" >
-                                    <f:selectItems var="item" itemValue="#{item.id}" itemLabel="#{item.name}" value="#{serviceConfigController.serviceTypeList}" />
+                                <p:selectOneMenu value="#{serviceConfigController.serviceConfigDto.serviceTypeId}" >
+                                    <f:selectItems var="item" itemValue="#{item.serviceTypeId}" itemLabel="#{item.name}" value="#{serviceConfigController.serviceTypeList}" />
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="Nhập phí dịch vụ:" styleClass="requireLabel"/>

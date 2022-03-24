@@ -29,7 +29,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
                 "t.DISCOUNT_MONEY, " +
                 "t.FINAL_MONEY, " +
                 "t.CODE, " +
-                "t.PAYMENT_TYPE_ID, " +
+                "pt.NAME, " +
                 "t.STATUS ");
         appendQuery(sb, searchDto);
         if (searchDto.getSortField() != null) {
@@ -57,8 +57,8 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             if (searchDto.getSortField().equals("code")) {
                 sb.append(" ORDER BY t.CODE ");
             }
-            if (searchDto.getSortField().equals("paymentTypeId")) {
-                sb.append(" ORDER BY t.PAYMENT_TYPE_ID ");
+            if (searchDto.getSortField().equals("paymentTypeName")) {
+                sb.append(" ORDER BY pt.NAME ");
             }
             if (searchDto.getSortField().equals("status")) {
                 sb.append(" ORDER BY t.STATUS ");
@@ -69,7 +69,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         }
         Query query = createQuery(sb, searchDto);
         if (searchDto.getPageSize() > 0) {
-            query.setFirstResult(searchDto.getPageIndex());
+            query.setFirstResult(searchDto.getPageIndex() * searchDto.getPageSize());
             query.setMaxResults(searchDto.getPageSize());
         } else {
             query.setFirstResult(0);
@@ -88,7 +88,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setDiscountMoney(ValueUtil.getDoubleByObject(result[5]));
             dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
             dto.setCode(ValueUtil.getStringByObject(result[7]));
-            dto.setPaymentTypeId(ValueUtil.getIntegerByObject(result[8]));
+            dto.setPaymentTypeName(ValueUtil.getStringByObject(result[8]));
             dto.setStatus(ValueUtil.getIntegerByObject(result[9]));
             list.add(dto);
         }
@@ -107,7 +107,16 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     public Query createQuery(StringBuilder sb, TransactionSearchDto searchDto) {
         Query query = entityManager.createNativeQuery(sb.toString());
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
-            query.setParameter("keyword", "%" + searchDto.getKeyword().trim() + "%");
+            query.setParameter("keyword", "%" + searchDto.getKeyword().trim().toUpperCase() + "%");
+        }
+        if (searchDto.getPaymentTypeSearch() != null) {
+            query.setParameter("paymentTypeSearch", searchDto.getPaymentTypeSearch());
+        }
+        if (searchDto.getLessMoney() != 0) {
+            query.setParameter("lessMoney", searchDto.getLessMoney());
+        }
+        if (searchDto.getGreatMoney() != 0) {
+            query.setParameter("greatMoney", searchDto.getGreatMoney());
         }
         if (searchDto.getStatus() != null) {
             query.setParameter("status", searchDto.getStatus());
@@ -116,47 +125,44 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
 
     }
 
-    public void appendQuery(StringBuilder sb, TransactionSearchDto SearchDto) {
-        sb.append(" FROM transaction t WHERE 1 = 1 ");
-        if (SearchDto.getKeyword() != null) {
+    public void appendQuery(StringBuilder sb, TransactionSearchDto searchDto) {
+        sb.append(" FROM transaction t LEFT JOIN payment_type pt ON t.PAYMENT_TYPE_ID = pt.PAYMENT_TYPE_ID WHERE 1 = 1 ");
+        if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (t.CODE LIKE :keyword OR t.SENDER LIKE :keyword OR t.RECIPIENT LIKE :keyword) ");
         }
-        if (SearchDto.getPaymentTypeSearch() != null) {
+        if (searchDto.getPaymentTypeSearch() != null) {
             sb.append(" AND t.PAYMENT_TYPE_ID = :paymentTypeSearch ");
         }
-        if (SearchDto.getLessMoney() != 0) {
+        if (searchDto.getLessMoney() != 0) {
             sb.append(" AND t.AMOUNT_MONEY >= :lessMoney ");
         }
-        if (SearchDto.getGreatMoney() != 0) {
+        if (searchDto.getGreatMoney() != 0) {
             sb.append(" AND t.AMOUNT_MONEY <= :greatMoney ");
         }
+        if (searchDto.getStatus() != null) {
+            sb.append(" AND t.STATUS =:status ");
+        }
     }
 
-    public Query createQueryExport(StringBuilder sb, TransactionSearchDto SearchDto, Integer offset, Integer limit) {
-        Query query = entityManager.createNativeQuery(sb.toString());
-        if (SearchDto.getKeyword() != null) {
-            query.setParameter("keyword", "%" + SearchDto.getKeyword().trim() + "%");
-        }
-        if (SearchDto.getPaymentTypeSearch() != null) {
-            query.setParameter("paymentTypeSearch", SearchDto.getPaymentTypeSearch());
-        }
-        if (SearchDto.getLessMoney() != 0) {
-            query.setParameter("lessMoney", SearchDto.getLessMoney());
-        }
-        if (SearchDto.getEndTime() != null) {
-            query.setParameter("greatMoney", SearchDto.getGreatMoney());
-        }
-        if (offset != null) {
-            query.setParameter("offset", offset);
-        }
-        if (limit != null) {
-            query.setParameter("limit", limit);
-        }
-        return query;
-    }
+//    public Query createQueryExport(StringBuilder sb, TransactionSearchDto SearchDto) {
+//        Query query = entityManager.createNativeQuery(sb.toString());
+//        if (SearchDto.getKeyword() != null) {
+//            query.setParameter("keyword", "%" + SearchDto.getKeyword().trim() + "%");
+//        }
+//        if (SearchDto.getPaymentTypeSearch() != null) {
+//            query.setParameter("paymentTypeSearch", SearchDto.getPaymentTypeSearch());
+//        }
+//        if (SearchDto.getLessMoney() != 0) {
+//            query.setParameter("lessMoney", SearchDto.getLessMoney());
+//        }
+//        if (SearchDto.getGreatMoney() != 0) {
+//            query.setParameter("greatMoney", SearchDto.getGreatMoney());
+//        }
+//        return query;
+//    }
 
     @Override
-    public List<TransactionDto> exportExcel(TransactionSearchDto SearchDto, Integer offset, Integer limit) {
+    public List<TransactionDto> exportExcel(TransactionSearchDto SearchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT t.TRANSACTION, " +
                 "t.SENDER, " +
@@ -194,8 +200,8 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             if (SearchDto.getSortField().equals("code")) {
                 sb.append(" ORDER BY t.CODE ");
             }
-            if (SearchDto.getSortField().equals("paymentTypeId")) {
-                sb.append(" ORDER BY t.PAYMENT_TYPE_ID ");
+            if (SearchDto.getSortField().equals("paymentTypeName")) {
+                sb.append(" ORDER BY pt.NAME ");
             }
             if (SearchDto.getSortField().equals("status")) {
                 sb.append(" ORDER BY t.STATUS ");
@@ -204,9 +210,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         } else {
             sb.append(" ORDER BY t.TRANSACTION DESC ");
         }
-        sb.append(" LIMIT :offset, :limit");
-
-        Query query = createQueryExport(sb, SearchDto, offset, limit);
+        Query query = createQuery(sb, SearchDto);
         if (SearchDto.getPageSize() > 0) {
             query.setFirstResult(SearchDto.getPageIndex());
             query.setMaxResults(SearchDto.getPageSize());
@@ -214,7 +218,6 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             query.setFirstResult(0);
             query.setMaxResults(Integer.MAX_VALUE);
         }
-
         List<Object[]> resultList = query.getResultList();
         List<TransactionDto> list = new ArrayList<>();
         for (Object[] result : resultList) {
@@ -227,7 +230,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setDiscountMoney(ValueUtil.getDoubleByObject(result[5]));
             dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
             dto.setCode(ValueUtil.getStringByObject(result[7]));
-            dto.setPaymentTypeId(ValueUtil.getIntegerByObject(result[8]));
+            dto.setPaymentTypeName(ValueUtil.getStringByObject(result[8]));
             dto.setStatus(ValueUtil.getIntegerByObject(result[9]));
             list.add(dto);
         }

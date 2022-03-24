@@ -7,7 +7,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 public interface TransactionRepositoryCustom {
-    List<TransactionDto> exportExcel(TransactionSearchDto SearchDto, Integer offset, Integer limit);
+    List<TransactionDto> exportExcel(TransactionSearchDto SearchDto);
 
     List<TransactionDto> search(TransactionSearchDto searchDto);
 

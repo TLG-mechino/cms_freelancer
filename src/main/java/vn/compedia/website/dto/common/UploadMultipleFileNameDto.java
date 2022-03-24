@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import vn.compedia.website.dto.UploadWithFilenameDto;
 
+import java.util.List;
 import java.util.Map;
 
 @Setter
@@ -12,7 +14,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UploadMultipleFileNameDto {
-    private Map<String, String> listToShow;
-    private Map<String, String> listToAdd;
-    private Map<String, String> listToDelete;
+    private List<UploadWithFilenameDto> listToShow;
+    private List<UploadWithFilenameDto> listToAdd;
+    private List<UploadWithFilenameDto> listToDelete;
 }

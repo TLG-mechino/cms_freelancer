@@ -122,27 +122,16 @@ public class MnTransactionController extends BaseController {
 
     public StreamedContent exportDataExcel() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        int offset = 0;
         int count = 1;
-        int fixedRow = Constant.FIXED_ROW;
-        int limit = fixedRow;
         ExportExcelDataDto exportExcelDataDto = new ExportExcelDataDto();
         exportExcelDataDto.setTransactionExcel(new ArrayList<>());
-        while (true) {
-            List<TransactionDto> transactionDtos = transactionRepository.exportExcel(searchDto, offset, limit);
-            if (CollectionUtils.isEmpty(transactionDtos)) {
-                break;
-            } else {
-                for (TransactionDto var : transactionDtos) {
-                    var.setStt(count);
-                    var.setTransactionTimeString(var.getTransactionTime() == null ? "" : simpleDateFormat.format(var.getTransactionTime()));
-                    count++;
-                }
-            }
-            offset = limit;
-            limit += fixedRow;
-            exportExcelDataDto.getTransactionExcel().addAll(transactionDtos);
+        List<TransactionDto> transactionDtos = transactionRepository.exportExcel(searchDto);
+        for (TransactionDto var : transactionDtos) {
+            var.setStt(count);
+            var.setTransactionTimeString(var.getTransactionTime() == null ? "" : simpleDateFormat.format(var.getTransactionTime()));
+            count++;
         }
+            exportExcelDataDto.getTransactionExcel().addAll(transactionDtos);
 
         String fileName = ExportUtil.getFileNameExport("Transaction_File");
         try {

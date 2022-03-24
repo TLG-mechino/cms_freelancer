@@ -1,16 +1,17 @@
-package vn.compedia.website.dto.config;
+package vn.compedia.website.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import vn.compedia.website.model.PackageService;
+import vn.compedia.website.model.Exam;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServiceConfigDto extends PackageService {
+public class ExamDto extends Exam {
     private Long stt;
-    private String serviceTypeName;
+    private String examTypeName;
+    private Long numberFile;
 }

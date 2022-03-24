@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
@@ -51,7 +52,7 @@ public class ServiceConfigController extends BaseController {
     private String titleDialog;
     private ServiceConfigSearchDto searchDto;
     private ServiceConfigDto serviceConfigDto;
-    private LazyDataModel<PackageService> lazyDataModel;
+    private LazyDataModel<ServiceConfigDto> lazyDataModel;
     private ServiceConfigSearchDto searchDtoTemp;
     private List<ServiceType> serviceTypeList;
 
@@ -79,9 +80,9 @@ public class ServiceConfigController extends BaseController {
     }
 
     public void onSearch() {
-        lazyDataModel = new LazyDataModel<PackageService>() {
+        lazyDataModel = new LazyDataModel<ServiceConfigDto>() {
             @Override
-            public List<PackageService> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, FilterMeta> filters) {
+            public List<ServiceConfigDto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, FilterMeta> filters) {
                 searchDto.setPageIndex(first);
                 searchDto.setPageSize(pageSize);
                 searchDto.setSortField(sortField);
@@ -97,10 +98,10 @@ public class ServiceConfigController extends BaseController {
             }
 
             @Override
-            public PackageService getRowData(String rowKey) {
-                List<PackageService> requestRewardDtoList = getWrappedData();
+            public ServiceConfigDto getRowData(String rowKey) {
+                List<ServiceConfigDto> requestRewardDtoList = getWrappedData();
                 Long value = Long.valueOf(rowKey);
-                for (PackageService obj : requestRewardDtoList) {
+                for (ServiceConfigDto obj : requestRewardDtoList) {
                     if (obj.getPackageServiceId().equals(value)) {
                         return obj;
                     }
@@ -114,34 +115,34 @@ public class ServiceConfigController extends BaseController {
     }
 
     public boolean validateDate() {
-        if (StringUtils.isBlank(packageService.getCode().trim())) {
+        if (StringUtils.isBlank(serviceConfigDto.getCode().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập mã dịch vụ");
             return false;
         }
 
         long idCheck;
-        if (null == packageService.getPackageServiceId()) {
+        if (null == serviceConfigDto.getPackageServiceId()) {
             idCheck = 0L;
         } else {
-            idCheck = packageService.getPackageServiceId();
+            idCheck = serviceConfigDto.getPackageServiceId();
         }
 
-//        List<PackageService> checkCodeExists = serviceConfigRepository.findByCodeExists(packageService.getCode(), idCheck);
-//        if (CollectionUtils.isNotEmpty(checkCodeExists)) {
-//            FacesUtil.addErrorMessage("Mã dịch vụ đã tồn tại");
-//            return false;
-//        }
+        List<PackageService> checkCodeExists = serviceConfigRepository.findByCodeExists(serviceConfigDto.getCode(), idCheck);
+        if (CollectionUtils.isNotEmpty(checkCodeExists)) {
+            FacesUtil.addErrorMessage("Mã dịch vụ đã tồn tại");
+            return false;
+        }
 
-        if (StringUtils.isBlank(packageService.getName().trim())) {
+        if (StringUtils.isBlank(serviceConfigDto.getName().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập tên dịch vụ ");
             return false;
         }
 
-        if (StringUtils.isBlank(packageService.getDescription().trim())) {
+        if (StringUtils.isBlank(serviceConfigDto.getDescription().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề ");
             return false;
         }
-        if (packageService.getMoney() == null) {
+        if (serviceConfigDto.getMoney() == null) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập số tiền ");
             return false;
         }
@@ -153,13 +154,14 @@ public class ServiceConfigController extends BaseController {
         if (!validateDate()) {
             return;
         }
-        if (packageService.getPackageServiceId() == null) {
-            packageService.setCreateDate(new Date());
-            packageService.setUserName(authorizationController.getAccountDto().getUsername());
+        if (serviceConfigDto.getPackageServiceId() == null) {
+            serviceConfigDto.setCreateDate(new Date());
+            serviceConfigDto.setUserName(authorizationController.getAccountDto().getUsername());
         }
-        packageService.setUpdateDate(new Date());
-        packageService.setUpdateBy(authorizationController.getAccountDto().getUsername());
+        serviceConfigDto.setUpdateDate(new Date());
+        serviceConfigDto.setUpdateBy(authorizationController.getAccountDto().getUsername());
 
+        BeanUtils.copyProperties(serviceConfigDto, packageService);
         serviceConfigRepository.save(packageService);
         FacesUtil.addSuccessMessage("Lưu thành công");
         FacesUtil.closeDialog("inforDialog");
@@ -167,14 +169,14 @@ public class ServiceConfigController extends BaseController {
         onSearch();
     }
 
-    public void onEdit(PackageService object) {
+    public void onEdit(ServiceConfigDto object) {
         if (object == null) {
             FacesUtil.addErrorMessage("Không tồn tại thông tin");
             FacesUtil.updateView("growl");
             return;
         }
-        packageService = new PackageService();
-        BeanUtils.copyProperties(object, packageService);
+        serviceConfigDto = new ServiceConfigDto();
+        BeanUtils.copyProperties(object, serviceConfigDto);
         titleDialog = "Sửa";
         FacesUtil.updateView("inforDialogId");
     }

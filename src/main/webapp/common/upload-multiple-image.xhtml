@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:fileUpload id="ortherImage"
+                  mode="advanced" dragDropSupport="true"
+                  auto="true" multiple="true" cancelLabel="#{t['lbl.cancel']}"
+                  update="fileListPanel #{Constant.ERROR_GROWL_ID}" fileLimit="10"
+                  label="Thêm ảnh" uploadLabel="Thêm ảnh"
+                  onstart="PF('statusDialog').show();"
+                  oncomplete="PF('statusDialog').hide();"
+                  listener="#{uploadMultipleImageWithFileNameController.onUploadImage}"/>
+
+    <p:outputPanel id="fileListPanel" style="margin-top: 5px;">
+        <ui:repeat value="#{uploadMultipleImageWithFileNameController.uploadMultipleFileDto.listToShow}"
+                  var="itemVar1" varStatus="status">
+            <div class="ui-g-12 ui-lg-3 my-card-image-border" style="text-align: center;">
+                <p:graphicImage id="galery_image_#{status.index}" name="#{itemVar1.filePath}"
+                                style="height: 150px; width: 150px; object-fit: cover !important;"/>
+                <br/>
+                <p:commandButton
+                        actionListener="#{uploadMultipleImageWithFileNameController.onRemoveImage(itemVar1)}"
+                        update="fileListPanel" styleClass="red-btn"
+                        style="width:40px;" process="@this" icon="ui-icon-trash">
+                    <p:confirm header="Xác nhận xóa hình ảnh" message="Bạn có chắc chắn muốn xóa?"/>
+                </p:commandButton>
+            </div>
+        </ui:repeat>
+    </p:outputPanel>
+
+</ui:composition>

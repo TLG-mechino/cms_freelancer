@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -12,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UploadMultipleFileDto {
-    private Set<String> listToShow;
-    private Set<String> listToAdd;
-    private Set<String> listToDelete;
+    private List<String> listToShow;
+    private List<String> listToAdd;
+    private List<String> listToDelete;
 }

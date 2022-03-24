@@ -2,8 +2,8 @@ package vn.compedia.website.repository.config.impl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
+import vn.compedia.website.dto.config.ServiceConfigDto;
 import vn.compedia.website.dto.config.ServiceConfigSearchDto;
-import vn.compedia.website.model.PackageService;
 import vn.compedia.website.repository.config.ServiceConfigRepositoryCustom;
 import vn.compedia.website.util.ValueUtil;
 
@@ -22,7 +22,7 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
 
 
     @Override
-    public List<PackageService> search(ServiceConfigSearchDto searchDto) {
+    public List<ServiceConfigDto> search(ServiceConfigSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" select s.PACKAGE_SERVICE_ID, " +
                 "       s.CODE, " +
@@ -73,9 +73,9 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
             query.setMaxResults(Integer.MAX_VALUE);
         }
         List<Object[]> resultList = query.getResultList();
-        List<PackageService> list = new ArrayList<>();
+        List<ServiceConfigDto> list = new ArrayList<>();
         for (Object[] obj : resultList) {
-            PackageService dto = new PackageService();
+            ServiceConfigDto dto = new ServiceConfigDto();
             dto.setPackageServiceId(ValueUtil.getLongByObject(obj[0]));
             dto.setCode(ValueUtil.getStringByObject(obj[1]));
             dto.setName(ValueUtil.getStringByObject(obj[2]));
@@ -105,7 +105,7 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             query.setParameter("keyword", "%" + searchDto.getKeyword().trim() + "%");
         }
-        if(searchDto.getFillServiceType() != null){
+        if (searchDto.getFillServiceType() != null) {
             query.setParameter("fillServiceType", searchDto.getFillServiceType());
         }
         if (searchDto.getStatus() != null) {

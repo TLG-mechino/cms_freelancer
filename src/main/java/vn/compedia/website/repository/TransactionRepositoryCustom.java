@@ -11,7 +11,6 @@ public interface TransactionRepositoryCustom {
 
     List<TransactionDto> search(TransactionSearchDto searchDto);
 
-
     List<TransactionDto> getAllByUserName(String userName,TransactionSearchDto dto);
 
     int countSearchByUserName(String userName,TransactionSearchDto searchDto);

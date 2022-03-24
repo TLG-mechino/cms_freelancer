@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "user")
@@ -21,12 +22,6 @@ public class User {
 
     @Column(name = "IMAGE_PATH", length = 200)
     private String imagePath;
-
-    @Column(name = "FULL_NAME", nullable = false, length = 50)
-    private String fullName;
-
-    @Column(name = "PHONE", nullable = false)
-    private Integer phone;
 
     @Column(name = "ADDRESS", length = 100)
     private String address;
@@ -55,12 +50,24 @@ public class User {
     @Column(name = "WORKING_HOURS")
     private Integer workingHours;
 
-    @Column(name = "TIME_TYPE")
-    private Integer timeType;
+    @Column(name = "TIME_TYPE_ID")
+    private Integer timeTypeId;
 
-    @Column(name = "FACEBOOK_LINK", length = 200)
+    @Column(name = "FACEBOOK_LINK")
     private String facebookLink;
 
-    @Column(name = "TYPE_LOGIN", length = 20)
+    @Column(name = "TYPE_LOGIN")
     private String typeLogin;
+
+    @Column(name = "IS_EDITOR")
+    private Integer isEditor;
+
+    @Column(name = "IS_USER")
+    private Integer isUser;
+
+    @Column(name = "DATE_OF_BIRTH")
+    private Date dateOfBirth;
+
+    @Column(name = "DESCRIPTION_USER")
+    private String descriptionUser;
 }

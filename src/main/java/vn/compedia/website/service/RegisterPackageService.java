@@ -1,14 +1,13 @@
-package vn.compedia.website.repository;
+package vn.compedia.website.service;
 
-import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import vn.compedia.website.dto.response.RegisterPackageResponseDto;
 import vn.compedia.website.dto.search.RegisterPackageSearchDto;
-import vn.compedia.website.model.RegisterPackage;
 
 import java.util.List;
 
-public interface RegisterPackageRepositoryCustom {
-
+@Service
+public interface RegisterPackageService {
     List<RegisterPackageResponseDto> getAllRegisterPackageByUserName(String userName, RegisterPackageSearchDto dto);
-    int countSearchByUserName(String userName,RegisterPackageSearchDto dto);
+    int countSearchByUser (String userName,RegisterPackageSearchDto dto);
 }

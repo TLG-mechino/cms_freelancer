@@ -21,6 +21,9 @@ public class Transaction {
     @Column(name = "TRANSACTION", nullable = false)
     private Long transactionId;
 
+    @Column(name = "TITLE_TRANSACTION")
+    private String title;
+
     @Column(name = "SENDER", length = 20)
     private String sender;
 
@@ -47,4 +50,5 @@ public class Transaction {
 
     @Column(name = "STATUS")
     private Integer status;
+
 }

@@ -67,7 +67,7 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
 
         Query query = createQuery(sb, searchDto, type);
         if (searchDto.getPageSize() > 0) {
-            query.setFirstResult(searchDto.getPageIndex());
+            query.setFirstResult(searchDto.getPageIndex()*searchDto.getPageSize());
             query.setMaxResults(searchDto.getPageSize());
         } else {
             query.setFirstResult(0);

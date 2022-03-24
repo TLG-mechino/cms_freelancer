@@ -8,6 +8,6 @@ import vn.compedia.website.dto.BaseSearchDto;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserSearchDto extends BaseSearchDto {
+public class ReviewSearchDto extends BaseSearchDto {
     private Integer status;
 }

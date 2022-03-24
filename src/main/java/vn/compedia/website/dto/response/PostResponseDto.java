@@ -7,12 +7,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RegisterPackageResponseDto {
-    private Long registerId;
+public class PostResponseDto {
+
+    private Long id;
+    private String content;
     private String userName;
-    private String registrationTime;
-    private String expiredTime;
-    private Double money;
-    private String namePackage;
+    private String postingTime;
+    private Integer blockComment;
     private Integer status;
+    private String filePost;
 }

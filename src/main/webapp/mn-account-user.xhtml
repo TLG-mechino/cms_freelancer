@@ -6,7 +6,7 @@
                 template="/template/template.xhtml">
 
     <f:metadata>
-        <f:event type="preRenderView" listener="#{mnAccountUserController.initData()}"/>
+        <f:event type="preRenderView" listener="#{mnUserController.initData()}"/>
     </f:metadata>
 
     <ui:define name="title">Quản lý người dùng</ui:define>
@@ -27,10 +27,10 @@
                         <p:inputText placeholder="Nhập họ và tên, địa chỉ email, số điện thoại, tên đăng nhập" style="width: 97%"
                                      onblur="this.value = this.value.trim()" maxlength="100"
                                      onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
-                                     value="#{mnAccountUserController.searchDto.keyword}"
+                                     value="#{mnUserController.searchUserDto.keyword}"
                                      styleClass="border-input" onchange="this.value = this.value.trim()">
                             <p:ajax event="change" update="searchForm"
-                                    listener="#{mnAccountUserController.onSearch()}"/>
+                                    listener="#{mnUserController.onSearch()}"/>
                         </p:inputText>
                     </div>
                 </p:outputPanel>
@@ -40,7 +40,7 @@
 
                 <p:overlayPanel for="basic" styleClass="filter-panel">
                     <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
-                    <p:selectOneMenu styleClass="filter-item" value="#{mnAccountUserController.searchDto.status}">
+                    <p:selectOneMenu styleClass="filter-item" value="#{mnUserController.searchUserDto.status}">
                         <f:selectItem itemLabel="Tất cả" itemValue=""/>
                         <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
                         <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
@@ -48,11 +48,11 @@
 
                     <p:commandButton value="Bỏ lọc" update="searchForm"
                                      icon="fa fa-refresh" styleClass="filter-btn"
-                                     actionListener="#{mnAccountUserController.resetAll()}"/>
+                                     actionListener="#{mnUserController.resetAll()}"/>
 
                     <p:commandButton value="Lọc" update="tblSearchResult"
                                      icon="fa fa-search" styleClass="margin-right-10 filter-btn" id="search"
-                                     actionListener="#{mnAccountUserController.onSearch()}"/>
+                                     actionListener="#{mnUserController.onSearch()}"/>
                 </p:overlayPanel>
             </p:panelGrid>
 
@@ -60,10 +60,10 @@
                          widgetVar="dataTable" resizableColumns="true" paginator="true" rows="20"
                          lazy="true" pageLinks="5" var="resultDto" paginatorPosition="bottom"
                          paginatorAlwaysVisible="true" rowsPerPageTemplate="20,50,100"
-                         value="#{mnAccountUserController.lazyDataModel}" rowKey="#{resultDto.accountId}"
+                         value="#{mnUserController.lazyDataModel}" rowKey="#{resultDto.accountId}"
                          paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                          emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
-                         currentPageReportTemplate="Tổng số bản ghi: #{mnAccountUserController.lazyDataModel.rowCount}">
+                         currentPageReportTemplate="Tổng số bản ghi: #{mnUserController.lazyDataModel.rowCount}">
 
                 <p:column headerText="STT" width="30" style="text-align: center">
                     <p:outputLabel value="#{rowIndex + 1}"/>
@@ -73,16 +73,16 @@
                     <p:outputLabel value="#{resultDto.fullName}"/>
                 </p:column>
 
-                <p:column headerText="Tên đăng nhập" style="text-align: left" sortBy="#{resultDto.username}">
-                    <p:outputLabel value="#{resultDto.username}"/>
+                <p:column headerText="Số điện thoại" style="text-align: left" sortBy="#{resultDto.phone}">
+                    <p:outputLabel value="#{resultDto.phone}"/>
                 </p:column>
 
                 <p:column headerText="Địa chỉ email" style="text-align: left" sortBy="#{resultDto.email}">
                     <p:outputLabel value="#{resultDto.email}"/>
                 </p:column>
 
-                <p:column headerText="Số điện thoại" style="text-align: left" sortBy="#{resultDto.phone}">
-                    <p:outputLabel value="#{resultDto.phone}"/>
+                <p:column headerText="Ngày tạo" style="text-align: left" sortBy="#{resultDto.createDate}">
+                    <p:outputLabel value="#{resultDto.createDate}"/>
                 </p:column>
 
                 <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
@@ -95,7 +95,7 @@
                     <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
                         <p:menuitem value="Khóa tài khoản" icon="fa fa-lock" process="@this"
                                     update="tblSearchResult growl" rendered="#{resultDto.status eq DbConstant.ACTIVE_STATUS}"
-                                    actionListener="#{mnAccountUserController.onDelete(resultDto)}">
+                                    actionListener="#{mnUserController.onDelete(resultDto)}">
                             <p:confirm header="Xác nhận thông tin" escape="false"
                                        message="Bạn có chắc chắn muốn khóa tài khoản?"
                                        icon="fa fa-question-circle"/>
@@ -103,14 +103,14 @@
 
                         <p:menuitem value="Mở khóa tài khoản" icon="fa fa-unlock" process="@this"
                                     update="tblSearchResult growl" rendered="#{resultDto.status eq DbConstant.INACTIVE_STATUS}"
-                                    actionListener="#{mnAccountUserController.onDelete(resultDto)}">
+                                    actionListener="#{mnUserController.onDelete(resultDto)}">
                             <p:confirm header="Xác nhận thông tin" escape="false"
                                        message="Bạn có chắc chắn muốn mở khóa tài khoản?"
                                        icon="fa fa-question-circle"/>
                         </p:menuitem>
 
-                        <p:menuitem value="Sửa thông tin" icon="fa fa-edit"
-                                    update="dlForm" actionListener="#{mnAccountController.onEdit(resultDto)}"/>
+<!--                        <p:menuitem value="Sửa thông tin" icon="fa fa-edit"-->
+<!--                                    update="dlForm" actionListener="#{mnUserController.onEdit(resultDto)}"/>-->
                     </p:menuButton>
                 </p:column>
             </p:dataTable>

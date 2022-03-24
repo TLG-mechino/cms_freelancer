@@ -81,6 +81,10 @@
                     <p:outputLabel value="#{resultDto.email}"/>
                 </p:column>
 
+                <p:column headerText="Mô tả" style="text-align: left" sortBy="#{resultDto.descriptionUser}">
+                    <p:outputLabel value="#{resultDto.descriptionUser}"/>
+                </p:column>
+
                 <p:column headerText="Ngày tạo" style="text-align: left" sortBy="#{resultDto.createDate}">
                     <p:outputLabel value="#{resultDto.createDate}"/>
                 </p:column>
@@ -93,6 +97,11 @@
 
                 <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">
                     <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
+
+                        <p:menuitem value="Xem chi tiết" icon="fa fa-eye"
+                                    actionListener="#{mnUserController.findUserDtoById(resultDto.accountId)}">
+                        </p:menuitem>
+
                         <p:menuitem value="Khóa tài khoản" icon="fa fa-lock" process="@this"
                                     update="tblSearchResult growl" rendered="#{resultDto.status eq DbConstant.ACTIVE_STATUS}"
                                     actionListener="#{mnUserController.onDelete(resultDto)}">
@@ -108,9 +117,6 @@
                                        message="Bạn có chắc chắn muốn mở khóa tài khoản?"
                                        icon="fa fa-question-circle"/>
                         </p:menuitem>
-
-<!--                        <p:menuitem value="Sửa thông tin" icon="fa fa-edit"-->
-<!--                                    update="dlForm" actionListener="#{mnUserController.onEdit(resultDto)}"/>-->
                     </p:menuButton>
                 </p:column>
             </p:dataTable>

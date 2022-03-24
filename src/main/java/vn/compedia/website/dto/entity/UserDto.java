@@ -8,6 +8,8 @@ import vn.compedia.website.model.User;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDto extends User {
     private Long accountId;
     private String fullName;
@@ -15,4 +17,6 @@ public class UserDto extends User {
     private String email;
     private String createDate;
     private Integer status;
+    private String languageName;
+
 }

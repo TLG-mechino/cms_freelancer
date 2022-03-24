@@ -1,0 +1,61 @@
+.container{
+    display: flex;
+}
+.container .container-left{
+    width: 25%;
+}
+.container .container-right{
+    width: 75%
+}
+.container .container-right input{
+    border: 0
+}
+.container .container-right .ui-outputpanel{
+    border-bottom: 1px solid black;
+}
+.container .container-left .ui-menu{
+    border: 1px solid #7e7e7e;
+    border-radius: 25px;
+}
+.container .container-right .ui-panelgrid-cell{
+    min-width: 200px;
+    margin-left: 20px;
+}
+.container .container-right .ui-panelgrid-cell input{
+    min-width: 100px;
+    margin-left: 20px;
+}
+.container .container-left{
+    margin-right: 15px;
+}
+.container .container-right .ui-grid-row{
+    margin-bottom: 20px;
+}
+.container .container-left .ui-menuitem{
+    padding-bottom: 20px;
+}
+
+.container-evaluate-detail{
+
+}
+.container-evaluate-detail .card-list{
+    width: 100%;
+}
+.container-evaluate-detail .card-list .ui-g{
+    width: 100%;
+}
+.container-evaluate-detail .card-list .ui-panelgrid .ui-panelgrid-content .ui-g .ui-panelgrid-cell .ui-outputpanel .card{
+    display: flex;
+    width: 100%;
+}
+.container-evaluate-detail .card-list .ui-panelgrid .ui-panelgrid-content .ui-g .ui-panelgrid-cell .ui-outputpanel .card .p-d-flex{
+    display: block;
+    width: 20%;
+}
+.container-evaluate-detail .card-list .ui-panelgrid .ui-panelgrid-content .ui-g .ui-panelgrid-cell .ui-outputpanel .card .p-d-flex label:last-child{
+    width: 100%;
+}
+.container-evaluate-detail .card-list .ui-panelgrid .ui-panelgrid-content .ui-g .ui-panelgrid-cell{
+    display: block;
+    width: 100%;
+}

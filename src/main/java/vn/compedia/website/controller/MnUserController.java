@@ -1,7 +1,11 @@
 package vn.compedia.website.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -11,9 +15,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.controller.common.BaseController;
-import vn.compedia.website.dto.AccountDto;
+import vn.compedia.website.dto.HashtagDto;
 import vn.compedia.website.dto.entity.UserDto;
 import vn.compedia.website.dto.search.UserSearchDto;
+import vn.compedia.website.model.Hashtag;
+import vn.compedia.website.model.User;
 import vn.compedia.website.repository.UserRepository;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.DbConstant;
@@ -22,11 +28,14 @@ import vn.compedia.website.util.FacesUtil;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Named
 @Scope(value = "session")
 public class MnUserController extends BaseController {
@@ -38,10 +47,12 @@ public class MnUserController extends BaseController {
     private UserRepository userRepository;
 
 
+    private User user;
     private String titleDialog;
     private LazyDataModel<UserDto>lazyDataModel;
     private UserSearchDto searchUserDto;
     private UserSearchDto searchUserTemp;
+    private UserDto userDtoDetails;
 
     public void initData() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -53,16 +64,14 @@ public class MnUserController extends BaseController {
     public void resetAll() {
         searchUserDto = new UserSearchDto();
         searchUserTemp = new UserSearchDto();
+        user = new User();
         onSearch();
 
     }
-
     @Override
     protected String getMenuId() {
         return Constant.MN_USER;
     }
-
-
 
     public void onSearch(){
         lazyDataModel = new LazyDataModel<UserDto>() {
@@ -99,11 +108,61 @@ public class MnUserController extends BaseController {
         FacesUtil.updateView("searchFrom");
     }
 
-    public void onEdit(UserDto resultDto) {
+    public boolean validateDate() {
+        if (StringUtils.isBlank(userDtoDetails.getFullName().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập họ tên");
+            return false;
+        }
+
+        if (StringUtils.isBlank(userDtoDetails.getPhone().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập số điện thoại ");
+            return false;
+        }
+
+        if (StringUtils.isBlank(userDtoDetails.getEmail().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập email ");
+            return false;
+        }
+        if (StringUtils.isBlank(userDtoDetails.getFacebookLink().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập link facebook ");
+            return false;
+        }
+        if (StringUtils.isBlank(userDtoDetails.getAddress().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập địa chỉ ");
+            return false;
+        }
+
+        return true;
     }
 
-
-    public void onDelete(UserDto resultDto){
-
+    public void onSave() {
+        if (!validateDate()) {
+            return;
+        }
+        BeanUtils.copyProperties(userDtoDetails, user);
+        userRepository.save(user);
+        FacesUtil.addSuccessMessage("Lưu thành công");
+        FacesUtil.closeDialog("inforDialog");
+        FacesUtil.updateView("growl");
+        onSearch();
     }
+
+    public void onEdit(UserDto object) {
+        if (object == null) {
+            FacesUtil.addErrorMessage("Không tồn tại thông tin");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        BeanUtils.copyProperties(userDtoDetails, user);
+        userRepository.save(user);
+        titleDialog = "Sửa";
+        FacesUtil.addSuccessMessage("Update thành công");
+        FacesUtil.updateView("inforDialogId");
+    }
+
+    public void findUserDtoById(Long accountId){
+        userDtoDetails = userRepository.findUserDtoById(accountId);
+        FacesUtil.redirect("/user/profile.xhtml");
+    }
+
 }

@@ -1,6 +1,8 @@
 package vn.compedia.website.repository.impl;
 
 import com.ocpsoft.pretty.faces.util.StringUtils;
+import org.springframework.util.CollectionUtils;
+import vn.compedia.website.dto.UserExamDto;
 import vn.compedia.website.dto.entity.UserDto;
 import vn.compedia.website.dto.search.UserSearchDto;
 import vn.compedia.website.repository.UserRepositoryCustom;
@@ -157,12 +159,74 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         return ValueUtil.getIntegerByObject(query.getSingleResult());
     }
 
+    @Override
+    public UserDto findUserDtoById(Long accountId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" select ac.ACCOUNT_ID, " +
+                "       ac.FULL_NAME, " +
+                "       ac.PHONE, " +
+                "       ac.EMAIL, " +
+                "       user.FACEBOOK_LINK, " +
+                "       user.ADDRESS," +
+                "       user.TOTAL_SCORE, " +
+                "       user.MONEY_WALLET, " +
+                "       user.PROVINCE_ID, " +
+                "       user.DISTRICT_ID, " +
+                "       user.COMMUNE_ID, " +
+                "       user.EXPERIENCE_AMOUNT," +
+                "       user.WORKING_HOURS, " +
+                "       user.DESCRIPTION_USER, " +
+                "       language.NAME, " +
+                "       user.USERNAME, " +
+                "       user.IMAGE_PATH, " +
+                "       user.IS_EDITOR, " +
+                "       user.IS_USER, " +
+                "       user.RENT_COST, " +
+                "       user.TIME_TYPE_ID, " +
+                "       user.TYPE_LOGIN, " +
+                "       user.LANGUAGE_ID ");
+        sb.append("  from ACCOUNT ac inner join USER user on ac.USERNAME = user.USERNAME " +
+                "LEFT JOIN LANGUAGE language ON user.LANGUAGE_ID = language.LANGUAGE_ID WHERE ac.ACCOUNT_ID = :accountId ");
+        Query query = entityManager.createNativeQuery(sb.toString());
+        query.setParameter("accountId", accountId);
+        List<Object[]>result = query.getResultList();
+        UserDto dto = new UserDto();
+        if(!CollectionUtils.isEmpty(result)) {
+            for (Object[] obj : result) {
+                dto.setAccountId(ValueUtil.getLongByObject(obj[0]));
+                dto.setFullName(ValueUtil.getStringByObject(obj[1]));
+                dto.setPhone(ValueUtil.getStringByObject(obj[2]));
+                dto.setEmail(ValueUtil.getStringByObject(obj[3]));
+                dto.setFacebookLink(ValueUtil.getStringByObject(obj[4]));
+                dto.setAddress(ValueUtil.getStringByObject(obj[5]));
+                dto.setTotalScore(ValueUtil.getIntegerByObject(obj[6]));
+                dto.setMoneyWallet(ValueUtil.getIntegerByObject(obj[7]));
+                dto.setProvinceId(ValueUtil.getIntegerByObject(obj[8]));
+                dto.setDistrictId(ValueUtil.getIntegerByObject(obj[9]));
+                dto.setCommuneId(ValueUtil.getIntegerByObject(obj[10]));
+                dto.setExperienceAmount(ValueUtil.getIntegerByObject(obj[11]));
+                dto.setWorkingHours(ValueUtil.getIntegerByObject(obj[12]));
+                dto.setDescriptionUser(ValueUtil.getStringByObject(obj[13]));
+                dto.setLanguageName(ValueUtil.getStringByObject(obj[14]));
+                dto.setId(ValueUtil.getStringByObject(obj[15]));
+                dto.setImagePath(ValueUtil.getStringByObject(obj[16]));
+                dto.setIsEditor(ValueUtil.getIntegerByObject(obj[17]));
+                dto.setIsUser(ValueUtil.getIntegerByObject(obj[18]));
+                dto.setRentCost(ValueUtil.getIntegerByObject(obj[19]));
+                dto.setTimeTypeId(ValueUtil.getIntegerByObject(obj[20]));
+                dto.setTypeLogin(ValueUtil.getStringByObject(obj[21]));
+                dto.setLanguageId(ValueUtil.getIntegerByObject(obj[22]));
+            }
+        }
+        return dto;
+    }
+
     public Query createQuery(StringBuilder sb , UserSearchDto dto){
         Query query = entityManager.createNativeQuery(sb.toString());
-        if(dto.getKeyword()!=null) {
+        if(StringUtils.isNotBlank(dto.getKeyword())) {
             query.setParameter("keyword", "%" + dto.getKeyword().trim() + "%");
         }
-        query.setParameter("type", DbConstant.ACCOUNT_CMS);
+        query.setParameter("type", DbConstant.ACCOUNT_USER);
         if(dto.getStatus() != null) {
             query.setParameter("status",dto.getStatus());
         }

@@ -14,4 +14,6 @@ public interface UserRepositoryCustom {
 
     int countSearch(UserSearchDto userSearchDto, int type);
 
+    UserDto findUserDtoById(Long accountId);
+
 }

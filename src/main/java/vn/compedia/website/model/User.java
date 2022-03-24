@@ -70,4 +70,8 @@ public class User {
 
     @Column(name = "DESCRIPTION_USER")
     private String descriptionUser;
+
+    @Column(name = "LANGUAGE_ID")
+    private Integer languageId;
+
 }

@@ -43,10 +43,10 @@
                                 <p:outputLabel value="Nhập phí dịch vụ:" styleClass="requireLabel"/>
                                 <p:inputNumber placeholder="Nhập số tiền"
                                                onchange="this.value = this.value.trim()" maxlength="12"
-                                               value="#{serviceConfigController.packageService.money}"/>
+                                               value="#{serviceConfigController.serviceConfigDto.money}"/>
 
                                 <p:outputLabel value="Trạng thái:" styleClass="requireLabel"/>
-                                <p:selectOneMenu value="#{serviceConfigController.packageService.status}">
+                                <p:selectOneMenu value="#{serviceConfigController.serviceConfigDto.status}">
                                     <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
                                     <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
                                 </p:selectOneMenu>
@@ -142,8 +142,8 @@
                         <p:outputLabel value="#{resultDto.name}"/>
                     </p:column>
 
-                    <p:column headerText="Loại dịch vụ" style="text-align: left" sortBy="#{resultDto.serviceTypeId}">
-                        <p:outputLabel value="#{resultDto.serviceTypeId}"/>
+                    <p:column headerText="Loại dịch vụ" style="text-align: left" sortBy="#{resultDto.serviceTypeName}">
+                        <p:outputLabel value="#{resultDto.serviceTypeName}"/>
                     </p:column>
 
                     <p:column headerText="Mô tả" style="text-align: left" sortBy="#{resultDto.description}">

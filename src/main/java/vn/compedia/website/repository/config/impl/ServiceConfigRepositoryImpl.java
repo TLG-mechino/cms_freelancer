@@ -33,7 +33,8 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
                 "       s.USERNAME, " +
                 "       s.CREATE_DATE, " +
                 "       s.UPDATE_DATE, " +
-                "       s.UPDATE_BY ");
+                "       s.UPDATE_BY, " +
+                "       st.NAME as serviceTypeName ");
         appendQuery(sb, searchDto);
 
         if (searchDto.getSortField() != null) {
@@ -51,6 +52,9 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
             }
             if (searchDto.getSortField().equals("status")) {
                 sb.append(" ORDER BY s.STATUS ");
+            }
+            if (searchDto.getSortField().equals("serviceTypeName")) {
+                sb.append(" ORDER BY st.NAME ");
             }
             if (searchDto.getSortField().equals("userName")) {
                 sb.append(" ORDER BY s.USERNAME ");
@@ -86,6 +90,7 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
             dto.setCreateDate(ValueUtil.getDateByObject(obj[7]));
             dto.setUpdateDate(ValueUtil.getDateByObject(obj[8]));
             dto.setUpdateBy(ValueUtil.getStringByObject(obj[9]));
+            dto.setServiceTypeName(ValueUtil.getStringByObject(obj[10]));
             list.add(dto);
         }
         return list;
@@ -116,7 +121,7 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
     }
 
     public void appendQuery(StringBuilder sb, ServiceConfigSearchDto searchDto) {
-        sb.append(" from PACKAGE_SERVICE s WHERE 1 = 1 ");
+        sb.append(" from PACKAGE_SERVICE s LEFT JOIN SERVICE_TYPE st ON s.SERVICE_TYPE_ID = st.SERVICE_TYPE_ID WHERE 1 = 1 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (lower(s.CODE) LIKE lower(:keyword) " +
                     "OR lower(s.NAME) LIKE lower(:keyword) " +

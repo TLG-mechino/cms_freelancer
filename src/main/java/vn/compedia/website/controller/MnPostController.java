@@ -1,6 +1,5 @@
 package vn.compedia.website.controller;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +13,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.controller.common.BaseController;
-import vn.compedia.website.dto.NotificationDto;
-import vn.compedia.website.dto.NotificationSearchDto;
-import vn.compedia.website.model.Notification;
-import vn.compedia.website.repository.NotificationRepository;
+
+import vn.compedia.website.dto.PostDto;
+import vn.compedia.website.dto.PostSearchDto;
+import vn.compedia.website.model.Post;
+
+import vn.compedia.website.repository.PostRepository;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.FacesUtil;
 
@@ -33,8 +34,8 @@ import java.util.Map;
 @NoArgsConstructor
 @Named
 @Scope(value = "session")
-public class MnNotificationController extends BaseController {
-    private static Logger logger = LoggerFactory.getLogger(MnNotificationController.class);
+public class MnPostController extends BaseController {
+    private static Logger logger = LoggerFactory.getLogger(MnPostController.class);
     @Inject
     private AuthorizationController authorizationController;
 
@@ -42,14 +43,14 @@ public class MnNotificationController extends BaseController {
     private MnUserController userController;
 
     @Autowired
-    private NotificationRepository notificationRepository;
+    private PostRepository postRepository;
 
-    private Notification notification;
+    private Post post;
     private String titleDialog;
-    private NotificationSearchDto searchDto;
-    private NotificationDto notificationDto;
-    private LazyDataModel<NotificationDto> lazyDataModel;
-    private NotificationSearchDto searchDtoTemp;
+    private PostSearchDto searchDto;
+    private PostDto postDto;
+    private LazyDataModel<PostDto> lazyDataModel;
+    private PostSearchDto searchDtoTemp;
 
     public void initData() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -59,23 +60,23 @@ public class MnNotificationController extends BaseController {
     }
 
     public void resetAll() {
-        notification = new Notification();
-        notificationDto = new NotificationDto();
-        searchDto = new NotificationSearchDto();
-        searchDtoTemp = new NotificationSearchDto();
+        post = new Post();
+        postDto = new PostDto();
+        searchDto = new PostSearchDto();
+        searchDtoTemp = new PostSearchDto();
         onSearch();
     }
 
     public void resetDialog() {
-        notification= new Notification();
+        post = new Post();
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }
 
     public void onSearch() {
-        lazyDataModel = new LazyDataModel<NotificationDto>() {
+        lazyDataModel = new LazyDataModel<PostDto>() {
             @Override
-            public List<NotificationDto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, FilterMeta> filters) {
+            public List<PostDto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, FilterMeta> filters) {
                 searchDto.setPageIndex(first);
                 searchDto.setPageSize(pageSize);
                 searchDto.setSortField(sortField);
@@ -87,14 +88,14 @@ public class MnNotificationController extends BaseController {
                 }
                 searchDto.setSortOrder(sort);
                 BeanUtils.copyProperties(searchDto, searchDtoTemp);
-                return notificationRepository.getAllNotificationRpByUserName(userController.getUserDtoDetails().getId(), searchDto);
+                return postRepository.getAllPostByUserName(userController.getUserDtoDetails().getId(), searchDto);
             }
 
             @Override
-            public NotificationDto getRowData(String rowKey) {
-                List<NotificationDto> requestRewardDtoList = getWrappedData();
+            public PostDto getRowData(String rowKey) {
+                List<PostDto> requestRewardDtoList = getWrappedData();
                 Long value = Long.valueOf(rowKey);
-                for (NotificationDto obj : requestRewardDtoList) {
+                for (PostDto obj : requestRewardDtoList) {
                     if (obj.getId().equals(value)) {
                         return obj;
                     }
@@ -102,18 +103,18 @@ public class MnNotificationController extends BaseController {
                 return null;
             }
         };
-        int count = notificationRepository.countSearchRpByUserName(userController.getUserDtoDetails().getId(), searchDto).intValue();
+        int count = postRepository.countSearchRpByUserName(userController.getUserDtoDetails().getId(), searchDto).intValue();
         lazyDataModel.setRowCount(count);
         FacesUtil.updateView("searchForm");
     }
 
-    public void onDelete(Long notificationId) {
-        if (notificationId == null) {
+    public void onDelete(Long postId) {
+        if (postId == null) {
             FacesUtil.addErrorMessage("Không tồn tại thông tin");
             FacesUtil.updateView("growl");
             return;
         }
-        notificationRepository.deleteById(notificationId);
+        postRepository.deleteById(postId);
         FacesUtil.addSuccessMessage("Xóa thành công");
         FacesUtil.updateView("growl");
         onSearch();
@@ -121,6 +122,6 @@ public class MnNotificationController extends BaseController {
 
     @Override
     protected String getMenuId() {
-        return Constant.MN_NOTIFICATION;
+        return Constant.MN_POST;
     }
 }

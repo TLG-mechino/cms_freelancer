@@ -2,7 +2,7 @@ package vn.compedia.website.service;
 
 import org.springframework.stereotype.Service;
 import vn.compedia.website.dto.response.PostResponseDto;
-import vn.compedia.website.dto.search.PostSearchDto;
+import vn.compedia.website.dto.PostSearchDto;
 
 import java.util.List;
 

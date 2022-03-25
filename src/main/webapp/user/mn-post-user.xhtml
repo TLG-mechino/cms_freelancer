@@ -1,0 +1,140 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/template.xhtml">
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{mnPostController.initData()}"/>
+    </f:metadata>
+
+    <ui:define name="title">Quản lý người dùng</ui:define>
+
+    <ui:define name="content">
+
+        <h:form styleClass="ui-g-12" id="searchForm" prependId="false">
+            <p:outputPanel>
+                <p:link styleClass="title-color-left ui-sm-12">Quản lý người dùng</p:link>
+
+                <div style="float: right" class="ui-sm-12">
+                    <p:button value="Quay lại" icon="fa fa-arrow-left" outcome="/mn-account-user.xhtml">
+                    </p:button>
+                </div>
+            </p:outputPanel>
+
+            <hr class="hr-class"/>
+
+            <div class="container">
+                <div class="container-left" style="float: left">
+                    <ui:include src="/template/topbar.xhtml"/>
+                    <ui:include src="menu_user.xhtml"/>
+                </div>
+
+                <h:form styleClass="ui-g-12" prependId="false">
+                    <p:outputPanel>
+                        <p:link styleClass="title-color-left ui-sm-12">Thông tin bài đăng</p:link>
+                    </p:outputPanel>
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
+                                 columnClasses="ui-grid-col-11 ui-no-margin-padding margin-right-10, ui-grid-col-1 ui-no-margin-padding">
+                        <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
+                            <div class="ui-input-icon-left" style="width: 100%; display: flex;">
+                                <i class="fa fa-search"/>
+                                <p:inputText placeholder="Nhập nội dung"
+                                             style="width: 97%"
+                                             onblur="this.value = this.value.trim()" maxlength="100"
+                                             onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
+                                             value="#{mnPostController.searchDto.keyword}"
+                                             styleClass="border-input" onchange="this.value = this.value.trim()">
+                                    <p:ajax event="change" update="searchForm"
+                                            listener="#{mnPostController.onSearch()}"/>
+                                </p:inputText>
+                            </div>
+                        </p:outputPanel>
+
+                        <p:commandButton id="basic" value="Bộ lọc" type="button" iconPos="right"
+                                         icon="fa fa-caret-down"
+                                         styleClass="filter-search ui-sm-12"/>
+
+                        <p:overlayPanel for="basic" styleClass="filter-panel">
+                            <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
+                            <p:selectOneMenu styleClass="filter-item"
+                                             value="#{mnPostController.searchDto.status}">
+                                <f:selectItem itemLabel="Tất cả" itemValue=""/>
+                                <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
+                                <f:selectItem itemLabel="Không hoạt động"
+                                              itemValue="#{DbConstant.INACTIVE_STATUS}"/>
+                            </p:selectOneMenu>
+
+                            <p:commandButton value="Bỏ lọc" update="searchForm"
+                                             icon="fa fa-refresh" styleClass="filter-btn"
+                                             actionListener="#{mnPostController.resetAll()}"/>
+
+                            <p:commandButton value="Lọc" update="tblSearchResult"
+                                             icon="fa fa-search" styleClass="margin-right-10 filter-btn" id="search"
+                                             actionListener="#{mnPostController.onSearch()}"/>
+                        </p:overlayPanel>
+                    </p:panelGrid>
+
+
+                    <hr class="hr-class"/>
+
+                    <p:dataTable id="tblSearchResult" styleClass="margin-top-15 search-panel"
+                                 tableStyle="table-layout: auto;"
+                                 widgetVar="dataTable" resizableColumns="true" paginator="true" rows="20"
+                                 lazy="true" pageLinks="5" var="resultDto" paginatorPosition="bottom"
+                                 paginatorAlwaysVisible="true" rowsPerPageTemplate="20,50,100"
+                                 value="#{mnPostController.lazyDataModel}" rowKey="#{resultDto.id}"
+                                 paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                                 emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
+                                 currentPageReportTemplate="Tổng số bản ghi: #{mnPostController.lazyDataModel.rowCount}">
+
+                        <p:column headerText="STT" width="30" style="text-align: center">
+                            <p:outputLabel value="#{rowIndex + 1}"/>
+                        </p:column>
+
+                        <p:column headerText="Người đăng" style="text-align: left" sortBy="#{resultDto.userName}">
+                            <p:outputLabel value="#{resultDto.userName}"/>
+                        </p:column>
+
+                        <p:column headerText="Nội dung đăng" style="text-align: left"
+                                  sortBy="#{resultDto.content}">
+                            <p:outputLabel value="#{resultDto.content}"/>
+                        </p:column>
+
+                        <p:column headerText="File đính kèm" style="text-align: left" sortBy="#{resultDto.filePost}">
+                            <p:outputLabel value="#{resultDto.filePost}"/>
+                        </p:column>
+
+                        <p:column headerText="Thời gian thông báo" style="text-align: left"
+                                  sortBy="#{resultDto.postingTime}">
+                            <p:outputLabel value="#{resultDto.postingTime}">
+                                <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>
+                            </p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
+                            <p:outputLabel value="Hoạt động" rendered="#{resultDto.status eq 1}"/>
+                            <p:outputLabel value="Không hoạt động"
+                                           rendered="#{resultDto.status eq 0}"/>
+                        </p:column>
+
+                        <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">
+                            <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
+                                <p:menuitem value="Xóa thông tin" icon="fa fa-close"
+                                            update="searchForm growl" process="@this"
+                                            actionListener="#{mnPostController.onDelete(resultDto.postId)}">
+                                    <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"
+                                               message="Bạn có chắc chắn muốn xóa thông tin?"/>
+                                </p:menuitem>
+                            </p:menuButton>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+

@@ -110,6 +110,18 @@ public class MnJobController extends BaseController {
         FacesUtil.updateView("searchForm");
     }
 
+    public void onDelete(Long jobId) {
+        if (jobId == null) {
+            FacesUtil.addErrorMessage("Không tồn tại thông tin");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        jobRepository.deleteById(jobId);
+        FacesUtil.addSuccessMessage("Xóa thành công");
+        FacesUtil.updateView("growl");
+        onSearch();
+    }
+
     @Override
     protected String getMenuId() {
         return Constant.MN_JOB;

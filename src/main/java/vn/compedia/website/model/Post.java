@@ -1,15 +1,18 @@
 package vn.compedia.website.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "post")
 public class Post {
@@ -22,7 +25,7 @@ public class Post {
     @Column(name = "USERNAME")
     private String userName;
     @Column(name = "POSTING_TIME")
-    private Timestamp postingTime;
+    private Date postingTime;
     @Column(name = "BLOCK_COMMENT")
     private Integer blockComment;
     @Column(name = "STATUS")

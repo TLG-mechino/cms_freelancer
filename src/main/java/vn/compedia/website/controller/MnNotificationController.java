@@ -1,5 +1,6 @@
 package vn.compedia.website.controller;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,13 +14,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.controller.common.BaseController;
-
 import vn.compedia.website.dto.JobDto;
 import vn.compedia.website.dto.JobSearchDto;
-
+import vn.compedia.website.dto.NotificationDto;
+import vn.compedia.website.dto.NotificationSearchDto;
 import vn.compedia.website.model.Job;
-
+import vn.compedia.website.model.Notification;
 import vn.compedia.website.repository.JobRepository;
+import vn.compedia.website.repository.NotificationRepository;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.FacesUtil;
 
@@ -35,9 +37,8 @@ import java.util.Map;
 @NoArgsConstructor
 @Named
 @Scope(value = "session")
-public class MnJobController extends BaseController {
-
-    private static Logger logger = LoggerFactory.getLogger(MnJobController.class);
+public class MnNotificationController extends BaseController {
+    private static Logger logger = LoggerFactory.getLogger(MnNotificationController.class);
     @Inject
     private AuthorizationController authorizationController;
 
@@ -45,14 +46,14 @@ public class MnJobController extends BaseController {
     private MnUserController userController;
 
     @Autowired
-    private JobRepository jobRepository;
+    private NotificationRepository notificationRepository;
 
-    private Job job;
+    private Notification notification;
     private String titleDialog;
-    private JobSearchDto searchDto;
-    private JobDto jobDto;
-    private LazyDataModel<JobDto> lazyDataModel;
-    private JobSearchDto searchDtoTemp;
+    private NotificationSearchDto searchDto;
+    private NotificationDto notificationDto;
+    private LazyDataModel<NotificationDto> lazyDataModel;
+    private NotificationSearchDto searchDtoTemp;
 
     public void initData() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -62,23 +63,23 @@ public class MnJobController extends BaseController {
     }
 
     public void resetAll() {
-        job = new Job();
-        jobDto = new JobDto();
-        searchDto = new JobSearchDto();
-        searchDtoTemp = new JobSearchDto();
+        notification = new Notification();
+        notificationDto = new NotificationDto();
+        searchDto = new NotificationSearchDto();
+        searchDtoTemp = new NotificationSearchDto();
         onSearch();
     }
 
     public void resetDialog() {
-        job = new Job();
+        notification= new Notification();
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }
 
     public void onSearch() {
-        lazyDataModel = new LazyDataModel<JobDto>() {
+        lazyDataModel = new LazyDataModel<NotificationDto>() {
             @Override
-            public List<JobDto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, FilterMeta> filters) {
+            public List<NotificationDto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, FilterMeta> filters) {
                 searchDto.setPageIndex(first);
                 searchDto.setPageSize(pageSize);
                 searchDto.setSortField(sortField);
@@ -90,14 +91,14 @@ public class MnJobController extends BaseController {
                 }
                 searchDto.setSortOrder(sort);
                 BeanUtils.copyProperties(searchDto, searchDtoTemp);
-                return jobRepository.getAllJobRpByUserName(userController.getUserDtoDetails().getId(), searchDto);
+                return notificationRepository.getAllNotificationRpByUserName(userController.getUserDtoDetails().getId(), searchDto);
             }
 
             @Override
-            public JobDto getRowData(String rowKey) {
-                List<JobDto> requestRewardDtoList = getWrappedData();
+            public NotificationDto getRowData(String rowKey) {
+                List<NotificationDto> requestRewardDtoList = getWrappedData();
                 Long value = Long.valueOf(rowKey);
-                for (JobDto obj : requestRewardDtoList) {
+                for (NotificationDto obj : requestRewardDtoList) {
                     if (obj.getId().equals(value)) {
                         return obj;
                     }
@@ -105,13 +106,13 @@ public class MnJobController extends BaseController {
                 return null;
             }
         };
-        int count = jobRepository.countSearchRpByUserName(userController.getUserDtoDetails().getId(), searchDto).intValue();
+        int count = notificationRepository.countSearchRpByUserName(userController.getUserDtoDetails().getId(), searchDto).intValue();
         lazyDataModel.setRowCount(count);
         FacesUtil.updateView("searchForm");
     }
 
     @Override
     protected String getMenuId() {
-        return Constant.MN_JOB;
+        return Constant.MN_NOTIFICATION;
     }
 }

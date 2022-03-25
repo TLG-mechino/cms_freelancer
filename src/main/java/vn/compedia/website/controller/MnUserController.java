@@ -16,7 +16,9 @@ import org.springframework.context.annotation.Scope;
 import vn.compedia.website.controller.common.BaseController;
 import vn.compedia.website.dto.entity.UserDto;
 import vn.compedia.website.dto.search.UserSearchDto;
+import vn.compedia.website.model.Account;
 import vn.compedia.website.model.User;
+import vn.compedia.website.repository.AccountRepository;
 import vn.compedia.website.repository.UserRepository;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.DbConstant;
@@ -41,8 +43,12 @@ public class MnUserController extends BaseController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AccountRepository accountRepository;
+
 
     private User user;
+    private Account account;
     private String titleDialog;
     private LazyDataModel<UserDto>lazyDataModel;
     private UserSearchDto searchUserDto;
@@ -59,6 +65,7 @@ public class MnUserController extends BaseController {
     public void resetAll() {
         searchUserDto = new UserSearchDto();
         searchUserTemp = new UserSearchDto();
+        account = new Account();
         user = new User();
         onSearch();
 

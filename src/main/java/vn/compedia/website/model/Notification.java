@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -21,7 +22,7 @@ public class Notification {
     @Column(name = "CONTENT")
     private String content;
     @Column(name = "SENDING_TIME")
-    private Timestamp sendingTime;
+    private Date sendingTime;
     @Column(name = "USERNAME")
     private String userName;
     @Column(name = "STATUS")

@@ -261,7 +261,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     }
 
     public void appendQueryByUserName(StringBuilder sb, TransactionSearchDto SearchDto) {
-        sb.append(" FROM transaction t WHERE t.SENDER =:userName or t.RECIPIENT =:userName ");
+        sb.append(" FROM transaction t LEFT JOIN payment_type pt ON t.PAYMENT_TYPE_ID = pt.PAYMENT_TYPE_ID WHERE t.SENDER =:userName or t.RECIPIENT =:userName ");
         if (SearchDto.getKeyword() != null) {
             sb.append(" AND (t.TITLE_TRANSACTION LIKE :keyword) ");
         }

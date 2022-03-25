@@ -23,67 +23,67 @@
 
         <hr class="hr-class"/>
         <div class="container">
-        <div class="container-left" style="float: left">
-            <ui:include src="/template/topbar.xhtml"/>
-            <ui:include src="menu_user.xhtml"/>
-        </div>
+            <div class="container-left" style="float: left">
+                <ui:include src="/template/topbar.xhtml"/>
+                <ui:include src="menu_user.xhtml"/>
+            </div>
             <div class="container-right">
-        <h:form styleClass="ui-g-10" id="searchForm" prependId="false" style="background: #FFFFFF; border: 1px solid #E9E9E9; box-sizing: border-box; border-radius: 8px" >
-            <p:outputPanel>
-                <p:link styleClass="title-color-left ui-sm-12">Thông tin profile</p:link>
-            </p:outputPanel>
+                <h:form styleClass="ui-g-10" id="searchForm" prependId="false" style="background: #FFFFFF; border: 1px solid #E9E9E9; box-sizing: border-box; border-radius: 8px" >
+                    <p:outputPanel>
+                        <p:link styleClass="title-color-left ui-sm-12">Thông tin profile</p:link>
+                    </p:outputPanel>
 
-            <hr class="hr-class"/>
+                    <hr class="hr-class"/>
 
-            <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
-                         layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
-                <p:outputLabel value="họ và tên : " styleClass="requireLabel"/>
-                <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
-                             value="#{mnUserController.userDtoDetails.fullName}"/>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
+                                 layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
+                        <p:outputLabel value="họ và tên : " styleClass="requireLabel"/>
+                        <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
+                                     value="#{mnUserController.userDtoDetails.fullName}"/>
 
-                <p:outputLabel value="Số điện thoại :" styleClass="requireLabel"/>
-                <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
-                             value="#{mnUserController.userDtoDetails.phone}"/>
+                        <p:outputLabel value="Số điện thoại :" styleClass="requireLabel"/>
+                        <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
+                                     value="#{mnUserController.userDtoDetails.phone}"/>
 
-                <p:outputLabel value="Email : " styleClass="requireLabel"/>
-                <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
-                             value="#{mnUserController.userDtoDetails.email}"/>
+                        <p:outputLabel value="Email : " styleClass="requireLabel"/>
+                        <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
+                                     value="#{mnUserController.userDtoDetails.email}"/>
 
-                <p:outputLabel value="Link facebook : " styleClass="requireLabel"/>
-                <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
-                             value="#{mnUserController.userDtoDetails.facebookLink}"/>
+                        <p:outputLabel value="Link facebook : " styleClass="requireLabel"/>
+                        <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
+                                     value="#{mnUserController.userDtoDetails.facebookLink}"/>
 
-                <p:outputLabel value="Địa chỉ : " styleClass="requireLabel"/>
-                <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
-                             value="#{mnUserController.userDtoDetails.address}"/>
+                        <p:outputLabel value="Địa chỉ : " styleClass="requireLabel"/>
+                        <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
+                                     value="#{mnUserController.userDtoDetails.address}"/>
 
-                <p:outputLabel value="Tổng điểm : " styleClass="requireLabel"/>
-                <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
-                             value="#{mnUserController.userDtoDetails.totalScore}" disabled="true"/>
+                        <p:outputLabel value="Tổng điểm : " styleClass="requireLabel"/>
+                        <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
+                                     value="#{mnUserController.userDtoDetails.totalScore}" disabled="true"/>
 
-                <p:outputLabel value="Số tiền trong ví : " styleClass="requireLabel"/>
-                <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
-                             value="#{mnUserController.userDtoDetails.moneyWallet}" disabled="true"/>
+                        <p:outputLabel value="Số tiền trong ví : " styleClass="requireLabel"/>
+                        <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
+                                     value="#{mnUserController.userDtoDetails.moneyWallet}" disabled="true"/>
 
-                <p:outputLabel value="Kinh nghiệm làm việc : " styleClass="requireLabel"/>
-                <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
-                             value="#{mnUserController.userDtoDetails.experienceAmount}"/>
+                        <p:outputLabel value="Kinh nghiệm làm việc : " styleClass="requireLabel"/>
+                        <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
+                                     value="#{mnUserController.userDtoDetails.experienceAmount}"/>
 
-                <p:outputLabel value="Số giờ làm việc : " styleClass="requireLabel"/>
-                <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
-                             value="#{mnUserController.userDtoDetails.workingHours}"/>
+                        <p:outputLabel value="Số giờ làm việc : " styleClass="requireLabel"/>
+                        <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
+                                     value="#{mnUserController.userDtoDetails.workingHours}"/>
 
-                <p:outputLabel value="Ngôn ngữ : " styleClass="requireLabel"/>
-                <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
-                             value="#{mnUserController.userDtoDetails.languageName}"/>
+                        <p:outputLabel value="Ngôn ngữ : " styleClass="requireLabel"/>
+                        <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
+                                     value="#{mnUserController.userDtoDetails.languageName}"/>
 
 
-            </p:panelGrid>
-            <hr class="hr-class"/>
-            <p:commandButton value="Lưu" styleClass="border-btn" icon="fa fa-save"
-                             style="width: auto" oncomplete="PF('inforDialog').show()"
-                             actionListener="#{mnUserController.onEdit(mnUserController.userDtoDetails)}"/>
-        </h:form>
+                    </p:panelGrid>
+                    <hr class="hr-class"/>
+                    <p:commandButton value="Lưu" styleClass="border-btn" icon="fa fa-save"
+                                     style="width: auto" oncomplete="PF('inforDialog').show()"
+                                     actionListener="#{mnUserController.onEdit(mnUserController.userDtoDetails)}"/>
+                </h:form>
             </div>
         </div>
     </ui:define>

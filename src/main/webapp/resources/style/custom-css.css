@@ -11,14 +11,14 @@
     border: 0
 }
 .container .container-right .ui-outputpanel{
-    border-bottom: 1px solid black;
+    /*border-bottom: 1px solid black;*/
 }
 .container .container-left .ui-menu{
     border: 1px solid #7e7e7e;
     border-radius: 25px;
 }
 .container .container-right .ui-panelgrid-cell{
-    min-width: 200px;
+    /*min-width: 200px;*/
     margin-left: 20px;
 }
 .container .container-right .ui-panelgrid-cell input{

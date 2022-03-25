@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
@@ -15,20 +14,16 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.controller.common.BaseController;
-import vn.compedia.website.dto.HashtagDto;
 import vn.compedia.website.dto.entity.UserDto;
 import vn.compedia.website.dto.search.UserSearchDto;
-import vn.compedia.website.model.Hashtag;
 import vn.compedia.website.model.User;
 import vn.compedia.website.repository.UserRepository;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.DbConstant;
 import vn.compedia.website.util.FacesUtil;
-
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 

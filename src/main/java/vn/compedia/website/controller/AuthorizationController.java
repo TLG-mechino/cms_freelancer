@@ -67,6 +67,7 @@ public class AuthorizationController implements Serializable {
         myMenus.add(Constant.SYS_CONFIG);
         myMenus.add(Constant.MN_USER);
         myMenus.add(Constant.MN_TEST);
+        myMenus.add(Constant.MN_JOB);
         myMenus.add(Constant.MN_TEST_EVALUATE);
         myMenus.add(Constant.MN_TRANSACTION);
         myMenus.add(Constant.SERVICE_CONFIG);

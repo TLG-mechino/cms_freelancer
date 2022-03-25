@@ -16,4 +16,6 @@ public interface JobRepository extends CrudRepository<Job,Long>, JobRepositoryCu
     @Query(value = "select * from job j where j.JOB_ID = :jobId",nativeQuery = true)
     Job getJobByJobId(@Param("jobId")Long jobId);
 
+
+
 }

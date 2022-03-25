@@ -109,9 +109,8 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
             sb.append(" AND (lower(j.USERNAME) LIKE :keyword " +
                     " OR lower(j.NAME) LIKE lower(:keyword)) " );
         }
-        if (dto.getMoney() != 0) {
-            sb.append(" AND j.MONEY_FROM < :money ");
-            sb.append(" AND j.MONEY_TO > :money ");
+        if (dto.getMoney() != null) {
+            sb.append(" AND j.MONEY_FROM <= :money AND j.MONEY_TO >= :money ");
         }
         if (dto.getStatus() != null) {
             sb.append(" AND j.STATUS =:status ");
@@ -125,7 +124,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
         if (StringUtils.isNotBlank(dto.getKeyword())) {
             query.setParameter("keyword", "%" + dto.getKeyword().trim().toUpperCase() + "%");
         }
-        if (dto.getMoney() != 0) {
+        if (dto.getMoney() != null) {
             query.setParameter("money", dto.getMoney());
         }
         if (dto.getStatus() != null) {

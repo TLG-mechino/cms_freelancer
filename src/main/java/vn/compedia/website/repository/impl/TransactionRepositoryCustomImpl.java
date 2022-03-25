@@ -109,6 +109,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
                 "t.FINAL_MONEY, " +
                 "t.CODE, " +
                 "t.PAYMENT_TYPE_ID, " +
+                "pt.NAME, " +
                 "t.STATUS, " +
                 "t.TITLE_TRANSACTION ");
         appendQueryByUserName(sb, searchDto);
@@ -131,6 +132,9 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             if (searchDto.getSortField().equals("discountMoney")) {
                 sb.append(" ORDER BY t.DISCOUNT_MONEY ");
             }
+            if (searchDto.getSortField().equals("paymentTypeName")) {
+                sb.append(" ORDER BY pt.NAME ");
+            }
             if (searchDto.getSortField().equals("finalMoney")) {
                 sb.append(" ORDER BY t.FINAL_MONEY ");
             }
@@ -149,7 +153,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         }
         Query query = createQueryByUserName(userName, sb, searchDto);
         if (searchDto.getPageSize() > 0) {
-            query.setFirstResult(searchDto.getPageIndex() * searchDto.getPageSize());
+            query.setFirstResult(searchDto.getPageIndex());
             query.setMaxResults(searchDto.getPageSize());
         } else {
             query.setFirstResult(0);
@@ -168,20 +172,21 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
             dto.setCode(ValueUtil.getStringByObject(result[7]));
             dto.setPaymentTypeId(ValueUtil.getIntegerByObject(result[8]));
-            dto.setStatus(ValueUtil.getIntegerByObject(result[9]));
-            dto.setTitle(ValueUtil.getStringByObject(result[10]));
+            dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
+            dto.setStatus(ValueUtil.getIntegerByObject(result[10]));
+            dto.setTitle(ValueUtil.getStringByObject(result[11]));
             list.add(dto);
         }
         return list;
     }
 
     @Override
-    public int countSearchByUserName(String userName, TransactionSearchDto searchDto) {
+    public BigInteger countSearchByUserName(String userName, TransactionSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(t.TRANSACTION) ");
         appendQueryByUserName(sb, searchDto);
         Query query = createQueryByUserName(userName, sb, searchDto);
-        return ValueUtil.getIntegerByObject(query.getSingleResult());
+        return (BigInteger) query.getSingleResult();
     }
 
     @Override

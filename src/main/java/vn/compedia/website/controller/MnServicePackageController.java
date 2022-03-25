@@ -13,13 +13,16 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.controller.common.BaseController;
-import vn.compedia.website.dto.PostDto;
-import vn.compedia.website.dto.PostSearchDto;
+import vn.compedia.website.dto.PackageServiceDto;
+import vn.compedia.website.dto.PackageServiceSearchDto;
 import vn.compedia.website.dto.TransactionDto;
 import vn.compedia.website.dto.TransactionSearchDto;
-import vn.compedia.website.model.Post;
+import vn.compedia.website.dto.config.ServiceConfigDto;
+import vn.compedia.website.dto.config.ServiceConfigSearchDto;
+import vn.compedia.website.model.PackageService;
 import vn.compedia.website.model.Transaction;
-import vn.compedia.website.repository.PostRepository;
+import vn.compedia.website.repository.PackageServiceRepository;
+import vn.compedia.website.repository.RegisterPackageRepository;
 import vn.compedia.website.repository.TransactionRepository;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.FacesUtil;
@@ -30,30 +33,33 @@ import javax.inject.Named;
 import java.util.List;
 import java.util.Map;
 
+
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Named
 @Scope(value = "session")
-public class MnTransactionUserController extends BaseController {
+public class MnServicePackageController extends BaseController {
 
-    private static Logger logger = LoggerFactory.getLogger(MnTransactionUserController.class);
+    private static Logger logger = LoggerFactory.getLogger(MnServicePackageController.class);
     @Inject
     private AuthorizationController authorizationController;
 
     @Inject
     private MnUserController userController;
 
-    @Autowired
-    private TransactionRepository transactionRepository;
 
-    private Transaction transaction;
+    @Autowired
+    private RegisterPackageRepository registerPackageRepository;
+
+
+    private PackageService packageService;
     private String titleDialog;
-    private TransactionSearchDto searchDto;
-    private TransactionDto transactionDto;
-    private LazyDataModel<TransactionDto> lazyDataModel;
-    private TransactionSearchDto searchDtoTemp;
+    private PackageServiceSearchDto searchDto;
+    private PackageServiceDto packageServiceDto;
+    private LazyDataModel<PackageServiceDto> lazyDataModel;
+    private PackageServiceSearchDto searchDtoTemp;
 
     public void initData() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -63,23 +69,23 @@ public class MnTransactionUserController extends BaseController {
     }
 
     public void resetAll() {
-        transaction = new Transaction();
-        transactionDto = new TransactionDto();
-        searchDto = new TransactionSearchDto();
-        searchDtoTemp = new TransactionSearchDto();
+        packageService = new PackageService();
+        packageServiceDto = new PackageServiceDto();
+        searchDto = new PackageServiceSearchDto();
+        searchDtoTemp = new PackageServiceSearchDto();
         onSearch();
     }
 
     public void resetDialog() {
-        transaction = new Transaction();
+        packageService = new PackageService();
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }
 
     public void onSearch() {
-        lazyDataModel = new LazyDataModel<TransactionDto>() {
+        lazyDataModel = new LazyDataModel<PackageServiceDto>() {
             @Override
-            public List<TransactionDto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, FilterMeta> filters) {
+            public List<PackageServiceDto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, FilterMeta> filters) {
                 searchDto.setPageIndex(first);
                 searchDto.setPageSize(pageSize);
                 searchDto.setSortField(sortField);
@@ -91,22 +97,22 @@ public class MnTransactionUserController extends BaseController {
                 }
                 searchDto.setSortOrder(sort);
                 BeanUtils.copyProperties(searchDto, searchDtoTemp);
-                return transactionRepository.getAllByUserName(userController.getUserDtoDetails().getId(), searchDto);
+                return registerPackageRepository.getAllRegisterPackageByUserName(userController.getUserDtoDetails().getId(), searchDto);
             }
 
             @Override
-            public TransactionDto getRowData(String rowKey) {
-                List<TransactionDto> requestRewardDtoList = getWrappedData();
+            public PackageServiceDto getRowData(String rowKey) {
+                List<PackageServiceDto> requestRewardDtoList = getWrappedData();
                 Long value = Long.valueOf(rowKey);
-                for (TransactionDto obj : requestRewardDtoList) {
-                    if (obj.getTransactionId().equals(value)) {
+                for (PackageServiceDto obj : requestRewardDtoList) {
+                    if (obj.getPackageServiceId().equals(value)) {
                         return obj;
                     }
                 }
                 return null;
             }
         };
-        int count = transactionRepository.countSearchByUserName(userController.getUserDtoDetails().getId(), searchDto).intValue();
+        int count = registerPackageRepository.countSearchByUserName(userController.getUserDtoDetails().getId(), searchDto).intValue();
         lazyDataModel.setRowCount(count);
         FacesUtil.updateView("searchForm");
     }
@@ -117,15 +123,14 @@ public class MnTransactionUserController extends BaseController {
             FacesUtil.updateView("growl");
             return;
         }
-        transactionRepository.deleteById(transactionId);
+        registerPackageRepository.deleteById(transactionId);
         FacesUtil.addSuccessMessage("Xóa thành công");
         FacesUtil.updateView("growl");
         onSearch();
     }
 
-
     @Override
     protected String getMenuId() {
-        return Constant.MN_TRANSACTION_USER;
+        return Constant.MN_PACKAGE_SERVICE;
     }
 }

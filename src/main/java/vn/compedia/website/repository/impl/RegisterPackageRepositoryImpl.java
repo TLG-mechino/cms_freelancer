@@ -3,6 +3,8 @@ package vn.compedia.website.repository.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.CollectionUtils;
+import vn.compedia.website.dto.PackageServiceDto;
+import vn.compedia.website.dto.PackageServiceSearchDto;
 import vn.compedia.website.dto.response.RegisterPackageResponseDto;
 import vn.compedia.website.dto.search.RegisterPackageSearchDto;
 import vn.compedia.website.repository.RegisterPackageRepositoryCustom;
@@ -11,6 +13,7 @@ import vn.compedia.website.util.ValueUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +24,7 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
 
 
     @Override
-    public List<RegisterPackageResponseDto> getAllRegisterPackageByUserName(String userName, RegisterPackageSearchDto searchDto) {
+    public List<PackageServiceDto> getAllRegisterPackageByUserName(String userName, PackageServiceSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append("select rp.REGISTER_PACKAGE_ID," +
                 "       rp.USERNAME," +
@@ -41,19 +44,15 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
             query.setFirstResult(0);
             query.setMaxResults(Integer.MAX_VALUE);
         }
-        List<RegisterPackageResponseDto> dtos = new ArrayList<>();
+        List<PackageServiceDto> dtos = new ArrayList<>();
         List<Object[]> result = query.getResultList();
         if (!CollectionUtils.isEmpty(result)) {
             for (Object[] obj : result) {
-                RegisterPackageResponseDto responseDto = new RegisterPackageResponseDto();
-                responseDto.setRegisterId(ValueUtil.getLongByObject(obj[0]));
+                PackageServiceDto responseDto = new PackageServiceDto();
+                responseDto.setPackageServiceId(ValueUtil.getLongByObject(obj[0]));
                 responseDto.setUserName(ValueUtil.getStringByObject(obj[1]));
-                if (obj[2] != null) {
-                    responseDto.setRegistrationTime(DateUtil.formatDatePattern(ValueUtil.getDateByObject(obj[2]), DateUtil.DATE_FORMAT));
-                }
-                if (obj[3] != null) {
-                    responseDto.setExpiredTime(DateUtil.formatDatePattern(ValueUtil.getDateByObject(obj[3]), DateUtil.DATE_FORMAT));
-                }
+                responseDto.setRegistrationTime(ValueUtil.getDateByObject(obj[2]));
+                responseDto.setExpiredTime(ValueUtil.getDateByObject(obj[3]));
                 responseDto.setMoney(ValueUtil.getDoubleByObject(obj[4]));
                 responseDto.setNamePackage(ValueUtil.getStringByObject(obj[6]));
                 responseDto.setStatus(ValueUtil.getIntegerByObject(obj[7]));
@@ -64,7 +63,7 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
     }
 
 
-    private Query createQueryByUser(StringBuilder sb,String userName , RegisterPackageSearchDto searchDto) {
+    private Query createQueryByUser(StringBuilder sb,String userName , PackageServiceSearchDto searchDto) {
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("userName",userName);
         if (searchDto.getKeyword() != null) {
@@ -73,14 +72,14 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
         if (searchDto.getStatus() != null) {
             query.setParameter("status",searchDto.getStatus());
         }
-        if (searchDto.getMoneyPackageService() != null ) {
-            query.setParameter("money",searchDto.getMoneyPackageService());
+        if (searchDto.getMoney() != null ) {
+            query.setParameter("money",searchDto.getMoney());
         }
         return query;
     }
 
 
-    private void appendQueryByUserName (StringBuilder sb , RegisterPackageSearchDto dto) {
+    private void appendQueryByUserName (StringBuilder sb , PackageServiceSearchDto dto) {
         sb.append(" from register_package rp " +
                 "         inner join (select ps.NAME,ps.CODE,ps.PACKAGE_SERVICE_ID from package_service ps) result1 " +
                 "                    on rp.PACKAGE_SERVICE_ID = result1.PACKAGE_SERVICE_ID" +
@@ -91,17 +90,17 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
         if (dto.getStatus() != null) {
             sb.append(" and rp.STATUS =:status ");
         }
-        if (dto.getMoneyPackageService() != null) {
+        if (dto.getMoney() != null) {
             sb.append(" and rp.MONEY =:money");
         }
     }
 
     @Override
-    public int countSearchByUserName(String userName, RegisterPackageSearchDto dto) {
+    public BigInteger countSearchByUserName(String userName, PackageServiceSearchDto dto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" select COUNT(rp.REGISTER_PACKAGE_ID) ");
         appendQueryByUserName(sb,dto);
         Query query = createQueryByUser(sb,userName,dto);
-        return ValueUtil.getIntegerByObject(query.getSingleResult());
+        return (BigInteger) query.getSingleResult();
     }
 }

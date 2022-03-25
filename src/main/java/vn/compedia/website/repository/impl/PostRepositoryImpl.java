@@ -101,7 +101,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
 
     public void appendQuery (StringBuilder sb , PostSearchDto dto, String userName) {
         sb.append(" from post p" +
-                "         left join (select pf.POST_ID, concat(pf.FILE_NAME, ';') as postFile" +
+                "         left join (select pf.POST_ID, group_concat(pf.FILE_NAME) as postFile" +
                 "                     from post_file pf" +
                 "                     group by pf.POST_ID) result1 on p.POST_ID = result1.POST_ID" +
                 "    where p.USERNAME=:userName");

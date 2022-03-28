@@ -17,9 +17,9 @@ import java.util.List;
 
 @Repository
 public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCustom {
+
     @PersistenceContext
     private EntityManager entityManager;
-
 
     @Override
     public List<ServiceConfigDto> search(ServiceConfigSearchDto searchDto) {

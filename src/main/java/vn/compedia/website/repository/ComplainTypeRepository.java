@@ -12,4 +12,5 @@ public interface ComplainTypeRepository extends JpaRepository<ComplainType, Long
 
     @Query("SELECT u FROM ComplainType u WHERE u.status = 1")
     List<ComplainType> findAllByStatus(Integer status);
+
 }

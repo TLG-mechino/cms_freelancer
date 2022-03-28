@@ -6,11 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.util.Date;
 
 @Entity
-@Table(name = "transaction")
+@Table(name = "TRANSACTION")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -18,7 +17,7 @@ import java.util.Date;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "TRANSACTION", nullable = false)
+    @Column(name = "TRANSACTION_ID", nullable = false)
     private Long transactionId;
 
     @Column(name = "TITLE_TRANSACTION")

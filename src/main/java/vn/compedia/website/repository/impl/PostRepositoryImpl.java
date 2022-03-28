@@ -100,11 +100,11 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
 
     public void appendQuery (StringBuilder sb , PostSearchDto dto, String userName) {
-        sb.append(" from post p" +
+        sb.append(" from POST p" +
                 "         left join (select pf.POST_ID, group_concat(pf.FILE_NAME) as postFile" +
-                "                     from post_file pf" +
+                "                     from POST_FILE pf" +
                 "                     group by pf.POST_ID) result1 on p.POST_ID = result1.POST_ID" +
-                "    where p.USERNAME=:userName");
+                "    where p.USERNAME = :userName");
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("userName",userName);
         if (StringUtils.isNotBlank(dto.getKeyword())) {

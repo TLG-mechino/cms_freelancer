@@ -6,9 +6,6 @@ import org.springframework.data.repository.query.Param;
 import vn.compedia.website.dto.AccountDto;
 import vn.compedia.website.model.Account;
 
-import java.util.List;
-import java.util.Optional;
-
 public interface AccountRepository extends CrudRepository<Account, Long>, AccountRepositoryCustom {
 
     Account getByUsername(String username);
@@ -31,4 +28,5 @@ public interface AccountRepository extends CrudRepository<Account, Long>, Accoun
     @Query("SELECT new vn.compedia.website.dto.AccountDto(ac.accountId, ac.email, ac.username, ac.password, ac.salt, ac.status )" +
             " from Account ac where ac.accountId =:id ")
     AccountDto getAccountInfo(Long id);
+
 }

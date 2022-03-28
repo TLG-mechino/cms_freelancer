@@ -7,7 +7,9 @@ import java.math.BigInteger;
 import java.util.List;
 
 public interface NotificationRepositoryCustom {
+
     List<NotificationDto> getAllNotificationRpByUserName(String userName, NotificationSearchDto searchDto);
 
     BigInteger countSearchRpByUserName(String userName, NotificationSearchDto searchDto);
+
 }

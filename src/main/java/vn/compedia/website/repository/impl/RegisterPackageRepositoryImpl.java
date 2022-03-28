@@ -62,7 +62,6 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
         return dtos;
     }
 
-
     private Query createQueryByUser(StringBuilder sb,String userName , PackageServiceSearchDto searchDto) {
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("userName",userName);
@@ -78,12 +77,11 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
         return query;
     }
 
-
     private void appendQueryByUserName (StringBuilder sb , PackageServiceSearchDto dto) {
-        sb.append(" from register_package rp " +
-                "         inner join (select ps.NAME,ps.CODE,ps.PACKAGE_SERVICE_ID from package_service ps) result1 " +
+        sb.append(" from REGISTER_PACKAGE rp " +
+                "         inner join (select ps.NAME,ps.CODE,ps.PACKAGE_SERVICE_ID from PACKAGE_SERVICE ps) result1 " +
                 "                    on rp.PACKAGE_SERVICE_ID = result1.PACKAGE_SERVICE_ID" +
-                " where rp.USERNAME=:userName ");
+                " where rp.USERNAME = :userName ");
         if (dto.getKeyword() != null) {
             sb.append(" and result1.NAME like :keyword ");
         }

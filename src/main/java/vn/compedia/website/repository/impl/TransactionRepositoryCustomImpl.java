@@ -216,7 +216,6 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             query.setParameter("status", searchDto.getStatus());
         }
         return query;
-
     }
 
     public Query createQueryByUserName(String userName, StringBuilder sb, TransactionSearchDto searchDto) {
@@ -242,7 +241,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     }
 
     public void appendQuery(StringBuilder sb, TransactionSearchDto searchDto) {
-        sb.append(" FROM transaction t LEFT JOIN payment_type pt ON t.PAYMENT_TYPE_ID = pt.PAYMENT_TYPE_ID WHERE 1 = 1 ");
+        sb.append(" FROM TRANSACTION t LEFT JOIN PAYMENT_TYPE pt ON t.PAYMENT_TYPE_ID = pt.PAYMENT_TYPE_ID WHERE 1 = 1 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (t.CODE LIKE :keyword OR t.SENDER LIKE :keyword OR t.RECIPIENT LIKE :keyword) ");
         }
@@ -261,7 +260,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     }
 
     public void appendQueryByUserName(StringBuilder sb, TransactionSearchDto SearchDto) {
-        sb.append(" FROM transaction t LEFT JOIN payment_type pt ON t.PAYMENT_TYPE_ID = pt.PAYMENT_TYPE_ID WHERE t.SENDER =:userName or t.RECIPIENT =:userName ");
+        sb.append(" FROM TRANSACTION t LEFT JOIN PAYMENT_TYPE pt ON t.PAYMENT_TYPE_ID = pt.PAYMENT_TYPE_ID WHERE t.SENDER =:userName or t.RECIPIENT =:userName ");
         if (SearchDto.getKeyword() != null) {
             sb.append(" AND (t.TITLE_TRANSACTION LIKE :keyword) ");
         }

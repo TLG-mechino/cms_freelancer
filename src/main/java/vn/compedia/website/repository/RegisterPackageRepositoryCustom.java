@@ -13,5 +13,6 @@ import java.util.List;
 public interface RegisterPackageRepositoryCustom {
 
     List<PackageServiceDto> getAllRegisterPackageByUserName(String userName, PackageServiceSearchDto dto);
+
     BigInteger countSearchByUserName(String userName, PackageServiceSearchDto dto);
 }

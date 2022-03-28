@@ -6,10 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.Instant;
 
 @Entity
-@Table(name = "exam")
+@Table(name = "EXAM")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,19 +28,15 @@ public class Exam extends BaseModel{
     @Column(name = "TITLE_EN")
     private String titleEn;
 
-    @Lob
     @Column(name = "DESCRIPTION_VN")
     private String descriptionVn;
 
-    @Lob
     @Column(name = "DESCRIPTION_EN")
     private String descriptionEn;
 
-    @Lob
     @Column(name = "CONTENT_VN")
     private String contentVn;
 
-    @Lob
     @Column(name = "CONTENT_EN")
     private String contentEn;
 

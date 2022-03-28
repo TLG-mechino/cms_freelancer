@@ -7,7 +7,9 @@ import java.math.BigInteger;
 import java.util.List;
 
 public interface HashtagRepositoryCustom {
+
     List<HashtagDto> search(HashtagSearchDto searchDto);
 
     BigInteger countSearch(HashtagSearchDto searchDto);
+
 }

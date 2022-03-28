@@ -9,16 +9,19 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "notification_ref")
+@Table(name = "NOTIFICATION_REF")
 public class NotificationRef {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "NOTIFICATION_REF_ID")
     private Long id;
+
     @Column(name = "NOTIFICATION_ID")
     private Long notificationId;
+
     @Column(name = "USERNAME")
     private String userName;
+
     @Column(name = "STATUS")
     private Integer status;
 }

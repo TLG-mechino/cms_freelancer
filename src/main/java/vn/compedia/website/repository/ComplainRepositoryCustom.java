@@ -9,7 +9,9 @@ import java.math.BigInteger;
 import java.util.List;
 
 public interface ComplainRepositoryCustom {
+
     List<ComplainDto> search(ComplainSearchDto searchDto);
 
     BigInteger countSearch(ComplainSearchDto searchDto);
+
 }

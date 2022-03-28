@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface TransactionRepository extends CrudRepository<Transaction,Long>, TransactionRepositoryCustom {
+
     @Query("select t from Transaction t where t.code = :code and t.transactionId <> :transactionId")
     List<Transaction> findByCodeExists(@Param("code") String code, @Param("transactionId") Long transactionId);
 

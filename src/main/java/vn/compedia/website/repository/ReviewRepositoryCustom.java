@@ -10,5 +10,6 @@ import java.util.List;
 public interface ReviewRepositoryCustom {
 
     List<ReviewDto> getAllReviewByUserName(String userName, ReviewSearchDto reviewSearchDto);
+
     BigInteger countSearchByUserName (String userName, ReviewSearchDto dto);
 }

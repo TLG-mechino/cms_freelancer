@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "account")
+@Table(name = "ACCOUNT")
 @NoArgsConstructor
 @Setter
 @Getter
@@ -16,34 +16,34 @@ public class Account extends BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "account_id")
+    @Column(name = "ACCOUNT_ID")
     private Long accountId;
 
-    @Column(name = "username")
+    @Column(name = "USERNAME")
     private String username;
 
-    @Column(name = "email")
+    @Column(name = "EMAIL")
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "PASSWORD")
     private String password;
 
-    @Column(name = "first_login")
+    @Column(name = "FIRST_LOGIN")
     private int firstLogin;
 
-    @Column(name = "salt")
+    @Column(name = "SALT")
     private String salt;
 
-    @Column(name = "status")
+    @Column(name = "STATUS")
     private Integer status;
 
-    @Column(name = "full_name")
+    @Column(name = "FULL_NAME")
     private String fullName;
 
-    @Column(name = "phone")
+    @Column(name = "PHONE")
     private String phone;
 
-    @Column(name = "type")
+    @Column(name = "TYPE")
     private int type;
 
     public Account(Long accountId, String email, String username, String password, String salt, Integer status) {

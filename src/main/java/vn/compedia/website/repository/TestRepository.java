@@ -10,6 +10,8 @@ import java.util.List;
 
 @Repository
 public interface TestRepository extends CrudRepository<Exam, Long>, TestRepositoryCustom {
+
     @Query("select e from Exam e where e.code = :code and e.examId <> :examId")
     List<Exam> findByCodeExists(@Param("code") String code, @Param("examId") Long examId);
+
 }

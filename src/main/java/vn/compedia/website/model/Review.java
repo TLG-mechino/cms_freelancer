@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -28,6 +29,6 @@ public class Review {
     @Column(name = "STATUS")
     private Integer status;
     @Column(name = "REVIEW_TIME")
-    private Timestamp reviewTime;
+    private Date reviewTime;
 
 }

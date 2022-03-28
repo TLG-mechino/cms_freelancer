@@ -1,14 +1,14 @@
 package vn.compedia.website.repository;
 
-import org.springframework.data.domain.Pageable;
-import vn.compedia.website.dto.response.ReviewResponseDto;
-import vn.compedia.website.dto.search.ReviewSearchDto;
+import vn.compedia.website.dto.ReviewDto;
+import vn.compedia.website.dto.ReviewSearchDto;
 
+import java.math.BigInteger;
 import java.util.List;
 
 
 public interface ReviewRepositoryCustom {
 
-    List<ReviewResponseDto> getAllReviewByUserName(String userName, ReviewSearchDto reviewSearchDto);
-    int countSearchByUserName (String userName,ReviewSearchDto dto);
+    List<ReviewDto> getAllReviewByUserName(String userName, ReviewSearchDto reviewSearchDto);
+    BigInteger countSearchByUserName (String userName, ReviewSearchDto dto);
 }

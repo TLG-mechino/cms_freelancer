@@ -1,8 +1,9 @@
 package vn.compedia.website.repository.impl;
 
 import org.springframework.util.CollectionUtils;
+import vn.compedia.website.dto.ReviewDto;
 import vn.compedia.website.dto.response.ReviewResponseDto;
-import vn.compedia.website.dto.search.ReviewSearchDto;
+import vn.compedia.website.dto.ReviewSearchDto;
 import vn.compedia.website.repository.ReviewRepositoryCustom;
 import vn.compedia.website.util.DateUtil;
 import vn.compedia.website.util.ValueUtil;
@@ -10,6 +11,7 @@ import vn.compedia.website.util.ValueUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
     private EntityManager entityManager;
 
     @Override
-    public List<ReviewResponseDto> getAllReviewByUserName(String userName, ReviewSearchDto reviewSearchDto) {
+    public List<ReviewDto> getAllReviewByUserName(String userName, ReviewSearchDto reviewSearchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append("select rv.REVIEW_ID," +
                 "       rv.USERNAME," +
@@ -30,7 +32,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                 "       result1.NAME," +
                 "       result1.JOB_ID,"+
                 "       rv.TITLE ");
-        appendQueryByUserName(sb,reviewSearchDto);
+        appendQueryByUserName(sb,reviewSearchDto, userName);
         if (reviewSearchDto.getSortField() != null ) {
             if (reviewSearchDto.getSortField().equals("content")) {
                 sb.append(" ORDER BY rv.CONTENT ");
@@ -64,17 +66,17 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
             query.setFirstResult(0);
             query.setMaxResults(Integer.MAX_VALUE);
         }
-        List<ReviewResponseDto>reviews = new ArrayList<>();
+        List<ReviewDto>reviews = new ArrayList<>();
         List<Object[]>result = query.getResultList();
         if (!CollectionUtils.isEmpty(result)) {
             for (Object[] obj:result) {
-                ReviewResponseDto review = new ReviewResponseDto();
+                ReviewDto review = new ReviewDto();
                 review.setId(ValueUtil.getLongByObject(obj[0]));
                 review.setUserName(ValueUtil.getStringByObject(obj[1]));
                 review.setContent(null == ValueUtil.getStringByObject(obj[2])?"":ValueUtil.getStringByObject(obj[2]));
                 review.setStarAmount(null == ValueUtil.getIntegerByObject(obj[3])?0:ValueUtil.getIntegerByObject(obj[3]));
                 review.setStatus(ValueUtil.getIntegerByObject(obj[4]));
-                review.setReviewTime(DateUtil.formatDatePattern(ValueUtil.getDateByObject(obj[5]),DateUtil.DATE_FORMAT));
+                review.setReviewTime(ValueUtil.getDateByObject(obj[5]));
                 review.setNameJob(ValueUtil.getStringByObject(obj[6]));
                 review.setJobId(null == ValueUtil.getLongByObject(obj[7])?null:ValueUtil.getLongByObject(obj[7]));
                 review.setTitle(ValueUtil.getStringByObject(obj[8]));
@@ -84,13 +86,27 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
         return reviews;
     }
 
-    private void appendQueryByUserName (StringBuilder sb , ReviewSearchDto dto) {
+    @Override
+    public BigInteger countSearchByUserName(String userName, ReviewSearchDto dto) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" select COUNT(rv.REVIEW_ID) ");
+        appendQueryByUserName(sb,dto, userName);
+        Query query = createQueryByUserName(userName,sb,dto);
+        return (BigInteger) query.getSingleResult();
+    }
+
+    private void appendQueryByUserName (StringBuilder sb , ReviewSearchDto dto, String userName) {
         sb.append(" from review rv " +
                 "  inner join (select j.JOB_ID, j.NAME from job j where j.USERNAME = :userName) result1" +
                 "   on rv.JOB_ID = result1.JOB_ID " +
                 " where 1 = 1 ");
+        Query query = entityManager.createNativeQuery(sb.toString());
+        query.setParameter("userName",userName);
         if (dto.getKeyword() != null) {
             sb.append(" and ( (rv.TITLE like :keyword) or (rv.START_AMOUNT like :keyword) )");
+        }
+        if(dto.getStartAmount() != null){
+            sb.append(" and rv.START_AMOUNT =:startAmount");
         }
         if (dto.getStatus() != null) {
             sb.append(" and rv.STATUS =:status");
@@ -103,6 +119,9 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
         if (dto.getKeyword() !=null ) {
             query.setParameter("keyword",dto.getKeyword());
         }
+        if(dto.getStartAmount() != null){
+            query.setParameter("startAmount",dto.getStartAmount());
+        }
         if (dto.getStatus() != null ) {
             query.setParameter("status",dto.getStatus());
         }
@@ -110,9 +129,6 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
     }
 
 
-    @Override
-    public int countSearchByUserName(String userName, ReviewSearchDto dto) {
-        return 0;
-    }
+
 
 }

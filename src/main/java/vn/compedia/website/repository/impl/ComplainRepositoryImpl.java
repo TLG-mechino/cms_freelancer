@@ -97,7 +97,7 @@ public class ComplainRepositoryImpl implements ComplainRepositoryCustom {
     }
 
     public void appendQuery(StringBuilder sb, ComplainSearchDto searchDto) {
-        sb.append(" FROM COMPLAIN c INNER JOIN JOB j on c.OBJECT_ID = j.JOB_ID INNER JOIN account u on u.username = c.username " +
+        sb.append(" FROM COMPLAIN c INNER JOIN JOB j on c.OBJECT_ID = j.JOB_ID INNER JOIN ACCOUNT u on u.username = c.username " +
                 " INNER JOIN COMPLAIN_TYPE ct on ct.COMPLAIN_TYPE_ID = c.COMPLAIN_TYPE_ID where 1 = 1 ");
          if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (lower(c.TITLE) LIKE :keyword OR lower(c.CONTENT) LIKE :keyword OR lower(c.USERNAME) LIKE :keyword ");

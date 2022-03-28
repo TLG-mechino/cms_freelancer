@@ -21,7 +21,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     @Override
     public List<TransactionDto> search(TransactionSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT t.TRANSACTION, " +
+        sb.append(" SELECT t.TRANSACTION_ID, " +
                 "t.SENDER, " +
                 "t.RECIPIENT, " +
                 "t.TRANSACTION_TIME, " +
@@ -35,7 +35,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         appendQuery(sb, searchDto);
         if (searchDto.getSortField() != null) {
             if (searchDto.getSortField().equals("transactionId")) {
-                sb.append(" ORDER BY t.TRANSACTION ");
+                sb.append(" ORDER BY t.TRANSACTION_ID ");
             }
             if (searchDto.getSortField().equals("sender")) {
                 sb.append(" ORDER BY t.SENDER ");
@@ -66,7 +66,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             }
             sb.append(searchDto.getSortOrder());
         } else {
-            sb.append(" ORDER BY t.TRANSACTION DESC ");
+            sb.append(" ORDER BY t.TRANSACTION_ID DESC ");
         }
         Query query = createQuery(sb, searchDto);
         if (searchDto.getPageSize() > 0) {
@@ -100,7 +100,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     @Override
     public List<TransactionDto> getAllByUserName(String userName, TransactionSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT t.TRANSACTION, " +
+        sb.append(" SELECT t.TRANSACTION_ID, " +
                 "t.SENDER, " +
                 "t.RECIPIENT, " +
                 "t.TRANSACTION_TIME, " +
@@ -115,7 +115,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         appendQueryByUserName(sb, searchDto);
         if (searchDto.getSortField() != null) {
             if (searchDto.getSortField().equals("transactionId")) {
-                sb.append(" ORDER BY t.TRANSACTION ");
+                sb.append(" ORDER BY t.TRANSACTION_ID ");
             }
             if (searchDto.getSortField().equals("sender")) {
                 sb.append(" ORDER BY t.SENDER ");
@@ -149,7 +149,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             }
             sb.append(searchDto.getSortOrder());
         } else {
-            sb.append(" ORDER BY t.TRANSACTION DESC ");
+            sb.append(" ORDER BY t.TRANSACTION_ID DESC ");
         }
         Query query = createQueryByUserName(userName, sb, searchDto);
         if (searchDto.getPageSize() > 0) {
@@ -183,7 +183,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     @Override
     public BigInteger countSearchByUserName(String userName, TransactionSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT COUNT(t.TRANSACTION) ");
+        sb.append(" SELECT COUNT(t.TRANSACTION_ID) ");
         appendQueryByUserName(sb, searchDto);
         Query query = createQueryByUserName(userName, sb, searchDto);
         return (BigInteger) query.getSingleResult();
@@ -192,7 +192,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     @Override
     public BigInteger countSearch(TransactionSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT COUNT(t.TRANSACTION) ");
+        sb.append(" SELECT COUNT(t.TRANSACTION_ID) ");
         appendQuery(sb, searchDto);
         Query query = createQuery(sb, searchDto);
         return (BigInteger) query.getSingleResult();
@@ -301,7 +301,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     @Override
     public List<TransactionDto> exportExcel(TransactionSearchDto SearchDto) {
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT t.TRANSACTION, " +
+        sb.append(" SELECT t.TRANSACTION_ID, " +
                 "t.SENDER, " +
                 "t.RECIPIENT, " +
                 "t.TRANSACTION_TIME, " +
@@ -314,7 +314,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         appendQuery(sb, SearchDto);
         if (SearchDto.getSortField() != null) {
             if (SearchDto.getSortField().equals("transactionId")) {
-                sb.append(" ORDER BY t.TRANSACTION ");
+                sb.append(" ORDER BY t.TRANSACTION_ID ");
             }
             if (SearchDto.getSortField().equals("sender")) {
                 sb.append(" ORDER BY t.SENDER ");
@@ -345,7 +345,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             }
             sb.append(SearchDto.getSortOrder());
         } else {
-            sb.append(" ORDER BY t.TRANSACTION DESC ");
+            sb.append(" ORDER BY t.TRANSACTION_ID DESC ");
         }
         Query query = createQuery(sb, SearchDto);
         if (SearchDto.getPageSize() > 0) {

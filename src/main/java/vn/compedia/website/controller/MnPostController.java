@@ -68,7 +68,7 @@ public class MnPostController extends BaseController {
     }
 
     public void resetDialog() {
-        post = new Post();
+        postDto = new PostDto();
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }

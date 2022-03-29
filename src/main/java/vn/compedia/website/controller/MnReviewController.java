@@ -72,7 +72,7 @@ public class MnReviewController extends BaseController {
     }
 
     public void resetDialog() {
-        review = new Review();
+        reviewDto = new ReviewDto();
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }

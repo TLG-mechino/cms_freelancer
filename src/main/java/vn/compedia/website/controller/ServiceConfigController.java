@@ -15,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.controller.common.BaseController;
+import vn.compedia.website.dto.PackageServiceDto;
 import vn.compedia.website.dto.config.ServiceConfigDto;
 import vn.compedia.website.dto.config.ServiceConfigSearchDto;
 import vn.compedia.website.model.PackageService;
@@ -74,7 +75,7 @@ public class ServiceConfigController extends BaseController {
     }
 
     public void resetDialog() {
-        packageService = new PackageService();
+        serviceConfigDto = new ServiceConfigDto();
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }

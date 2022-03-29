@@ -67,7 +67,7 @@ public class MnHashtagController extends BaseController {
     }
 
     public void resetDialog() {
-        hashtag = new Hashtag();
+        hashtagDto = new HashtagDto();
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }
@@ -157,6 +157,7 @@ public class MnHashtagController extends BaseController {
         }
         hashtagDto.setUpdateDate(new Date());
         hashtagDto.setUpdateBy(authorizationController.getAccountDto().getUsername());
+
         BeanUtils.copyProperties(hashtagDto, hashtag);
         hashtagRepository.save(hashtag);
         FacesUtil.addSuccessMessage("Lưu thành công");

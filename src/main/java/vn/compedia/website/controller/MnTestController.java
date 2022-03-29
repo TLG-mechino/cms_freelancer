@@ -92,7 +92,7 @@ public class MnTestController extends BaseController {
     }
 
     public void resetDialog() {
-        exam = new Exam();
+        examDto = new ExamDto();
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }

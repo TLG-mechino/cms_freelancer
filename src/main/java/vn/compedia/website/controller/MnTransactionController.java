@@ -79,7 +79,7 @@ public class MnTransactionController extends BaseController {
     }
 
     public void resetDialog() {
-        transaction = new Transaction();
+        transactionDto = new TransactionDto();
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }

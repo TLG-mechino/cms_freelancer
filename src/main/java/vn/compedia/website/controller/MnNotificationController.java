@@ -67,7 +67,7 @@ public class MnNotificationController extends BaseController {
     }
 
     public void resetDialog() {
-        notification= new Notification();
+        notificationDto= new NotificationDto();
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }

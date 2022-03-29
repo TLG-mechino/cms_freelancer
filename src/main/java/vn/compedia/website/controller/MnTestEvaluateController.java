@@ -86,7 +86,7 @@ public class MnTestEvaluateController extends BaseController {
     }
 
     public void resetDialog() {
-        userExam = new UserExam();
+        userExamDto = new UserExamDto();
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }

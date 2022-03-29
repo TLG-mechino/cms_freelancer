@@ -77,7 +77,7 @@ public class MnServicePackageController extends BaseController {
     }
 
     public void resetDialog() {
-        packageService = new PackageService();
+        packageServiceDto = new PackageServiceDto();
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }

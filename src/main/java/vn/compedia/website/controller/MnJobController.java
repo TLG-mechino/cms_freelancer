@@ -70,7 +70,7 @@ public class MnJobController extends BaseController {
     }
 
     public void resetDialog() {
-        job = new Job();
+        jobDto = new JobDto();
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }

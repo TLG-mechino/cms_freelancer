@@ -125,7 +125,7 @@
                              widgetVar="dataTable" resizableColumns="true" paginator="true" rows="20"
                              lazy="true" pageLinks="5" var="resultDto" paginatorPosition="bottom"
                              paginatorAlwaysVisible="true" rowsPerPageTemplate="20,50,100"
-                             value="#{serviceConfigController.lazyDataModel}" rowKey="#{resultDto.serviceId}"
+                             value="#{serviceConfigController.lazyDataModel}" rowKey="#{resultDto.packageServiceId}"
                              paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                              emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
                              currentPageReportTemplate="Tổng số bản ghi: #{serviceConfigController.lazyDataModel.rowCount}">
@@ -170,7 +170,7 @@
 
                             <p:menuitem value="Xóa thông tin" icon="fa fa-close"
                                         update="searchForm growl" process="@this"
-                                        actionListener="#{serviceConfigController.onDelete(resultDto.marketId)}">
+                                        actionListener="#{serviceConfigController.onDelete(resultDto.packageServiceId)}">
                                 <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"
                                            message="Bạn có chắc chắn muốn xóa thông tin?"/>
                             </p:menuitem>

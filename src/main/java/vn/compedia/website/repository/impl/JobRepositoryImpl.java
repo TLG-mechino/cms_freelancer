@@ -1,14 +1,11 @@
 package vn.compedia.website.repository.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.util.CollectionUtils;
 import vn.compedia.website.dto.JobDto;
 import vn.compedia.website.dto.JobSearchDto;
-import vn.compedia.website.dto.response.JobResponseDto;
-import vn.compedia.website.dto.search.JobUserSearchDto;
 import vn.compedia.website.repository.JobRepositoryCustom;
-import vn.compedia.website.util.DateUtil;
 import vn.compedia.website.util.ValueUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

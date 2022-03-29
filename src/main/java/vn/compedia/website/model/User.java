@@ -45,7 +45,7 @@ public class User {
     private Integer experienceAmount;
 
     @Column(name = "RENT_COST")
-    private Integer rentCost;
+    private Double rentCost;
 
     @Column(name = "WORKING_HOURS")
     private Integer workingHours;

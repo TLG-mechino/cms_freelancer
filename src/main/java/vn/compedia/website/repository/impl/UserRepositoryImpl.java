@@ -136,7 +136,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             userDto.setDistrictId(null == ValueUtil.getIntegerByObject(obj[11]) ? null : ValueUtil.getIntegerByObject(obj[11]));
             userDto.setCommuneId(null == ValueUtil.getIntegerByObject(obj[12]) ? null : ValueUtil.getIntegerByObject(obj[12]));
             userDto.setExperienceAmount(null == ValueUtil.getIntegerByObject(obj[13]) ? null : ValueUtil.getIntegerByObject(obj[13]));
-            userDto.setRentCost(null == ValueUtil.getIntegerByObject(obj[14]) ? null : ValueUtil.getIntegerByObject(obj[14]));
+            userDto.setRentCost(null == ValueUtil.getDoubleByObject(obj[14]) ? null : ValueUtil.getDoubleByObject(obj[14]));
             userDto.setWorkingHours(null == ValueUtil.getIntegerByObject(obj[15]) ? null : ValueUtil.getIntegerByObject(obj[15]));
             userDto.setTimeTypeId(null == ValueUtil.getIntegerByObject(obj[16]) ? null : ValueUtil.getIntegerByObject(obj[16]));
             userDto.setFacebookLink(null == ValueUtil.getStringByObject(obj[17]) ? null : ValueUtil.getStringByObject(obj[17]));
@@ -212,7 +212,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                 dto.setImagePath(ValueUtil.getStringByObject(obj[16]));
                 dto.setIsEditor(ValueUtil.getIntegerByObject(obj[17]));
                 dto.setIsUser(ValueUtil.getIntegerByObject(obj[18]));
-                dto.setRentCost(ValueUtil.getIntegerByObject(obj[19]));
+                dto.setRentCost(ValueUtil.getDoubleByObject(obj[19]));
                 dto.setTimeTypeId(ValueUtil.getIntegerByObject(obj[20]));
                 dto.setTypeLogin(ValueUtil.getStringByObject(obj[21]));
                 dto.setLanguageId(ValueUtil.getIntegerByObject(obj[22]));

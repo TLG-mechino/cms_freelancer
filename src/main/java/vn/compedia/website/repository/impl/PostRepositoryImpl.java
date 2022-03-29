@@ -4,10 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import vn.compedia.website.dto.PostDto;
-import vn.compedia.website.dto.response.PostResponseDto;
 import vn.compedia.website.dto.PostSearchDto;
 import vn.compedia.website.repository.PostRepositoryCustom;
-import vn.compedia.website.util.DateUtil;
 import vn.compedia.website.util.ValueUtil;
 
 import javax.persistence.EntityManager;

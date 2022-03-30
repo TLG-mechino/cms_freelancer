@@ -131,6 +131,27 @@ public class MnTestEvaluateController extends BaseController {
         return uploadWithFilenameDto;
     }
 
+    public void onEdit(UserExamDto object) {
+        if (object == null) {
+            FacesUtil.addErrorMessage("Không tồn tại thông tin");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        userExamDto = new UserExamDto();
+        List<ExamFile> list = examFileRepository.findAllByUserExamId(object.getUserExamId());
+        List<UploadWithFilenameDto> uploadMutipleImage = new ArrayList<>();
+
+        list.forEach(var -> {
+            if (var.getType() == 1) {
+                uploadMutipleImage.add(copyValue(var, new UploadWithFilenameDto()));
+            }
+        });
+        uploadMultipleImageFileNameController.getUploadMultipleFileDto().setListToShow(uploadMutipleImage);
+        BeanUtils.copyProperties(object, userExamDto);
+        titleDialog = "Sửa";
+        FacesUtil.updateView("inforDialogId");
+    }
+
     public void onDelete(Long userExamId) {
         if (userExamId == null) {
             FacesUtil.addErrorMessage("Không tồn tại thông tin");

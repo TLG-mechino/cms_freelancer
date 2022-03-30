@@ -121,7 +121,7 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
     }
 
     public void appendQuery(StringBuilder sb, ServiceConfigSearchDto searchDto) {
-        sb.append(" from PACKAGE_SERVICE s LEFT JOIN SERVICE_TYPE st ON s.SERVICE_TYPE_ID = st.SERVICE_TYPE_ID WHERE 1 = 1 ");
+        sb.append(" from package_service s LEFT JOIN service_type st ON s.SERVICE_TYPE_ID = st.SERVICE_TYPE_ID WHERE 1 = 1 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (lower(s.CODE) LIKE lower(:keyword) " +
                     "OR lower(s.NAME) LIKE lower(:keyword) " +

@@ -99,7 +99,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
     }
 
     public void appendQueryByUserName(StringBuilder sb, JobSearchDto dto, String userName) {
-        sb.append(" FROM JOB j WHERE j.USERNAME = :userName ");
+        sb.append(" FROM job j WHERE j.USERNAME = :userName ");
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("userName", userName);
         if (StringUtils.isNotBlank(dto.getKeyword())) {

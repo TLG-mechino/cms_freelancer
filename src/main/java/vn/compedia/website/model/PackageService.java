@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "PACKAGE_SERVICE")
+@Table(name = "package_service")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter

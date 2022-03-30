@@ -9,7 +9,7 @@ import vn.compedia.website.model.User;
 @Repository
 public interface UserRepository extends CrudRepository<User,Long> ,UserRepositoryCustom{
 
-    @Query(value = "select * from USER u , ACCOUNT ac  where u.USERNAME = ac.USERNAME and u.USERNAME =:userName and ac.STATUS = 1", nativeQuery = true)
+    @Query(value = "select * from user u , account ac  where u.USERNAME = ac.USERNAME and u.USERNAME =:userName and ac.STATUS = 1", nativeQuery = true)
     User getUsersByUserName(@Param("userName")String userName);
 
 }

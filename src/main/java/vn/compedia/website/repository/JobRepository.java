@@ -9,7 +9,7 @@ import vn.compedia.website.model.Job;
 @Repository
 public interface JobRepository extends CrudRepository<Job,Long>, JobRepositoryCustom {
 
-    @Query(value = "select * from JOB j where j.JOB_ID = :jobId", nativeQuery = true)
+    @Query(value = "select * from job j where j.JOB_ID = :jobId", nativeQuery = true)
     Job getJobByJobId(@Param("jobId") Long jobId);
 
 }

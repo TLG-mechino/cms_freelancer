@@ -78,8 +78,8 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
     }
 
     private void appendQueryByUserName (StringBuilder sb , PackageServiceSearchDto dto) {
-        sb.append(" from REGISTER_PACKAGE rp " +
-                "         inner join (select ps.NAME,ps.CODE,ps.PACKAGE_SERVICE_ID from PACKAGE_SERVICE ps) result1 " +
+        sb.append(" from register_package rp " +
+                "         inner join (select ps.NAME,ps.CODE,ps.PACKAGE_SERVICE_ID from package_service ps) result1 " +
                 "                    on rp.PACKAGE_SERVICE_ID = result1.PACKAGE_SERVICE_ID" +
                 " where rp.USERNAME = :userName ");
         if (dto.getKeyword() != null) {

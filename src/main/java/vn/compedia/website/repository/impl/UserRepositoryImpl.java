@@ -185,8 +185,8 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                 "       user.TIME_TYPE_ID, " +
                 "       user.TYPE_LOGIN, " +
                 "       user.LANGUAGE_ID ");
-        sb.append("  from ACCOUNT ac inner join USER user on ac.USERNAME = user.USERNAME " +
-                "LEFT JOIN LANGUAGE language ON user.LANGUAGE_ID = language.LANGUAGE_ID WHERE ac.ACCOUNT_ID = :accountId ");
+        sb.append("  from account ac inner join user user on ac.USERNAME = user.USERNAME " +
+                "LEFT JOIN language language ON user.LANGUAGE_ID = language.LANGUAGE_ID WHERE ac.ACCOUNT_ID = :accountId ");
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("accountId", accountId);
         List<Object[]>result = query.getResultList();
@@ -234,7 +234,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     }
 
     public void appendQuery(StringBuilder sb,UserSearchDto dto) {
-        sb.append(" from ACCOUNT ac inner join USER user on ac.USERNAME = user.USERNAME where ac.TYPE = :type");
+        sb.append(" from account ac inner join user user on ac.USERNAME = user.USERNAME where ac.TYPE = :type");
         if (StringUtils.isNotBlank(dto.getKeyword())) {
             sb.append(" and ( (ac.FULL_NAME like :keyword) or (ac.PHONE like :keyword) or (ac.EMAIL like :keyword))");
         }

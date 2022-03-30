@@ -10,7 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "REGISTER_PACKAGE")
+@Table(name = "register_package")
 public class RegisterPackage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -22,8 +22,8 @@ public class RestClient extends RestTemplate implements Serializable {
         String url = EnvironmentProperties.getData(apiResourceKey);
         String restUrl = API_DOMAIN + url;
 
-        logger.info("Send POST request restUrl: " + url);
-        logger.info("Send POST data: " + jsonData);
+        logger.info("Send post request restUrl: " + url);
+        logger.info("Send post data: " + jsonData);
 
         HttpEntity<String> entity = new HttpEntity<>(jsonData.toString(), requestHeaders);
         return this.postForObject(restUrl, entity, cls);

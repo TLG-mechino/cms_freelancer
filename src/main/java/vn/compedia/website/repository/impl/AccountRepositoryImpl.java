@@ -119,7 +119,7 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
     }
 
     public void appendQuery(StringBuilder sb, AccountSearchDto searchDto, Integer type) {
-        sb.append(" FROM ACCOUNT a where a.ACCOUNT_ID <> :accountId ");
+        sb.append(" FROM account a where a.ACCOUNT_ID <> :accountId ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (lower(a.USERNAME) LIKE :keyword OR lower(a.FULL_NAME) LIKE :keyword or lower(a.PHONE) LIKE :keyword OR lower(a.EMAIL) LIKE :keyword) ");
         }

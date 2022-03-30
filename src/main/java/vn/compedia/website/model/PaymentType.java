@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "PAYMENT_TYPE")
+@Table(name = "payment_type")
 @Setter
 @Getter
 @NoArgsConstructor

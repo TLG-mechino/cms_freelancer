@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "HASHTAG")
+@Table(name = "hashtag")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter

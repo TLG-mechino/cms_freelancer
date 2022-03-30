@@ -96,7 +96,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
     }
 
     private void appendQueryByUserName (StringBuilder sb , ReviewSearchDto dto, String userName) {
-        sb.append(" from REVIEW rv " +
+        sb.append(" from review rv " +
                 "  inner join (select j.JOB_ID, j.NAME from JOB j where j.USERNAME = :userName) result1" +
                 "   on rv.JOB_ID = result1.JOB_ID " +
                 " where 1 = 1 ");

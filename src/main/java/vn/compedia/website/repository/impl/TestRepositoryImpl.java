@@ -127,7 +127,7 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
     }
 
     public void appendQuery(StringBuilder sb, ExamSearchDto searchDto) {
-        sb.append(" from EXAM e LEFT JOIN EXAM_TYPE et ON e.EXAM_TYPE_ID = et.EXAM_TYPE_ID  LEFT JOIN EXAM_FILE ef ON e.EXAM_ID = ef.OBJECT_ID WHERE 1 = 1 ");
+        sb.append(" from exam e LEFT JOIN exam_type et ON e.EXAM_TYPE_ID = et.EXAM_TYPE_ID  LEFT JOIN exam_file ef ON e.EXAM_ID = ef.OBJECT_ID WHERE 1 = 1 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (lower(e.CODE) LIKE lower(:keyword) " +
                     "OR lower(e.TITLE_VN) LIKE lower(:keyword)" +

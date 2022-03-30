@@ -81,7 +81,7 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
     }
 
     public void appendQueryByUserName(StringBuilder sb, NotificationSearchDto searchDto, String userName) {
-        sb.append(" FROM NOTIFICATION n WHERE n.USERNAME = :userName ");
+        sb.append(" FROM notification n WHERE n.USERNAME = :userName ");
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("userName", userName);
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {

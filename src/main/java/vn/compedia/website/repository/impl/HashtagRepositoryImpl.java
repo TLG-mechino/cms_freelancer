@@ -116,7 +116,7 @@ public class HashtagRepositoryImpl implements HashtagRepositoryCustom {
     }
 
     public void appendQuery(StringBuilder sb, HashtagSearchDto searchDto) {
-        sb.append(" from HASHTAG h WHERE 1 = 1 ");
+        sb.append(" from hashtag h WHERE 1 = 1 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (lower(h.CODE) LIKE lower(:keyword) " +
                     "OR lower(h.TITLE_VN) LIKE lower(:keyword))");

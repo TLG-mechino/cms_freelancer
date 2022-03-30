@@ -106,7 +106,7 @@ public class TestEvaluateRepositoryImpl implements TestEvaluateRepositoryCustom 
                 "       ue.STATUS, " +
                 "       COUNT(ef.EXAM_FILE_ID) as numberFile");
         sb.append(" from USER_EXAM ue LEFT JOIN EXAM e ON ue.EXAM_ID = e.EXAM_ID " +
-                "LEFT JOIN EXAM_FILE ef ON ue.USER_EXAM_ID = ef.OBJECT_ID WHERE ue.USER_EXAM_ID = :userExamId ");
+                "LEFT JOIN EXAM_FILE ef ON ue.USER_EXAM_ID = ef.OBJECT_ID WHERE ue.USER_EXAM_ID = :userExamId AND ef.TYPE = 2");
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("userExamId", userExamId);
         List<Object[]>result = query.getResultList();
@@ -142,7 +142,7 @@ public class TestEvaluateRepositoryImpl implements TestEvaluateRepositoryCustom 
     }
 
     public void appendQuery(StringBuilder sb, UserExamSearchDto searchDto) {
-        sb.append(" from USER_EXAM ue LEFT JOIN EXAM e ON ue.EXAM_ID = e.EXAM_ID LEFT JOIN EXAM_FILE ef ON ue.USER_EXAM_ID = ef.OBJECT_ID WHERE 1 = 1 ");
+        sb.append(" from USER_EXAM ue LEFT JOIN EXAM e ON ue.EXAM_ID = e.EXAM_ID LEFT JOIN EXAM_FILE ef ON ue.USER_EXAM_ID = ef.OBJECT_ID WHERE ef.TYPE = 2 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (lower(ue.USERNAME) LIKE :keyword " +
                     "OR lower(e.EXAM_CODE) LIKE lower(:keyword)" +

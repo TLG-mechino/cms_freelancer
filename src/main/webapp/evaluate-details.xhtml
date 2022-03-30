@@ -79,8 +79,8 @@
                         <p:outputLabel value="#{resultDto.fileName}"/>
                     </p:column>
 
-                    <p:column headerText="Thao tác" width="100" style="text-align: center" exportable="false">
-                        <p:commandButton value="Tải xuống" styleClass="ui-button-raised ui-button-danger ui-button-flat"
+                    <p:column headerText="Thao tác" width="100" styleClass="ui-button-raised ui-button-danger ui-button-flat" style="text-align: center" exportable="false">
+                        <p:commandButton value="Tải xuống"
                                          actionListener="#{fileDownload.FileDownload(resultDto)}">
                             <p:fileDownload value="#{fileDownload.file}"/>
                         </p:commandButton>

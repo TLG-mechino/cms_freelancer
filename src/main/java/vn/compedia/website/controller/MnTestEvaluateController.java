@@ -81,7 +81,6 @@ public class MnTestEvaluateController extends BaseController {
         searchDto = new UserExamSearchDto();
         searchDtoTemp = new UserExamSearchDto();
         examFileList = new ArrayList<>();
-        userExamDtoDetail = new UserExamDto();
         onSearch();
     }
 

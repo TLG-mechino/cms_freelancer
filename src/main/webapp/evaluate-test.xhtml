@@ -109,7 +109,7 @@
                 <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">
                     <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
                         <p:menuitem value="Chi tiết đánh giá" icon="fa fa-eye"
-                                    actionListener="#{mnTestEvaluateController.findById(resultDto.userExamId)}">
+                                    actionListener="#{mnTestEvaluateController.findByIdAndExamCode(resultDto.userExamId)}">
                         </p:menuitem>
 
                         <p:menuitem value="Xóa thông tin" icon="fa fa-close"

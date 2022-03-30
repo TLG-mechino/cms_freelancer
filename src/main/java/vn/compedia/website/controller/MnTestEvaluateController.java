@@ -80,7 +80,6 @@ public class MnTestEvaluateController extends BaseController {
         userExamDto = new UserExamDto();
         searchDto = new UserExamSearchDto();
         searchDtoTemp = new UserExamSearchDto();
-        examFileList = new ArrayList<>();
         onSearch();
     }
 
@@ -152,7 +151,7 @@ public class MnTestEvaluateController extends BaseController {
         onSearch();
     }
 
-    public void findById(Long userExamId){
+    public void findByIdAndExamCode(Long userExamId){
         userExamDtoDetail = testEvaluateRepository.findByIdAndExamCode(userExamId);
         examFileList = examFileRepository.findAllByUserExamId(userExamId);
         FacesUtil.redirect("/evaluate-details.xhtml");
@@ -163,3 +162,5 @@ public class MnTestEvaluateController extends BaseController {
         return Constant.MN_TEST_EVALUATE;
     }
 }
+
+

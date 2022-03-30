@@ -47,12 +47,14 @@
 
                                 <div class="p-d-flex">
                                     <p:outputLabel value="Số điểm đánh giá : " styleClass="filter-item-label"/>
-                                    <p:outputLabel value="Chưa đánh giá"/>
+                                    <p:outputLabel value="#{mnTestEvaluateController.userExamDtoDetail.score}"/>
                                 </div>
 
                                 <div class="p-d-flex">
                                     <p:outputLabel value="Trạng thái : " styleClass="filter-item-label"/>
-                                    <p:outputLabel value="Chưa đánh giá"/>
+                                    <p:outputLabel value="Đã đánh giá" rendered="#{mnTestEvaluateController.userExamDtoDetail.status eq 1}"/>
+                                    <p:outputLabel value="Chưa đánh giá"
+                                                       rendered="#{mnTestEvaluateController.userExamDtoDetail.status eq 0}"/>
                                 </div>
                             </div>
                         </p:outputPanel>
@@ -77,8 +79,8 @@
                         <p:outputLabel value="#{resultDto.fileName}"/>
                     </p:column>
 
-                    <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">
-                        <p:commandButton value="Tải xuống" styleClass="ui-button-raised ui-button-danger"
+                    <p:column headerText="Thao tác" width="100" style="text-align: center" exportable="false">
+                        <p:commandButton value="Tải xuống" styleClass="ui-button-raised ui-button-danger ui-button-flat"
                                          actionListener="#{fileDownload.FileDownload(resultDto)}">
                             <p:fileDownload value="#{fileDownload.file}"/>
                         </p:commandButton>
@@ -93,14 +95,14 @@
                             <div class="p-d-flex">
                                 <p:outputLabel value="Ghi chú : *" styleClass="filter-item-label"/>
                                 <div class="filter-item">
-                                    <p:inputText value="#{mnTestEvaluateController.userExamDto.note}"
+                                    <p:inputText value="#{mnTestEvaluateController.userExamDtoDetail.note}"
                                                  placeholder="Nhập ghi chú"/>
                                 </div>
                             </div>
                             <div class="p-d-flex">
                                 <p:outputLabel value="Số điểm đánh giá : *" styleClass="filter-item-label"/>
                                 <div class="filter-item">
-                                    <p:inputText value="#{mnTestEvaluateController.userExamDto.score}"
+                                    <p:inputText value="#{mnTestEvaluateController.userExamDtoDetail.score}"
                                                  placeholder="Nhập số điểm đánh giá" decimalPlaces="0"/>
                                 </div>
                             </div>

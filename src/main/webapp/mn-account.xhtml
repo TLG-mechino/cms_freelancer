@@ -164,7 +164,7 @@
 
                         <p:menuitem value="Xóa thông tin" icon="fa fa-remove" process="@this"
                                     update="tblSearchResult growl"
-                                    actionListener="#{mnAccountController.onDelete(resultDto)}">
+                                    actionListener="#{mnAccountController.onDelete(resultDto.accountId)}">
                             <p:confirm header="Xác nhận thông tin" escape="false"
                                        message="Bạn có chắc chắn muốn xóa tài khoản?"
                                        icon="fa fa-question-circle"/>

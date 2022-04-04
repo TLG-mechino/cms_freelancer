@@ -131,12 +131,12 @@ public class MnAccountController extends BaseController {
                 FacesUtil.updateView("growl");
                 return false;
             }
-            Account checkPhone = accountRepository.findAccountByPhoneExists(accountDto.getAccountId(), accountDto.getPhone());
-            if (checkPhone != null) {
-                FacesUtil.addErrorMessage("Số điện thoại đã tồn tại");
-                FacesUtil.updateView("growl");
-                return false;
-            }
+//            Account checkPhone = accountRepository.findAccountByPhoneExists(accountDto.getAccountId(), accountDto.getPhone());
+//            if (checkPhone != null) {
+//                FacesUtil.addErrorMessage("Số điện thoại đã tồn tại");
+//                FacesUtil.updateView("growl");
+//                return false;
+//            }
         }
         return true;
     }
@@ -224,6 +224,7 @@ public class MnAccountController extends BaseController {
     }
 
     public void onEdit(AccountDto resultDto) {
+        resultDto.setType(2);
         BeanUtils.copyProperties(resultDto, accountDto);
         titleDialog = "Sửa";
         FacesUtil.updateView("inforDialogId");
@@ -237,6 +238,18 @@ public class MnAccountController extends BaseController {
         accountRepository.save(account);
         EmailUtil.getInstance().sendResetPassword(account.getEmail(), password);
         FacesUtil.addSuccessMessage("Cấp lại mật khẩu thành công. Vui lòng kiểm tra email để lấy mật khẩu đăng nhập hệ thống");
+    }
+
+    public void onDelete(Long accountId){
+        if (accountId == null) {
+            FacesUtil.addErrorMessage("Không tồn tại thông tin");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        accountRepository.deleteById(accountId);
+        FacesUtil.addSuccessMessage("Xóa thành công");
+        FacesUtil.updateView("growl");
+        onSearch();
     }
 
     @Override

@@ -126,15 +126,17 @@ public class MnHashtagController extends BaseController {
             return false;
         }
 
+        if (StringUtils.isBlank(hashtagDto.getTitleVn().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề tiếng việt ");
+            return false;
+        }
+
         if (StringUtils.isBlank(hashtagDto.getTitleEn().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề tiếng anh ");
             return false;
         }
 
-        if (StringUtils.isBlank(hashtagDto.getTitleVn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề tiếng việt ");
-            return false;
-        }
+
         if (StringUtils.isBlank(hashtagDto.getDescriptionVn().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập mô tả tiếng việt ");
             return false;

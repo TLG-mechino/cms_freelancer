@@ -14,7 +14,7 @@
 
     <ui:define name="content">
         <div class="container-evaluate-detail">
-            <h:form styleClass="ui-g-12" prependId="false">
+            <h:form styleClass="ui-g-12" prependId="false" id="evaluate-details">
                 <p:outputPanel>
                     <p:link styleClass="title-color-left ui-sm-12">Đánh giá bài test > Chi tiết đánh giá</p:link>
 
@@ -108,8 +108,8 @@
                             </div>
                             <hr class="hr-class"/>
                             <p:commandButton value="Lưu" styleClass="border-btn" icon="fa fa-save"
-                                             style="width: auto" oncomplete="PF('inforDialog').show()"
-                                             actionListener="#{mnTestEvaluateController.onEdit(resultDto)}"/>
+                                             style="width: auto" oncomplete="PF('inforDialog').show()" update="evaluate-details"
+                                             actionListener="#{mnTestEvaluateController.onEditEvaluateDetails(mnTestEvaluateController.userExamDtoDetail)}"/>
                         </div>
 
                     </p:outputPanel>

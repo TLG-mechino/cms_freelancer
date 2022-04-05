@@ -206,10 +206,10 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         if (searchDto.getPaymentTypeSearch() != null) {
             query.setParameter("paymentTypeSearch", searchDto.getPaymentTypeSearch());
         }
-        if (searchDto.getLessMoney() != 0) {
+        if (searchDto.getLessMoney() != null) {
             query.setParameter("lessMoney", searchDto.getLessMoney());
         }
-        if (searchDto.getGreatMoney() != 0) {
+        if (searchDto.getGreatMoney() != null) {
             query.setParameter("greatMoney", searchDto.getGreatMoney());
         }
         if (searchDto.getStatus() != null) {
@@ -230,10 +230,10 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         if (searchDto.getPaymentTypeSearch() != null) {
             query.setParameter("paymentTypeSearch", searchDto.getPaymentTypeSearch());
         }
-        if (searchDto.getLessMoney() != 0) {
+        if (searchDto.getLessMoney() != null) {
             query.setParameter("lessMoney", searchDto.getLessMoney());
         }
-        if (searchDto.getGreatMoney() != 0) {
+        if (searchDto.getGreatMoney() != null) {
             query.setParameter("greatMoney", searchDto.getGreatMoney());
         }
         return query;
@@ -248,10 +248,10 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         if (searchDto.getPaymentTypeSearch() != null) {
             sb.append(" AND t.PAYMENT_TYPE_ID = :paymentTypeSearch ");
         }
-        if (searchDto.getLessMoney() != 0) {
+        if (searchDto.getLessMoney() != null) {
             sb.append(" AND t.AMOUNT_OF_MONEY >= :lessMoney ");
         }
-        if (searchDto.getGreatMoney() != 0) {
+        if (searchDto.getGreatMoney() != null) {
             sb.append(" AND t.AMOUNT_OF_MONEY <= :greatMoney ");
         }
         if (searchDto.getStatus() != null) {
@@ -267,10 +267,10 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         if (SearchDto.getPaymentTypeSearch() != null) {
             sb.append(" AND t.PAYMENT_TYPE_ID = :paymentTypeSearch ");
         }
-        if (SearchDto.getLessMoney() != 0) {
+        if (SearchDto.getLessMoney() != null) {
             sb.append(" AND t.AMOUNT_OF_MONEY >= :lessMoney ");
         }
-        if (SearchDto.getGreatMoney() != 0) {
+        if (SearchDto.getGreatMoney() != null) {
             sb.append(" AND t.AMOUNT_OF_MONEY <= :greatMoney ");
         }
         if (SearchDto.getStatus() != null) {

@@ -46,12 +46,13 @@
             <p:overlayPanel for="basic" styleClass="filter-panel">
                <p:outputLabel value="Phương thức thanh toán" styleClass="filter-item-label"/>
                <p:selectOneMenu styleClass="filter-item" value="#{mnTransactionController.searchDto.paymentTypeSearch}">
+                  <f:selectItem itemLabel="Chọn phương thức thanh toán"/>
                   <f:selectItems var="item" itemValue="#{item.paymentTypeId}" itemLabel="#{item.name}" value="#{mnTransactionController.paymentTypeList}" />
                </p:selectOneMenu>
 
                <p:outputLabel value="Số tiền giao dịch" styleClass="filter-item-label"/>
                <div class="filter-item">
-                  <p:inputNumber value="#{mnTransactionController.searchDto.lessMoney}" placeholder="Từ" decimalPlaces="0" size="12"/>
+                  <p:inputNumber value="#{mnTransactionController.searchDto.lessMoney}"  decimalPlaces="0" size="12" placeholder="Từ"/>
                   <p:inputNumber value="#{mnTransactionController.searchDto.greatMoney}" placeholder="Đến" decimalPlaces="0" size="12" style="margin-left: 20px"/>
                </div>
 

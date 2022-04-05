@@ -20,9 +20,10 @@
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
                                      layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
                             <p:outputLabel value="Mã bài test:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập mã bài test" maxlength="50"
-                                         onchange="this.value = this.value.trim()"
-                                         value="#{mnTestController.examDto.code}"/>
+                            <p:inputText placeholder="Nhập mã bài test" maxlength="50" id="code"
+                                         value="#{mnTestController.examDto.code}">
+                                <p:ajax event="change" update="code" listener="#{mnTestController.removeChar()}"/>
+                            </p:inputText>
 
                             <p:outputLabel value="Tiêu đề tiếng việt:" styleClass="requireLabel"/>
                             <p:inputText placeholder="Nhập tiêu đề tiếng việt" maxlength="50"
@@ -67,7 +68,8 @@
                             <p:outputLabel value="Điểm tích lũy:" styleClass="requireLabel"/>
                             <p:inputNumber placeholder="Nhập điểm tích lũy" maxlength="3"
                                          onchange="this.value = this.value.trim()"
-                                         value="#{mnTestController.examDto.score}"/>
+                                           value="#{mnTestController.examDto.score}" decimalPlaces="0" minValue="0">
+                            </p:inputNumber>
 
                             <p:outputLabel value="Trạng thái:" styleClass="requireLabel"/>
                             <p:selectOneMenu value="#{mnTestController.examDto.status}">
@@ -124,8 +126,9 @@
                                  styleClass="filter-search ui-sm-12"/>
 
                 <p:overlayPanel for="basic" styleClass="filter-panel">
-                    <p:outputLabel value="Loại bài test:"/>
+                    <p:outputLabel value="Loại bài test:" styleClass="filter-item-label"/>
                     <p:selectOneMenu styleClass="filter-item" value="#{mnTestController.searchDto.examTypeId}" >
+                        <f:selectItem itemLabel="Chọn loại bài test" itemValue=""/>
                         <f:selectItems var="item" itemValue="#{item.examTypeId}" itemLabel="#{item.name}" value="#{mnTestController.examTypeList}" />
                     </p:selectOneMenu>
 
@@ -171,22 +174,6 @@
                     <p:outputLabel value="#{resultDto.titleEn}"/>
                 </p:column>
 
-                <p:column headerText="Mô tả tiếng việt" style="text-align: left" sortBy="#{resultDto.descriptionVn}">
-                    <p:outputLabel value="#{resultDto.descriptionVn}"/>
-                </p:column>
-
-                <p:column headerText="Mô tả tiếng anh" style="text-align: left" sortBy="#{resultDto.descriptionEn}">
-                    <p:outputLabel value="#{resultDto.descriptionEn}"/>
-                </p:column>
-
-                <p:column headerText="Nội dung tiếng việt" style="text-align: left" sortBy="#{resultDto.contentVn}">
-                    <p:outputLabel value="#{resultDto.contentVn}"/>
-                </p:column>
-
-                <p:column headerText="Nội dung tiếng anh" style="text-align: left" sortBy="#{resultDto.contentEn}">
-                    <p:outputLabel value="#{resultDto.contentEn}"/>
-                </p:column>
-
                 <p:column headerText="Điểm tích lũy" style="text-align: left" sortBy="#{resultDto.score}">
                     <p:outputLabel value="#{resultDto.score}"/>
                 </p:column>
@@ -213,7 +200,7 @@
 
                         <p:menuitem value="Xóa thông tin" icon="fa fa-close"
                                     update="searchForm growl" process="@this"
-                                    actionListener="#{mnTestController.onDelete(resultDto.hashtagId)}">
+                                    actionListener="#{mnTestController.onDelete(resultDto.examId)}">
                             <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"
                                        message="Bạn có chắc chắn muốn xóa thông tin?"/>
                         </p:menuitem>

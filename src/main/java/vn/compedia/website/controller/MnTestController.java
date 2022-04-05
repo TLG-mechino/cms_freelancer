@@ -29,16 +29,13 @@ import vn.compedia.website.repository.ExamFileRepository;
 import vn.compedia.website.repository.ExamTypeRepository;
 import vn.compedia.website.repository.TestRepository;
 import vn.compedia.website.util.Constant;
-import vn.compedia.website.util.DbConstant;
 import vn.compedia.website.util.FacesUtil;
+import vn.compedia.website.util.StringUtil;
 
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Setter
 @Getter
@@ -71,6 +68,7 @@ public class MnTestController extends BaseController {
     private ExamSearchDto searchDtoTemp;
     private List<ExamType> examTypeList;
     private List<ExamFile> listExamFile;
+    private List<UploadWithFilenameDto> uploadMultipleImage;
 
     public void initData() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -85,6 +83,7 @@ public class MnTestController extends BaseController {
         searchDto = new ExamSearchDto();
         searchDtoTemp = new ExamSearchDto();
         listExamFile = new ArrayList<>();
+        uploadMultipleImage = new ArrayList<>();
         examTypeList = (List<ExamType>) examTypeRepository.findAll();
         uploadSingleImageController.resetAll(null);
         uploadMultipleImageFileNameController.resetAll(null);
@@ -93,6 +92,10 @@ public class MnTestController extends BaseController {
 
     public void resetDialog() {
         examDto = new ExamDto();
+        listExamFile = new ArrayList<>();
+        examTypeList = new ArrayList<>();
+        uploadMultipleImage = new ArrayList<>();
+        uploadMultipleImageFileNameController.resetAll(null);
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }
@@ -168,15 +171,16 @@ public class MnTestController extends BaseController {
             return false;
         }
 
+        if (StringUtils.isBlank(examDto.getTitleVn().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề tiếng việt ");
+            return false;
+        }
+
         if (StringUtils.isBlank(examDto.getTitleEn().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề tiếng anh ");
             return false;
         }
 
-        if (StringUtils.isBlank(examDto.getTitleVn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề tiếng việt ");
-            return false;
-        }
         if (StringUtils.isBlank(examDto.getDescriptionVn().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập mô tả tiếng việt ");
             return false;
@@ -245,15 +249,13 @@ public class MnTestController extends BaseController {
             return;
         }
         examDto = new ExamDto();
-        List<ExamFile> list = examFileRepository.findAllByExamId(object.getExamId());
-        List<UploadWithFilenameDto> uploadMutipleImage = new ArrayList<>();
-
-        list.forEach(var -> {
+        listExamFile = examFileRepository.findAllByExamId(object.getExamId());
+        listExamFile.forEach(var -> {
             if (var.getType() == 1) {
-                uploadMutipleImage.add(copyValue(var, new UploadWithFilenameDto()));
+                uploadMultipleImage.add(copyValue(var, new UploadWithFilenameDto()));
             }
         });
-        uploadMultipleImageFileNameController.getUploadMultipleFileDto().setListToShow(uploadMutipleImage);
+        uploadMultipleImageFileNameController.getUploadMultipleFileDto().setListToShow(uploadMultipleImage);
         BeanUtils.copyProperties(object, examDto);
         titleDialog = "Sửa";
         FacesUtil.updateView("inforDialogId");
@@ -265,19 +267,23 @@ public class MnTestController extends BaseController {
             FacesUtil.updateView("growl");
             return;
         }
-        List<ExamFile> list = examFileRepository.findAllByExamId(examId);
-        List<UploadWithFilenameDto> uploadMutipleImage = new ArrayList<>();
-
-        list.forEach(var -> {
+//        listExamFile = examFileRepository.findAllByExamId(examId);
+        listExamFile.forEach(var -> {
             if (var.getType() == 1) {
-                uploadMutipleImage.add(copyValue(var, new UploadWithFilenameDto()));
+                uploadMultipleImage.add(copyValue(var, new UploadWithFilenameDto()));
             }
         });
         testRepository.deleteById(examId);
-        uploadMultipleImageFileNameController.onRemoveImageList(uploadMutipleImage);
+        uploadMultipleImageFileNameController.onRemoveImageList(uploadMultipleImage);
         FacesUtil.addSuccessMessage("Xóa thành công");
         FacesUtil.updateView("growl");
         onSearch();
+    }
+
+    public void removeChar() {
+        if (!StringUtils.isBlank(examDto.getCode())) {
+            examDto.setCode(StringUtil.removeSigned(examDto.getCode()).toUpperCase());
+        }
     }
 
     @Override

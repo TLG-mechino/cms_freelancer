@@ -12,6 +12,6 @@ import lombok.Setter;
 public class TransactionSearchDto extends BaseSearchDto{
     private Integer status;
     private Long paymentTypeSearch;
-    private double greatMoney;
-    private double lessMoney;
+    private Double greatMoney;
+    private Double lessMoney;
 }

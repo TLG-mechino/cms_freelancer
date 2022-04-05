@@ -119,7 +119,11 @@ public class HashtagRepositoryImpl implements HashtagRepositoryCustom {
         sb.append(" from hashtag h WHERE 1 = 1 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (lower(h.CODE) LIKE lower(:keyword) " +
-                    "OR lower(h.TITLE_VN) LIKE lower(:keyword))");
+                    "OR lower(h.TITLE_VN) LIKE lower(:keyword) " +
+                    "OR lower(h.TITLE_EN) LIKE lower(:keyword) " +
+                    "OR lower(h.DESCRIPTION_VN) LIKE lower(:keyword) " +
+                    "OR lower(h.DESCRIPTION_EN) LIKE lower(:keyword) " +
+                    "OR lower(h.CREATE_BY) LIKE lower(:keyword))");
         }
         if (searchDto.getStatus() != null) {
             sb.append(" AND h.STATUS =:status ");

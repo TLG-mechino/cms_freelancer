@@ -23,10 +23,7 @@ import vn.compedia.website.model.Exam;
 import vn.compedia.website.model.ExamFile;
 import vn.compedia.website.model.ExamType;
 import vn.compedia.website.model.UserExam;
-import vn.compedia.website.repository.ExamFileRepository;
-import vn.compedia.website.repository.ExamTypeRepository;
-import vn.compedia.website.repository.TestEvaluateRepository;
-import vn.compedia.website.repository.TestRepository;
+import vn.compedia.website.repository.*;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.FacesUtil;
 
@@ -57,6 +54,9 @@ public class MnTestEvaluateController extends BaseController {
     private ExamFileRepository examFileRepository;
     @Inject
     private UploadMultipleImageWithFileNameController uploadMultipleImageFileNameController;
+
+    @Autowired
+    private UserExamRepository userExamRepository;
 
 
     private UserExam userExam;
@@ -178,6 +178,20 @@ public class MnTestEvaluateController extends BaseController {
         FacesUtil.redirect("/evaluate-details.xhtml");
     }
 
+
+    public void onEditEvaluateDetails(UserExamDto object) {
+        if (object == null) {
+            FacesUtil.addErrorMessage("Không tồn tại thông tin");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        userExamDtoDetail = testEvaluateRepository.findByIdAndExamCode(object.getUserExamId());
+        BeanUtils.copyProperties(object, userExam);
+        userExamRepository.save(userExam);
+        titleDialog = "Sửa";
+        FacesUtil.updateView("evaluate-details");
+        FacesUtil.addSuccessMessage("Sửa thông tin thành công");
+    }
     @Override
     protected String getMenuId() {
         return Constant.MN_TEST_EVALUATE;

@@ -3,8 +3,6 @@ package vn.compedia.website.repository.impl;
 import org.apache.commons.lang3.StringUtils;
 import vn.compedia.website.dto.ExamDto;
 import vn.compedia.website.dto.ExamSearchDto;
-import vn.compedia.website.dto.HashtagSearchDto;
-import vn.compedia.website.model.PackageService;
 import vn.compedia.website.repository.TestRepositoryCustom;
 import vn.compedia.website.util.ValueUtil;
 
@@ -23,7 +21,7 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
     @Override
     public List<ExamDto> search(ExamSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
-        sb.append(" select e.EXAM_ID, " +
+        sb.append(" select distinct e.EXAM_ID, " +
                 "       e.CODE, " +
                 "       e.TITLE_VN, " +
                 "       e.TITLE_EN, " +
@@ -34,7 +32,7 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
                 "       e.SCORE, " +
                 "       et.NAME, " +
                 "       e.STATUS, " +
-                "       COUNT(ef.EXAM_FILE_ID) as numberFile");
+                "       (select COUNT( ef.EXAM_FILE_ID) from exam_file ef WHERE e.EXAM_ID = ef.OBJECT_ID) as numberFile ");
         appendQuery(sb, searchDto);
 
         if (searchDto.getSortField() != null) {
@@ -105,7 +103,7 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
     @Override
     public BigInteger countSearch(ExamSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT COUNT(e.EXAM_ID) ");
+        sb.append(" SELECT COUNT(DISTINCT e.EXAM_ID) ");
         appendQuery(sb, searchDto);
         Query query = createQuery(sb, searchDto);
         return (BigInteger) query.getSingleResult();
@@ -127,7 +125,8 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
     }
 
     public void appendQuery(StringBuilder sb, ExamSearchDto searchDto) {
-        sb.append(" from exam e LEFT JOIN exam_type et ON e.EXAM_TYPE_ID = et.EXAM_TYPE_ID  LEFT JOIN exam_file ef ON e.EXAM_ID = ef.OBJECT_ID WHERE 1 = 1 ");
+        sb.append(" from exam e LEFT JOIN exam_type et ON e.EXAM_TYPE_ID = et.EXAM_TYPE_ID  " +
+                " LEFT JOIN exam_file ef ON e.EXAM_ID = ef.OBJECT_ID WHERE 1 = 1 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (lower(e.CODE) LIKE lower(:keyword) " +
                     "OR lower(e.TITLE_VN) LIKE lower(:keyword)" +
@@ -135,7 +134,7 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
                     "OR lower(e.DESCRIPTION_VN) LIKE lower(:keyword)" +
                     "OR lower(e.DESCRIPTION_EN) LIKE lower(:keyword)" +
                     "OR lower(e.CONTENT_VN) LIKE lower(:keyword)" +
-                    "OR lower(e.CONTENT_EN) LIKE lower(:keyword))" );
+                    "OR lower(e.CONTENT_EN) LIKE lower(:keyword))");
         }
         if (searchDto.getExamTypeId() != null) {
             sb.append(" AND e.EXAM_TYPE_ID =:examTypeId ");

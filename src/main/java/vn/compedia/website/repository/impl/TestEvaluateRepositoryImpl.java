@@ -99,6 +99,7 @@ public class TestEvaluateRepositoryImpl implements TestEvaluateRepositoryCustom 
         StringBuilder sb = new StringBuilder();
         sb.append(" select ue.USER_EXAM_ID, " +
                 "       ue.USERNAME, " +
+                "       e.EXAM_ID, "  +
                 "       e.CODE, " +
                 "       ue.SUBMIT_TIME, " +
                 "       ue.SCORE, " +
@@ -115,12 +116,13 @@ public class TestEvaluateRepositoryImpl implements TestEvaluateRepositoryCustom 
             for (Object[] obj : result) {
                 dto.setUserExamId(ValueUtil.getLongByObject(obj[0]));
                 dto.setUsername(ValueUtil.getStringByObject(obj[1]));
-                dto.setExamCode(ValueUtil.getStringByObject(obj[2]));
-                dto.setSubmitTime(ValueUtil.getDateByObject(obj[3]));
-                dto.setScore(ValueUtil.getDoubleByObject(obj[4]));
-                dto.setNote(ValueUtil.getStringByObject(obj[5]));
-                dto.setStatus(ValueUtil.getIntegerByObject(obj[6]));
-                dto.setNumberFile(ValueUtil.getLongByObject(obj[7]));
+                dto.setExamId(ValueUtil.getIntegerByObject(obj[2]));
+                dto.setExamCode(ValueUtil.getStringByObject(obj[3]));
+                dto.setSubmitTime(ValueUtil.getDateByObject(obj[4]));
+                dto.setScore(ValueUtil.getDoubleByObject(obj[5]));
+                dto.setNote(ValueUtil.getStringByObject(obj[6]));
+                dto.setStatus(ValueUtil.getIntegerByObject(obj[7]));
+                dto.setNumberFile(ValueUtil.getLongByObject(obj[8]));
             }
         }
         return dto;
@@ -145,7 +147,7 @@ public class TestEvaluateRepositoryImpl implements TestEvaluateRepositoryCustom 
         sb.append(" from user_exam ue LEFT JOIN exam e ON ue.EXAM_ID = e.EXAM_ID LEFT JOIN exam_file ef ON ue.USER_EXAM_ID = ef.OBJECT_ID WHERE ef.TYPE = 2 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (lower(ue.USERNAME) LIKE :keyword " +
-                    "OR lower(e.EXAM_CODE) LIKE lower(:keyword)" +
+                    "OR lower(e.CODE) LIKE lower(:keyword)" +
                     "OR lower(ue.NOTE) LIKE lower(:keyword)) " );
         }
         if (searchDto.getScore() != null) {

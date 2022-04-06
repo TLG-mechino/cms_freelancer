@@ -126,7 +126,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             userDto.setPhone(null == ValueUtil.getStringByObject(obj[2]) ? null : ValueUtil.getStringByObject(obj[2]));
             userDto.setEmail(null == ValueUtil.getStringByObject(obj[3]) ? null : ValueUtil.getStringByObject(obj[3]));
             userDto.setCreateDate(null == ValueUtil.getDateByObject(obj[4]) ? null :
-                    DateUtil.formatDatePattern(ValueUtil.getDateByObject(obj[4]), DateUtil.DATE_FORMAT));
+                    DateUtil.formatDatePattern(ValueUtil.getDateByObject(obj[4]), "HH:mm, dd/MM/yyyy"));
             userDto.setStatus(null == ValueUtil.getIntegerByObject(obj[5]) ? null : ValueUtil.getIntegerByObject(obj[5]));
             userDto.setImagePath(null == ValueUtil.getStringByObject(obj[6]) ? null : ValueUtil.getStringByObject(obj[6]));
             userDto.setAddress(null == ValueUtil.getStringByObject(obj[7]) ? null : ValueUtil.getStringByObject(obj[7]));

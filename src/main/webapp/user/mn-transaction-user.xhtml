@@ -40,7 +40,7 @@
                         <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
                             <div class="ui-input-icon-left" style="width: 100%; display: flex;">
                                 <i class="fa fa-search"/>
-                                <p:inputText placeholder="Nhập nội dung"
+                                <p:inputText placeholder="Nhập mã giao dịch"
                                              style="width: 97%"
                                              onblur="this.value = this.value.trim()" maxlength="100"
                                              onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
@@ -100,6 +100,10 @@
                                  paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                                  emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
                                  currentPageReportTemplate="Tổng số bản ghi: #{mnTransactionUserController.lazyDataModel.rowCount}">
+
+                        <p:column headerText="STT" width="30" style="text-align: center">
+                            <p:outputLabel value="#{rowIndex + 1}"/>
+                        </p:column>
 
                         <p:column headerText="Mã giao dịch" style="text-align: left" sortBy="#{resultDto.code}">
                             <p:outputLabel value="#{resultDto.code}"/>

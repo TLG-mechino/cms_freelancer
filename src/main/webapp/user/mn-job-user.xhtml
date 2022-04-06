@@ -40,7 +40,7 @@
                         <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
                             <div class="ui-input-icon-left" style="width: 100%; display: flex;">
                                 <i class="fa fa-search"/>
-                                <p:inputText placeholder="Nhập tên dự án, chi tiết dự án, kỹ năng" style="width: 97%"
+                                <p:inputText placeholder="Nhập tên dự án" style="width: 97%"
                                              onblur="this.value = this.value.trim()" maxlength="100"
                                              onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
                                              value="#{mnJobController.searchDto.keyword}"
@@ -110,13 +110,13 @@
 
                         <p:column headerText="Giá thấp nhất" style="text-align: left" sortBy="#{resultDto.moneyFrom}">
                             <p:outputLabel value="#{resultDto.moneyFrom}">
-                                <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"/>
+                                <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency" pattern="###,### đ"/>
                             </p:outputLabel>
                         </p:column>
 
                         <p:column headerText="Giá cao nhất" style="text-align: left" sortBy="#{resultDto.moneyTo}">
                             <p:outputLabel value="#{resultDto.moneyTo}">
-                                <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"/>
+                                <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency" pattern="###,### đ"/>
                             </p:outputLabel>
                         </p:column>
 

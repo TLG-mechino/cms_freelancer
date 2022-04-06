@@ -69,7 +69,6 @@ public class MnTransactionController extends BaseController {
     }
 
     public void resetAll() {
-        paymentTypeList = new ArrayList<>();
         transaction = new Transaction();
         transactionDto = new TransactionDto();
         searchDto = new TransactionSearchDto();

@@ -14,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.controller.common.BaseController;
+import vn.compedia.website.dto.AccountDto;
 import vn.compedia.website.dto.entity.UserDto;
 import vn.compedia.website.dto.search.UserSearchDto;
 import vn.compedia.website.model.Account;
@@ -23,11 +24,14 @@ import vn.compedia.website.repository.UserRepository;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.DbConstant;
 import vn.compedia.website.util.FacesUtil;
+import vn.compedia.website.util.StringUtil;
+
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Setter
 @Getter
@@ -165,6 +169,24 @@ public class MnUserController extends BaseController {
     public void findUserDtoById(Long accountId){
         userDtoDetails = userRepository.findUserDtoById(accountId);
         FacesUtil.redirect("/user/profile.xhtml");
+    }
+
+    public void blockAccount(Long accountId){
+        Account account = accountRepository.findById(accountId).get();
+        account.setStatus(0);
+        accountRepository.save(account);
+    }
+
+    public void reBlockAccount(Long accountId){
+        Account account = accountRepository.findById(accountId).get();
+        account.setStatus(1);
+        accountRepository.save(account);
+    }
+
+    public void removeChar() {
+        if (!StringUtils.isBlank(userDtoDetails.getFullName())) {
+            userDtoDetails.setFullName(StringUtil.removeSigned(userDtoDetails.getFullName()).toUpperCase());
+        }
     }
 
 }

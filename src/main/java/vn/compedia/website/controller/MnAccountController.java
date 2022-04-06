@@ -235,6 +235,7 @@ public class MnAccountController extends BaseController {
         String password = StringUtil.generateNewPassword();
         result.setPassword(StringUtil.encryptPassword(password + result.getSalt()));
         BeanUtils.copyProperties(result, account);
+        account.setType(2);
         accountRepository.save(account);
         EmailUtil.getInstance().sendResetPassword(account.getEmail(), password);
         FacesUtil.addSuccessMessage("Cấp lại mật khẩu thành công. Vui lòng kiểm tra email để lấy mật khẩu đăng nhập hệ thống");

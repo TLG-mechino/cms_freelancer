@@ -40,7 +40,7 @@
                             <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
                                 <div class="ui-input-icon-left" style="width: 100%; display: flex;">
                                     <i class="fa fa-search"/>
-                                    <p:inputText placeholder="Nhập tên dự án, chi tiết dự án, kỹ năng"
+                                    <p:inputText placeholder="Nhập nội dung"
                                                  style="width: 97%"
                                                  onblur="this.value = this.value.trim()" maxlength="100"
                                                  onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
@@ -57,12 +57,6 @@
                                              styleClass="filter-search ui-sm-12"/>
 
                             <p:overlayPanel for="basic" styleClass="filter-panel">
-                                <p:outputLabel value="Giá dự án" styleClass="filter-item-label"/>
-                                <div class="filter-item">
-                                    <p:inputNumber value="#{mnNotificationController.searchDto.money}"
-                                                   placeholder="Nhập giá dự án"
-                                                   decimalPlaces="0" size="42"/>
-                                </div>
 
                                 <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
                                 <p:selectOneMenu styleClass="filter-item"

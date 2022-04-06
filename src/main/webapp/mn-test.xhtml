@@ -36,32 +36,34 @@
                                          value="#{mnTestController.examDto.titleEn}"/>
 
                             <p:outputLabel value="Mô tả tiếng việt:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập mô tả tiếng việt" maxlength="50"
+                            <p:inputTextarea placeholder="Nhập mô tả tiếng việt" maxlength="100"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.descriptionVn}"/>
 
                             <p:outputLabel value="Mô tả tiếng anh:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập mô tả tiếng anh" maxlength="50"
+                            <p:inputTextarea placeholder="Nhập mô tả tiếng anh" maxlength="100"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.descriptionEn}"/>
 
                             <p:outputLabel value="Nội dung tiếng việt:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập nội dung tiếng việt" maxlength="50"
+                            <p:inputTextarea placeholder="Nhập nội dung tiếng việt" maxlength="1000"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.contentVn}"/>
 
                             <p:outputLabel value="Nội dung tiếng anh:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập nội dung tiếng anh" maxlength="50"
+                            <p:inputTextarea placeholder="Nhập nội dung tiếng anh" maxlength="1000"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.contentEn}"/>
 
                             <p:outputLabel value="Tài liệu bài test:" styleClass="requireLabel"/>
                             <p:outputPanel styleClass="ui-g-12">
                                 <ui:include src="/common/upload-multiple-image.xhtml"/>
+                                <p:outputLabel value="(*) Hệ thống chỉ hỗ trợ upload file có định dạng: jpg, JPG, jpeg, JPEG, png, PNG. Dung lượng tối đa 50 Mb"/>
                             </p:outputPanel>
 
-                            <p:outputLabel value="Loại bài test:"/>
+                            <p:outputLabel value="Loại bài test:" styleClass="requireLabel"/>
                             <p:selectOneMenu value="#{mnTestController.examDto.examTypeId}" >
+                                <f:selectItem itemLabel="Chọn loại bài test" itemValue=""/>
                                 <f:selectItems var="item" itemValue="#{item.examTypeId}" itemLabel="#{item.name}" value="#{mnTestController.examTypeList}" />
                             </p:selectOneMenu>
 

@@ -93,7 +93,6 @@ public class MnTestController extends BaseController {
     public void resetDialog() {
         examDto = new ExamDto();
         listExamFile = new ArrayList<>();
-        examTypeList = new ArrayList<>();
         uploadMultipleImage = new ArrayList<>();
         uploadMultipleImageFileNameController.resetAll(null);
         titleDialog = "Thêm mới";

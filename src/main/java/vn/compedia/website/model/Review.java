@@ -20,7 +20,7 @@ public class Review {
     private String title;
 
     @Column(name = "USERNAME")
-    private String userName;
+    private String username;
 
     @Column(name = "JOB_ID")
     private Long jobId;

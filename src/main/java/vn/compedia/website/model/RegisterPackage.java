@@ -18,7 +18,7 @@ public class RegisterPackage {
     private Long id;
 
     @Column(name = "USERNAME")
-    private String userName;
+    private String username;
 
     @Column(name = "EXPIRED_TIME")
     private Date expiredTime;

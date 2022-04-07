@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface PostRepositoryCustom {
 
-    List<PostDto> getAllPostByUserName(String userName, PostSearchDto dto);
+    List<PostDto> getAllPostByUserName(String username, PostSearchDto dto);
 
-    BigInteger countSearchRpByUserName(String userName, PostSearchDto searchDto);
+    BigInteger countSearchRpByUserName(String username, PostSearchDto searchDto);
 
 }

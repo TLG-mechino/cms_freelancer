@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RegisterPackageResponseDto {
     private Long registerId;
-    private String userName;
+    private String username;
     private String registrationTime;
     private String expiredTime;
     private Double money;

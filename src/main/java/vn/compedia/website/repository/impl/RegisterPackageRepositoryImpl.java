@@ -24,7 +24,7 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
 
 
     @Override
-    public List<PackageServiceDto> getAllRegisterPackageByUserName(String userName, PackageServiceSearchDto searchDto) {
+    public List<PackageServiceDto> getAllRegisterPackageByUserName(String username, PackageServiceSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append("select rp.REGISTER_PACKAGE_ID," +
                 "       rp.USERNAME," +
@@ -35,7 +35,7 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
                 "       result1.NAME," +
                 "       rp.STATUS ");
         appendQueryByUserName(sb,searchDto);
-        Query query = createQueryByUser(sb,userName,searchDto);
+        Query query = createQueryByUser(sb,username,searchDto);
         if (searchDto.getPageSize() > 0) {
             query.setFirstResult(searchDto.getPageIndex() * searchDto.getPageSize());
             query.setMaxResults(searchDto.getPageSize());
@@ -50,7 +50,7 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
             for (Object[] obj : result) {
                 PackageServiceDto responseDto = new PackageServiceDto();
                 responseDto.setPackageServiceId(ValueUtil.getLongByObject(obj[0]));
-                responseDto.setUserName(ValueUtil.getStringByObject(obj[1]));
+                responseDto.setUsername(ValueUtil.getStringByObject(obj[1]));
                 responseDto.setRegistrationTime(ValueUtil.getDateByObject(obj[2]));
                 responseDto.setExpiredTime(ValueUtil.getDateByObject(obj[3]));
                 responseDto.setMoney(ValueUtil.getDoubleByObject(obj[4]));
@@ -62,9 +62,9 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
         return dtos;
     }
 
-    private Query createQueryByUser(StringBuilder sb,String userName , PackageServiceSearchDto searchDto) {
+    private Query createQueryByUser(StringBuilder sb,String username , PackageServiceSearchDto searchDto) {
         Query query = entityManager.createNativeQuery(sb.toString());
-        query.setParameter("userName",userName);
+        query.setParameter("username",username);
         if (searchDto.getKeyword() != null) {
             query.setParameter("keyword","%"+searchDto.getKeyword().trim()+"%");
         }
@@ -81,7 +81,7 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
         sb.append(" from register_package rp " +
                 "         inner join (select ps.NAME,ps.CODE,ps.PACKAGE_SERVICE_ID from package_service ps) result1 " +
                 "                    on rp.PACKAGE_SERVICE_ID = result1.PACKAGE_SERVICE_ID" +
-                " where rp.USERNAME = :userName ");
+                " where rp.USERNAME = :username ");
         if (dto.getKeyword() != null) {
             sb.append(" and result1.NAME like :keyword ");
         }
@@ -94,11 +94,11 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
     }
 
     @Override
-    public BigInteger countSearchByUserName(String userName, PackageServiceSearchDto dto) {
+    public BigInteger countSearchByUserName(String username, PackageServiceSearchDto dto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" select COUNT(rp.REGISTER_PACKAGE_ID) ");
         appendQueryByUserName(sb,dto);
-        Query query = createQueryByUser(sb,userName,dto);
+        Query query = createQueryByUser(sb,username,dto);
         return (BigInteger) query.getSingleResult();
     }
 }

@@ -20,7 +20,7 @@ public class NotificationRef {
     private Long notificationId;
 
     @Column(name = "USERNAME")
-    private String userName;
+    private String username;
 
     @Column(name = "STATUS")
     private Integer status;

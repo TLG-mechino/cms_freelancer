@@ -14,9 +14,9 @@ public class NotificationRefServiceImpl implements NotificationRefService {
 
 
     @Override
-    public List<NotificationRef> getAllByUserName (String userName) throws Exception {
+    public List<NotificationRef> getAllByUserName (String username) throws Exception {
         try{
-           return notificationRefRepository.getAllByUserName(userName);
+           return notificationRefRepository.getAllByUserName(username);
         } catch (Exception e){
             throw new Exception("Could not get data");
         }

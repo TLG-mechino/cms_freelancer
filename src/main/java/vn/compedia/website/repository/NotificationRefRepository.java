@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface NotificationRefRepository extends CrudRepository<NotificationRef, Long>, NotificationRefRepositoryCustom {
 
-    @Query(value = "select * from notification_ref noti_ref where noti_ref.USERNAME=:userName", nativeQuery = true)
-    List<NotificationRef> getAllByUserName(@Param("userName") String userName);
+    @Query(value = "select * from notification_ref noti_ref where noti_ref.USERNAME=:username", nativeQuery = true)
+    List<NotificationRef> getAllByUserName(@Param("username") String username);
 
     @Query(value = "select * from notification_ref noti_ref where noti_ref.NOTIFICATION_REF_ID =:id", nativeQuery = true)
     NotificationRef getNotificationRefById(@Param("id") Long id);

@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface RegisterPackageRepositoryCustom {
 
-    List<PackageServiceDto> getAllRegisterPackageByUserName(String userName, PackageServiceSearchDto dto);
+    List<PackageServiceDto> getAllRegisterPackageByUserName(String username, PackageServiceSearchDto dto);
 
-    BigInteger countSearchByUserName(String userName, PackageServiceSearchDto dto);
+    BigInteger countSearchByUserName(String username, PackageServiceSearchDto dto);
 }

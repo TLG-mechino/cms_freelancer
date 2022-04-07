@@ -56,7 +56,7 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
             if (searchDto.getSortField().equals("serviceTypeName")) {
                 sb.append(" ORDER BY st.NAME ");
             }
-            if (searchDto.getSortField().equals("userName")) {
+            if (searchDto.getSortField().equals("username")) {
                 sb.append(" ORDER BY s.USERNAME ");
             }
             if (searchDto.getSortField().equals("createDate")) {
@@ -86,7 +86,7 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
             dto.setMoney(ValueUtil.getDoubleByObject(obj[3]));
             dto.setDescription(ValueUtil.getStringByObject(obj[4]));
             dto.setStatus(ValueUtil.getIntegerByObject(obj[5]));
-            dto.setUserName(ValueUtil.getStringByObject(obj[6]));
+            dto.setUsername(ValueUtil.getStringByObject(obj[6]));
             dto.setCreateDate(ValueUtil.getDateByObject(obj[7]));
             dto.setUpdateDate(ValueUtil.getDateByObject(obj[8]));
             dto.setUpdateBy(ValueUtil.getStringByObject(obj[9]));

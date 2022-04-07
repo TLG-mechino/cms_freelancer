@@ -7,5 +7,5 @@ import vn.compedia.website.model.User;
 @Service
 public interface UserService {
 
-    User getUserByLongIdAccount(String userName);
+    User getUserByLongIdAccount(String username);
 }

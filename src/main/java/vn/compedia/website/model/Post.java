@@ -24,7 +24,7 @@ public class Post {
     private String content;
 
     @Column(name = "USERNAME")
-    private String userName;
+    private String username;
 
     @Column(name = "POSTING_TIME")
     private Date postingTime;

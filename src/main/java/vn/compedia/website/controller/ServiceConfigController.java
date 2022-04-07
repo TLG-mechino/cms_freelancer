@@ -157,7 +157,7 @@ public class ServiceConfigController extends BaseController {
         }
         if (serviceConfigDto.getPackageServiceId() == null) {
             serviceConfigDto.setCreateDate(new Date());
-            serviceConfigDto.setUserName(authorizationController.getAccountDto().getUsername());
+            serviceConfigDto.setUsername(authorizationController.getAccountDto().getUsername());
         }
         serviceConfigDto.setUpdateDate(new Date());
         serviceConfigDto.setUpdateBy(authorizationController.getAccountDto().getUsername());

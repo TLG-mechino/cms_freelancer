@@ -11,9 +11,9 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public User getUserByLongIdAccount(String userName) {
-        if(userRepository.getUsersByUserName(userName)!=null) {
-            return userRepository.getUsersByUserName(userName);
+    public User getUserByLongIdAccount(String username) {
+        if(userRepository.getUsersByUserName(username)!=null) {
+            return userRepository.getUsersByUserName(username);
         }
         return null;
     }

@@ -33,7 +33,7 @@
 
                 <h:form styleClass="ui-g-12" prependId="false">
                     <p:outputPanel>
-                        <p:link styleClass="title-color-left ui-sm-12">Thông tin đánh giá</p:link>
+                        <p:link styleClass="title-color-left ui-sm-12">Thông tin review đánh giá</p:link>
                     </p:outputPanel>
                     <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
                                  columnClasses="ui-grid-col-11 ui-no-margin-padding margin-right-10, ui-grid-col-1 ui-no-margin-padding">
@@ -105,8 +105,8 @@
                             <p:outputLabel value="#{resultDto.nameJob}"/>
                         </p:column>
 
-                        <p:column headerText="Người đánh giá" style="text-align: left" sortBy="#{resultDto.userName}">
-                            <p:outputLabel value="#{resultDto.userName}"/>
+                        <p:column headerText="Người đánh giá" style="text-align: left" sortBy="#{resultDto.username}">
+                            <p:outputLabel value="#{resultDto.username}"/>
                         </p:column>
 
                         <p:column headerText="Tiêu đề" style="text-align: left" sortBy="#{resultDto.title}">

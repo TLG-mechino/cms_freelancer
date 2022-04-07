@@ -1210,7 +1210,7 @@ a.profile {
   display: flex;
   background-color: black;
 }
-.login-body .body-container .right-side #userName, .login-body .body-container .right-side #password, .login-body .body-container .right-side #login-button, .login-body .body-container .right-side #checkbox-save-password {
+.login-body .body-container .right-side #username, .login-body .body-container .right-side #password, .login-body .body-container .right-side #login-button, .login-body .body-container .right-side #checkbox-save-password {
   border-radius: 5px;
 }
 

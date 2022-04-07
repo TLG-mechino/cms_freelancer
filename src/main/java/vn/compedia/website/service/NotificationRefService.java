@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface NotificationRefService {
 
-    List<NotificationRef> getAllByUserName(String userName) throws Exception;
+    List<NotificationRef> getAllByUserName(String username) throws Exception;
 
     NotificationRef getNotificationRefById(Long id);
 

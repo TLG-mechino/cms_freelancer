@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface JobRepositoryCustom {
 
-    List<JobDto> getAllJobRpByUserName(String userName, JobSearchDto jobUserSearchDto);
+    List<JobDto> getAllJobRpByUserName(String username, JobSearchDto jobUserSearchDto);
 
-    BigInteger countSearchRpByUserName(String userName, JobSearchDto jobSearchDto);
+    BigInteger countSearchRpByUserName(String username, JobSearchDto jobSearchDto);
 
 }

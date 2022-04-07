@@ -20,7 +20,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     EntityManager entityManager;
 
     @Override
-    public List<PostDto> getAllPostByUserName (String userName, PostSearchDto dto) {
+    public List<PostDto> getAllPostByUserName (String username, PostSearchDto dto) {
         StringBuilder sb = new StringBuilder();
         sb.append("select p.POST_ID, " +
                 "       p.CONTENT, " +
@@ -29,26 +29,32 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 "       p.BLOCK_COMMENT, " +
                 "       p.STATUS, " +
                 "       result1.postFile ");
-        appendQuery(sb,dto, userName);
+        appendQuery(sb,dto, username);
         if (dto.getSortField() != null) {
-            if (dto.getSortField().equals(" content ")) {
+            if (dto.getSortField().equals("username")) {
+                sb.append(" ORDER BY p.USERNAME ");
+            }
+            if (dto.getSortField().equals("content")) {
                 sb.append(" ORDER BY p.CONTENT ");
             }
-            if (dto.getSortField().equals(" postingTime ")) {
+            if (dto.getSortField().equals("postingTime")) {
                 sb.append(" ORDER BY p.POSTING_TIME ");
             }
             if (dto.getSortField().equals("blockComment")) {
                 sb.append(" ORDER BY p.BLOCK_COMMENT ");
             }
-            if (dto.getSortField().equals("files")) {
+            if (dto.getSortField().equals("filePost")) {
                 sb.append(" ORDER BY result1.postFile ");
+            }
+            if (dto.getSortField().equals("status")) {
+                sb.append(" ORDER BY p.STATUS ");
             }
             sb.append(dto.getSortOrder());
         }
         else {
             sb.append(" ORDER BY p.POST_ID ");
         }
-        Query query = createQuery(sb,dto,userName);
+        Query query = createQuery(sb,dto,username);
         if (dto.getPageSize() > 0) {
             query.setFirstResult(dto.getPageIndex()*dto.getPageSize());
             query.setMaxResults(dto.getPageSize());
@@ -64,7 +70,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                PostDto responseDto = new PostDto();
                responseDto.setId(ValueUtil.getLongByObject(obj[0]));
                 responseDto.setContent(ValueUtil.getStringByObject(obj[1]));
-                responseDto.setUserName(ValueUtil.getStringByObject(obj[2]));
+                responseDto.setUsername(ValueUtil.getStringByObject(obj[2]));
                 responseDto.setPostingTime(ValueUtil.getDateByObject(obj[3]));
                 responseDto.setBlockComment(ValueUtil.getIntegerByObject(obj[4]));
                 responseDto.setStatus(ValueUtil.getIntegerByObject(obj[5]));
@@ -76,18 +82,18 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
 
     @Override
-    public BigInteger countSearchRpByUserName(String userName, PostSearchDto dto) {
+    public BigInteger countSearchRpByUserName(String username, PostSearchDto dto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" select COUNT(p.POST_ID) ");
-        appendQuery(sb,dto, userName);
-        Query query = createQuery(sb,dto,userName);
+        appendQuery(sb,dto, username);
+        Query query = createQuery(sb,dto,username);
         return (BigInteger) query.getSingleResult();
     }
 
 
-    public Query createQuery (StringBuilder sb , PostSearchDto dto , String userName) {
+    public Query createQuery (StringBuilder sb , PostSearchDto dto , String username) {
         Query query = entityManager.createNativeQuery(sb.toString());
-        query.setParameter("userName",userName);
+        query.setParameter("username", username);
         if (dto.getKeyword()!=null) {
             query.setParameter("keyword","%"+dto.getKeyword().trim()+"%");
         }
@@ -97,19 +103,19 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         return query;
     }
 
-    public void appendQuery (StringBuilder sb , PostSearchDto dto, String userName) {
+    public void appendQuery (StringBuilder sb , PostSearchDto dto, String username) {
         sb.append(" from post p" +
                 "         left join (select pf.POST_ID, group_concat(pf.FILE_NAME) as postFile" +
                 "                     from post_file pf" +
                 "                     group by pf.POST_ID) result1 on p.POST_ID = result1.POST_ID" +
-                "    where p.USERNAME = :userName");
+                "    where p.USERNAME = :username");
         Query query = entityManager.createNativeQuery(sb.toString());
-        query.setParameter("userName",userName);
+        query.setParameter("username",username);
         if (StringUtils.isNotBlank(dto.getKeyword())) {
             sb.append("     and ( (p.CONTENT like :keyword) or (p.USERNAME like :keyword) )");
         }
         if (dto.getStatus()!=null) {
-            sb.append(" and p.STATUS =:status ");
+            sb.append(" and p.STATUS = :status ");
         }
     }
 }

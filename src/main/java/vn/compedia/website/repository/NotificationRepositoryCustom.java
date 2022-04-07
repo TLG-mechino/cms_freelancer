@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface NotificationRepositoryCustom {
 
-    List<NotificationDto> getAllNotificationRpByUserName(String userName, NotificationSearchDto searchDto);
+    List<NotificationDto> getAllNotificationRpByUserName(String username, NotificationSearchDto searchDto);
 
-    BigInteger countSearchRpByUserName(String userName, NotificationSearchDto searchDto);
+    BigInteger countSearchRpByUserName(String username, NotificationSearchDto searchDto);
 
 }

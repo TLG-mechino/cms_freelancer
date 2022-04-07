@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 public class ReviewResponseDto {
 
     private Long id;
-    private String userName;
+    private String username;
     private Long jobId;
     private String content;
     private Integer starAmount;

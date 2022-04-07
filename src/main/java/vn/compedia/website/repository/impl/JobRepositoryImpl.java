@@ -20,7 +20,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
     EntityManager entityManager;
 
     @Override
-    public List<JobDto> getAllJobRpByUserName(String userName, JobSearchDto jobSearchDto) {
+    public List<JobDto> getAllJobRpByUserName(String username, JobSearchDto jobSearchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" select j.JOB_ID, " +
                 "       j.NAME, " +
@@ -31,36 +31,39 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
                 "       j.CREATE_DATE, " +
                 "       j.UPDATE_DATE, " +
                 "       j.STATUS ");
-        appendQueryByUserName(sb, jobSearchDto, userName);
+        appendQueryByUserName(sb, jobSearchDto, username);
 
 
         if (jobSearchDto.getSortField() != null) {
             if (jobSearchDto.getSortField().equals("name")) {
-                sb.append(" ORDER BY j.NAME");
+                sb.append(" ORDER BY j.NAME ");
             }
             if (jobSearchDto.getSortField().equals("description")) {
-                sb.append(" ORDER BY j.DESCRIPTION");
+                sb.append(" ORDER BY j.DESCRIPTION ");
             }
-            if (jobSearchDto.getSortField().equals("userName")) {
-                sb.append(" ORDER BY j.USERNAME");
+            if (jobSearchDto.getSortField().equals("username")) {
+                sb.append(" ORDER BY j.USERNAME ");
             }
             if (jobSearchDto.getSortField().equals("moneyFrom")) {
-                sb.append(" ORDER BY j.MONEY_FROM");
+                sb.append(" ORDER BY j.MONEY_FROM ");
             }
             if (jobSearchDto.getSortField().equals("moneyTo")) {
-                sb.append(" ORDER BY j.MONEY_TO");
+                sb.append(" ORDER BY j.MONEY_TO ");
             }
             if (jobSearchDto.getSortField().equals("createDate")) {
-                sb.append(" ORDER BY j.CREATE_DATE");
+                sb.append(" ORDER BY j.CREATE_DATE ");
             }
             if (jobSearchDto.getSortField().equals("updateDate")) {
-                sb.append(" ORDER BY j.UPDATE_DATE");
+                sb.append(" ORDER BY j.UPDATE_DATE ");
+            }
+            if (jobSearchDto.getSortField().equals("status")) {
+                sb.append(" ORDER BY j.STATUS ");
             }
             sb.append(jobSearchDto.getSortOrder());
         } else {
             sb.append(" ORDER BY j.JOB_ID DESC");
         }
-        Query query = createQueryByUserName(sb, jobSearchDto, userName);
+        Query query = createQueryByUserName(sb, jobSearchDto, username);
 
         if (jobSearchDto.getPageSize() > 0) {
             query.setFirstResult(jobSearchDto.getPageIndex());
@@ -77,7 +80,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
                 job.setId(ValueUtil.getLongByObject(obj[0]));
                 job.setName(ValueUtil.getStringByObject(obj[1]));
                 job.setDescription(ValueUtil.getStringByObject(obj[2]));
-                job.setUserName(ValueUtil.getStringByObject(obj[3]));
+                job.setUsername(ValueUtil.getStringByObject(obj[3]));
                 job.setMoneyFrom(ValueUtil.getDoubleByObject(obj[4]));
                 job.setMoneyTo(ValueUtil.getDoubleByObject(obj[5]));
                 job.setCreateTime(ValueUtil.getDateByObject(obj[6]));
@@ -90,18 +93,18 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
     }
 
     @Override
-    public BigInteger countSearchRpByUserName(String userName, JobSearchDto jobSearchDto) {
+    public BigInteger countSearchRpByUserName(String username, JobSearchDto jobSearchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(j.JOB_ID) ");
-        appendQueryByUserName(sb,jobSearchDto, userName);
-        Query query = createQueryByUserName(sb,jobSearchDto,userName);
+        appendQueryByUserName(sb,jobSearchDto, username);
+        Query query = createQueryByUserName(sb,jobSearchDto,username);
         return (BigInteger) query.getSingleResult();
     }
 
-    public void appendQueryByUserName(StringBuilder sb, JobSearchDto dto, String userName) {
-        sb.append(" FROM job j WHERE j.USERNAME = :userName ");
+    public void appendQueryByUserName(StringBuilder sb, JobSearchDto dto, String username) {
+        sb.append(" FROM job j WHERE j.USERNAME = :username ");
         Query query = entityManager.createNativeQuery(sb.toString());
-        query.setParameter("userName", userName);
+        query.setParameter("username", username);
         if (StringUtils.isNotBlank(dto.getKeyword())) {
             sb.append(" AND lower(j.NAME) LIKE lower(:keyword)) " );
         }
@@ -114,9 +117,9 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
     }
 
 
-    public Query createQueryByUserName(StringBuilder sb, JobSearchDto dto, String userName) {
+    public Query createQueryByUserName(StringBuilder sb, JobSearchDto dto, String username) {
         Query query = entityManager.createNativeQuery(sb.toString());
-        query.setParameter("userName", userName);
+        query.setParameter("username", username);
         if (StringUtils.isNotBlank(dto.getKeyword())) {
             query.setParameter("keyword", "%" + dto.getKeyword().trim() + "%");
         }

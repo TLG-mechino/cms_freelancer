@@ -39,6 +39,6 @@ public class PackageService extends BaseModel {
     private Integer status;
 
     @Column(name = "USERNAME")
-    private String userName;
+    private String username;
 
 }

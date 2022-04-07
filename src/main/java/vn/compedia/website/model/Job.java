@@ -28,7 +28,7 @@ public class Job {
     private String description;
 
     @Column(name = "USERNAME")
-    private String userName;
+    private String username;
 
     @Column(name = "MONEY_FROM")
     private Double moneyFrom;

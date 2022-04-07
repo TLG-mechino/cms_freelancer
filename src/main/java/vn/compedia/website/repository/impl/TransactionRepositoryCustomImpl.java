@@ -98,7 +98,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     }
 
     @Override
-    public List<TransactionDto> getAllByUserName(String userName, TransactionSearchDto searchDto) {
+    public List<TransactionDto> getAllByUserName(String username, TransactionSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT t.TRANSACTION_ID, " +
                 "t.SENDER, " +
@@ -151,7 +151,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         } else {
             sb.append(" ORDER BY t.TRANSACTION_ID DESC ");
         }
-        Query query = createQueryByUserName(userName, sb, searchDto);
+        Query query = createQueryByUserName(username, sb, searchDto);
         if (searchDto.getPageSize() > 0) {
             query.setFirstResult(searchDto.getPageIndex());
             query.setMaxResults(searchDto.getPageSize());
@@ -181,11 +181,11 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     }
 
     @Override
-    public BigInteger countSearchByUserName(String userName, TransactionSearchDto searchDto) {
+    public BigInteger countSearchByUserName(String username, TransactionSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(t.TRANSACTION_ID) ");
         appendQueryByUserName(sb, searchDto);
-        Query query = createQueryByUserName(userName, sb, searchDto);
+        Query query = createQueryByUserName(username, sb, searchDto);
         return (BigInteger) query.getSingleResult();
     }
 
@@ -218,9 +218,9 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         return query;
     }
 
-    public Query createQueryByUserName(String userName, StringBuilder sb, TransactionSearchDto searchDto) {
+    public Query createQueryByUserName(String username, StringBuilder sb, TransactionSearchDto searchDto) {
         Query query = entityManager.createNativeQuery(sb.toString());
-        query.setParameter("userName", userName);
+        query.setParameter("username", username);
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             query.setParameter("keyword", "%" + searchDto.getKeyword().trim() + "%");
         }
@@ -260,7 +260,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     }
 
     public void appendQueryByUserName(StringBuilder sb, TransactionSearchDto SearchDto) {
-        sb.append(" FROM transaction t LEFT JOIN payment_type pt ON t.PAYMENT_TYPE_ID = pt.PAYMENT_TYPE_ID WHERE t.SENDER =:userName or t.RECIPIENT =:userName ");
+        sb.append(" FROM transaction t LEFT JOIN payment_type pt ON t.PAYMENT_TYPE_ID = pt.PAYMENT_TYPE_ID WHERE t.SENDER =:username or t.RECIPIENT =:username ");
         if (SearchDto.getKeyword() != null) {
             sb.append(" AND (t.TITLE_TRANSACTION LIKE :keyword) ");
         }

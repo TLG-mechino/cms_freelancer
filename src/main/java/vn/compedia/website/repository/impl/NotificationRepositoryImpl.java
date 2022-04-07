@@ -21,19 +21,19 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
     EntityManager entityManager;
 
     @Override
-    public List<NotificationDto> getAllNotificationRpByUserName(String userName, NotificationSearchDto searchDto) {
+    public List<NotificationDto> getAllNotificationRpByUserName(String username, NotificationSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" select n.NOTIFICATION_ID, " +
                 "       n.CONTENT, " +
                 "       n.SENDING_TIME, " +
                 "       n.USERNAME, " +
                 "       n.STATUS ");
-        appendQueryByUserName(sb, searchDto, userName);
+        appendQueryByUserName(sb, searchDto, username);
         if (searchDto.getSortField() != null) {
             if (searchDto.getSortField().equals("content")) {
                 sb.append(" ORDER BY n.CONTENT");
             }
-            if (searchDto.getSortField().equals("userName")) {
+            if (searchDto.getSortField().equals("username")) {
                 sb.append(" ORDER BY n.USERNAME");
             }
             if (searchDto.getSortField().equals("sendingTime")) {
@@ -46,7 +46,7 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
         } else {
             sb.append(" ORDER BY n.NOTIFICATION_ID DESC");
         }
-        Query query = createQueryByUserName(sb, searchDto, userName);
+        Query query = createQueryByUserName(sb, searchDto, username);
 
         if (searchDto.getPageSize() > 0) {
             query.setFirstResult(searchDto.getPageIndex());
@@ -63,7 +63,7 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
                 notification.setId(ValueUtil.getLongByObject(obj[0]));
                 notification.setContent(ValueUtil.getStringByObject(obj[1]));
                 notification.setSendingTime(ValueUtil.getDateByObject(obj[2]));
-                notification.setUserName(ValueUtil.getStringByObject(obj[3]));
+                notification.setUsername(ValueUtil.getStringByObject(obj[3]));
                 notification.setStatus(ValueUtil.getIntegerByObject(obj[4]));
                 notificationDtos.add(notification);
             }
@@ -72,18 +72,18 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
     }
 
     @Override
-    public BigInteger countSearchRpByUserName(String userName, NotificationSearchDto searchDto) {
+    public BigInteger countSearchRpByUserName(String username, NotificationSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(n.NOTIFICATION_ID) ");
-        appendQueryByUserName(sb,searchDto, userName);
-        Query query = createQueryByUserName(sb,searchDto,userName);
+        appendQueryByUserName(sb,searchDto, username);
+        Query query = createQueryByUserName(sb,searchDto,username);
         return (BigInteger) query.getSingleResult();
     }
 
-    public void appendQueryByUserName(StringBuilder sb, NotificationSearchDto searchDto, String userName) {
-        sb.append(" FROM notification n WHERE n.USERNAME = :userName ");
+    public void appendQueryByUserName(StringBuilder sb, NotificationSearchDto searchDto, String username) {
+        sb.append(" FROM notification n WHERE n.USERNAME = :username ");
         Query query = entityManager.createNativeQuery(sb.toString());
-        query.setParameter("userName", userName);
+        query.setParameter("username", username);
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND lower(n.CONTENT) LIKE lower(:keyword)) " );
         }
@@ -93,9 +93,9 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
     }
 
 
-    public Query createQueryByUserName(StringBuilder sb, NotificationSearchDto searchDto, String userName) {
+    public Query createQueryByUserName(StringBuilder sb, NotificationSearchDto searchDto, String username) {
         Query query = entityManager.createNativeQuery(sb.toString());
-        query.setParameter("userName", userName);
+        query.setParameter("username", username);
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             query.setParameter("keyword", "%" + searchDto.getKeyword().trim() + "%");
         }

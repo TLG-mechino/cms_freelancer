@@ -34,10 +34,10 @@ public class EmailUtil implements Runnable {
         return INSTANCE;
     }
 
-    public void sendCreateUser(String emailTo, String userName, String password) {
+    public void sendCreateUser(String emailTo, String username, String password) {
         String subject = PropertiesUtil.getProperty("email.createUser.subject");
         String content = PropertiesUtil.getProperty("email.createUser.content")
-                .replace("{TEN_TAI_KHOAN}", userName)
+                .replace("{TEN_TAI_KHOAN}", username)
                 .replace("{MAT_KHAU}", password);
         mailDtoQueue.add(new MailDto(emailTo, subject, content));
     }

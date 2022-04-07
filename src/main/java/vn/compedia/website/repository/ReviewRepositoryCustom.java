@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ReviewRepositoryCustom {
 
-    List<ReviewDto> getAllReviewByUserName(String userName, ReviewSearchDto reviewSearchDto);
+    List<ReviewDto> getAllReviewByUserName(String username, ReviewSearchDto reviewSearchDto);
 
-    BigInteger countSearchByUserName (String userName, ReviewSearchDto dto);
+    BigInteger countSearchByUserName (String username, ReviewSearchDto dto);
 }

@@ -45,4 +45,8 @@ public class Exam extends BaseModel{
 
     @Column(name = "HASHTAG_ID")
     private Integer hashtagId;
+
+    @Column(name = "MAX_SCORE")
+    private Double maxScore;
+
 }

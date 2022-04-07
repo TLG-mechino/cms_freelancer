@@ -223,6 +223,7 @@ public class MnTestController extends BaseController {
         }
         examDto.setUpdateDate(new Date());
         examDto.setUpdateBy(authorizationController.getAccountDto().getUsername());
+        examDto.setMaxScore(100.0);
         BeanUtils.copyProperties(examDto, exam);
 
         testRepository.save(exam);

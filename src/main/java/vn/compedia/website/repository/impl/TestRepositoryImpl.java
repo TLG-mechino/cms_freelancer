@@ -28,6 +28,7 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
                 "       e.DESCRIPTION_VN, " +
                 "       e.DESCRIPTION_EN, " +
                 "       e.SCORE, " +
+                "       e.MAX_SCORE, " +
                 "       et.NAME, " +
                 "       e.STATUS, " +
                 "       (select COUNT( ef.EXAM_FILE_ID) from exam_file ef WHERE e.EXAM_ID = ef.OBJECT_ID) as numberFile ");
@@ -88,9 +89,10 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
             dto.setDescriptionVn(ValueUtil.getStringByObject(obj[4]));
             dto.setDescriptionEn(ValueUtil.getStringByObject(obj[5]));
             dto.setScore(ValueUtil.getDoubleByObject(obj[6]));
-            dto.setExamTypeName(ValueUtil.getStringByObject(obj[7]));
-            dto.setStatus(ValueUtil.getIntegerByObject(obj[8]));
-            dto.setNumberFile(ValueUtil.getLongByObject(obj[9]));
+            dto.setMaxScore(ValueUtil.getDoubleByObject(obj[7]));
+            dto.setExamTypeName(ValueUtil.getStringByObject(obj[8]));
+            dto.setStatus(ValueUtil.getIntegerByObject(obj[9]));
+            dto.setNumberFile(ValueUtil.getLongByObject(obj[10]));
             list.add(dto);
         }
         return list;

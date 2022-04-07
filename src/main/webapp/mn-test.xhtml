@@ -57,6 +57,12 @@
                                 <f:selectItems var="item" itemValue="#{item.examTypeId}" itemLabel="#{item.nameVn}" value="#{mnTestController.examTypeList}" />
                             </p:selectOneMenu>
 
+                            <p:outputLabel value="Loại kỹ năng:" styleClass="requireLabel"/>
+                            <p:selectOneMenu value="#{mnTestController.examDto.hashtagId}" >
+                                <f:selectItem itemLabel="Chọn kỹ năng" itemValue=""/>
+                                <f:selectItems var="itemHashtag" itemValue="#{itemHashtag.hashtagId}" itemLabel="#{itemHashtag.titleVn}" value="#{mnTestController.listHashtag}" />
+                            </p:selectOneMenu>
+
                             <p:outputLabel value="Điểm tích lũy:" styleClass="requireLabel"/>
                             <p:inputNumber placeholder="Nhập điểm tích lũy" maxlength="2"
                                          onchange="this.value = this.value.trim()"

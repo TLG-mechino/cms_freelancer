@@ -25,8 +25,10 @@ import vn.compedia.website.dto.UploadWithFilenameDto;
 import vn.compedia.website.model.Exam;
 import vn.compedia.website.model.ExamFile;
 import vn.compedia.website.model.ExamType;
+import vn.compedia.website.model.Hashtag;
 import vn.compedia.website.repository.ExamFileRepository;
 import vn.compedia.website.repository.ExamTypeRepository;
+import vn.compedia.website.repository.HashtagRepository;
 import vn.compedia.website.repository.TestRepository;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.FacesUtil;
@@ -59,6 +61,8 @@ public class MnTestController extends BaseController {
     private UploadSingleImageController uploadSingleImageController;
     @Autowired
     private ExamFileRepository examFileRepository;
+    @Autowired
+    private HashtagRepository hashtagRepository;
 
     private Exam exam;
     private String titleDialog;
@@ -68,6 +72,7 @@ public class MnTestController extends BaseController {
     private ExamSearchDto searchDtoTemp;
     private List<ExamType> examTypeList;
     private List<ExamFile> listExamFile;
+    private List<Hashtag> listHashtag;
     private List<UploadWithFilenameDto> uploadMultipleImage;
 
     public void initData() {
@@ -84,6 +89,7 @@ public class MnTestController extends BaseController {
         searchDtoTemp = new ExamSearchDto();
         listExamFile = new ArrayList<>();
         uploadMultipleImage = new ArrayList<>();
+        listHashtag = (List<Hashtag>) hashtagRepository.findAll();
         examTypeList = (List<ExamType>) examTypeRepository.findAll();
         uploadSingleImageController.resetAll(null);
         uploadMultipleImageFileNameController.resetAll(null);
@@ -191,6 +197,14 @@ public class MnTestController extends BaseController {
         if (CollectionUtils.isEmpty(uploadMultipleImageFileNameController.getUploadMultipleFileDto().getListToShow())) {
             FacesUtil.addErrorMessage("Bạn vui lòng chọn hình ảnh bài test");
             FacesUtil.updateView("growl");
+            return false;
+        }
+        if (examDto.getExamTypeId() == null) {
+            FacesUtil.addErrorMessage("Bạn vui chọn loại bài test ");
+            return false;
+        }
+        if (examDto.getHashtagId() == null) {
+            FacesUtil.addErrorMessage("Bạn vui chọn loại kỹ năng ");
             return false;
         }
         if (examDto.getScore() == null){

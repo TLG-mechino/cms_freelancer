@@ -85,8 +85,7 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("userName", userName);
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
-            sb.append(" AND (lower(n.USERNAME) LIKE :keyword " +
-                    " OR lower(n.CONTENT) LIKE lower(:keyword)) " );
+            sb.append(" AND lower(n.CONTENT) LIKE lower(:keyword)) " );
         }
         if (searchDto.getStatus() != null) {
             sb.append(" AND j.STATUS =:status ");
@@ -98,7 +97,7 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("userName", userName);
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
-            query.setParameter("keyword", "%" + searchDto.getKeyword().trim().toUpperCase() + "%");
+            query.setParameter("keyword", "%" + searchDto.getKeyword().trim() + "%");
         }
         if (searchDto.getStatus() != null) {
             query.setParameter("status", searchDto.getStatus());

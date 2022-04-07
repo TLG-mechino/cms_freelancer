@@ -120,7 +120,7 @@
                                 <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
                                     <p:menuitem value="Xóa thông tin" icon="fa fa-close"
                                                 update="searchForm growl" process="@this"
-                                                actionListener="#{mnNotificationController.onDelete(resultDto.hashtagId)}">
+                                                actionListener="#{mnNotificationController.onDelete(resultDto.id)}">
                                         <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"
                                                    message="Bạn có chắc chắn muốn xóa thông tin?"/>
                                     </p:menuitem>

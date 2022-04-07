@@ -97,13 +97,13 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
 
     private void appendQueryByUserName (StringBuilder sb , ReviewSearchDto dto, String userName) {
         sb.append(" from review rv " +
-                "  inner join (select j.JOB_ID, j.NAME from JOB j where j.USERNAME = :userName) result1" +
+                "  inner join (select j.JOB_ID, j.NAME from job j where j.USERNAME = :userName) result1" +
                 "   on rv.JOB_ID = result1.JOB_ID " +
                 " where 1 = 1 ");
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("userName",userName);
         if (dto.getKeyword() != null) {
-            sb.append(" and ( (rv.TITLE like :keyword) or (rv.START_AMOUNT like :keyword) )");
+            sb.append(" and ( (lower(rv.TITLE) like lower(:keyword)) or (lower(result1.NAME) like lower(:keyword)) )");
         }
         if(dto.getStartAmount() != null){
             sb.append(" and rv.START_AMOUNT =:startAmount");

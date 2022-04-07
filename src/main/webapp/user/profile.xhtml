@@ -44,8 +44,11 @@
                         </p:inputText>
 
                         <p:outputLabel value="Số điện thoại :" styleClass="requireLabel"/>
-                        <p:inputNumber maxlength="11" onchange="this.value = this.value.trim()" size="60"
-                                     value="#{mnUserController.userDtoDetails.phone}"/>
+                        <p:inputText placeholder="Nhập số điện thoại" maxlength="11"
+                                     onchange="this.value = this.value.trim()"
+                                     onkeyup="this.value = this.value.replace(/\D/g, '');"
+                                     value="#{mnUserController.userDtoDetails.phone}" minValue="0" decimalPlaces="0">
+                        </p:inputText>
 
                         <p:outputLabel value="Email : " styleClass="requireLabel"/>
                         <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"

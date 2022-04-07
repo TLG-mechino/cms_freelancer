@@ -40,7 +40,7 @@
                         <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
                             <div class="ui-input-icon-left" style="width: 100%; display: flex;">
                                 <i class="fa fa-search"/>
-                                <p:inputText placeholder="Nhập nội dung"
+                                <p:inputText placeholder="Nhập Tên dự án, Tiêu đề"
                                              style="width: 97%"
                                              onblur="this.value = this.value.trim()" maxlength="100"
                                              onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
@@ -138,7 +138,7 @@
                             <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
                                 <p:menuitem value="Xóa thông tin" icon="fa fa-close"
                                             update="searchForm growl" process="@this"
-                                            actionListener="#{mnReviewController.onDelete(resultDto.postId)}">
+                                            actionListener="#{mnReviewController.onDelete(resultDto.id)}">
                                     <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"
                                                message="Bạn có chắc chắn muốn xóa thông tin?"/>
                                 </p:menuitem>

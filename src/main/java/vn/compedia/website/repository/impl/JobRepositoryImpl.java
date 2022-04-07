@@ -103,8 +103,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("userName", userName);
         if (StringUtils.isNotBlank(dto.getKeyword())) {
-            sb.append(" AND (lower(j.USERNAME) LIKE :keyword " +
-                    " OR lower(j.NAME) LIKE lower(:keyword)) " );
+            sb.append(" AND lower(j.NAME) LIKE lower(:keyword)) " );
         }
         if (dto.getMoney() != null) {
             sb.append(" AND j.MONEY_FROM <= :money AND j.MONEY_TO >= :money ");
@@ -119,7 +118,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("userName", userName);
         if (StringUtils.isNotBlank(dto.getKeyword())) {
-            query.setParameter("keyword", "%" + dto.getKeyword().trim().toUpperCase() + "%");
+            query.setParameter("keyword", "%" + dto.getKeyword().trim() + "%");
         }
         if (dto.getMoney() != null) {
             query.setParameter("money", dto.getMoney());

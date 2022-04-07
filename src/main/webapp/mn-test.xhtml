@@ -58,7 +58,7 @@
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Điểm tích lũy:" styleClass="requireLabel"/>
-                            <p:inputNumber placeholder="Nhập điểm tích lũy" maxlength="3"
+                            <p:inputNumber placeholder="Nhập điểm tích lũy" maxlength="5"
                                          onchange="this.value = this.value.trim()"
                                            value="#{mnTestController.examDto.score}" decimalPlaces="0" minValue="0">
                             </p:inputNumber>
@@ -167,7 +167,9 @@
                 </p:column>
 
                 <p:column headerText="Điểm tích lũy" style="text-align: left" sortBy="#{resultDto.score}">
-                    <p:outputLabel value="#{resultDto.score}"/>
+                    <p:outputLabel value="#{resultDto.score}" >
+                        <f:convertNumber pattern="###,###"></f:convertNumber>
+                    </p:outputLabel>
                 </p:column>
 
                 <p:column headerText="File đính kèm" style="text-align: left">

@@ -22,7 +22,7 @@
                                          layout="grid" styleClass="ui-panelgrid-blank">
 
                                 <p:outputLabel value="Mã dịch vụ:" styleClass="requireLabel"/>
-                                <p:inputText placeholder="Nhập mã dịch vụ" maxlength="20"
+                                <p:inputText placeholder="Nhập mã dịch vụ" maxlength="10"
                                              value="#{serviceConfigController.serviceConfigDto.code}" id="code"
                                              onchange="this.value = this.value.trim()"
                                              onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();"/>
@@ -36,14 +36,15 @@
                                                  value="#{serviceConfigController.serviceConfigDto.description}"/>
 
                                 <p:outputLabel value="Loại dịch vụ:"/>
-                                <p:selectOneMenu value="#{serviceConfigController.serviceConfigDto.serviceTypeId}" >
+                                <p:selectOneMenu value="#{serviceConfigController.serviceConfigDto.serviceTypeId}" placeholder="Chọn loại dịch vụ" >
+                                    <f:selectItem itemLabel="Chọn loại dịch vụ" />
                                     <f:selectItems var="item" itemValue="#{item.serviceTypeId}" itemLabel="#{item.name}" value="#{serviceConfigController.serviceTypeList}" />
                                 </p:selectOneMenu>
 
-                                <p:outputLabel value="Nhập phí dịch vụ:" styleClass="requireLabel"/>
-                                <p:inputNumber placeholder="Nhập số tiền"
+                                <p:outputLabel value="Phí dịch vụ:" styleClass="requireLabel"/>
+                                <p:inputNumber placeholder="Nhập phí dịch vụ"
                                                onchange="this.value = this.value.trim()" maxlength="12"
-                                               value="#{serviceConfigController.serviceConfigDto.money}"/>
+                                               value="#{serviceConfigController.serviceConfigDto.money}" minValue="0"/>
 
                                 <p:outputLabel value="Trạng thái:" styleClass="requireLabel"/>
                                 <p:selectOneMenu value="#{serviceConfigController.serviceConfigDto.status}">
@@ -152,7 +153,7 @@
 
                     <p:column headerText="Phí dịch vụ" style="text-align: left" sortBy="#{resultDto.money}">
                         <p:outputLabel value="#{resultDto.money}">
-                            <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"/>
+                            <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency" pattern="###,### đ"/>
                         </p:outputLabel>
                     </p:column>
 

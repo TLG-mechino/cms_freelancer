@@ -149,7 +149,7 @@ public class AuthorizationController implements Serializable {
     }
 
     public boolean isValidatePassword(String password) {
-        String regex = "^.{6,50}$";
+        String regex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
 
         Pattern p = Pattern.compile(regex);
 
@@ -198,7 +198,7 @@ public class AuthorizationController implements Serializable {
             return;
         }
         if (!isValidatePassword(accountDto.getNewPassword())) {
-            FacesUtil.addErrorMessage("Mật khẩu phải từ 6 đến 50 ký  bao gồm chữ cái in thường, chữ cái in hoa, số, ký tự đặc biệt");
+            FacesUtil.addErrorMessage("Mật khẩu phải ít nhất 8 ký tự bao gồm chữ cái in thường, một chữ cái in hoa,một số,");
             return;
         }
         if (accountDto.getOldPassword().equals(accountDto.getNewPassword())) {
@@ -224,6 +224,7 @@ public class AuthorizationController implements Serializable {
             initPass();
             checkNotify = true;
             FacesUtil.redirect("/dashboard.xhtml");
+            FacesUtil.addSuccessMessage("Đổi mật khẩu thành công");
         } else {
             FacesUtil.addErrorMessage("Mật khẩu mới và nhập lại mật khẩu không trùng nhau");
         }

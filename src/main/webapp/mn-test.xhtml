@@ -25,22 +25,22 @@
                                 <p:ajax event="change" update="code" listener="#{mnTestController.removeChar()}"/>
                             </p:inputText>
 
-                            <p:outputLabel value="Tiêu đề tiếng việt:" styleClass="requireLabel"/>
+                            <p:outputLabel value="Tiêu đề Tiếng Việt:" styleClass="requireLabel"/>
                             <p:inputText placeholder="Nhập tiêu đề tiếng việt" maxlength="50"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.titleVn}"/>
 
-                            <p:outputLabel value="Tiêu đề tiếng anh:" styleClass="requireLabel"/>
+                            <p:outputLabel value="Tiêu đề Tiếng Anh:" styleClass="requireLabel"/>
                             <p:inputText placeholder="Nhập tiêu đề tiếng anh" maxlength="50"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.titleEn}"/>
 
-                            <p:outputLabel value="Mô tả tiếng việt:" styleClass="requireLabel"/>
+                            <p:outputLabel value="Mô tả Tiếng Việt:" styleClass="requireLabel"/>
                             <p:inputTextarea placeholder="Nhập mô tả tiếng việt" maxlength="100"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.descriptionVn}"/>
 
-                            <p:outputLabel value="Mô tả tiếng anh:" styleClass="requireLabel"/>
+                            <p:outputLabel value="Mô tả Tiếng Anh:" styleClass="requireLabel"/>
                             <p:inputTextarea placeholder="Nhập mô tả tiếng anh" maxlength="100"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.descriptionEn}"/>
@@ -103,7 +103,7 @@
                 <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
                     <div class="ui-input-icon-left" style="width: 100%; display: flex;">
                         <i class="fa fa-search"/>
-                        <p:inputText placeholder="Nhập mã bài test, tiêu đề, mô tả, nội dung" style="width: 97%"
+                        <p:inputText placeholder="Nhập Mã bài test, Tiêu đề, Mô tả, Nội dung" style="width: 97%"
                                      onblur="this.value = this.value.trim()" maxlength="100"
                                      onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
                                      value="#{mnTestController.searchDto.keyword}"
@@ -158,11 +158,11 @@
                     <p:outputLabel value="#{resultDto.code}"/>
                 </p:column>
 
-                <p:column headerText="Tiêu đề tiếng việt" style="text-align: left" sortBy="#{resultDto.titleVn}">
+                <p:column headerText="Tiêu đề Tiếng Việt" style="text-align: left" sortBy="#{resultDto.titleVn}">
                     <p:outputLabel value="#{resultDto.titleVn}"/>
                 </p:column>
 
-                <p:column headerText="Tiêu đề tiếng anh" style="text-align: left" sortBy="#{resultDto.titleEn}">
+                <p:column headerText="Tiêu đề Tiếng Anh" style="text-align: left" sortBy="#{resultDto.titleEn}">
                     <p:outputLabel value="#{resultDto.titleEn}"/>
                 </p:column>
 

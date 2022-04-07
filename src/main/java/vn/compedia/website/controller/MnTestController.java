@@ -188,14 +188,6 @@ public class MnTestController extends BaseController {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập mô tả tiếng anh ");
             return false;
         }
-        if (StringUtils.isBlank(examDto.getContentVn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập nội dung tiếng việt ");
-            return false;
-        }
-        if (StringUtils.isBlank(examDto.getContentEn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập nội dung tiếng anh ");
-            return false;
-        }
         if (CollectionUtils.isEmpty(uploadMultipleImageFileNameController.getUploadMultipleFileDto().getListToShow())) {
             FacesUtil.addErrorMessage("Bạn vui lòng chọn hình ảnh bài test");
             FacesUtil.updateView("growl");

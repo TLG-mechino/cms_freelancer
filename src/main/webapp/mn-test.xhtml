@@ -45,16 +45,6 @@
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.descriptionEn}"/>
 
-                            <p:outputLabel value="Nội dung tiếng việt:" styleClass="requireLabel"/>
-                            <p:inputTextarea placeholder="Nhập nội dung tiếng việt" maxlength="1000"
-                                         onchange="this.value = this.value.trim()"
-                                         value="#{mnTestController.examDto.contentVn}"/>
-
-                            <p:outputLabel value="Nội dung tiếng anh:" styleClass="requireLabel"/>
-                            <p:inputTextarea placeholder="Nhập nội dung tiếng anh" maxlength="1000"
-                                         onchange="this.value = this.value.trim()"
-                                         value="#{mnTestController.examDto.contentEn}"/>
-
                             <p:outputLabel value="Tài liệu bài test:" styleClass="requireLabel"/>
                             <p:outputPanel styleClass="ui-g-12">
                                 <ui:include src="/common/upload-multiple-image.xhtml"/>

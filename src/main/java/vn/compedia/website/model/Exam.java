@@ -34,12 +34,6 @@ public class Exam extends BaseModel{
     @Column(name = "DESCRIPTION_EN")
     private String descriptionEn;
 
-    @Column(name = "CONTENT_VN")
-    private String contentVn;
-
-    @Column(name = "CONTENT_EN")
-    private String contentEn;
-
     @Column(name = "SCORE")
     private Double score;
 

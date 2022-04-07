@@ -27,8 +27,6 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
                 "       e.TITLE_EN, " +
                 "       e.DESCRIPTION_VN, " +
                 "       e.DESCRIPTION_EN, " +
-                "       e.CONTENT_VN, " +
-                "       e.CONTENT_EN, " +
                 "       e.SCORE, " +
                 "       et.NAME, " +
                 "       e.STATUS, " +
@@ -89,12 +87,10 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
             dto.setTitleEn(ValueUtil.getStringByObject(obj[3]));
             dto.setDescriptionVn(ValueUtil.getStringByObject(obj[4]));
             dto.setDescriptionEn(ValueUtil.getStringByObject(obj[5]));
-            dto.setContentVn(ValueUtil.getStringByObject(obj[6]));
-            dto.setContentEn(ValueUtil.getStringByObject(obj[7]));
-            dto.setScore(ValueUtil.getDoubleByObject(obj[8]));
-            dto.setExamTypeName(ValueUtil.getStringByObject(obj[9]));
-            dto.setStatus(ValueUtil.getIntegerByObject(obj[10]));
-            dto.setNumberFile(ValueUtil.getLongByObject(obj[11]));
+            dto.setScore(ValueUtil.getDoubleByObject(obj[6]));
+            dto.setExamTypeName(ValueUtil.getStringByObject(obj[7]));
+            dto.setStatus(ValueUtil.getIntegerByObject(obj[8]));
+            dto.setNumberFile(ValueUtil.getLongByObject(obj[9]));
             list.add(dto);
         }
         return list;

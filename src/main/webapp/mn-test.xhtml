@@ -52,9 +52,9 @@
                             </p:outputPanel>
 
                             <p:outputLabel value="Loại bài test:" styleClass="requireLabel"/>
-                            <p:selectOneMenu value="#{mnTestController.examDto.examTypeId}" >
+                            <p:selectOneMenu value="#{mnTestController.examDto.examTypeId}">
                                 <f:selectItem itemLabel="Chọn loại bài test" itemValue=""/>
-                                <f:selectItems var="item" itemValue="#{item.examTypeId}" itemLabel="#{item.nameVn}" value="#{mnTestController.examTypeList}" />
+                                <f:selectItems value="#{mnTestController.examTypeList}"/>
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Loại kỹ năng:" styleClass="requireLabel"/>
@@ -174,13 +174,13 @@
 
                 <p:column headerText="Số điểm để qua bài thi" style="text-align: left" sortBy="#{resultDto.score}">
                     <p:outputLabel value="#{resultDto.score}" >
-                        <f:convertNumber pattern="###,###"></f:convertNumber>
+                        <f:convertNumber pattern="###,###"/>
                     </p:outputLabel>
                 </p:column>
 
                 <p:column headerText="Số điểm tối đa" style="text-align: left" sortBy="#{resultDto.maxScore}">
                     <p:outputLabel value="#{resultDto.maxScore}" >
-                        <f:convertNumber pattern="###,###"></f:convertNumber>
+                        <f:convertNumber pattern="###,###"/>
                     </p:outputLabel>
                 </p:column>
 

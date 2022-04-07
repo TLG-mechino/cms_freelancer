@@ -35,9 +35,13 @@ import vn.compedia.website.util.FacesUtil;
 import vn.compedia.website.util.StringUtil;
 
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Setter
 @Getter
@@ -70,7 +74,7 @@ public class MnTestController extends BaseController {
     private ExamDto examDto;
     private LazyDataModel<ExamDto> lazyDataModel;
     private ExamSearchDto searchDtoTemp;
-    private List<ExamType> examTypeList;
+    private List<SelectItem> examTypeList;
     private List<ExamFile> listExamFile;
     private List<Hashtag> listHashtag;
     private List<UploadWithFilenameDto> uploadMultipleImage;
@@ -90,7 +94,15 @@ public class MnTestController extends BaseController {
         listExamFile = new ArrayList<>();
         uploadMultipleImage = new ArrayList<>();
         listHashtag = (List<Hashtag>) hashtagRepository.findAll();
-        examTypeList = (List<ExamType>) examTypeRepository.findAll();
+
+        examTypeList = new ArrayList<>();
+        List<ExamType> dataList = (List<ExamType>) examTypeRepository.findAll();
+        if (CollectionUtils.isNotEmpty(dataList)) {
+            for (ExamType examType : dataList) {
+                examTypeList.add(new SelectItem(examType.getExamTypeId(), examType.getNameVn()));
+            }
+        }
+
         uploadSingleImageController.resetAll(null);
         uploadMultipleImageFileNameController.resetAll(null);
         onSearch();

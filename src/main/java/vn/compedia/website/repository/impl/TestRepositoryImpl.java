@@ -29,7 +29,7 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
                 "       e.DESCRIPTION_EN, " +
                 "       e.SCORE, " +
                 "       e.MAX_SCORE, " +
-                "       et.NAME, " +
+                "       et.NAME_VN, " +
                 "       e.STATUS, " +
                 "       (select COUNT( ef.EXAM_FILE_ID) from exam_file ef WHERE e.EXAM_ID = ef.OBJECT_ID) as numberFile ");
         appendQuery(sb, searchDto);
@@ -60,7 +60,7 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
                 sb.append(" ORDER BY e.SCORE ");
             }
             if (searchDto.getSortField().equals("examTypeName")) {
-                sb.append(" ORDER BY et.NAME ");
+                sb.append(" ORDER BY et.NAME_VN ");
             }
             if (searchDto.getSortField().equals("status")) {
                 sb.append(" ORDER BY e.STATUS ");

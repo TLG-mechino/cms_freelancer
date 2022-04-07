@@ -54,7 +54,7 @@
                             <p:outputLabel value="Loại bài test:" styleClass="requireLabel"/>
                             <p:selectOneMenu value="#{mnTestController.examDto.examTypeId}" >
                                 <f:selectItem itemLabel="Chọn loại bài test" itemValue=""/>
-                                <f:selectItems var="item" itemValue="#{item.examTypeId}" itemLabel="#{item.name}" value="#{mnTestController.examTypeList}" />
+                                <f:selectItems var="item" itemValue="#{item.examTypeId}" itemLabel="#{item.nameVn}" value="#{mnTestController.examTypeList}" />
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Điểm tích lũy:" styleClass="requireLabel"/>
@@ -121,7 +121,7 @@
                     <p:outputLabel value="Loại bài test:" styleClass="filter-item-label"/>
                     <p:selectOneMenu styleClass="filter-item" value="#{mnTestController.searchDto.examTypeId}" >
                         <f:selectItem itemLabel="Chọn loại bài test" itemValue=""/>
-                        <f:selectItems var="item" itemValue="#{item.examTypeId}" itemLabel="#{item.name}" value="#{mnTestController.examTypeList}" />
+                        <f:selectItems var="item" itemValue="#{item.examTypeId}" itemLabel="#{item.nameVn}" value="#{mnTestController.examTypeList}" />
                     </p:selectOneMenu>
 
                     <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>

@@ -22,8 +22,11 @@ public class ExamType {
     @Column(name = "CODE", length = 20)
     private String code;
 
-    @Column(name = "NAME", length = 50)
-    private String name;
+    @Column(name = "NAME_VN", length = 50)
+    private String nameVn;
+
+    @Column(name = "NAME_EN")
+    private String nameEn;
 
     @Column(name = "STATUS")
     private Integer status;

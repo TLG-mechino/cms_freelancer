@@ -17,8 +17,10 @@ import vn.compedia.website.dto.PostDto;
 import vn.compedia.website.dto.PostSearchDto;
 import vn.compedia.website.dto.TransactionDto;
 import vn.compedia.website.dto.TransactionSearchDto;
+import vn.compedia.website.model.PaymentType;
 import vn.compedia.website.model.Post;
 import vn.compedia.website.model.Transaction;
+import vn.compedia.website.repository.PaymentTypeRepository;
 import vn.compedia.website.repository.PostRepository;
 import vn.compedia.website.repository.TransactionRepository;
 import vn.compedia.website.util.Constant;
@@ -27,6 +29,7 @@ import vn.compedia.website.util.FacesUtil;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +47,8 @@ public class MnTransactionUserController extends BaseController {
 
     @Inject
     private MnUserController userController;
+    @Autowired
+    private PaymentTypeRepository paymentTypeRepository;
 
     @Autowired
     private TransactionRepository transactionRepository;
@@ -54,6 +59,7 @@ public class MnTransactionUserController extends BaseController {
     private TransactionDto transactionDto;
     private LazyDataModel<TransactionDto> lazyDataModel;
     private TransactionSearchDto searchDtoTemp;
+    private List<PaymentType> paymentTypeList;
 
     public void initData() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -64,9 +70,11 @@ public class MnTransactionUserController extends BaseController {
 
     public void resetAll() {
         transaction = new Transaction();
+        paymentTypeList = new ArrayList<>();
         transactionDto = new TransactionDto();
         searchDto = new TransactionSearchDto();
         searchDtoTemp = new TransactionSearchDto();
+        paymentTypeList = (List<PaymentType>) paymentTypeRepository.findAll();
         onSearch();
     }
 

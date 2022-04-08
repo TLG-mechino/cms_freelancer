@@ -45,7 +45,7 @@
                                          value="#{mnHashtagController.hashtagDto.descriptionEn}"/>
 
                             <p:outputLabel value="Trạng thái:" styleClass="requireLabel"/>
-                            <p:selectOneMenu value="#{mnHashtagController.hashtagDto.status}">
+                            <p:selectOneMenu value="#{mnHashtagController.hashtagDto.status}" style="">
                                 <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
                                 <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
                             </p:selectOneMenu>
@@ -154,7 +154,7 @@
                 </p:column>
 
                 <p:column headerText="Ngày tạo" style="text-align: left" sortBy="#{resultDto.createDate}">
-                    <p:outputLabel value="#{resultDto.createDate}">
+                    <p:outputLabel value="#{resultDto.updateBy}">
                         <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>
                     </p:outputLabel>
                 </p:column>

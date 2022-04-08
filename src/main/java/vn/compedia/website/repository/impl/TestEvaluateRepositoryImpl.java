@@ -30,7 +30,7 @@ public class TestEvaluateRepositoryImpl implements TestEvaluateRepositoryCustom 
                 "       ue.SCORE, " +
                 "       ue.NOTE, " +
                 "       ue.STATUS, " +
-                "       COUNT(ef.EXAM_FILE_ID) as numberFile");
+                "       (select COUNT(ef.EXAM_FILE_ID) from exam_file ef WHERE ue.USER_EXAM_ID = ef.OBJECT_ID ) as numberFile ");
         appendQuery(sb, searchDto);
 
         if (searchDto.getSortField() != null) {

@@ -185,12 +185,14 @@ public class MnTestEvaluateController extends BaseController {
             FacesUtil.updateView("growl");
             return;
         }
-        userExamDtoDetail = testEvaluateRepository.findByIdAndExamCode(object.getUserExamId());
-        BeanUtils.copyProperties(object, userExam);
+        userExam = userExamRepository.findById(object.getUserExamId()).get();
+        userExam.setScore(object.getScore());
+        userExam.setNote(object.getNote());
+        userExam.setSubmitTime(object.getSubmitTime());
         userExamRepository.save(userExam);
         titleDialog = "Sửa";
-        FacesUtil.updateView("evaluate-details");
         FacesUtil.addSuccessMessage("Sửa thông tin thành công");
+        FacesUtil.updateView("evaluate-details");
     }
     @Override
     protected String getMenuId() {

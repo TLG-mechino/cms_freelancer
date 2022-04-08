@@ -47,8 +47,8 @@
 
                             <p:outputLabel value="Tài liệu bài test:" styleClass="requireLabel"/>
                             <p:outputPanel styleClass="ui-g-12">
-                                <ui:include src="/common/upload-multiple-image.xhtml"/>
                                 <p:outputLabel value="(*) Hệ thống chỉ hỗ trợ upload file có định dạng: jpg, JPG, jpeg, JPEG, png, PNG. Dung lượng tối đa 50 Mb"/>
+                                <ui:include src="/common/upload-multiple-image.xhtml"/>
                             </p:outputPanel>
 
                             <p:outputLabel value="Loại bài test:" styleClass="requireLabel"/>
@@ -60,7 +60,7 @@
                             <p:outputLabel value="Loại kỹ năng:" styleClass="requireLabel"/>
                             <p:selectOneMenu value="#{mnTestController.examDto.hashtagId}" >
                                 <f:selectItem itemLabel="Chọn kỹ năng" itemValue=""/>
-                                <f:selectItems var="itemHashtag" itemValue="#{itemHashtag.hashtagId}" itemLabel="#{itemHashtag.titleVn}" value="#{mnTestController.listHashtag}" />
+                                <f:selectItems value="#{mnTestController.listHashtag}" />
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Điểm tích lũy:" styleClass="requireLabel"/>

@@ -76,7 +76,7 @@ public class MnTestController extends BaseController {
     private ExamSearchDto searchDtoTemp;
     private List<SelectItem> examTypeList;
     private List<ExamFile> listExamFile;
-    private List<Hashtag> listHashtag;
+    private List<SelectItem> listHashtag;
     private List<UploadWithFilenameDto> uploadMultipleImage;
 
     public void initData() {
@@ -93,7 +93,14 @@ public class MnTestController extends BaseController {
         searchDtoTemp = new ExamSearchDto();
         listExamFile = new ArrayList<>();
         uploadMultipleImage = new ArrayList<>();
-        listHashtag = (List<Hashtag>) hashtagRepository.findAll();
+
+        listHashtag = new ArrayList<>();
+        List<Hashtag> dataHashtag = (List<Hashtag>) hashtagRepository.findAll();
+        if (CollectionUtils.isNotEmpty(dataHashtag)) {
+            for (Hashtag hashtag : dataHashtag) {
+                listHashtag.add(new SelectItem(hashtag.getHashtagId(), hashtag.getTitleVn()));
+            }
+        }
 
         examTypeList = new ArrayList<>();
         List<ExamType> dataList = (List<ExamType>) examTypeRepository.findAll();
@@ -243,7 +250,7 @@ public class MnTestController extends BaseController {
         if (!validateDate()) {
             return;
         }
-        if (examDto.getHashtagId() == null) {
+        if (examDto.getExamId() == null) {
             examDto.setCreateDate(new Date());
             examDto.setCreateBy(authorizationController.getAccountDto().getUsername());
         }

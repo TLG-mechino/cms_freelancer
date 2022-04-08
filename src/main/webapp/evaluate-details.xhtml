@@ -93,23 +93,24 @@
                     <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
                         <div class="card">
                             <div class="p-d-flex">
-                                <p:outputLabel value="Ghi chú : *" styleClass="filter-item-label"/>
+                                <p:outputLabel value="Ghi chú : " styleClass="requireLabel"/>
                                 <div class="filter-item">
                                     <p:inputText value="#{mnTestEvaluateController.userExamDtoDetail.note}"
                                                  placeholder="Nhập ghi chú"/>
                                 </div>
                             </div>
                             <div class="p-d-flex">
-                                <p:outputLabel value="Số điểm đánh giá : *" styleClass="filter-item-label"/>
+                                <p:outputLabel value="Số điểm đánh giá : " styleClass="requireLabel"/>
                                 <div class="filter-item">
-                                    <p:inputText value="#{mnTestEvaluateController.userExamDtoDetail.score}"
-                                                 placeholder="Nhập số điểm đánh giá" decimalPlaces="0"/>
+                                    <p:inputNumber value="#{mnTestEvaluateController.userExamDtoDetail.score}"
+                                                 placeholder="Nhập số điểm đánh giá" decimalPlaces="0" minValue="0" maxValue="100"/>
                                 </div>
                             </div>
                             <hr class="hr-class"/>
                             <p:commandButton value="Lưu" styleClass="border-btn" icon="fa fa-save"
                                              style="width: auto" oncomplete="PF('inforDialog').show()" update="evaluate-details"
-                                             actionListener="#{mnTestEvaluateController.onEditEvaluateDetails(mnTestEvaluateController.userExamDtoDetail)}"/>
+                                             actionListener="#{mnTestEvaluateController.onEditEvaluateDetails(mnTestEvaluateController.userExamDtoDetail)}">
+                            </p:commandButton>
                         </div>
 
                     </p:outputPanel>

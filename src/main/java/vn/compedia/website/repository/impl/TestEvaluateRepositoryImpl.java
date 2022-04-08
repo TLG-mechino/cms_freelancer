@@ -23,14 +23,14 @@ public class TestEvaluateRepositoryImpl implements TestEvaluateRepositoryCustom 
     @Override
     public List<UserExamDto> search(UserExamSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
-        sb.append(" select ue.USER_EXAM_ID, " +
+        sb.append(" select distinct ue.USER_EXAM_ID, " +
                 "       ue.USERNAME, " +
                 "       e.CODE, " +
                 "       ue.SUBMIT_TIME, " +
                 "       ue.SCORE, " +
                 "       ue.NOTE, " +
                 "       ue.STATUS, " +
-                "       (select COUNT(ef.EXAM_FILE_ID) from exam_file ef WHERE ue.USER_EXAM_ID = ef.OBJECT_ID ) as numberFile ");
+                "       (select COUNT(ef.EXAM_FILE_ID) from exam_file ef WHERE ue.USER_EXAM_ID = ef.OBJECT_ID AND TYPE = 2) as numberFile ");
         appendQuery(sb, searchDto);
 
         if (searchDto.getSortField() != null) {

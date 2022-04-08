@@ -88,7 +88,7 @@ public class TestEvaluateRepositoryImpl implements TestEvaluateRepositoryCustom 
     @Override
     public BigInteger countSearch(UserExamSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT COUNT(ue.USER_EXAM_ID) ");
+        sb.append(" SELECT COUNT(DISTINCT ue.USER_EXAM_ID) ");
         appendQuery(sb, searchDto);
         Query query = createQuery(sb, searchDto);
         return (BigInteger) query.getSingleResult();

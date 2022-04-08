@@ -47,7 +47,7 @@ public class TestEvaluateRepositoryImpl implements TestEvaluateRepositoryCustom 
                 sb.append(" ORDER BY ue.SCORE ");
             }
             if (searchDto.getSortField().equals("numberFile")) {
-                sb.append(" ORDER BY COUNT(ef.EXAM_FILE_ID) ");
+                sb.append(" ORDER BY numberFile ");
             }
             if (searchDto.getSortField().equals("note")) {
                 sb.append(" ORDER BY ue.NOTE ");

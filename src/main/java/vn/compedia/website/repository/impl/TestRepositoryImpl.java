@@ -42,6 +42,9 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
             if (searchDto.getSortField().equals("titleVn")) {
                 sb.append(" ORDER BY e.TITLE_VN ");
             }
+            if (searchDto.getSortField().equals("numberFile")) {
+                sb.append(" ORDER BY numberFile ");
+            }
             if (searchDto.getSortField().equals("titleEn")) {
                 sb.append(" ORDER BY e.TITLE_EN ");
             }

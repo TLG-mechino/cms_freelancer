@@ -198,7 +198,7 @@ public class AuthorizationController implements Serializable {
             return;
         }
         if (!isValidatePassword(accountDto.getNewPassword())) {
-            FacesUtil.addErrorMessage("Mật khẩu phải ít nhất 8 ký tự bao gồm chữ cái in thường, một chữ cái in hoa,một số,");
+            FacesUtil.addErrorMessage("Mật khẩu phải ít nhất 8 ký tự bao gồm chữ cái in thường, một chữ cái in hoa,một số");
             return;
         }
         if (accountDto.getOldPassword().equals(accountDto.getNewPassword())) {

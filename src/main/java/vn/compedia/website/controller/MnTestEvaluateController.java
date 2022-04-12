@@ -44,20 +44,18 @@ import java.util.Map;
 public class MnTestEvaluateController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(MnTestEvaluateController.class);
+
     @Inject
     private AuthorizationController authorizationController;
-
-    @Autowired
-    private TestEvaluateRepository testEvaluateRepository;
-
-    @Autowired
-    private ExamFileRepository examFileRepository;
     @Inject
     private UploadMultipleImageWithFileNameController uploadMultipleImageFileNameController;
 
     @Autowired
+    private TestEvaluateRepository testEvaluateRepository;
+    @Autowired
+    private ExamFileRepository examFileRepository;
+    @Autowired
     private UserExamRepository userExamRepository;
-
 
     private UserExam userExam;
     private String titleDialog;
@@ -178,7 +176,6 @@ public class MnTestEvaluateController extends BaseController {
         FacesUtil.redirect("/evaluate-details.xhtml");
     }
 
-
     public void onEditEvaluateDetails(UserExamDto object) {
         if (object == null) {
             FacesUtil.addErrorMessage("Không tồn tại thông tin");
@@ -192,8 +189,9 @@ public class MnTestEvaluateController extends BaseController {
         userExamRepository.save(userExam);
         titleDialog = "Sửa";
         FacesUtil.addSuccessMessage("Sửa thông tin thành công");
-        FacesUtil.updateView("evaluate-details");
+        FacesUtil.updateView("growl");
     }
+
     @Override
     protected String getMenuId() {
         return Constant.MN_TEST_EVALUATE;

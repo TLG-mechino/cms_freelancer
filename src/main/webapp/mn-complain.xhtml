@@ -83,10 +83,6 @@
                     <p:outputLabel value="#{resultDto.content}"/>
                 </p:column>
 
-                <p:column headerText="Người khiếu nại" style="text-align: left" sortBy="#{resultDto.fullName}">
-                    <p:outputLabel value="#{resultDto.fullName}"/>
-                </p:column>
-
                 <p:column headerText="Số điện thoại" style="text-align: left" sortBy="#{resultDto.phone}">
                     <p:outputLabel value="#{resultDto.phone}"/>
                 </p:column>
@@ -104,13 +100,15 @@
                 </p:column>
 
                 <p:column headerText="Thời gian khiếu nại" style="text-align: left" sortBy="#{resultDto.createDate}">
-                    <p:outputLabel value="#{resultDto.createDate}"/>
+                    <p:outputLabel value="#{resultDto.createDate}">
+                        <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>
+                    </p:outputLabel>
                 </p:column>
 
                 <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
-                    <p:outputLabel value="Đã xử lý" rendered="#{resultDto.status eq DbConstant.ACTIVE_STATUS}"/>
+                    <p:outputLabel value="Đã xử lý" rendered="#{resultDto.status eq 1}"/>
                     <p:outputLabel value="Chưa xử lý"
-                                   rendered="#{resultDto.status eq DbConstant.INACTIVE_STATUS}"/>
+                                   rendered="#{resultDto.status eq 0}"/>
                 </p:column>
 
                 <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">

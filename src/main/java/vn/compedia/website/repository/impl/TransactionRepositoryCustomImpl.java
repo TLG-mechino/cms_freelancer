@@ -313,6 +313,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
                 "t.FINAL_MONEY, " +
                 "t.CODE, " +
                 "t.PAYMENT_TYPE_ID, " +
+                "pt.NAME, " +
                 "t.STATUS ");
         appendQuery(sb, SearchDto);
         if (SearchDto.getSortField() != null) {
@@ -370,8 +371,9 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setDiscountMoney(ValueUtil.getDoubleByObject(result[5]));
             dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
             dto.setCode(ValueUtil.getStringByObject(result[7]));
-            dto.setPaymentTypeName(ValueUtil.getStringByObject(result[8]));
-            dto.setStatus(ValueUtil.getIntegerByObject(result[9]));
+            dto.setPaymentTypeId(ValueUtil.getIntegerByObject(result[8]));
+            dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
+            dto.setStatus(ValueUtil.getIntegerByObject(result[10]));
             list.add(dto);
         }
         return list;

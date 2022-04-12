@@ -11,7 +11,6 @@
 
     <ui:define name="title">Đánh giá bài test</ui:define>
 
-
     <ui:define name="content">
         <div class="container-evaluate-detail">
             <h:form styleClass="ui-g-12" prependId="false" id="evaluate-details">
@@ -24,42 +23,31 @@
                                   outcome="/evaluate-test.xhtml"/>
                     </div>
                 </p:outputPanel>
-                <div class="card-list">
-                    <p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center"
-                                 columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3">
-                        <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
-                            <div class="card">
-                                <div class="p-d-flex">
-                                    <p:outputLabel value="Mã bài test : " styleClass="filter-item-label"/>
-                                    <p:outputLabel value="#{mnTestEvaluateController.userExamDtoDetail.examCode}"/>
-                                </div>
-                                <div class="p-d-flex">
-                                    <p:outputLabel value="Người làm : " styleClass="filter-item-label"/>
-                                    <p:outputLabel value="#{mnTestEvaluateController.userExamDtoDetail.username}"/>
-                                </div>
 
-                                <div class="p-d-flex">
-                                    <p:outputLabel value="Thời gian nộp : " styleClass="filter-item-label"/>
-                                    <p:outputLabel value="#{mnTestEvaluateController.userExamDtoDetail.submitTime}">
-                                        <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>
-                                    </p:outputLabel>
-                                </div>
+                <hr class="hr-class"/>
 
-                                <div class="p-d-flex">
-                                    <p:outputLabel value="Số điểm đánh giá : " styleClass="filter-item-label"/>
-                                    <p:outputLabel value="#{mnTestEvaluateController.userExamDtoDetail.score}"/>
-                                </div>
+                <p:panelGrid columns="6" layout="grid" styleClass="ui-panelgrid-blank"
+                             columnClasses="ui-grid-col-2 ui-grid-col-2 ui-grid-col-2 ui-grid-col-2 ui-grid-col-2 ui-grid-col-2">
+                    <p:outputLabel value="Mã bài test : " styleClass="filter-item-label"/>
+                    <p:outputLabel value="#{mnTestEvaluateController.userExamDtoDetail.examCode}"/>
 
-                                <div class="p-d-flex">
-                                    <p:outputLabel value="Trạng thái : " styleClass="filter-item-label"/>
-                                    <p:outputLabel value="Đã đánh giá" rendered="#{mnTestEvaluateController.userExamDtoDetail.status eq 1}"/>
-                                    <p:outputLabel value="Chưa đánh giá"
-                                                       rendered="#{mnTestEvaluateController.userExamDtoDetail.status eq 0}"/>
-                                </div>
-                            </div>
-                        </p:outputPanel>
-                    </p:panelGrid>
-                </div>
+                    <p:outputLabel value="Người làm : " styleClass="filter-item-label"/>
+                    <p:outputLabel value="#{mnTestEvaluateController.userExamDtoDetail.username}"/>
+
+                    <p:outputLabel value="Thời gian nộp : " styleClass="filter-item-label"/>
+                    <p:outputLabel value="#{mnTestEvaluateController.userExamDtoDetail.submitTime}">
+                        <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>
+                    </p:outputLabel>
+
+                    <p:outputLabel value="Số điểm đánh giá : " styleClass="filter-item-label"/>
+                    <p:outputLabel value="#{mnTestEvaluateController.userExamDtoDetail.score}"/>
+
+                    <p:outputLabel value="Trạng thái : " styleClass="filter-item-label"/>
+                    <p:outputLabel value="Đã đánh giá"
+                                   rendered="#{mnTestEvaluateController.userExamDtoDetail.status eq 1}"/>
+                    <p:outputLabel value="Chưa đánh giá"
+                                   rendered="#{mnTestEvaluateController.userExamDtoDetail.status eq 0}"/>
+                </p:panelGrid>
 
                 <p:dataTable id="tblSearchResult" styleClass="margin-top-15 search-panel"
                              tableStyle="table-layout: auto;"
@@ -75,50 +63,38 @@
                         <p:outputLabel value="#{rowIndex + 1}"/>
                     </p:column>
 
-                    <p:column headerText="File đính kèm" style="text-align: left" sortBy="#{resultDto.fileName}">
+                    <p:column headerText="File đính kèm" style="text-align: left">
                         <p:outputLabel value="#{resultDto.fileName}"/>
                     </p:column>
 
-                    <p:column headerText="Thao tác" width="100" styleClass="ui-button-raised ui-button-danger ui-button-flat" style="text-align: center" exportable="false">
-                        <p:commandButton value="Tải xuống"
-                                         actionListener="#{fileDownload.FileDownload(resultDto)}">
-                            <p:fileDownload value="#{fileDownload.file}"/>
+                    <p:column headerText="Thao tác" width="100"
+                              styleClass="ui-button-raised ui-button-danger ui-button-flat"
+                              style="text-align: center" exportable="false">
+                        <p:commandButton value="Tải xuống" ajax="false">
+                            <p:fileDownload value="#{commonController.getFileDownload(resultDto.filePath)}"/>
                         </p:commandButton>
                     </p:column>
-
                 </p:dataTable>
 
-                <p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center"
-                             columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3">
-                    <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
-                        <div class="card">
-                            <div class="p-d-flex">
-                                <p:outputLabel value="Ghi chú : " styleClass="requireLabel"/>
-                                <div class="filter-item">
-                                    <p:inputText value="#{mnTestEvaluateController.userExamDtoDetail.note}"
-                                                 placeholder="Nhập ghi chú"/>
-                                </div>
-                            </div>
-                            <div class="p-d-flex">
-                                <p:outputLabel value="Số điểm đánh giá : " styleClass="requireLabel"/>
-                                <div class="filter-item">
-                                    <p:inputNumber value="#{mnTestEvaluateController.userExamDtoDetail.score}"
-                                                 placeholder="Nhập số điểm đánh giá" decimalPlaces="0" minValue="0" maxValue="100"/>
-                                </div>
-                            </div>
-                            <hr class="hr-class"/>
-                            <p:commandButton value="Lưu" styleClass="border-btn" icon="fa fa-save"
-                                             style="width: auto" oncomplete="PF('inforDialog').show()" update="evaluate-details"
-                                             actionListener="#{mnTestEvaluateController.onEditEvaluateDetails(mnTestEvaluateController.userExamDtoDetail)}">
-                            </p:commandButton>
-                        </div>
+                <p:panelGrid columns="1" layout="grid" styleClass="ui-fluid ui-panelgrid-blank"
+                             columnClasses="ui-grid-col-12">
 
-                    </p:outputPanel>
+                    <p:outputLabel value="Ghi chú : " styleClass="requireLabel"/>
+                    <p:inputTextarea value="#{mnTestEvaluateController.userExamDtoDetail.note}"
+                                     placeholder="Nhập ghi chú" rows="5"/>
+
+                    <p:outputLabel value="Số điểm đánh giá : " styleClass="requireLabel"/>
+                    <p:inputNumber value="#{mnTestEvaluateController.userExamDtoDetail.score}"
+                                   placeholder="Nhập số điểm đánh giá" decimalPlaces="0" minValue="0" maxValue="100"/>
+
+                    <hr class="hr-class"/>
+                    <p:commandButton value="Lưu" styleClass="border-btn" icon="fa fa-save"
+                                     style="width: auto" update="evaluate-details"
+                                     actionListener="#{mnTestEvaluateController.onEditEvaluateDetails(mnTestEvaluateController.userExamDtoDetail)}">
+                    </p:commandButton>
                 </p:panelGrid>
-
             </h:form>
         </div>
-
     </ui:define>
 
 </ui:composition>

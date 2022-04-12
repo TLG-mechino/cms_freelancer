@@ -20,10 +20,10 @@
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
                                      layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
                             <p:outputLabel value="Họ và tên:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập họ và tên" maxlength="200" id="fullname"
+                            <p:inputText placeholder="Nhập họ và tên" maxlength="50" id="fullname"
                                          onchange="this.value = this.value.trim()"
+                                         onblur="this.value = this.value.replaceAll(/\\#,+()$~%.'{}]/g,'')"
                                          value="#{mnAccountController.accountDto.fullName}">
-                                <p:ajax event="change" update="fullname" listener="#{mnAccountController.removeChar()}"/>
                             </p:inputText>
 
                             <p:outputLabel value="Địa chỉ email:" styleClass="requireLabel"/>
@@ -34,14 +34,15 @@
                             </p:inputText>
 
                             <p:outputLabel value="Số điện thoại:" styleClass="requireLabel"/>
-                            <p:inputNumber placeholder="Nhập số điện thoại" maxlength="11"
+                            <p:inputText placeholder="Nhập số điện thoại" maxlength="11"
                                          onchange="this.value = this.value.trim()"
+                                           onkeyup="this.value = this.value.replace(/\D/g, '');"
                                            value="#{mnAccountController.accountDto.phone}" minValue="0" decimalPlaces="0">
 
-                            </p:inputNumber>
+                            </p:inputText>
 
                             <p:outputLabel value="Tên đăng nhập:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập tên đăng nhập" maxlength="200" id="username"
+                            <p:inputText placeholder="Nhập tên đăng nhập" maxlength="50" id="username"
                                          onchange="this.value = this.value.trim()"
                                          onkeyup="this.value=this.value.replace(/[^\w\d\.\_]/g, '').toLowerCase();"
                                          disabled="#{mnAccountController.accountDto.accountId ne null}"

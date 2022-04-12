@@ -34,6 +34,7 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
                 "       s.CREATE_DATE, " +
                 "       s.UPDATE_DATE, " +
                 "       s.UPDATE_BY, " +
+                "       s.SERVICE_TYPE_ID, " +
                 "       st.NAME as serviceTypeName ");
         appendQuery(sb, searchDto);
 
@@ -90,7 +91,8 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
             dto.setCreateDate(ValueUtil.getDateByObject(obj[7]));
             dto.setUpdateDate(ValueUtil.getDateByObject(obj[8]));
             dto.setUpdateBy(ValueUtil.getStringByObject(obj[9]));
-            dto.setServiceTypeName(ValueUtil.getStringByObject(obj[10]));
+            dto.setServiceTypeId(ValueUtil.getLongByObject(obj[10]));
+            dto.setServiceTypeName(ValueUtil.getStringByObject(obj[11]));
             list.add(dto);
         }
         return list;

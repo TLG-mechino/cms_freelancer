@@ -257,9 +257,6 @@ public class MnAccountController extends BaseController {
         if (!StringUtils.isBlank(accountDto.getUsername())) {
             accountDto.setUsername(StringUtil.removeSigned(accountDto.getUsername()));
         }
-        if(!StringUtils.isBlank(accountDto.getFullName())){
-            accountDto.setFullName(StringUtil.removeSigned(accountDto.getFullName()));
-        }
     }
 
     @Override

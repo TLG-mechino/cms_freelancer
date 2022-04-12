@@ -111,7 +111,7 @@ public class MnUserController extends BaseController {
         };
         int count = userRepository.countSearch(searchUserDto,DbConstant.ACCOUNT_USER);
         lazyDataModel.setRowCount(count);
-        FacesUtil.updateView("searchFrom");
+        FacesUtil.updateView("searchForm");
     }
 
     public boolean validateDate() {
@@ -163,7 +163,7 @@ public class MnUserController extends BaseController {
         userRepository.save(user);
         titleDialog = "Sửa";
         FacesUtil.addSuccessMessage("Update thành công");
-        FacesUtil.updateView("inforDialogId");
+        FacesUtil.updateView("growl");
     }
 
     public void findUserDtoById(Long accountId){

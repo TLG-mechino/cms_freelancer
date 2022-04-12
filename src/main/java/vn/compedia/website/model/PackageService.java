@@ -21,7 +21,7 @@ public class PackageService extends BaseModel {
     private Long packageServiceId;
 
     @Column(name = "SERVICE_TYPE_ID")
-    private Integer serviceTypeId;
+    private Long serviceTypeId;
 
     @Column(name = "NAME")
     private String name;

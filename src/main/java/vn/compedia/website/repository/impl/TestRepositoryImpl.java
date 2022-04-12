@@ -32,6 +32,7 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
                 "       et.NAME_VN, " +
                 "       e.STATUS, " +
                 "       et.EXAM_TYPE_ID, " +
+                "       e.HASHTAG_ID, " +
                 "       (select COUNT( ef.EXAM_FILE_ID) from exam_file ef WHERE e.EXAM_ID = ef.OBJECT_ID) as numberFile ");
         appendQuery(sb, searchDto);
 
@@ -53,12 +54,6 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
             }
             if (searchDto.getSortField().equals("descriptionEn")) {
                 sb.append(" ORDER BY e.DESCRIPTION_EN ");
-            }
-            if (searchDto.getSortField().equals("contentVn")) {
-                sb.append(" ORDER BY e.CONTENT_VN ");
-            }
-            if (searchDto.getSortField().equals("contentEn")) {
-                sb.append(" ORDER BY e.CONTENT_EN ");
             }
             if (searchDto.getSortField().equals("score")) {
                 sb.append(" ORDER BY e.SCORE ");
@@ -97,7 +92,8 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
             dto.setExamTypeName(ValueUtil.getStringByObject(obj[8]));
             dto.setStatus(ValueUtil.getIntegerByObject(obj[9]));
             dto.setExamTypeId(ValueUtil.getLongByObject(obj[10]));
-            dto.setNumberFile(ValueUtil.getLongByObject(obj[11]));
+            dto.setHashtagId(ValueUtil.getLongByObject(obj[11]));
+            dto.setNumberFile(ValueUtil.getLongByObject(obj[12]));
             list.add(dto);
         }
         return list;
@@ -135,9 +131,7 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
                     "OR lower(e.TITLE_VN) LIKE lower(:keyword)" +
                     "OR lower(e.TITLE_EN) LIKE lower(:keyword)" +
                     "OR lower(e.DESCRIPTION_VN) LIKE lower(:keyword)" +
-                    "OR lower(e.DESCRIPTION_EN) LIKE lower(:keyword)" +
-                    "OR lower(e.CONTENT_VN) LIKE lower(:keyword)" +
-                    "OR lower(e.CONTENT_EN) LIKE lower(:keyword))");
+                    "OR lower(e.DESCRIPTION_EN) LIKE lower(:keyword))");
         }
         if (searchDto.getExamTypeId() != null) {
             sb.append(" AND e.EXAM_TYPE_ID =:examTypeId ");

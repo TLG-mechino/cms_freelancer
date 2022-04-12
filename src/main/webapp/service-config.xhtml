@@ -28,17 +28,17 @@
                                              onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();"/>
 
                                 <p:outputLabel value="Tên dịch vụ:" styleClass="requireLabel"/>
-                                <p:inputText placeholder="Nhập tên dịch vụ" maxlength="50"
+                                <p:inputText placeholder="Nhập tên dịch vụ" maxlength="20"
                                              value="#{serviceConfigController.serviceConfigDto.name}"/>
 
                                 <p:outputLabel value="Mô tả thông tin:"/>
-                                <p:inputTextarea placeholder="Nhập mô tả thông tin dịch vụ" rows="5" maxlength="150"
+                                <p:inputTextarea placeholder="Nhập mô tả thông tin dịch vụ" rows="5" maxlength="100"
                                                  value="#{serviceConfigController.serviceConfigDto.description}"/>
 
-                                <p:outputLabel value="Loại dịch vụ:"/>
-                                <p:selectOneMenu value="#{serviceConfigController.serviceConfigDto.serviceTypeId}" placeholder="Chọn loại dịch vụ" >
+                                <p:outputLabel value="Loại dịch vụ:" styleClass="requireLabel"/>
+                                <p:selectOneMenu value="#{serviceConfigController.serviceConfigDto.serviceTypeId}">
                                     <f:selectItem itemLabel="Chọn loại dịch vụ" />
-                                    <f:selectItems var="item" itemValue="#{item.serviceTypeId}" itemLabel="#{item.name}" value="#{serviceConfigController.serviceTypeList}" />
+                                    <f:selectItems value="#{serviceConfigController.serviceTypeList}" />
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="Phí dịch vụ:" styleClass="requireLabel"/>
@@ -102,6 +102,7 @@
                     <p:overlayPanel for="basic" styleClass="filter-panel">
                         <p:outputLabel value="Loại dịch vụ" styleClass="filter-item-label" />
                         <p:selectOneMenu styleClass="filter-item" value="#{serviceConfigController.searchDto.fillServiceType}" >
+                            <f:selectItem itemLabel="Chọn loại dịch vụ" itemValue="" />
                             <f:selectItems var="item" itemValue="#{item.serviceTypeId}" itemLabel="#{item.name}" value="#{serviceConfigController.serviceTypeList}" />
                         </p:selectOneMenu>
 
@@ -148,7 +149,7 @@
                     </p:column>
 
                     <p:column headerText="Mô tả" style="text-align: left" sortBy="#{resultDto.description}">
-                        <p:outputLabel value="#{resultDto.description}"/>
+                        <p:outputLabel value="#{commonController.abbreviate(resultDto.description, 20)}" />
                     </p:column>
 
                     <p:column headerText="Phí dịch vụ" style="text-align: left" sortBy="#{resultDto.money}">

@@ -39,7 +39,7 @@
                 <p:commandButton id="basic" value="Bộ lọc" type="button" iconPos="right" icon="fa fa-caret-down"
                                  styleClass="filter-search ui-sm-12"/>
 
-                <p:overlayPanel for="basic" styleClass="filter-panel">
+                <p:overlayPanel for="basic" styleClass="filter-panel" id="loc">
                     <p:outputLabel value="Số điểm đánh giá" styleClass="filter-item-label"/>
                     <div class="filter-item">
                         <p:inputNumber value="#{mnTestEvaluateController.searchDto.score}" placeholder="Nhập số điểm đánh giá" decimalPlaces="0" size="40"/>
@@ -56,9 +56,9 @@
                                      icon="fa fa-refresh" styleClass="filter-btn"
                                      actionListener="#{mnTestEvaluateController.resetAll()}"/>
 
-                    <p:commandButton value="Lọc" update="tblSearchResult"
+                    <p:commandButton value="Lọc" update="tblSearchResult growl"
                                      icon="fa fa-search" styleClass="margin-right-10 filter-btn" id="search"
-                                     actionListener="#{mnTestEvaluateController.onSearch()}"/>
+                                     actionListener="#{mnTestEvaluateController.onSearch()}" />
                 </p:overlayPanel>
             </p:panelGrid>
 

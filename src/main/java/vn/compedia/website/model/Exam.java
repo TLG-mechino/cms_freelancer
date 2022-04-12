@@ -44,7 +44,7 @@ public class Exam extends BaseModel{
     private Integer status;
 
     @Column(name = "HASHTAG_ID")
-    private Integer hashtagId;
+    private Long hashtagId;
 
     @Column(name = "MAX_SCORE")
     private Double maxScore;

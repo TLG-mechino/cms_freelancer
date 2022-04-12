@@ -22,6 +22,7 @@ import vn.compedia.website.model.Hashtag;
 import vn.compedia.website.repository.HashtagRepository;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.FacesUtil;
+import vn.compedia.website.util.StringUtil;
 
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -195,5 +196,11 @@ public class MnHashtagController extends BaseController {
     @Override
     protected String getMenuId() {
         return Constant.MN_HASHTAG;
+    }
+
+    public void removeChar() {
+        if (!StringUtils.isBlank(hashtagDto.getCode())) {
+            hashtagDto.setCode(StringUtil.removeSigned(hashtagDto.getCode()).toUpperCase());
+        }
     }
 }

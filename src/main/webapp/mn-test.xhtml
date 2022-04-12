@@ -63,8 +63,8 @@
                                 <f:selectItems value="#{mnTestController.listHashtag}" />
                             </p:selectOneMenu>
 
-                            <p:outputLabel value="Điểm tích lũy:" styleClass="requireLabel"/>
-                            <p:inputNumber placeholder="Nhập điểm tích lũy" maxlength="2"
+                            <p:outputLabel value="Số điểm hoàn thành:" styleClass="requireLabel"/>
+                            <p:inputNumber placeholder="Nhập số điểm hoàn thành" maxlength="2"
                                          onchange="this.value = this.value.trim()"
                                            value="#{mnTestController.examDto.score}" decimalPlaces="0" minValue="0" maxValue="100">
                             </p:inputNumber>

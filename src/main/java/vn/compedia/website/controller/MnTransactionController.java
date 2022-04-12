@@ -130,7 +130,7 @@ public class MnTransactionController extends BaseController {
             var.setTransactionTimeString(var.getTransactionTime() == null ? "" : simpleDateFormat.format(var.getTransactionTime()));
             count++;
         }
-            exportExcelDataDto.getTransactionExcel().addAll(transactionDtos);
+        exportExcelDataDto.getTransactionExcel().addAll(transactionDtos);
 
         String fileName = ExportUtil.getFileNameExport("Transaction_File");
         try {

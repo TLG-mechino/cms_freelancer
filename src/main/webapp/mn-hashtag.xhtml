@@ -20,27 +20,29 @@
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
                                      layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
                             <p:outputLabel value="Mã hashtag:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập mã hashtag" maxlength="10"
+                            <p:inputText placeholder="Nhập mã hashtag" maxlength="10" id="code"
                                          onchange="this.value = this.value.trim()"
-                                         value="#{mnHashtagController.hashtagDto.code}"/>
+                                         value="#{mnHashtagController.hashtagDto.code}">
+                                <p:ajax event="change" update="code" listener="#{mnHashtagController.removeChar()}"/>
+                            </p:inputText>
 
                             <p:outputLabel value="Tiêu đề Tiếng Việt:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập tiêu đề tiếng việt" maxlength="50"
+                            <p:inputText placeholder="Nhập tiêu đề Tiếng Việt" maxlength="50"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnHashtagController.hashtagDto.titleVn}"/>
 
                             <p:outputLabel value="Tiêu đề Tiếng Anh:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập tiêu đề tiếng anh" maxlength="50"
+                            <p:inputText placeholder="Nhập tiêu đề Tiếng Anh" maxlength="50"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnHashtagController.hashtagDto.titleEn}"/>
 
                             <p:outputLabel value="Mô tả Tiếng Việt:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập tiêu đề tiếng việt" maxlength="50"
+                            <p:inputTextarea placeholder="Nhập mô tả Tiếng Việt" maxlength="100"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnHashtagController.hashtagDto.descriptionVn}"/>
 
                             <p:outputLabel value="Mô tả Tiếng Anh:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập mô tả tiếng anh" maxlength="50"
+                            <p:inputTextarea placeholder="Nhập mô tả Tiếng Anh" maxlength="100"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnHashtagController.hashtagDto.descriptionEn}"/>
 
@@ -154,7 +156,7 @@
                 </p:column>
 
                 <p:column headerText="Ngày tạo" style="text-align: left" sortBy="#{resultDto.createDate}">
-                    <p:outputLabel value="#{resultDto.updateBy}">
+                    <p:outputLabel value="#{resultDto.updateDate}">
                         <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>
                     </p:outputLabel>
                 </p:column>

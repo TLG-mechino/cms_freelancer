@@ -178,7 +178,7 @@ public class MnTestController extends BaseController {
 
     public boolean validateDate() {
         if (StringUtils.isBlank(examDto.getCode().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập mã hashtag");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập mã bài test");
             return false;
         }
 
@@ -196,21 +196,21 @@ public class MnTestController extends BaseController {
         }
 
         if (StringUtils.isBlank(examDto.getTitleVn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề tiếng việt ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề Tiếng Việt ");
             return false;
         }
 
         if (StringUtils.isBlank(examDto.getTitleEn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề tiếng anh ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề Tiếng Anh ");
             return false;
         }
 
         if (StringUtils.isBlank(examDto.getDescriptionVn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập mô tả tiếng việt ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập mô tả Tiếng Việt ");
             return false;
         }
         if (StringUtils.isBlank(examDto.getDescriptionEn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập mô tả tiếng anh ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập mô tả Tiếng Anh ");
             return false;
         }
         if (CollectionUtils.isEmpty(uploadMultipleImageFileNameController.getUploadMultipleFileDto().getListToShow())) {

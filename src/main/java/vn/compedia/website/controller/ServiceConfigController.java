@@ -18,6 +18,7 @@ import vn.compedia.website.controller.common.BaseController;
 import vn.compedia.website.dto.PackageServiceDto;
 import vn.compedia.website.dto.config.ServiceConfigDto;
 import vn.compedia.website.dto.config.ServiceConfigSearchDto;
+import vn.compedia.website.model.Hashtag;
 import vn.compedia.website.model.PackageService;
 import vn.compedia.website.model.ServiceType;
 import vn.compedia.website.repository.ServiceTypeRepository;
@@ -26,6 +27,7 @@ import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.FacesUtil;
 
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class ServiceConfigController extends BaseController {
     private ServiceConfigDto serviceConfigDto;
     private LazyDataModel<ServiceConfigDto> lazyDataModel;
     private ServiceConfigSearchDto searchDtoTemp;
-    private List<ServiceType> serviceTypeList;
+    private List<SelectItem> serviceTypeList;
 
     public void initData() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -65,12 +67,18 @@ public class ServiceConfigController extends BaseController {
     }
 
     public void resetAll() {
-        serviceTypeList = new ArrayList<>();
         packageService = new PackageService();
         serviceConfigDto = new ServiceConfigDto();
         searchDto = new ServiceConfigSearchDto();
         searchDtoTemp = new ServiceConfigSearchDto();
-        serviceTypeList = (List<ServiceType>) serviceTypeRepository.findAll();
+
+        serviceTypeList = new ArrayList<>();
+        List<ServiceType> list = (List<ServiceType>) serviceTypeRepository.findAll();
+        if (CollectionUtils.isNotEmpty(list)) {
+            for (ServiceType serviceType : list) {
+                serviceTypeList.add(new SelectItem(serviceType.getServiceTypeId(), serviceType.getName()));
+            }
+        }
         onSearch();
     }
 
@@ -139,12 +147,13 @@ public class ServiceConfigController extends BaseController {
             return false;
         }
 
-        if (StringUtils.isBlank(serviceConfigDto.getDescription().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề ");
+        if (serviceConfigDto.getServiceTypeId() == null) {
+            FacesUtil.addErrorMessage("Bạn vui lòng chọn loại dịch vụ ");
             return false;
         }
+
         if (serviceConfigDto.getMoney() == null) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập số tiền ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập phí dịch vụ ");
             return false;
         }
 

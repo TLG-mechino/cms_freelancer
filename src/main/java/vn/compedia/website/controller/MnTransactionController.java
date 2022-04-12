@@ -137,7 +137,6 @@ public class MnTransactionController extends BaseController {
             return ExportUtil.downloadExcelFile(exportExcelDataDto, fileName, Constant.TEMPLATE_EXPORT_TRANSACTION, Constant.REPORT_EXPORT_TRANSACTION);
         } catch (Exception e) {
             FacesUtil.addErrorMessage("Có lỗi trong quá trình xuất dữ liệu");
-//            log.error("Download excel error", e);
             return null;
         }
     }

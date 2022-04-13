@@ -57,7 +57,6 @@ public class ServiceConfigController extends BaseController {
     private ServiceConfigDto serviceConfigDto;
     private LazyDataModel<ServiceConfigDto> lazyDataModel;
     private ServiceConfigSearchDto searchDtoTemp;
-    private List<SelectItem> serviceTypeList;
 
     public void initData() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -71,14 +70,6 @@ public class ServiceConfigController extends BaseController {
         serviceConfigDto = new ServiceConfigDto();
         searchDto = new ServiceConfigSearchDto();
         searchDtoTemp = new ServiceConfigSearchDto();
-
-        serviceTypeList = new ArrayList<>();
-        List<ServiceType> list = (List<ServiceType>) serviceTypeRepository.findAll();
-        if (CollectionUtils.isNotEmpty(list)) {
-            for (ServiceType serviceType : list) {
-                serviceTypeList.add(new SelectItem(serviceType.getServiceTypeId(), serviceType.getName()));
-            }
-        }
         onSearch();
     }
 
@@ -142,13 +133,8 @@ public class ServiceConfigController extends BaseController {
             return false;
         }
 
-        if (StringUtils.isBlank(serviceConfigDto.getName().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập tên dịch vụ ");
-            return false;
-        }
-
-        if (serviceConfigDto.getServiceTypeId() == null) {
-            FacesUtil.addErrorMessage("Bạn vui lòng chọn loại dịch vụ ");
+        if (StringUtils.isBlank(serviceConfigDto.getNameVn().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập Tên Tiếng Việt ");
             return false;
         }
 

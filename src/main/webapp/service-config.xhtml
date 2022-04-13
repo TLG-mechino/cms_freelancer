@@ -5,180 +5,265 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/template/template.xhtml">
 
-        <f:metadata>
-            <f:event type="preRenderView" listener="#{serviceConfigController.initData()}"/>
-        </f:metadata>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{serviceConfigController.initData()}"/>
+    </f:metadata>
 
-        <ui:define name="title">Cấu hình dịch vụ</ui:define>
+    <ui:define name="title">Cấu hình dịch vụ</ui:define>
 
-        <ui:define name="content">
-            <p:dialog widgetVar="inforDialog" width="750" header="#{serviceConfigController.titleDialog} cấu hình dịch vụ"
-                      modal="true" id="inforDialogId">
-                <p:ajax event="close" update="searchForm dlForm" global="false"/>
-                <h:form id="dlForm" prependId="false">
-                    <p:scrollPanel mode="native" style="width: 100%; max-height: 500px; border: none">
-                        <div class="ui-fluid">
-                            <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
-                                         layout="grid" styleClass="ui-panelgrid-blank">
+    <ui:define name="content">
+        <p:dialog widgetVar="inforDialog" width="750" height="500" modal="true" id="inforDialogId"
+                  header="#{serviceConfigController.titleDialog} cấu hình dịch vụ">
+            <p:ajax event="close" update="searchForm dlForm" global="false"/>
+            <h:form id="dlForm" prependId="false" styleClass="ui-fluid">
+                <p:panelGrid columns="1" columnClasses="ui-grid-col-12"
+                             layout="grid" styleClass="ui-panelgrid-blank">
 
-                                <p:outputLabel value="Mã dịch vụ:" styleClass="requireLabel"/>
-                                <p:inputText placeholder="Nhập mã dịch vụ" maxlength="10"
-                                             value="#{serviceConfigController.serviceConfigDto.code}" id="code"
-                                             onchange="this.value = this.value.trim()"
-                                             onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();"/>
+                    <p:outputPanel>
+                        <p:outputLabel value="Mã dịch vụ:" styleClass="requireLabel"/>
+                        <p:inputText placeholder="Nhập mã dịch vụ" maxlength="10"
+                                     value="#{serviceConfigController.serviceConfigDto.code}" id="code"
+                                     onchange="this.value = this.value.trim()"
+                                     onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();"/>
+                    </p:outputPanel>
 
-                                <p:outputLabel value="Tên dịch vụ:" styleClass="requireLabel"/>
-                                <p:inputText placeholder="Nhập tên dịch vụ" maxlength="20"
-                                             value="#{serviceConfigController.serviceConfigDto.name}"/>
+                    <p:outputPanel>
+                        <p:outputLabel value="Tên dịch vụ Tiếng Việt:" styleClass="requireLabel"/>
+                        <p:inputText placeholder="Nhập tên dịch vụ Tiếng Việt" maxlength="20"
+                                     value="#{serviceConfigController.serviceConfigDto.nameVn}"/>
+                    </p:outputPanel>
 
-                                <p:outputLabel value="Mô tả thông tin:"/>
-                                <p:inputTextarea placeholder="Nhập mô tả thông tin dịch vụ" rows="5" maxlength="100"
-                                                 value="#{serviceConfigController.serviceConfigDto.description}"/>
+                    <p:outputPanel>
+                        <p:outputLabel value="Tên dịch vụ Tiếng Anh:" styleClass="requireLabel"/>
+                        <p:inputText placeholder="Nhập tên dịch vụ Tiếng Anh" maxlength="20"
+                                     value="#{serviceConfigController.serviceConfigDto.nameEn}"/>
+                    </p:outputPanel>
 
-                                <p:outputLabel value="Loại dịch vụ:" styleClass="requireLabel"/>
-                                <p:selectOneMenu value="#{serviceConfigController.serviceConfigDto.serviceTypeId}">
-                                    <f:selectItem itemLabel="Chọn loại dịch vụ" />
-                                    <f:selectItems value="#{serviceConfigController.serviceTypeList}" />
-                                </p:selectOneMenu>
+                    <p:outputPanel>
+                        <p:outputLabel value="Mô tả thông tin:"/>
+                        <p:inputTextarea placeholder="Nhập mô tả thông tin dịch vụ" rows="5" maxlength="100"
+                                         value="#{serviceConfigController.serviceConfigDto.description}"/>
+                    </p:outputPanel>
 
-                                <p:outputLabel value="Phí dịch vụ:" styleClass="requireLabel"/>
-                                <p:inputNumber placeholder="Nhập phí dịch vụ"
-                                               onchange="this.value = this.value.trim()" maxlength="12"
-                                               value="#{serviceConfigController.serviceConfigDto.money}" minValue="0"/>
+                    <p:outputPanel>
+                        <p:outputLabel value="Chọn màu: "/>
+                        <p:colorPicker value="#{serviceConfigController.serviceConfigDto.color}"
+                                       style="width: auto; display: inline-flex; margin-left: 20px;"/>
+                    </p:outputPanel>
 
-                                <p:outputLabel value="Trạng thái:" styleClass="requireLabel"/>
-                                <p:selectOneMenu value="#{serviceConfigController.serviceConfigDto.status}">
-                                    <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
-                                    <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
-                                </p:selectOneMenu>
-                            </p:panelGrid>
+                    <p:outputPanel>
+                        <p:outputLabel value="Phí dịch vụ:" styleClass="requireLabel"/>
+                        <p:inputNumber placeholder="Nhập phí dịch vụ"
+                                       onchange="this.value = this.value.trim()" maxlength="12" decimalPlaces="0"
+                                       value="#{serviceConfigController.serviceConfigDto.money}" minValue="0"/>
+                    </p:outputPanel>
 
-                            <p:outputPanel>
-                                <p:commandButton value="Lưu" styleClass="save-btn"
-                                                 icon="fa fa-save" update="dlForm tblSearchResult growl"
-                                                 actionListener="#{serviceConfigController.onSave()}"/>
+                    <p:outputPanel>
+                        <p:outputLabel value="Lượt đăng bài:" styleClass="requireLabel"/>
+                        <p:selectOneRadio id="console"
+                                          value="#{serviceConfigController.serviceConfigDto.limitPost}"
+                                          unselectable="true">
+                            <p:ajax update="inputPost" process="@this"/>
+                            <f:selectItem itemLabel="Không giới hạn" itemValue="true"/>
+                            <f:selectItem itemLabel="Giới hạn" itemValue="false"/>
+                        </p:selectOneRadio>
+                    </p:outputPanel>
 
-                                <p:commandButton value="Hủy bỏ" styleClass="close-btn" icon="fa fa-close"
-                                                 style="margin-right: 10px"
-                                                 oncomplete="PF('inforDialog').hide()" update="searchForm"
-                                                 actionListener="#{serviceConfigController.resetAll()}"/>
-                            </p:outputPanel>
-                        </div>
-                    </p:scrollPanel>
-                </h:form>
-            </p:dialog>
+                    <p:outputPanel id="inputPost">
+                        <p:outputLabel value="Số lượt đăng bài:" styleClass="requireLabel"
+                                       rendered="#{serviceConfigController.serviceConfigDto.limitPost eq 'false'}"/>
+                        <p:inputNumber placeholder="Nhập số lượt đăng bài"
+                                       onchange="this.value = this.value.trim()" maxlength="12"
+                                       value="#{serviceConfigController.serviceConfigDto.post}" minValue="0"
+                                       decimalPlaces="0"
+                                       maxValue="100"
+                                       rendered="#{serviceConfigController.serviceConfigDto.limitPost eq 'false'}"/>
+                    </p:outputPanel>
 
-            <h:form styleClass="ui-g-12" id="searchForm" prependId="false">
+                    <p:outputPanel>
+                        <p:outputLabel value="Lượt bình luận:" styleClass="requireLabel"/>
+                        <p:selectOneRadio value="#{serviceConfigController.serviceConfigDto.limitComment}"
+                                          unselectable="true">
+                            <p:ajax update="inputComment" process="@this"/>
+                            <f:selectItem itemLabel="Không giới hạn" itemValue="true"/>
+                            <f:selectItem itemLabel="Giới hạn" itemValue="false"/>
+                        </p:selectOneRadio>
+                    </p:outputPanel>
+
+                    <p:outputPanel id="inputComment">
+                        <p:outputLabel value="Số lượt bình luận:" styleClass="requireLabel"
+                                       rendered="#{serviceConfigController.serviceConfigDto.limitComment eq 'false'}"/>
+                        <p:inputNumber placeholder="Nhập số lượt bình luận"
+                                       onchange="this.value = this.value.trim()" maxlength="12"
+                                       value="#{serviceConfigController.serviceConfigDto.comment}" minValue="0"
+                                       maxValue="100" decimalPlaces="0"
+                                       rendered="#{serviceConfigController.serviceConfigDto.limitComment eq 'false'}"/>
+                    </p:outputPanel>
+
+                    <p:outputPanel>
+                        <p:outputLabel value="Lượt hiển thị ưu tiên:" styleClass="requireLabel"/>
+                        <p:selectOneRadio value="#{serviceConfigController.serviceConfigDto.limitShow}"
+                                          unselectable="true">
+                            <p:ajax update="inputShow" process="@this"/>
+                            <f:selectItem itemLabel="Không giới hạn" itemValue="true"/>
+                            <f:selectItem itemLabel="Giới hạn" itemValue="false"/>
+                        </p:selectOneRadio>
+                    </p:outputPanel>
+
+                    <p:outputPanel id="inputShow">
+                        <p:outputLabel value="Số lượt hiển thị ưu tiên:" styleClass="requireLabel"
+                                       rendered="#{serviceConfigController.serviceConfigDto.limitShow eq 'false'}"/>
+                        <p:inputNumber placeholder="Nhập số lượt hiển thị ưu tiên"
+                                       onchange="this.value = this.value.trim()" maxlength="12"
+                                       value="#{serviceConfigController.serviceConfigDto.show}" minValue="0"
+                                       maxValue="100" decimalPlaces="0"
+                                       rendered="#{serviceConfigController.serviceConfigDto.limitShow eq 'false'}"/>
+                    </p:outputPanel>
+
+                    <p:outputPanel>
+                        <p:outputLabel value="Phí giao dịch:" styleClass="requireLabel"/>
+                        <p:selectOneRadio value="#{serviceConfigController.serviceConfigDto.limitTransaction}"
+                                          unselectable="true">
+                            <p:ajax update="inputTransaction" process="@this"/>
+                            <f:selectItem itemLabel="Miễn phí" itemValue="true"/>
+                            <f:selectItem itemLabel="Tính phí" itemValue="false"/>
+                        </p:selectOneRadio>
+                    </p:outputPanel>
+
+                    <p:outputPanel id="inputTransaction">
+                        <p:outputLabel value="Phí giao dịch:" styleClass="requireLabel"
+                                       rendered="#{serviceConfigController.serviceConfigDto.limitTransaction eq 'false'}"/>
+                        <p:inputNumber placeholder="Nhập số lượt hiển thị ưu tiên"
+                                       onchange="this.value = this.value.trim()" maxlength="12"
+                                       value="#{serviceConfigController.serviceConfigDto.transaction}" minValue="0"
+                                       maxValue="100" decimalPlaces="0"
+                                       rendered="#{serviceConfigController.serviceConfigDto.limitTransaction eq 'false'}"/>
+                    </p:outputPanel>
+
+                    <p:outputPanel>
+                        <p:outputLabel value="Trạng thái:" styleClass="requireLabel"/>
+                        <p:selectOneMenu value="#{serviceConfigController.serviceConfigDto.status}">
+                            <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
+                            <f:selectItem itemLabel="Không hoạt động"
+                                          itemValue="#{DbConstant.INACTIVE_STATUS}"/>
+                        </p:selectOneMenu>
+                    </p:outputPanel>
+                </p:panelGrid>
+
                 <p:outputPanel>
-                    <p:link styleClass="title-color-left ui-sm-12">Cấu hình dịch vụ</p:link>
-                    <div style="float: right" class="ui-sm-12">
-                        <p:commandButton value="Thêm mới" styleClass="border-btn" icon="fa fa-plus"
-                                         oncomplete="PF('inforDialog').show()" update="dlForm"
-                                         actionListener="#{serviceConfigController.resetDialog()}"/>
+                    <p:commandButton value="Lưu" styleClass="save-btn"
+                                     icon="fa fa-save" update="dlForm tblSearchResult growl"
+                                     actionListener="#{serviceConfigController.onSave()}"/>
+
+                    <p:commandButton value="Hủy bỏ" styleClass="close-btn" icon="fa fa-close"
+                                     style="margin-right: 10px"
+                                     oncomplete="PF('inforDialog').hide()" update="searchForm"
+                                     actionListener="#{serviceConfigController.resetAll()}"/>
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+
+        <h:form styleClass="ui-g-12" id="searchForm" prependId="false">
+            <p:outputPanel>
+                <p:link styleClass="title-color-left ui-sm-12">Cấu hình dịch vụ</p:link>
+                <div style="float: right" class="ui-sm-12">
+                    <p:commandButton value="Thêm mới" styleClass="border-btn" icon="fa fa-plus"
+                                     oncomplete="PF('inforDialog').show()" update="dlForm"
+                                     actionListener="#{serviceConfigController.resetDialog()}"/>
+                </div>
+            </p:outputPanel>
+
+            <hr class="hr-class"/>
+
+            <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
+                         columnClasses="ui-grid-col-11 ui-no-margin-padding margin-right-10, ui-grid-col-1 ui-no-margin-padding">
+                <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
+                    <div class="ui-input-icon-left" style="width: 100%; display: flex;">
+                        <i class="fa fa-search"/>
+                        <p:inputText placeholder="Nhập mã dịch vụ, tên dịch vụ" style="width: 97%"
+                                     onblur="this.value = this.value.trim()" maxlength="100"
+                                     onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
+                                     value="#{serviceConfigController.searchDto.keyword}"
+                                     styleClass="border-input" onchange="this.value = this.value.trim()">
+                            <p:ajax event="change" update="searchForm"
+                                    listener="#{serviceConfigController.onSearch()}"/>
+                        </p:inputText>
                     </div>
                 </p:outputPanel>
 
-                <hr class="hr-class"/>
+                <p:commandButton id="basic" value="Bộ lọc" type="button" iconPos="right" icon="fa fa-caret-down"
+                                 styleClass="filter-search ui-sm-12"/>
 
-                <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
-                             columnClasses="ui-grid-col-11 ui-no-margin-padding margin-right-10, ui-grid-col-1 ui-no-margin-padding">
-                    <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
-                        <div class="ui-input-icon-left" style="width: 100%; display: flex;">
-                            <i class="fa fa-search"/>
-                            <p:inputText placeholder="Nhập mã dịch vụ, tên dịch vụ" style="width: 97%"
-                                         onblur="this.value = this.value.trim()" maxlength="100"
-                                         onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
-                                         value="#{serviceConfigController.searchDto.keyword}"
-                                         styleClass="border-input" onchange="this.value = this.value.trim()">
-                                <p:ajax event="change" update="searchForm"
-                                        listener="#{serviceConfigController.onSearch()}"/>
-                            </p:inputText>
-                        </div>
-                    </p:outputPanel>
+                <p:overlayPanel for="basic" styleClass="filter-panel">
+                    <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
+                    <p:selectOneMenu styleClass="filter-item" value="#{serviceConfigController.searchDto.status}">
+                        <f:selectItem itemLabel="Tất cả" itemValue=""/>
+                        <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
+                        <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
+                    </p:selectOneMenu>
 
-                    <p:commandButton id="basic" value="Bộ lọc" type="button" iconPos="right" icon="fa fa-caret-down"
-                                     styleClass="filter-search ui-sm-12"/>
+                    <p:commandButton value="Bỏ lọc" update="searchForm"
+                                     icon="fa fa-refresh" styleClass="filter-btn"
+                                     actionListener="#{serviceConfigController.resetAll()}"/>
 
-                    <p:overlayPanel for="basic" styleClass="filter-panel">
-                        <p:outputLabel value="Loại dịch vụ" styleClass="filter-item-label" />
-                        <p:selectOneMenu styleClass="filter-item" value="#{serviceConfigController.searchDto.fillServiceType}" >
-                            <f:selectItem itemLabel="Chọn loại dịch vụ" itemValue="" />
-                            <f:selectItems var="item" itemValue="#{item.serviceTypeId}" itemLabel="#{item.name}" value="#{serviceConfigController.serviceTypeList}" />
-                        </p:selectOneMenu>
+                    <p:commandButton value="Lọc" update="searchForm" id="search"
+                                     icon="fa fa-search" styleClass="margin-right-10 filter-btn"
+                                     actionListener="#{serviceConfigController.onSearch()}"/>
+                </p:overlayPanel>
+            </p:panelGrid>
 
-                        <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
-                        <p:selectOneMenu styleClass="filter-item" value="#{serviceConfigController.searchDto.status}">
-                            <f:selectItem itemLabel="Tất cả" itemValue=""/>
-                            <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
-                            <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
-                        </p:selectOneMenu>
+            <p:dataTable id="tblSearchResult" styleClass="margin-top-15" tableStyle="table-layout: auto;"
+                         widgetVar="dataTable" resizableColumns="true" paginator="true" rows="20"
+                         lazy="true" pageLinks="5" var="resultDto" paginatorPosition="bottom"
+                         paginatorAlwaysVisible="true" rowsPerPageTemplate="20,50,100"
+                         value="#{serviceConfigController.lazyDataModel}" rowKey="#{resultDto.packageServiceId}"
+                         paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
+                         currentPageReportTemplate="Tổng số bản ghi: #{serviceConfigController.lazyDataModel.rowCount}">
 
-                        <p:commandButton value="Bỏ lọc" update="searchForm"
-                                         icon="fa fa-refresh" styleClass="filter-btn"
-                                         actionListener="#{serviceConfigController.resetAll()}"/>
+                <p:column headerText="STT" width="30" style="text-align: center">
+                    <p:outputLabel value="#{rowIndex + 1}"/>
+                </p:column>
 
-                        <p:commandButton value="Lọc" update="searchForm" id="search"
-                                         icon="fa fa-search" styleClass="margin-right-10 filter-btn"
-                                         actionListener="#{serviceConfigController.onSearch()}"/>
-                    </p:overlayPanel>
-                </p:panelGrid>
+                <p:column headerText="Mã dịch vụ" style="text-align: left" sortBy="#{resultDto.code}">
+                    <p:outputLabel value="#{resultDto.code}"/>
+                </p:column>
 
-                <p:dataTable id="tblSearchResult" styleClass="margin-top-15" tableStyle="table-layout: auto;"
-                             widgetVar="dataTable" resizableColumns="true" paginator="true" rows="20"
-                             lazy="true" pageLinks="5" var="resultDto" paginatorPosition="bottom"
-                             paginatorAlwaysVisible="true" rowsPerPageTemplate="20,50,100"
-                             value="#{serviceConfigController.lazyDataModel}" rowKey="#{resultDto.packageServiceId}"
-                             paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                             emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
-                             currentPageReportTemplate="Tổng số bản ghi: #{serviceConfigController.lazyDataModel.rowCount}">
+                <p:column headerText="Tên dịch vụ" style="text-align: left" sortBy="#{resultDto.name}">
+                    <p:outputLabel value="#{resultDto.nameVn}"/>
+                </p:column>
 
-                    <p:column headerText="STT" width="30" style="text-align: center">
-                        <p:outputLabel value="#{rowIndex + 1}"/>
-                    </p:column>
+                <p:column headerText="Mô tả" style="text-align: left" sortBy="#{resultDto.description}">
+                    <p:outputLabel value="#{commonController.abbreviate(resultDto.description, 20)}"/>
+                </p:column>
 
-                    <p:column headerText="Mã dịch vụ" style="text-align: left" sortBy="#{resultDto.code}">
-                        <p:outputLabel value="#{resultDto.code}"/>
-                    </p:column>
+                <p:column headerText="Phí dịch vụ" style="text-align: left" sortBy="#{resultDto.money}">
+                    <p:outputLabel value="#{resultDto.money}">
+                        <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency" pattern="###,### đ"/>
+                    </p:outputLabel>
+                </p:column>
 
-                    <p:column headerText="Tên dịch vụ" style="text-align: left" sortBy="#{resultDto.name}">
-                        <p:outputLabel value="#{resultDto.name}"/>
-                    </p:column>
+                <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
+                    <p:outputLabel value="Hoạt động" rendered="#{resultDto.status eq DbConstant.ACTIVE_STATUS}"/>
+                    <p:outputLabel value="Không hoạt động"
+                                   rendered="#{resultDto.status eq DbConstant.INACTIVE_STATUS}"/>
+                </p:column>
 
-                    <p:column headerText="Loại dịch vụ" style="text-align: left" sortBy="#{resultDto.serviceTypeName}">
-                        <p:outputLabel value="#{resultDto.serviceTypeName}"/>
-                    </p:column>
+                <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">
+                    <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
+                        <p:menuitem value="Sửa thông tin" icon="fa fa-edit"
+                                    oncomplete="PF('inforDialog').show()" update="dlForm"
+                                    actionListener="#{serviceConfigController.onEdit(resultDto)}"/>
 
-                    <p:column headerText="Mô tả" style="text-align: left" sortBy="#{resultDto.description}">
-                        <p:outputLabel value="#{commonController.abbreviate(resultDto.description, 20)}" />
-                    </p:column>
-
-                    <p:column headerText="Phí dịch vụ" style="text-align: left" sortBy="#{resultDto.money}">
-                        <p:outputLabel value="#{resultDto.money}">
-                            <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency" pattern="###,### đ"/>
-                        </p:outputLabel>
-                    </p:column>
-
-                    <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
-                        <p:outputLabel value="Hoạt động" rendered="#{resultDto.status eq DbConstant.ACTIVE_STATUS}"/>
-                        <p:outputLabel value="Không hoạt động"
-                                       rendered="#{resultDto.status eq DbConstant.INACTIVE_STATUS}"/>
-                    </p:column>
-
-                    <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">
-                        <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
-                            <p:menuitem value="Sửa thông tin" icon="fa fa-edit"
-                                        oncomplete="PF('inforDialog').show()" update="dlForm"
-                                        actionListener="#{serviceConfigController.onEdit(resultDto)}"/>
-
-                            <p:menuitem value="Xóa thông tin" icon="fa fa-close"
-                                        update="searchForm growl" process="@this"
-                                        actionListener="#{serviceConfigController.onDelete(resultDto.packageServiceId)}">
-                                <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"
-                                           message="Bạn có chắc chắn muốn xóa thông tin?"/>
-                            </p:menuitem>
-                        </p:menuButton>
-                    </p:column>
-                </p:dataTable>
-            </h:form>
-        </ui:define>
+                        <p:menuitem value="Xóa thông tin" icon="fa fa-close"
+                                    update="searchForm growl" process="@this"
+                                    actionListener="#{serviceConfigController.onDelete(resultDto.packageServiceId)}">
+                            <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"
+                                       message="Bạn có chắc chắn muốn xóa thông tin?"/>
+                        </p:menuitem>
+                    </p:menuButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
 </ui:composition>

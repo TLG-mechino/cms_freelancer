@@ -20,12 +20,6 @@ public class PackageService extends BaseModel {
     @Column(name = "PACKAGE_SERVICE_ID")
     private Long packageServiceId;
 
-    @Column(name = "SERVICE_TYPE_ID")
-    private Long serviceTypeId;
-
-    @Column(name = "NAME")
-    private String name;
-
     @Column(name = "CODE")
     private String code;
 
@@ -41,4 +35,36 @@ public class PackageService extends BaseModel {
     @Column(name = "USERNAME")
     private String username;
 
+    @Column(name = "NAME_VN", length = 100)
+    private String nameVn;
+
+    @Column(name = "LIMIT_POST")
+    private Boolean limitPost;
+
+    @Column(name = "LIMIT_COMMENT")
+    private Boolean limitComment;
+
+    @Column(name = "LIMIT_SHOW")
+    private Boolean limitShow;
+
+    @Column(name = "LIMIT_TRANSACTION")
+    private Boolean limitTransaction;
+
+    @Column(name = "POST")
+    private Integer post;
+
+    @Column(name = "COMMENT")
+    private Integer comment;
+
+    @Column(name = "`SHOW`")
+    private Integer show;
+
+    @Column(name = "TRANSACTION")
+    private Integer transaction;
+
+    @Column(name = "NAME_EN", length = 100)
+    private String nameEn;
+
+    @Column(name = "COLOR")
+    private String color;
 }

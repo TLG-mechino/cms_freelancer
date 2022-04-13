@@ -26,7 +26,16 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
         StringBuilder sb = new StringBuilder();
         sb.append(" select s.PACKAGE_SERVICE_ID, " +
                 "       s.CODE, " +
-                "       s.NAME, " +
+                "       s.NAME_VN, " +
+                "       s.NAME_EN, " +
+                "       s.LIMIT_POST, " +
+                "       s.LIMIT_COMMENT, " +
+                "       s.LIMIT_SHOW, " +
+                "       s.LIMIT_TRANSACTION, " +
+                "       s.POST, " +
+                "       s.COMMENT, " +
+                "       s.SHOW, " +
+                "       s.TRANSACTION, " +
                 "       s.MONEY, " +
                 "       s.DESCRIPTION, " +
                 "       s.STATUS, " +
@@ -34,8 +43,7 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
                 "       s.CREATE_DATE, " +
                 "       s.UPDATE_DATE, " +
                 "       s.UPDATE_BY, " +
-                "       s.SERVICE_TYPE_ID, " +
-                "       st.NAME as serviceTypeName ");
+                "       s.COLOR ");
         appendQuery(sb, searchDto);
 
         if (searchDto.getSortField() != null) {
@@ -83,16 +91,24 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
             ServiceConfigDto dto = new ServiceConfigDto();
             dto.setPackageServiceId(ValueUtil.getLongByObject(obj[0]));
             dto.setCode(ValueUtil.getStringByObject(obj[1]));
-            dto.setName(ValueUtil.getStringByObject(obj[2]));
-            dto.setMoney(ValueUtil.getDoubleByObject(obj[3]));
-            dto.setDescription(ValueUtil.getStringByObject(obj[4]));
-            dto.setStatus(ValueUtil.getIntegerByObject(obj[5]));
-            dto.setUsername(ValueUtil.getStringByObject(obj[6]));
-            dto.setCreateDate(ValueUtil.getDateByObject(obj[7]));
-            dto.setUpdateDate(ValueUtil.getDateByObject(obj[8]));
-            dto.setUpdateBy(ValueUtil.getStringByObject(obj[9]));
-            dto.setServiceTypeId(ValueUtil.getLongByObject(obj[10]));
-            dto.setServiceTypeName(ValueUtil.getStringByObject(obj[11]));
+            dto.setNameVn(ValueUtil.getStringByObject(obj[2]));
+            dto.setNameEn(ValueUtil.getStringByObject(obj[3]));
+            dto.setLimitPost(ValueUtil.getBooleanByObject(obj[4]));
+            dto.setLimitComment(ValueUtil.getBooleanByObject(obj[5]));
+            dto.setLimitShow(ValueUtil.getBooleanByObject(obj[6]));
+            dto.setLimitTransaction(ValueUtil.getBooleanByObject(obj[7]));
+            dto.setPost(ValueUtil.getIntegerByObject(obj[8]));
+            dto.setComment(ValueUtil.getIntegerByObject(obj[9]));
+            dto.setShow(ValueUtil.getIntegerByObject(obj[10]));
+            dto.setTransaction(ValueUtil.getIntegerByObject(obj[11]));
+            dto.setMoney(ValueUtil.getDoubleByObject(obj[12]));
+            dto.setDescription(ValueUtil.getStringByObject(obj[13]));
+            dto.setStatus(ValueUtil.getIntegerByObject(obj[14]));
+            dto.setUsername(ValueUtil.getStringByObject(obj[15]));
+            dto.setCreateDate(ValueUtil.getDateByObject(obj[16]));
+            dto.setUpdateDate(ValueUtil.getDateByObject(obj[17]));
+            dto.setUpdateBy(ValueUtil.getStringByObject(obj[18]));
+            dto.setColor(ValueUtil.getStringByObject(obj[19]));
             list.add(dto);
         }
         return list;
@@ -123,14 +139,11 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
     }
 
     public void appendQuery(StringBuilder sb, ServiceConfigSearchDto searchDto) {
-        sb.append(" from package_service s LEFT JOIN service_type st ON s.SERVICE_TYPE_ID = st.SERVICE_TYPE_ID WHERE 1 = 1 ");
+        sb.append(" from package_service s WHERE 1 = 1 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (lower(s.CODE) LIKE lower(:keyword) " +
                     "OR lower(s.NAME) LIKE lower(:keyword) " +
                     "OR lower(s.USERNAME) LIKE lower(:keyword))");
-        }
-        if (searchDto.getFillServiceType() != null) {
-            sb.append(" AND s.SERVICE_TYPE_ID =:fillServiceType ");
         }
         if (searchDto.getStatus() != null) {
             sb.append(" AND s.STATUS =:status ");

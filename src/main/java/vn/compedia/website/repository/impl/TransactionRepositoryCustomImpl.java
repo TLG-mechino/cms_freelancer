@@ -70,7 +70,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         }
         Query query = createQuery(sb, searchDto);
         if (searchDto.getPageSize() > 0) {
-            query.setFirstResult(searchDto.getPageIndex() * searchDto.getPageSize());
+            query.setFirstResult(searchDto.getPageIndex());
             query.setMaxResults(searchDto.getPageSize());
         } else {
             query.setFirstResult(0);
@@ -374,6 +374,11 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setPaymentTypeId(ValueUtil.getIntegerByObject(result[8]));
             dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
             dto.setStatus(ValueUtil.getIntegerByObject(result[10]));
+            if(dto.getStatus() == 1) {
+                dto.setStatusString("Hoạt động");
+            }else {
+                dto.setStatusString("Không hoạt động");
+            }
             list.add(dto);
         }
         return list;

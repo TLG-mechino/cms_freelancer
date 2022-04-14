@@ -47,7 +47,6 @@
 
                             <p:outputLabel value="Tài liệu bài test:" styleClass="requireLabel"/>
                             <p:outputPanel styleClass="ui-g-12">
-                                <p:outputLabel value="(*) Hệ thống chỉ hỗ trợ upload file có định dạng: jpg, JPG, jpeg, JPEG, png, PNG. Dung lượng tối đa 50 Mb"/>
                                 <ui:include src="/common/upload-multiple-image.xhtml"/>
                             </p:outputPanel>
 
@@ -109,7 +108,7 @@
                 <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
                     <div class="ui-input-icon-left" style="width: 100%; display: flex;">
                         <i class="fa fa-search"/>
-                        <p:inputText placeholder="Nhập Mã bài test, Tiêu đề, Mô tả, Nội dung" style="width: 97%"
+                        <p:inputText placeholder="Nhập mã bài test, tiêu đề" style="width: 97%"
                                      onblur="this.value = this.value.trim()" maxlength="100"
                                      onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
                                      value="#{mnTestController.searchDto.keyword}"
@@ -124,10 +123,10 @@
                                  styleClass="filter-search ui-sm-12"/>
 
                 <p:overlayPanel for="basic" styleClass="filter-panel">
-                    <p:outputLabel value="Loại bài test:" styleClass="filter-item-label"/>
+                    <p:outputLabel value="Loại bài test" styleClass="filter-item-label"/>
                     <p:selectOneMenu styleClass="filter-item" value="#{mnTestController.searchDto.examTypeId}" >
                         <f:selectItem itemLabel="Chọn loại bài test" itemValue=""/>
-                        <f:selectItems var="item" itemValue="#{item.examTypeId}" itemLabel="#{item.nameVn}" value="#{mnTestController.examTypeList}" />
+                        <f:selectItems value="#{mnTestController.examTypeList}"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>

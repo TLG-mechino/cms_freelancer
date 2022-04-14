@@ -58,6 +58,9 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
             if (searchDto.getSortField().equals("score")) {
                 sb.append(" ORDER BY e.SCORE ");
             }
+            if (searchDto.getSortField().equals("maxScore")) {
+                sb.append(" ORDER BY e.MAX_SCORE ");
+            }
             if (searchDto.getSortField().equals("examTypeName")) {
                 sb.append(" ORDER BY et.NAME_VN ");
             }

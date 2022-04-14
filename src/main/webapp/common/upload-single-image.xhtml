@@ -2,26 +2,35 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-        <p:fileUpload id="imageId" mode="advanced"
-                      auto="true" label="Thêm ảnh"
-                      multiple="false"
-                      onstart="PF('statusDialog').show();"
-                      oncomplete="PF('statusDialog').hide();"
-                      listener="#{uploadSingleImageController.onUploadImage}"
-                      update="singleImage #{Constant.ERROR_GROWL_ID}"/>
 
-        <p:outputPanel id="singleImage" style="margin-top: 5px !important;" styleClass="ui-no-margin-padding">
-            <div class="ui-g-12 my-card-image-border" style="text-align: center;">
-                <p:graphicImage style="width: 150px; height: 150px; object-fit: cover !important;"
-                                name="#{uploadSingleImageController.imagePath}"/>
-                <br/>
-                <p:commandButton
-                        actionListener="#{uploadSingleImageController.onRemoveImage}"
-                        rendered="#{uploadSingleImageController.showDeleteButton and uploadSingleImageController.isShowDeleteButtonDefault(uploadSingleImageController.imagePath)}"
-                        update="singleImage" styleClass="red-btn"
-                        process="@this" style="width:40px;" icon="ui-icon-trash">
-                    <p:confirm header="Xác nhận xóa hình ảnh" message="Bạn có chắc chắn muốn xóa?"/>
-                </p:commandButton>
-            </div>
-        </p:outputPanel>
+    <style>
+        .file-upload-custom .ui-icon-plusthick:before {
+            content: '\f093' !important;
+        }
+    </style>
+    <p:fileUpload id="imageId" mode="advanced"
+                  auto="true" label="Tải File"
+                  multiple="false"
+                  onstart="PF('statusDialog').show();"
+                  oncomplete="PF('statusDialog').hide();"
+                  listener="#{uploadSingleImageController.onUploadImage}"
+                  update="singleImage #{Constant.ERROR_GROWL_ID}"/>
+
+    <p:outputLabel
+            value="(*) Hệ thống chỉ hỗ trợ upload file có định dạng: jpg, JPG, jpeg, JPEG, png, PNG. Dung lượng tối đa 50 Mb"/>
+
+    <p:outputPanel id="singleImage" style="margin-top: 5px !important;" styleClass="ui-no-margin-padding">
+        <div class="ui-g-12 my-card-image-border" style="text-align: center;">
+            <p:graphicImage style="width: 150px; height: 150px; object-fit: cover !important;"
+                            name="#{uploadSingleImageController.imagePath}"/>
+            <br/>
+            <p:commandButton
+                    actionListener="#{uploadSingleImageController.onRemoveImage}"
+                    rendered="#{uploadSingleImageController.showDeleteButton and uploadSingleImageController.isShowDeleteButtonDefault(uploadSingleImageController.imagePath)}"
+                    update="singleImage" styleClass="red-btn"
+                    process="@this" style="width:40px;" icon="ui-icon-trash">
+                <p:confirm header="Xác nhận xóa hình ảnh" message="Bạn có chắc chắn muốn xóa?"/>
+            </p:commandButton>
+        </div>
+    </p:outputPanel>
 </ui:composition>

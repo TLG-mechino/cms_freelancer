@@ -29,7 +29,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                 "       rv.STAR_AMOUNT," +
                 "       rv.STATUS," +
                 "       rv.REVIEW_TIME," +
-                "       result1.NAME_VN," +
+                "       result1.NAME," +
                 "       result1.JOB_ID,"+
                 "       rv.TITLE ");
         appendQueryByUserName(sb,reviewSearchDto, username);
@@ -51,7 +51,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                 sb.append(" ORDER BY rv.REVIEW_TIME ");
             }
             if (reviewSearchDto.getSortField().equals("nameJob")) {
-                sb.append(" ORDER BY result1.NAME_VN ");
+                sb.append(" ORDER BY result1.NAME ");
             }
             if (reviewSearchDto.getSortField().equals("title")) {
                 sb.append(" ORDER BY rv.TITLE ");
@@ -107,7 +107,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("username",username);
         if (dto.getKeyword() != null) {
-            sb.append(" and ( (lower(rv.TITLE) like lower(:keyword)) or (lower(result1.NAME_VN) like lower(:keyword)) ) ");
+            sb.append(" and ( (lower(rv.TITLE) like lower(:keyword)) or (lower(result1.NAME) like lower(:keyword)) ) ");
         }
         if(dto.getStartAmount() != null){
             sb.append(" and rv.START_AMOUNT =:startAmount ");

@@ -31,13 +31,12 @@
                                          value="#{customerTalkController.customerTalkDto.fullName}"/>
 
                             <p:outputLabel value="Nội dung:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập nội dung " maxlength="50"
+                            <p:inputText placeholder="Nhập nội dung" maxlength="50"
                                          onchange="this.value = this.value.trim()"
                                          value="#{customerTalkController.customerTalkDto.content}"/>
 
                             <p:outputLabel value="Tải ảnh lên: " styleClass="requireLabel"/>
                             <p:outputPanel styleClass="ui-g-12">
-                                <p:outputLabel value="(*) Hệ thống chỉ hỗ trợ upload file có định dạng: jpg, JPG, jpeg, JPEG, png, PNG. Dung lượng tối đa 50 Mb"/>
                                 <ui:include src="/common/upload-single-image.xhtml"/>
                             </p:outputPanel>
 

@@ -20,7 +20,7 @@
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
                                      layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
                             <p:outputLabel value="Họ và tên:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập họ và tên" maxlength="50" id="fullname"
+                            <p:inputText placeholder="Nhập họ và tên" maxlength="30" id="fullname"
                                          onchange="this.value = this.value.trim()"
                                          onblur="this.value = this.value.replaceAll(/\\#,+()$~%.'{}]/g,'')"
                                          value="#{mnAccountController.accountDto.fullName}">
@@ -30,7 +30,7 @@
                             <p:inputText id="email" onchange="this.value = this.value.trim()"
                                          onkeyup="this.value=this.value.replace(' ', '').toLowerCase()"
                                          placeholder="Nhập địa chỉ email"
-                                         maxlength="50" value="#{mnAccountController.accountDto.email}">
+                                         maxlength="30" value="#{mnAccountController.accountDto.email}">
                             </p:inputText>
 
                             <p:outputLabel value="Số điện thoại:" styleClass="requireLabel"/>
@@ -42,7 +42,7 @@
                             </p:inputText>
 
                             <p:outputLabel value="Tên đăng nhập:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập tên đăng nhập" maxlength="50" id="username"
+                            <p:inputText placeholder="Nhập tên đăng nhập" maxlength="30" id="username"
                                          onchange="this.value = this.value.trim()"
                                          onkeyup="this.value=this.value.replace(/[^\w\d\.\_]/g, '').toLowerCase();"
                                          disabled="#{mnAccountController.accountDto.accountId ne null}"

@@ -89,11 +89,6 @@ public class MnAccountController extends BaseController {
             return false;
         }
 
-        if (!accountDto.getPhone().matches(Constant.PHONE_PATTERN)) {
-            FacesUtil.addErrorMessage("Số điện thoại không đúng định dạng");
-            return false;
-        }
-
         if (StringUtils.isBlank(accountDto.getUsername())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập tên đăng nhập");
             return false;

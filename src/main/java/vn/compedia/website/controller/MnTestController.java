@@ -42,6 +42,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Setter
 @Getter
@@ -176,9 +178,21 @@ public class MnTestController extends BaseController {
         return uploadWithFilenameDto;
     }
 
+    public boolean isValidateExam(String exam) {
+        String regex = "([A-Z]+)(\\d+)";
+
+        Pattern p = Pattern.compile(regex);
+
+        if (exam == null) {
+            return false;
+        }
+        Matcher m = p.matcher(exam);
+        return m.matches();
+    }
+
     public boolean validateDate() {
-        if (StringUtils.isBlank(examDto.getCode().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập mã bài test");
+        if (!isValidateExam(examDto.getCode())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập mã bài test phải bao gồm một chữ cái và một số");
             return false;
         }
 

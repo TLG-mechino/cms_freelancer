@@ -27,12 +27,12 @@
                             </p:inputText>
 
                             <p:outputLabel value="Tiêu đề Tiếng Việt:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập tiêu đề Tiếng Việt" maxlength="50"
+                            <p:inputText placeholder="Nhập tiêu đề Tiếng Việt" maxlength="30"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnHashtagController.hashtagDto.titleVn}"/>
 
                             <p:outputLabel value="Tiêu đề Tiếng Anh:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập tiêu đề Tiếng Anh" maxlength="50"
+                            <p:inputText placeholder="Nhập tiêu đề Tiếng Anh" maxlength="30"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnHashtagController.hashtagDto.titleEn}"/>
 
@@ -144,11 +144,11 @@
                 </p:column>
 
                 <p:column headerText="Mô tả Tiếng Việt" style="text-align: left" sortBy="#{resultDto.descriptionVn}">
-                    <p:outputLabel value="#{resultDto.descriptionVn}"/>
+                    <p:outputLabel value="#{commonController.abbreviate(resultDto.descriptionVn, 30)}"/>
                 </p:column>
 
                 <p:column headerText="Mô tả Tiếng Anh" style="text-align: left" sortBy="#{resultDto.descriptionEn}">
-                    <p:outputLabel value="#{resultDto.descriptionEn}"/>
+                    <p:outputLabel value="#{commonController.abbreviate(resultDto.descriptionEn, 30)}"/>
                 </p:column>
 
                 <p:column headerText="Người tạo" style="text-align: left" sortBy="#{resultDto.createBy}">

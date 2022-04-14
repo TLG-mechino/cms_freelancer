@@ -20,18 +20,18 @@
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
                                      layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
                             <p:outputLabel value="Vị trí công việc của khách hàng: " styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập vị trí công việc khách hàng:" maxlength="50"
+                            <p:inputText placeholder="Nhập vị trí công việc khách hàng" maxlength="50"
                                          onchange="this.value = this.value.trim()"
                                          value="#{customerTalkController.customerTalkDto.position}">
                             </p:inputText>
 
                             <p:outputLabel value="Họ và Tên:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập họ và tên: " maxlength="50"
+                            <p:inputText placeholder="Nhập họ và tên " maxlength="50"
                                          onchange="this.value = this.value.trim()"
                                          value="#{customerTalkController.customerTalkDto.fullName}"/>
 
                             <p:outputLabel value="Nội dung:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập nội dung: " maxlength="50"
+                            <p:inputText placeholder="Nhập nội dung " maxlength="50"
                                          onchange="this.value = this.value.trim()"
                                          value="#{customerTalkController.customerTalkDto.content}"/>
 
@@ -70,7 +70,7 @@
                 <div style="float: right" class="ui-sm-12">
                     <p:commandButton value="Thêm mới" styleClass="border-btn" icon="fa fa-plus"
                                      oncomplete="PF('inforDialog').show()" update="dlForm"
-                                     actionListener="#{mnHashtagController.resetDialog()}"/>
+                                     actionListener="#{customerTalkController.resetDialog()}"/>
                 </div>
             </p:outputPanel>
 
@@ -164,7 +164,7 @@
 
                         <p:menuitem value="Xóa thông tin" icon="fa fa-close"
                                     update="searchForm growl" process="@this"
-                                    actionListener="#{customerTalkController.onDelete(resultDto.hashtagId)}">
+                                    actionListener="#{customerTalkController.onDelete(resultDto.customerTalkId)}">
                             <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"
                                        message="Bạn có chắc chắn muốn xóa thông tin?"/>
                         </p:menuitem>

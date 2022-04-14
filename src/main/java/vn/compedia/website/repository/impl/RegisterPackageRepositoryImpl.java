@@ -32,7 +32,7 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
                 "       rp.EXPIRED_TIME," +
                 "       rp.MONEY," +
                 "       result1.PACKAGE_SERVICE_ID," +
-                "       result1.NAME," +
+                "       result1.NAME_VN," +
                 "       rp.STATUS ");
         appendQueryByUserName(sb,searchDto);
         Query query = createQueryByUser(sb,username,searchDto);
@@ -79,11 +79,11 @@ public class RegisterPackageRepositoryImpl implements RegisterPackageRepositoryC
 
     private void appendQueryByUserName (StringBuilder sb , PackageServiceSearchDto dto) {
         sb.append(" from register_package rp " +
-                "         inner join (select ps.NAME,ps.CODE,ps.PACKAGE_SERVICE_ID from package_service ps) result1 " +
+                "         inner join (select ps.NAME_VN,ps.CODE,ps.PACKAGE_SERVICE_ID from package_service ps) result1 " +
                 "                    on rp.PACKAGE_SERVICE_ID = result1.PACKAGE_SERVICE_ID" +
                 " where rp.USERNAME = :username ");
         if (dto.getKeyword() != null) {
-            sb.append(" and result1.NAME like :keyword ");
+            sb.append(" and result1.NAME_VN like :keyword ");
         }
         if (dto.getStatus() != null) {
             sb.append(" and rp.STATUS =:status ");

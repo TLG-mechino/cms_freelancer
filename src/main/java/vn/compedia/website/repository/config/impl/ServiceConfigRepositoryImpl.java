@@ -142,8 +142,8 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
         sb.append(" from package_service s WHERE 1 = 1 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (lower(s.CODE) LIKE lower(:keyword) " +
-                    "OR lower(s.NAME) LIKE lower(:keyword) " +
-                    "OR lower(s.USERNAME) LIKE lower(:keyword))");
+                    "OR lower(s.NAME_VN) LIKE lower(:keyword) " +
+                    "OR lower(s.NAME_EN) LIKE lower(:keyword))");
         }
         if (searchDto.getStatus() != null) {
             sb.append(" AND s.STATUS =:status ");

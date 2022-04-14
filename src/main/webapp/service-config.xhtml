@@ -11,6 +11,14 @@
 
     <ui:define name="title">Cấu hình dịch vụ</ui:define>
 
+    <ui:define name="head">
+        <style>
+            .color-picker-custom button {
+                background-color: transparent !important;
+            }
+        </style>
+    </ui:define>
+
     <ui:define name="content">
         <p:dialog widgetVar="inforDialog" width="750" height="500" modal="true" id="inforDialogId"
                   header="#{serviceConfigController.titleDialog} cấu hình dịch vụ">
@@ -21,7 +29,7 @@
 
                     <p:outputPanel>
                         <p:outputLabel value="Mã dịch vụ:" styleClass="requireLabel"/>
-                        <p:inputText placeholder="Nhập mã dịch vụ" maxlength="10"
+                        <p:inputText placeholder="Nhập mã dịch vụ" maxlength="20"
                                      value="#{serviceConfigController.serviceConfigDto.code}" id="code"
                                      onchange="this.value = this.value.trim()"
                                      onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();"/>
@@ -47,7 +55,7 @@
 
                     <p:outputPanel>
                         <p:outputLabel value="Chọn màu: "/>
-                        <p:colorPicker value="#{serviceConfigController.serviceConfigDto.color}"
+                        <p:colorPicker value="#{serviceConfigController.serviceConfigDto.color}" styleClass="color-picker-custom"
                                        style="width: auto; display: inline-flex; margin-left: 20px;"/>
                     </p:outputPanel>
 
@@ -133,7 +141,7 @@
                     <p:outputPanel id="inputTransaction">
                         <p:outputLabel value="Phí giao dịch:" styleClass="requireLabel"
                                        rendered="#{serviceConfigController.serviceConfigDto.limitTransaction eq 'false'}"/>
-                        <p:inputNumber placeholder="Nhập số lượt hiển thị ưu tiên"
+                        <p:inputNumber placeholder="Nhập phí giao dịch"
                                        onchange="this.value = this.value.trim()" maxlength="12"
                                        value="#{serviceConfigController.serviceConfigDto.transaction}" minValue="0"
                                        maxValue="100" decimalPlaces="0"
@@ -229,12 +237,16 @@
                     <p:outputLabel value="#{resultDto.code}"/>
                 </p:column>
 
-                <p:column headerText="Tên dịch vụ" style="text-align: left" sortBy="#{resultDto.name}">
+                <p:column headerText="Tên Tiếng Việt" style="text-align: left" sortBy="#{resultDto.name}">
                     <p:outputLabel value="#{resultDto.nameVn}"/>
                 </p:column>
 
+                <p:column headerText="Tên Tiếng Anh" style="text-align: left" sortBy="#{resultDto.name}">
+                    <p:outputLabel value="#{resultDto.nameEn}"/>
+                </p:column>
+
                 <p:column headerText="Mô tả" style="text-align: left" sortBy="#{resultDto.description}">
-                    <p:outputLabel value="#{commonController.abbreviate(resultDto.description, 20)}"/>
+                    <p:outputLabel value="#{commonController.abbreviate(resultDto.description, 30)}"/>
                 </p:column>
 
                 <p:column headerText="Phí dịch vụ" style="text-align: left" sortBy="#{resultDto.money}">

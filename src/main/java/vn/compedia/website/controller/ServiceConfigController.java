@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Setter
 @Getter
@@ -75,6 +77,10 @@ public class ServiceConfigController extends BaseController {
 
     public void resetDialog() {
         serviceConfigDto = new ServiceConfigDto();
+        serviceConfigDto.setLimitPost(true);
+        serviceConfigDto.setLimitComment(true);
+        serviceConfigDto.setLimitTransaction(true);
+        serviceConfigDto.setLimitShow(true);
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }
@@ -114,9 +120,21 @@ public class ServiceConfigController extends BaseController {
         FacesUtil.updateView("searchForm");
     }
 
+    public boolean isValidatePackageService(String packageService) {
+        String regex = "([A-Z]+)(\\d+)";
+
+        Pattern p = Pattern.compile(regex);
+
+        if (packageService == null) {
+            return false;
+        }
+        Matcher m = p.matcher(packageService);
+        return m.matches();
+    }
+
     public boolean validateDate() {
-        if (StringUtils.isBlank(serviceConfigDto.getCode().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập mã dịch vụ");
+        if (!isValidatePackageService(serviceConfigDto.getCode().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập mã dịch vụ phải bao gồm một chữ cái và một số");
             return false;
         }
 
@@ -135,6 +153,31 @@ public class ServiceConfigController extends BaseController {
 
         if (StringUtils.isBlank(serviceConfigDto.getNameVn().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập Tên Tiếng Việt ");
+            return false;
+        }
+
+        if(serviceConfigDto.getLimitPost() == false && serviceConfigDto.getPost() == null){
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập số lượng đăng bài ");
+            return false;
+        }
+
+        if(serviceConfigDto.getLimitComment() == false && serviceConfigDto.getComment() == null){
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập số lượng bình luận");
+            return false;
+        }
+
+        if(serviceConfigDto.getLimitShow() == false && serviceConfigDto.getShow() == null){
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập số lượng hiển thị ưu tiên");
+            return false;
+        }
+
+        if(serviceConfigDto.getLimitTransaction() == false && serviceConfigDto.getTransaction() == null){
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập phần trăm chiết khấu giao dịch");
+            return false;
+        }
+
+        if (StringUtils.isBlank(serviceConfigDto.getNameEn().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập Tên Tiếng Anh ");
             return false;
         }
 
@@ -158,6 +201,7 @@ public class ServiceConfigController extends BaseController {
         serviceConfigDto.setUpdateBy(authorizationController.getAccountDto().getUsername());
 
         BeanUtils.copyProperties(serviceConfigDto, packageService);
+        packageService.setColor("#"+serviceConfigDto.getColor());
         serviceConfigRepository.save(packageService);
         FacesUtil.addSuccessMessage("Lưu thành công");
         FacesUtil.closeDialog("inforDialog");

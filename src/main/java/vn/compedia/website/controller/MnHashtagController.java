@@ -30,6 +30,8 @@ import javax.inject.Named;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Setter
 @Getter
@@ -108,9 +110,21 @@ public class MnHashtagController extends BaseController {
         FacesUtil.updateView("searchForm");
     }
 
+    public boolean isValidateHashTag(String hashtag) {
+        String regex = "([A-Z]+)(\\d+)";
+
+        Pattern p = Pattern.compile(regex);
+
+        if (hashtag == null) {
+            return false;
+        }
+        Matcher m = p.matcher(hashtag);
+        return m.matches();
+    }
+
     public boolean validateDate() {
-        if (StringUtils.isBlank(hashtagDto.getCode().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập mã hashtag");
+        if (!isValidateHashTag(hashtagDto.getCode())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập mã hashtag phải bao gồm một chữ cái và một số");
             return false;
         }
 

@@ -63,7 +63,7 @@
                         <p:outputLabel value="#{rowIndex + 1}"/>
                     </p:column>
 
-                    <p:column headerText="Hình ảnh " style="text-align: left" width="120">
+                    <p:column headerText="Hình ảnh " style="text-align: right" width="120">
                         <p:graphicImage id="image" name="#{resultDto.filePath}"
                                         rendered="#{not empty resultDto.filePath}"
                                         styleClass="image-in-table"/>
@@ -75,7 +75,7 @@
                         </p:overlayPanel>
                     </p:column>
 
-                    <p:column headerText="Tên file " style="text-align: left">
+                    <p:column headerText="Tên file " style="text-align: right">
                         <p:outputLabel value="#{resultDto.fileName}"/>
                     </p:column>
 
@@ -91,11 +91,11 @@
                 <p:panelGrid columns="1" layout="grid" styleClass="ui-fluid ui-panelgrid-blank"
                              columnClasses="ui-grid-col-12">
 
-                    <p:outputLabel value="Ghi chú : " styleClass="requireLabel"/>
+                    <p:outputLabel value="Ghi chú : " styleClass="filter-item-label requireLabel"/>
                     <p:inputTextarea value="#{mnTestEvaluateController.userExamDtoDetail.note}"
                                      placeholder="Nhập ghi chú" rows="5"/>
 
-                    <p:outputLabel value="Số điểm đánh giá : " styleClass="requireLabel"/>
+                    <p:outputLabel value="Số điểm đánh giá : " styleClass="filter-item-label requireLabel"/>
                     <p:inputNumber value="#{mnTestEvaluateController.userExamDtoDetail.score}"
                                    placeholder="Nhập số điểm đánh giá" decimalPlaces="0" minValue="0" maxValue="100"/>
 

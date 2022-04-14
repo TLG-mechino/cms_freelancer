@@ -77,6 +77,7 @@ public class CustomerTalkController extends BaseController {
 
     public void resetDialog(){
         customerTalkDto = new CustomerTalkDto();
+        uploadSingleImageController.resetAll(null);
         titleDialog = "Thêm mới";
         FacesUtil.updateView("inforDialogId");
     }

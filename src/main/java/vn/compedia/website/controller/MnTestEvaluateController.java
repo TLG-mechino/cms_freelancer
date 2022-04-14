@@ -183,6 +183,16 @@ public class MnTestEvaluateController extends BaseController {
             return;
         }
         userExam = userExamRepository.findById(object.getUserExamId()).get();
+        if(StringUtils.isBlank(userExamDtoDetail.getNote())){
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập ghi chú");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        if(userExamDtoDetail.getScore() == null){
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập số điểm đánh giá");
+            FacesUtil.updateView("growl");
+            return;
+        }
         userExam.setScore(object.getScore());
         userExam.setNote(object.getNote());
         userExam.setSubmitTime(object.getSubmitTime());

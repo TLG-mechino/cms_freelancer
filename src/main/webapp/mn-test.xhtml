@@ -20,7 +20,7 @@
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
                                      layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
                             <p:outputLabel value="Mã bài test:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập mã bài test" maxlength="50" id="code"
+                            <p:inputText placeholder="Nhập mã bài test" maxlength="10" id="code"
                                          value="#{mnTestController.examDto.code}">
                                 <p:ajax event="change" update="code" listener="#{mnTestController.removeChar()}"/>
                             </p:inputText>

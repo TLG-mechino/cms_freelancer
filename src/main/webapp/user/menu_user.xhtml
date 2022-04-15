@@ -4,18 +4,18 @@
                 xmlns:p="http://primefaces.org/ui">
 
 
-    <div style="background: #FFFFFF; border: 1px solid #E9E9E9; box-sizing: border-box; border-radius: 20px;">
+    <div style="background: #FFFFFF; box-sizing: border-box;">
         <h:form style="font-weight: bold;" prependId="false">
-            <p:menu id="menu-user">
-                <p:menuitem id="userId-1" value="Thông tin profile" outcome="/user/profile.xhtml" style="border: 1px solid #E9E9E9"/>
-                <p:menuitem id="userId-2" value="Thông tin dự án thuê" outcome="/user/mn-job-user.xhtml" style="border: 1px solid #E9E9E9"/>
-                <p:menuitem id="userId-3" value="Thông tin dự án nhận" style="border: 1px solid #E9E9E9"/>
-                <p:menuitem id="userId-4" value="Thông tin thông báo" outcome="/user/mn-notification-user.xhtml" style="border: 1px solid #E9E9E9"/>
-                <p:menuitem id="userId-5" value="Thông tin chat" style="border: 1px solid #E9E9E9"/>
+            <p:menu id="menu-user" style="width: 75%">
+                <p:menuitem id="userId-1" value="Thông tin profile" outcome="/user/profile.xhtml" />
+                <p:menuitem id="userId-2" value="Thông tin dự án thuê" outcome="/user/mn-job-user.xhtml" />
+                <p:menuitem id="userId-3" value="Thông tin dự án nhận" outcome="/user/mn-job-user-recipient.xhtml" />
+                <p:menuitem id="userId-4" value="Thông tin thông báo" outcome="/user/mn-notification-user.xhtml" />
+                <p:menuitem id="userId-5" value="Thông tin chat" />
                 <p:menuitem id="userId-6" value="Thông tin bài đăng" outcome="/user/mn-post-user.xhtml" />
-                <p:menuitem id="userId-7" value="Thông tin lịch sử giao dịch" outcome="/user/mn-transaction-user.xhtml" style="border: 1px solid #E9E9E9"/>
-                <p:menuitem id="userId-8" value="Thông tin review đánh giá" outcome="/user/mn-review-user.xhtml" style="border: 1px solid #E9E9E9"/>
-                <p:menuitem id="userId-9" value="Thông tin gói dịch vụ" outcome="/user/mn-package-service.xhtml" style="border: 1px solid #E9E9E9"/>
+                <p:menuitem id="userId-7" value="Thông tin lịch sử giao dịch" outcome="/user/mn-transaction-user.xhtml" />
+                <p:menuitem id="userId-8" value="Thông tin review đánh giá" outcome="/user/mn-review-user.xhtml" />
+                <p:menuitem id="userId-9" value="Thông tin gói dịch vụ" outcome="/user/mn-package-service.xhtml" />
             </p:menu>
         </h:form>
     </div>

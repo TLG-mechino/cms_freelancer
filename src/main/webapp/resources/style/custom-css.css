@@ -25,9 +25,6 @@
 .container .container-right .ui-grid-row{
     margin-bottom: 20px;
 }
-.container .container-left .ui-menuitem{
-    padding-bottom: 20px;
-}
 
 .container-evaluate-detail{
 
@@ -60,20 +57,13 @@
     border-radius: 10px !important;
     color: #7a7a7a !important;
 }
+
 .active-menuitem-user {
     background-color: #FF3408 !important;
 }
-
-#menu-user li{
-    white-space: nowrap;
-    border-radius: 10px !important;
-    padding: 0px !important;
+.active-menuitem-user a {
+    color: White !important
 }
-#menu-user li a {
-    color: black !important;
-}
-#menu-user li a:hover {
-    border-radius: 10px !important;
-    padding: 5px !important;
-    color: white !important;
+ .ui-menu .ui-menu-list .ui-menuitem {
+    margin-bottom :5px !important;
 }

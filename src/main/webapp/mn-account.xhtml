@@ -42,7 +42,7 @@
                             </p:inputText>
 
                             <p:outputLabel value="Tên đăng nhập:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập tên đăng nhập" maxlength="30" id="username"
+                            <p:inputText placeholder="Nhập tên đăng nhập" maxlength="20" id="username"
                                          onchange="this.value = this.value.trim()"
                                          onkeyup="this.value=this.value.replace(/[^\w\d\.\_]/g, '').toLowerCase();"
                                          disabled="#{mnAccountController.accountDto.accountId ne null}"

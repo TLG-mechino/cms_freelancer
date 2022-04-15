@@ -33,6 +33,7 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
                 "       e.STATUS, " +
                 "       et.EXAM_TYPE_ID, " +
                 "       e.HASHTAG_ID, " +
+                "       e.TIME, " +
                 "       (select COUNT( ef.EXAM_FILE_ID) from exam_file ef WHERE e.EXAM_ID = ef.OBJECT_ID) as numberFile ");
         appendQuery(sb, searchDto);
 
@@ -96,7 +97,8 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
             dto.setStatus(ValueUtil.getIntegerByObject(obj[9]));
             dto.setExamTypeId(ValueUtil.getLongByObject(obj[10]));
             dto.setHashtagId(ValueUtil.getLongByObject(obj[11]));
-            dto.setNumberFile(ValueUtil.getLongByObject(obj[12]));
+            dto.setTime(ValueUtil.getIntegerByObject(obj[12]));
+            dto.setNumberFile(ValueUtil.getLongByObject(obj[13]));
             list.add(dto);
         }
         return list;

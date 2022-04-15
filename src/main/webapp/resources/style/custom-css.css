@@ -7,12 +7,6 @@
 .container .container-right{
     width: 75%
 }
-.container .container-right input{
-    border: 0
-}
-.container .container-right .ui-outputpanel{
-    /*border-bottom: 1px solid black;*/
-}
 .container .container-left .ui-menu{
     border: 1px solid #7e7e7e;
     border-radius: 25px;
@@ -58,4 +52,28 @@
 .container-evaluate-detail .card-list .ui-panelgrid .ui-panelgrid-content .ui-g .ui-panelgrid-cell{
     display: block;
     width: 100%;
+}
+
+.button-back {
+    border: 1px solid #7a7a7a !important;
+    background-color: white !important;
+    border-radius: 10px !important;
+    color: #7a7a7a !important;
+}
+.active-menuitem-user {
+    background-color: #FF3408 !important;
+}
+
+#menu-user li{
+    white-space: nowrap;
+    border-radius: 10px !important;
+    padding: 0px !important;
+}
+#menu-user li a {
+    color: black !important;
+}
+#menu-user li a:hover {
+    border-radius: 10px !important;
+    padding: 5px !important;
+    color: white !important;
 }

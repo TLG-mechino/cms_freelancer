@@ -49,4 +49,7 @@ public class Exam extends BaseModel{
     @Column(name = "MAX_SCORE")
     private Double maxScore;
 
+    @Column(name = "TIME")
+    private Integer time;
+
 }

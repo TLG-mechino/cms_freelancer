@@ -65,7 +65,6 @@ public class MnHashtagController extends BaseController {
         hashtag = new Hashtag();
         hashtagDto = new HashtagDto();
         searchDto = new HashtagSearchDto();
-        searchDtoTemp = new HashtagSearchDto();
         onSearch();
     }
 

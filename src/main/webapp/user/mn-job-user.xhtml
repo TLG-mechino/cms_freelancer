@@ -18,7 +18,7 @@
                 <p:link styleClass="title-color-left ui-sm-12">Quản lý người dùng</p:link>
 
                 <div style="float: right" class="ui-sm-12">
-                    <p:button value="Quay lại" icon="fa fa-arrow-left" outcome="/mn-user.xhtml">
+                    <p:button value="Quay lại" icon="fa fa-arrow-left" outcome="/mn-user.xhtml" styleClass="button-back">
                     </p:button>
                 </div>
             </p:outputPanel>
@@ -33,7 +33,7 @@
                 <h:form styleClass="ui-g-12" prependId="false">
 
                     <p:outputPanel>
-                        <p:link styleClass="title-color-left ui-sm-12">Thông tin dự án</p:link>
+                        <p:link styleClass="title-color-left ui-sm-12">Thông tin dự án thuê</p:link>
                     </p:outputPanel>
                     <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
                                  columnClasses="ui-grid-col-11 ui-no-margin-padding margin-right-10, ui-grid-col-1 ui-no-margin-padding">
@@ -142,5 +142,15 @@
             </div>
         </h:form>
 
+        <script>
+            setTimeout(function() {
+                document.getElementById('id-2-4').classList.add('active-menuitem');
+                $('#id-2-4').addClass('active-menuitem');
+            }, 500);
+            setTimeout(function() {
+                document.getElementById('id-2').classList.add('active-menuitem');
+                $('#id-2').addClass('active-menuitem');
+            }, 500);
+        </script>
     </ui:define>
 </ui:composition>

@@ -45,6 +45,11 @@
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.descriptionEn}"/>
 
+                            <p:outputLabel value="Thời gian làm bài:" styleClass="requireLabel"/>
+                            <p:inputNumber placeholder="Nhập thời gian làm bài" maxlength="100"
+                                             onchange="this.value = this.value.trim()"
+                                             value="#{mnTestController.examDto.time}" decimalPlaces="0" minValue="0" maxValue="1000"/>
+
                             <p:outputLabel value="Tài liệu bài test:" styleClass="requireLabel"/>
                             <p:outputPanel styleClass="ui-g-12">
                                 <ui:include src="/common/upload-multiple-image.xhtml"/>
@@ -179,6 +184,12 @@
 
                 <p:column headerText="Số điểm tối đa" style="text-align: left" sortBy="#{resultDto.maxScore}">
                     <p:outputLabel value="#{resultDto.maxScore}" >
+                        <f:convertNumber pattern="###,###"/>
+                    </p:outputLabel>
+                </p:column>
+
+                <p:column headerText="Thời gian làm bài" style="text-align: left" sortBy="#{resultDto.time}">
+                    <p:outputLabel value="#{resultDto.time}" >
                         <f:convertNumber pattern="###,###"/>
                     </p:outputLabel>
                 </p:column>

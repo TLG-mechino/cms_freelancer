@@ -159,10 +159,34 @@ public class MnUserController extends BaseController {
             FacesUtil.updateView("growl");
             return;
         }
-        BeanUtils.copyProperties(userDtoDetails, user);
+        user = userRepository.findById(object.getId()).get();
+        account = accountRepository.findById(object.getAccountId()).get();
+        user.setFacebookLink(object.getFacebookLink());
+        user.setAddress(object.getAddress());
+        user.setExperienceAmount(object.getExperienceAmount());
+        user.setWorkingHours(object.getWorkingHours());
+        account.setFullName(object.getFullName());
+        account.setPhone(object.getPhone());
+        account.setEmail(object.getEmail());
+        if (!validateDate()) {
+            FacesUtil.updateView("growl");
+            return;
+        }
+        if(object.getExperienceAmount() == null){
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập số năm kinh nghiệm làm việc ");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        if(object.getWorkingHours() == null){
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập số giờ làm việc ");
+            FacesUtil.updateView("growl");
+            return;
+        }
+
         userRepository.save(user);
+        accountRepository.save(account);
         titleDialog = "Sửa";
-        FacesUtil.addSuccessMessage("Update thành công");
+        FacesUtil.addSuccessMessage("Lưu thành công");
         FacesUtil.updateView("growl");
     }
 

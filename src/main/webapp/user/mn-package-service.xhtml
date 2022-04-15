@@ -18,7 +18,7 @@
                 <p:link styleClass="title-color-left ui-sm-12">Quản lý người dùng</p:link>
 
                 <div style="float: right" class="ui-sm-12">
-                    <p:button value="Quay lại" icon="fa fa-arrow-left" outcome="/mn-user.xhtml">
+                    <p:button value="Quay lại" icon="fa fa-arrow-left" outcome="/mn-user.xhtml" styleClass="button-back">
                     </p:button>
                 </div>
             </p:outputPanel>
@@ -145,6 +145,16 @@
             </div>
         </h:form>
 
+        <script>
+            setTimeout(function() {
+                document.getElementById('id-2-4').classList.add('active-menuitem');
+                $('#id-2-4').addClass('active-menuitem');
+            }, 500);
+            setTimeout(function() {
+                document.getElementById('id-2').classList.add('active-menuitem');
+                $('#id-2').addClass('active-menuitem');
+            }, 500);
+        </script>
     </ui:define>
 </ui:composition>
 

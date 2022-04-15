@@ -106,7 +106,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("username", username);
         if (StringUtils.isNotBlank(dto.getKeyword())) {
-            sb.append(" AND lower(j.NAME) LIKE lower(:keyword)) " );
+            sb.append(" AND lower(j.NAME) LIKE lower(:keyword) " );
         }
         if (dto.getMoney() != null) {
             sb.append(" AND j.MONEY_FROM <= :money AND j.MONEY_TO >= :money ");

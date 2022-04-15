@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import vn.compedia.website.model.User;
 
 @Repository
-public interface UserRepository extends CrudRepository<User,Long> ,UserRepositoryCustom{
+public interface UserRepository extends CrudRepository<User,String> ,UserRepositoryCustom{
 
     @Query(value = "select * from user u , account ac  where u.USERNAME = ac.USERNAME and u.USERNAME =:username and ac.STATUS = 1", nativeQuery = true)
     User getUsersByUserName(@Param("username")String username);

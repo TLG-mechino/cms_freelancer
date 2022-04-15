@@ -16,12 +16,13 @@
             <p:link styleClass="title-color-left ui-sm-12">Quản lý người dùng</p:link>
 
             <div style="float: right" class="ui-sm-12">
-                <p:button value="Quay lại" icon="fa fa-arrow-left" outcome="/mn-user.xhtml">
+                <p:button value="Quay lại" icon="fa fa-arrow-left" outcome="/mn-user.xhtml" styleClass="button-back">
                 </p:button>
             </div>
         </p:outputPanel>
 
         <hr class="hr-class"/>
+
         <div class="container">
             <div class="container-left" style="float: left">
                 <ui:include src="/template/topbar.xhtml"/>
@@ -40,14 +41,13 @@
                         <p:outputLabel value="Họ và Tên:" styleClass="requireLabel"/>
                         <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
                                      value="#{mnUserController.userDtoDetails.fullName}" id="fullName">
-                            <p:ajax event="change" update="fullName" listener="#{mnUserController.removeChar()}"/>
                         </p:inputText>
 
                         <p:outputLabel value="Số điện thoại:" styleClass="requireLabel"/>
-                        <p:inputText placeholder="Nhập số điện thoại" maxlength="11" style="border: #0a6fbd" size="60"
+                        <p:inputText placeholder="Nhập số điện thoại" maxlength="11" size="60"
                                      onchange="this.value = this.value.trim()"
                                      onkeyup="this.value = this.value.replace(/\D/g, '');"
-                                     value="#{mnUserController.userDtoDetails.phone}" minValue="0" decimalPlaces="0">
+                                     value="#{mnUserController.userDtoDetails.phone}">
                         </p:inputText>
 
                         <p:outputLabel value="Email:" styleClass="requireLabel"/>
@@ -71,25 +71,35 @@
                                      value="#{mnUserController.userDtoDetails.moneyWallet}" disabled="true"/>
 
                         <p:outputLabel value="Kinh nghiệm làm việc:" styleClass="requireLabel"/>
-                        <p:inputNumber maxlength="3" onchange="this.value = this.value.trim()" size="60" minValue="0"
+                        <p:inputNumber maxlength="3" onchange="this.value = this.value.trim()" size="60" minValue="0" maxValue="100"
                                      value="#{mnUserController.userDtoDetails.experienceAmount}"/>
 
                         <p:outputLabel value="Số giờ làm việc:" styleClass="requireLabel"/>
-                        <p:inputNumber maxlength="2" onchange="this.value = this.value.trim()" size="60" minValue="0"
+                        <p:inputNumber maxlength="2" onchange="this.value = this.value.trim()" size="60" minValue="0" maxValue="100"
                                      value="#{mnUserController.userDtoDetails.workingHours}"/>
-
-                        <p:outputLabel value="Ngôn ngữ:" styleClass="requireLabel"/>
-                        <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
-                                     value="#{mnUserController.userDtoDetails.languageName}"/>
-
 
                     </p:panelGrid>
                     <hr class="hr-class"/>
                     <p:commandButton value="Lưu" styleClass="border-btn" icon="fa fa-save"
-                                     style="width: auto" oncomplete="PF('inforDialog').show()"
+                                     style="width: auto"
                                      actionListener="#{mnUserController.onEdit(mnUserController.userDtoDetails)}"/>
                 </h:form>
             </div>
         </div>
+
+        <script>
+            setTimeout(function() {
+                document.getElementById('id-2-4').classList.add('active-menuitem');
+                $('#id-2-4').addClass('active-menuitem');
+            }, 500);
+            setTimeout(function() {
+                document.getElementById('id-2').classList.add('active-menuitem');
+                $('#id-2').addClass('active-menuitem');
+            }, 500);
+            setTimeout(function() {
+                document.getElementById('userId-1').classList.add('active-menuitem');
+                $('#userId-1').addClass('active-menuitem');
+            }, 500);
+        </script>
     </ui:define>
 </ui:composition>

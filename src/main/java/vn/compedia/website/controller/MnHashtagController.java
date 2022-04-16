@@ -88,7 +88,6 @@ public class MnHashtagController extends BaseController {
                     sort = "DESC";
                 }
                 searchDto.setSortOrder(sort);
-                BeanUtils.copyProperties(searchDto, searchDtoTemp);
                 return hashtagRepository.search(searchDto);
             }
 

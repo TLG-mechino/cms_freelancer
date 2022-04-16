@@ -264,8 +264,8 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         if (SearchDto.getKeyword() != null) {
             sb.append(" AND (t.TITLE_TRANSACTION LIKE :keyword) ");
         }
-        if (SearchDto.getPaymentTypeSearch() != null) {
-            sb.append(" AND t.PAYMENT_TYPE_ID = :paymentTypeSearch ");
+        if (StringUtils.isNotBlank(SearchDto.getKeyword())) {
+            sb.append(" AND (t.CODE LIKE :keyword OR t.SENDER LIKE :keyword OR t.RECIPIENT LIKE :keyword) ");
         }
         if (SearchDto.getLessMoney() != null) {
             sb.append(" AND t.AMOUNT_OF_MONEY >= :lessMoney ");

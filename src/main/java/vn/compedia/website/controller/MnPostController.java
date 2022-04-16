@@ -105,7 +105,7 @@ public class MnPostController extends BaseController {
         };
         int count = postRepository.countSearchRpByUserName(userController.getUserDtoDetails().getId(), searchDto).intValue();
         lazyDataModel.setRowCount(count);
-        FacesUtil.updateView("searchForm");
+        FacesUtil.updateView("searchForm tblSearchResult");
     }
 
     public void onDelete(Long postId) {

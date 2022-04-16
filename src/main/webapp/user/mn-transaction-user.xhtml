@@ -13,166 +13,174 @@
 
     <ui:define name="content">
 
-        <h:form styleClass="ui-g-12" id="searchForm" prependId="false">
-            <p:outputPanel>
-                <p:link styleClass="title-color-left ui-sm-12">Quản lý người dùng</p:link>
+        <p:outputPanel>
+            <p:link styleClass="title-color-left ui-sm-12">Quản lý người dùng</p:link>
 
-                <div style="float: right" class="ui-sm-12">
-                    <p:button value="Quay lại" icon="fa fa-arrow-left" outcome="/mn-user.xhtml" styleClass="button-back">
-                    </p:button>
-                </div>
-            </p:outputPanel>
-
-            <hr class="hr-class"/>
-
-            <div class="container">
-                <div class="container-left" style="float: left">
-                    <ui:include src="/template/topbar.xhtml"/>
-                    <ui:include src="menu_user.xhtml"/>
-                </div>
-
-                <h:form styleClass="ui-g-12" prependId="false">
-                    <p:outputPanel>
-                        <p:link styleClass="title-color-left ui-sm-12">Thông tin lịch sử giao dịch</p:link>
-                    </p:outputPanel>
-                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
-                                 columnClasses="ui-grid-col-11 ui-no-margin-padding margin-right-10, ui-grid-col-1 ui-no-margin-padding">
-                        <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
-                            <div class="ui-input-icon-left" style="width: 100%; display: flex;">
-                                <i class="fa fa-search"/>
-                                <p:inputText placeholder="Nhập mã giao dịch"
-                                             style="width: 97%"
-                                             onblur="this.value = this.value.trim()" maxlength="100"
-                                             onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
-                                             value="#{mnTransactionUserController.searchDto.keyword}"
-                                             styleClass="border-input" onchange="this.value = this.value.trim()">
-                                    <p:ajax event="change" update="searchForm"
-                                            listener="#{mnTransactionUserController.onSearch()}"/>
-                                </p:inputText>
-                            </div>
-                        </p:outputPanel>
-
-                        <p:commandButton id="basic" value="Bộ lọc" type="button" iconPos="right"
-                                         icon="fa fa-caret-down"
-                                         styleClass="filter-search ui-sm-12"/>
-
-                        <p:overlayPanel for="basic" styleClass="filter-panel">
-                            <p:outputLabel value="Phương thức thanh toán" styleClass="filter-item-label"/>
-                            <p:selectOneMenu styleClass="filter-item" value="#{mnTransactionUserController.searchDto.paymentTypeSearch}">
-                                <f:selectItem itemLabel="Chọn phương thức thanh toán"/>
-                                <f:selectItems var="item" itemValue="#{item.paymentTypeId}" itemLabel="#{item.name}" value="#{mnTransactionUserController.paymentTypeList}" />
-                            </p:selectOneMenu>
-
-                            <p:outputLabel value="Số tiền giao dịch" styleClass="filter-item-label"/>
-                            <div class="filter-item">
-                                <p:inputNumber value="#{mnTransactionController.searchDto.lessMoney}" placeholder="Từ" decimalPlaces="0" size="12"/>
-                                <p:inputNumber value="#{mnTransactionController.searchDto.greatMoney}" placeholder="Đến" decimalPlaces="0" size="12" style="margin-left: 20px"/>
-                            </div>
-
-                            <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
-                            <p:selectOneMenu styleClass="filter-item"
-                                             value="#{mnTransactionUserController.searchDto.status}">
-                                <f:selectItem itemLabel="Tất cả" itemValue=""/>
-                                <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
-                                <f:selectItem itemLabel="Không hoạt động"
-                                              itemValue="#{DbConstant.INACTIVE_STATUS}"/>
-                            </p:selectOneMenu>
-
-                            <p:commandButton value="Bỏ lọc" update="searchForm"
-                                             icon="fa fa-refresh" styleClass="filter-btn"
-                                             actionListener="#{mnTransactionUserController.resetAll()}"/>
-
-                            <p:commandButton value="Lọc" update="tblSearchResult"
-                                             icon="fa fa-search" styleClass="margin-right-10 filter-btn" id="search"
-                                             actionListener="#{mnTransactionUserController.onSearch()}"/>
-                        </p:overlayPanel>
-                    </p:panelGrid>
-
-
-                    <hr class="hr-class"/>
-
-                    <p:dataTable id="tblSearchResult" styleClass="margin-top-15 search-panel"
-                                 tableStyle="table-layout: auto;"
-                                 widgetVar="dataTable" resizableColumns="true" paginator="true" rows="20"
-                                 lazy="true" pageLinks="5" var="resultDto" paginatorPosition="bottom"
-                                 paginatorAlwaysVisible="true" rowsPerPageTemplate="20,50,100"
-                                 value="#{mnTransactionUserController.lazyDataModel}" rowKey="#{resultDto.transactionId}"
-                                 paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-                                 emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
-                                 currentPageReportTemplate="Tổng số bản ghi: #{mnTransactionUserController.lazyDataModel.rowCount}">
-
-                        <p:column headerText="STT" width="30" style="text-align: center">
-                            <p:outputLabel value="#{rowIndex + 1}"/>
-                        </p:column>
-
-                        <p:column headerText="Mã giao dịch" style="text-align: left" sortBy="#{resultDto.code}">
-                            <p:outputLabel value="#{resultDto.code}"/>
-                        </p:column>
-
-                        <p:column headerText="Người gửi" style="text-align: left" sortBy="#{resultDto.sender}">
-                            <p:outputLabel value="#{resultDto.sender}"/>
-                        </p:column>
-
-                        <p:column headerText="Người nhận" style="text-align: left" sortBy="#{resultDto.recipient}">
-                            <p:outputLabel value="#{resultDto.recipient}"/>
-                        </p:column>
-
-                        <p:column headerText="Phương thức thanh toán" style="text-align: left" sortBy="#{resultDto.paymentTypeName}">
-                            <p:outputLabel value="#{resultDto.paymentTypeName}"/>
-                        </p:column>
-
-                        <p:column headerText="Số tiền giao dịch" style="text-align: left" sortBy="#{resultDto.amountOfMoney}">
-                            <p:outputLabel value="#{resultDto.amountOfMoney}">
-                                <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency" pattern="###,### đ"/>
-                            </p:outputLabel>
-                        </p:column>
-
-                        <p:column headerText="Số tiền chiết khấu" style="text-align: left" sortBy="#{resultDto.discountMoney}">
-                            <p:outputLabel value="#{resultDto.discountMoney}">
-                                <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency" pattern="###,### đ"/>
-                            </p:outputLabel>
-                        </p:column>
-
-                        <p:column headerText="Số tiền nhận được" style="text-align: left" sortBy="#{resultDto.finalMoney}">
-                            <p:outputLabel value="#{resultDto.finalMoney}">
-                                <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency" pattern="###,### đ"/>
-                            </p:outputLabel>
-                        </p:column>
-
-                        <p:column headerText="Thời gian giao dịch" style="text-align: left" sortBy="#{resultDto.transactionTime}">
-                            <p:outputLabel value="#{resultDto.transactionTime}">
-                                <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>
-                            </p:outputLabel>
-                        </p:column>
-
-                        <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
-                            <p:outputLabel value="Hoạt động" rendered="#{resultDto.status eq DbConstant.ACTIVE_STATUS}"/>
-                            <p:outputLabel value="Không hoạt động"
-                                           rendered="#{resultDto.status eq DbConstant.INACTIVE_STATUS}"/>
-                        </p:column>
-
-                        <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">
-                            <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
-                                <p:menuitem value="Xóa thông tin" icon="fa fa-close"
-                                            update="searchForm growl" process="@this"
-                                            actionListener="#{mnTransactionUserController.onDelete(resultDto.transactionId)}">
-                                    <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"
-                                               message="Bạn có chắc chắn muốn xóa thông tin?"/>
-                                </p:menuitem>
-                            </p:menuButton>
-                        </p:column>
-
-                    </p:dataTable>
-                </h:form>
+            <div style="float: right" class="ui-sm-12">
+                <p:button value="Quay lại" icon="fa fa-arrow-left" outcome="/mn-user.xhtml" styleClass="button-back">
+                </p:button>
             </div>
-        </h:form>
+        </p:outputPanel>
+
+        <hr class="hr-class"/>
+
+        <div class="container">
+            <div class="container-left" style="float: left">
+                <ui:include src="/template/topbar.xhtml"/>
+                <ui:include src="menu_user.xhtml"/>
+            </div>
+
+            <h:form styleClass="ui-g-12" id="searchForm" prependId="false">
+                <p:outputPanel>
+                    <p:link styleClass="title-color-left ui-sm-12">Thông tin lịch sử giao dịch</p:link>
+                </p:outputPanel>
+                <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
+                             columnClasses="ui-grid-col-11 ui-no-margin-padding margin-right-10, ui-grid-col-1 ui-no-margin-padding">
+                    <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
+                        <div class="ui-input-icon-left" style="width: 100%; display: flex;">
+                            <i class="fa fa-search"/>
+                            <p:inputText placeholder="Nhập mã giao dịch, người gửi, người nhận" style="width: 97%"
+                                         onblur="this.value = this.value.trim()" maxlength="100"
+                                         onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
+                                         value="#{mnTransactionUserController.searchDto.keyword}"
+                                         styleClass="border-input" onchange="this.value = this.value.trim()">
+                                <p:ajax event="change" update="searchForm"
+                                        listener="#{mnTransactionUserController.onSearch()}"/>
+                            </p:inputText>
+                        </div>
+                    </p:outputPanel>
+
+                    <p:commandButton id="basic" value="Bộ lọc" type="button" iconPos="right"
+                                     icon="fa fa-caret-down"
+                                     styleClass="filter-search ui-sm-12"/>
+
+                    <p:overlayPanel for="basic" styleClass="filter-panel">
+                        <p:outputLabel value="Phương thức thanh toán" styleClass="filter-item-label"/>
+                        <p:selectOneMenu styleClass="filter-item"
+                                         value="#{mnTransactionUserController.searchDto.paymentTypeSearch}">
+                            <f:selectItem itemLabel="Chọn phương thức thanh toán"/>
+                            <f:selectItems var="item" itemValue="#{item.paymentTypeId}" itemLabel="#{item.name}"
+                                           value="#{mnTransactionUserController.paymentTypeList}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Số tiền giao dịch" styleClass="filter-item-label"/>
+                        <div class="filter-item">
+                            <p:inputNumber value="#{mnTransactionUserController.searchDto.lessMoney}" placeholder="Từ"
+                                           decimalPlaces="0" size="12"/>
+                            <p:inputNumber value="#{mnTransactionUserController.searchDto.greatMoney}" placeholder="Đến"
+                                           decimalPlaces="0" size="12" style="margin-left: 20px"/>
+                        </div>
+
+                        <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
+                        <p:selectOneMenu styleClass="filter-item"
+                                         value="#{mnTransactionUserController.searchDto.status}">
+                            <f:selectItem itemLabel="Tất cả" itemValue=""/>
+                            <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
+                            <f:selectItem itemLabel="Không hoạt động"
+                                          itemValue="#{DbConstant.INACTIVE_STATUS}"/>
+                        </p:selectOneMenu>
+
+                        <p:commandButton value="Bỏ lọc" update="searchForm"
+                                         icon="fa fa-refresh" styleClass="filter-btn"
+                                         actionListener="#{mnTransactionUserController.resetAll()}"/>
+
+                        <p:commandButton value="Lọc" update="tblSearchResult"
+                                         icon="fa fa-search" styleClass="margin-right-10 filter-btn" id="search"
+                                         actionListener="#{mnTransactionUserController.onSearch()}"/>
+                    </p:overlayPanel>
+                </p:panelGrid>
+
+
+                <hr class="hr-class"/>
+
+                <p:dataTable id="tblSearchResult" styleClass="margin-top-15 search-panel"
+                             tableStyle="table-layout: auto;"
+                             widgetVar="dataTable" resizableColumns="true" paginator="true" rows="20"
+                             lazy="true" pageLinks="5" var="resultDto" paginatorPosition="bottom"
+                             paginatorAlwaysVisible="true" rowsPerPageTemplate="20,50,100"
+                             value="#{mnTransactionUserController.lazyDataModel}" rowKey="#{resultDto.transactionId}"
+                             paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                             emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
+                             currentPageReportTemplate="Tổng số bản ghi: #{mnTransactionUserController.lazyDataModel.rowCount}">
+
+                    <p:column headerText="STT" width="30" style="text-align: center">
+                        <p:outputLabel value="#{rowIndex + 1}"/>
+                    </p:column>
+
+                    <p:column headerText="Mã giao dịch" style="text-align: left" sortBy="#{resultDto.code}">
+                        <p:outputLabel value="#{resultDto.code}"/>
+                    </p:column>
+
+                    <p:column headerText="Người gửi" style="text-align: left" sortBy="#{resultDto.sender}">
+                        <p:outputLabel value="#{resultDto.sender}"/>
+                    </p:column>
+
+                    <p:column headerText="Người nhận" style="text-align: left" sortBy="#{resultDto.recipient}">
+                        <p:outputLabel value="#{resultDto.recipient}"/>
+                    </p:column>
+
+                    <p:column headerText="Phương thức thanh toán" style="text-align: left"
+                              sortBy="#{resultDto.paymentTypeName}">
+                        <p:outputLabel value="#{resultDto.paymentTypeName}"/>
+                    </p:column>
+
+                    <p:column headerText="Số tiền giao dịch" style="text-align: left"
+                              sortBy="#{resultDto.amountOfMoney}">
+                        <p:outputLabel value="#{resultDto.amountOfMoney}">
+                            <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
+                                             pattern="###,### đ"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="Số tiền chiết khấu" style="text-align: left"
+                              sortBy="#{resultDto.discountMoney}">
+                        <p:outputLabel value="#{resultDto.discountMoney}">
+                            <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
+                                             pattern="###,### đ"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="Số tiền nhận được" style="text-align: left" sortBy="#{resultDto.finalMoney}">
+                        <p:outputLabel value="#{resultDto.finalMoney}">
+                            <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
+                                             pattern="###,### đ"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="Thời gian giao dịch" style="text-align: left"
+                              sortBy="#{resultDto.transactionTime}">
+                        <p:outputLabel value="#{resultDto.transactionTime}">
+                            <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
+                        <p:outputLabel value="Hoạt động" rendered="#{resultDto.status eq DbConstant.ACTIVE_STATUS}"/>
+                        <p:outputLabel value="Không hoạt động"
+                                       rendered="#{resultDto.status eq DbConstant.INACTIVE_STATUS}"/>
+                    </p:column>
+
+                    <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">
+                        <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
+                            <p:menuitem value="Xóa thông tin" icon="fa fa-close"
+                                        update="searchForm growl" process="@this"
+                                        actionListener="#{mnTransactionUserController.onDelete(resultDto.transactionId)}">
+                                <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"
+                                           message="Bạn có chắc chắn muốn xóa thông tin?"/>
+                            </p:menuitem>
+                        </p:menuButton>
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+        </div>
 
         <script>
-            setTimeout(function() {
+            setTimeout(function () {
                 document.getElementById('id-2-4').classList.add('active-menuitem');
                 $('#id-2-4').addClass('active-menuitem');
             }, 500);
-            setTimeout(function() {
+            setTimeout(function () {
                 document.getElementById('id-2').classList.add('active-menuitem');
                 $('#id-2').addClass('active-menuitem');
             }, 500);

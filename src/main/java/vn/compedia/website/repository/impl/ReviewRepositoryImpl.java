@@ -1,5 +1,6 @@
 package vn.compedia.website.repository.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 import vn.compedia.website.dto.ReviewDto;
 import vn.compedia.website.dto.response.ReviewResponseDto;
@@ -106,7 +107,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                 " where 1 = 1 ");
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("username",username);
-        if (dto.getKeyword() != null) {
+        if (StringUtils.isNotBlank(dto.getKeyword())) {
             sb.append(" and ( (lower(rv.TITLE) like lower(:keyword)) or (lower(result1.NAME) like lower(:keyword)) ) ");
         }
         if(dto.getStartAmount() != null){
@@ -120,7 +121,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
     private Query createQueryByUserName (String username, StringBuilder sb,ReviewSearchDto dto) {
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("username",username);
-        if (dto.getKeyword() !=null ) {
+        if (StringUtils.isNotBlank(dto.getKeyword())) {
             query.setParameter("keyword",dto.getKeyword());
         }
         if(dto.getStartAmount() != null){

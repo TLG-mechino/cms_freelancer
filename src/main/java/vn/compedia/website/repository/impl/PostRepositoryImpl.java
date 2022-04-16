@@ -94,7 +94,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     public Query createQuery (StringBuilder sb , PostSearchDto dto , String username) {
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("username", username);
-        if (dto.getKeyword()!=null) {
+        if (StringUtils.isNotBlank(dto.getKeyword())) {
             query.setParameter("keyword","%"+dto.getKeyword().trim()+"%");
         }
         if (dto.getStatus()!=null) {

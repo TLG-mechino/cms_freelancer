@@ -7,12 +7,14 @@ import lombok.Setter;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.controller.common.BaseController;
 import vn.compedia.website.dto.AccountDto;
 import vn.compedia.website.dto.ComplainDto;
 import vn.compedia.website.dto.ComplainSearchDto;
+import vn.compedia.website.model.Complain;
 import vn.compedia.website.model.ComplainType;
 import vn.compedia.website.repository.ComplainRepository;
 import vn.compedia.website.repository.ComplainTypeRepository;
@@ -38,6 +40,7 @@ public class MnComplainController extends BaseController {
     @Autowired
     private ComplainTypeRepository complainTypeRepository;
 
+    private Complain complain;
     private ComplainSearchDto searchDto;
     private ComplainDto dto;
     private LazyDataModel<ComplainDto> lazyDataModel;
@@ -53,6 +56,7 @@ public class MnComplainController extends BaseController {
     public void resetAll() {
         searchDto = new ComplainSearchDto();
         dto = new ComplainDto();
+        complain = new Complain();
         complainTypes = complainTypeRepository.findAllByStatus(DbConstant.ACTIVE_STATUS);
         onSearch();
     }
@@ -91,6 +95,32 @@ public class MnComplainController extends BaseController {
         int count = complainRepository.countSearch(searchDto).intValue();
         lazyDataModel.setRowCount(count);
         FacesUtil.updateView("searchForm");
+    }
+
+    public void getComplainId(Long id){
+        complain = complainRepository.findById(id).get();
+        BeanUtils.copyProperties(complain, dto);
+    }
+
+    public void ComplainResolve(ComplainDto dto){
+        complain.setStatus(dto.getStatus());
+        complain.setNote(dto.getNote());
+        complainRepository.save(complain);
+        FacesUtil.addSuccessMessage("Lưu thành công");
+        FacesUtil.closeDialog("inforDialog");
+        FacesUtil.updateView("growl");
+    }
+
+    public void onDelete(Long complainId) {
+        if (complainId == null) {
+            FacesUtil.addErrorMessage("Không tồn tại thông tin");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        complainRepository.deleteById(complainId);
+        FacesUtil.addSuccessMessage("Xóa thành công");
+        FacesUtil.updateView("growl");
+        onSearch();
     }
 
     @Override

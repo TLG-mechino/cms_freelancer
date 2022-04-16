@@ -38,6 +38,7 @@ public class Constant {
     public static final String MN_TRANSACTION = "mn-transaction";
     public static final String MN_TEST = "mn-test";
     public static final String MN_JOB = "mn-job";
+    public static final String MN_JOB_RECIPIENT = "mn-job-recipient";
     public static final String MN_REVIEW = "mn-review";
     public static final String MN_POST = "mn-post";
     public static final String MN_CUSTOMER_TALK = "mn-customer-talk";

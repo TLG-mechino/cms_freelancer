@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.Instant;
+import java.util.Date;
 
 @Entity
 @Table(name = "complain")
@@ -14,7 +16,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Complain extends BaseModel {
+public class Complain{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,4 +46,11 @@ public class Complain extends BaseModel {
 
     @Column(name = "TYPE")
     private Integer type;
+
+    @Column(name = "CREATE_DATE")
+    private Date createDate;
+
+    @Column(name = "UPDATE_DATE")
+    private Date updateDate;
+
 }

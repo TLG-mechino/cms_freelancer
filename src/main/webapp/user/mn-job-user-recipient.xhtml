@@ -6,7 +6,7 @@
                 template="/template/template.xhtml">
 
     <f:metadata>
-        <f:event type="preRenderView" listener="#{mnJobController.initData()}"/>
+        <f:event type="preRenderView" listener="#{mnJobRecipientController.initData()}"/>
     </f:metadata>
 
     <ui:define name="title">Quản lý dự án</ui:define>
@@ -42,10 +42,10 @@
                                 <p:inputText placeholder="Nhập tên dự án" style="width: 97%"
                                              onblur="this.value = this.value.trim()" maxlength="100"
                                              onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
-                                             value="#{mnJobController.searchDto.keyword}"
+                                             value="#{mnJobRecipientController.searchDto.keyword}"
                                              styleClass="border-input" onchange="this.value = this.value.trim()">
                                     <p:ajax event="change" update="searchForm"
-                                            listener="#{mnJobController.onSearch()}"/>
+                                            listener="#{mnJobRecipientController.onSearch()}"/>
                                 </p:inputText>
                             </div>
                         </p:outputPanel>
@@ -56,12 +56,12 @@
                         <p:overlayPanel for="basic" styleClass="filter-panel">
                             <p:outputLabel value="Giá dự án" styleClass="filter-item-label"/>
                             <div class="filter-item">
-                                <p:inputNumber value="#{mnJobController.searchDto.money}" placeholder="Nhập giá dự án"
+                                <p:inputNumber value="#{mnJobRecipientController.searchDto.money}" placeholder="Nhập giá dự án"
                                                decimalPlaces="0" size="42"/>
                             </div>
 
                             <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
-                            <p:selectOneMenu styleClass="filter-item" value="#{mnJobController.searchDto.status}">
+                            <p:selectOneMenu styleClass="filter-item" value="#{mnJobRecipientController.searchDto.status}">
                                 <f:selectItem itemLabel="Tất cả" itemValue=""/>
                                 <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
                                 <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
@@ -69,11 +69,11 @@
 
                             <p:commandButton value="Bỏ lọc" update="searchForm"
                                              icon="fa fa-refresh" styleClass="filter-btn"
-                                             actionListener="#{mnJobController.resetAll()}"/>
+                                             actionListener="#{mnJobRecipientController.resetAll()}"/>
 
                             <p:commandButton value="Lọc" update="tblSearchResult"
                                              icon="fa fa-search" styleClass="margin-right-10 filter-btn" id="search"
-                                             actionListener="#{mnJobController.onSearch()}"/>
+                                             actionListener="#{mnJobRecipientController.onSearch()}"/>
                         </p:overlayPanel>
                     </p:panelGrid>
 
@@ -86,10 +86,10 @@
                                  widgetVar="dataTable" resizableColumns="true" paginator="true" rows="20"
                                  lazy="true" pageLinks="5" var="resultDto" paginatorPosition="bottom"
                                  paginatorAlwaysVisible="true" rowsPerPageTemplate="20,50,100"
-                                 value="#{mnJobController.lazyDataModel}" rowKey="#{resultDto.id}"
+                                 value="#{mnJobRecipientController.lazyDataModel}" rowKey="#{resultDto.id}"
                                  paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                                  emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
-                                 currentPageReportTemplate="Tổng số bản ghi: #{mnJobController.lazyDataModel.rowCount}">
+                                 currentPageReportTemplate="Tổng số bản ghi: #{mnJobRecipientController.lazyDataModel.rowCount}">
 
                         <p:column headerText="STT" width="30" style="text-align: center">
                             <p:outputLabel value="#{rowIndex + 1}"/>
@@ -129,7 +129,7 @@
                             <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
                                 <p:menuitem value="Xóa thông tin" icon="fa fa-close"
                                             update="searchForm growl" process="@this"
-                                            actionListener="#{mnJobController.onDelete(resultDto.id)}">
+                                            actionListener="#{mnJobRecipientController.onDelete(resultDto.id)}">
                                     <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"
                                                message="Bạn có chắc chắn muốn xóa thông tin?"/>
                                 </p:menuitem>

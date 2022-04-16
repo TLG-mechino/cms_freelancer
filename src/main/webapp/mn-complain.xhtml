@@ -12,6 +12,45 @@
     <ui:define name="title">Quản lý khiếu nại</ui:define>
 
     <ui:define name="content">
+
+        <p:dialog widgetVar="inforDialog" width="600" header="Giải quyết khiếu nại"
+                  modal="true" id="inforDialogId">
+            <h:form id="dlForm" prependId="false">
+                <p:scrollPanel mode="native" style="width: 100%; max-height: 500px; border: none">
+                    <div class="ui-fluid">
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
+                                     layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
+
+                            <p:outputLabel value="Trạng thái:" styleClass="requireLabel"/>
+                            <p:selectOneMenu value="#{mnComplainController.dto.status}" style="">
+                                <f:selectItem itemLabel="Chọn trạng thái" />
+                                <f:selectItem itemLabel="Đã xử lý " itemValue="#{DbConstant.ACTIVE_STATUS}" rendered="#{mnComplainController.dto.status eq 1}"/>
+                                <f:selectItem itemLabel="Chưa xử lý" itemValue="#{DbConstant.INACTIVE_STATUS}" rendered="#{mnComplainController.dto.status eq 0}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Ghi chú:" styleClass="requireLabel"/>
+                            <p:inputTextarea placeholder="Nhập ghi chú" maxlength="200"
+                                         onchange="this.value = this.value.trim()"
+                                         value="#{mnComplainController.dto.note}">
+                            </p:inputTextarea>
+
+                        </p:panelGrid>
+
+                        <p:outputPanel style="margin: 10px 0 10px 0">
+                            <p:commandButton value="Lưu" styleClass="save-btn"
+                                             icon="fa fa-save" update="tblSearchResult"
+                                             actionListener="#{mnComplainController.ComplainResolve(mnComplainController.dto)}"/>
+
+                            <p:commandButton value="Hủy bỏ" styleClass="close-btn" icon="fa fa-close"
+                                             oncomplete="PF('inforDialog').hide()"
+                                             update="dlForm searchForm growl"
+                                             actionListener="#{mnComplainController.resetAll()}"/>
+                        </p:outputPanel>
+                    </div>
+                </p:scrollPanel>
+            </h:form>
+        </p:dialog>
+
         <h:form styleClass="ui-g-12" id="searchForm" prependId="false">
             <p:outputPanel>
                 <p:link styleClass="title-color-left ui-sm-12">Quản lý khiếu nại</p:link>
@@ -91,6 +130,10 @@
                     <p:outputLabel value="#{resultDto.complainTypeName}"/>
                 </p:column>
 
+                <p:column headerText="Người khiếu nại" style="text-align: left" sortBy="#{resultDto.username}">
+                    <p:outputLabel value="#{resultDto.username}"/>
+                </p:column>
+
                 <p:column headerText="Đối tượng khiếu nại" style="text-align: left" sortBy="#{resultDto.objectName}">
                     <p:outputLabel value="#{resultDto.objectName}"/>
                 </p:column>
@@ -113,17 +156,20 @@
 
                 <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">
                     <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
+                        <p:menuitem value="Giải quyết khiếu nại" icon="fa fa-edit" process="@this"
+                                    update="dlForm tblSearchResult growl" oncomplete="PF('inforDialog').show()"
+                                    actionListener="#{mnComplainController.getComplainId(resultDto.complainId)}">
+                        </p:menuitem>
+
                         <p:menuitem value="Xóa thông tin" icon="fa fa-remove" process="@this"
                                     update="tblSearchResult growl"
-                                    actionListener="#{mnComplainController.onDelete(resultDto)}">
+                                    actionListener="#{mnComplainController.onDelete(resultDto.complainId)}">
                             <p:confirm header="Xác nhận thông tin" escape="false"
                                        message="Bạn có chắc chắn muốn xóa tài khoản?"
                                        icon="fa fa-question-circle"/>
                         </p:menuitem>
 
-                        <p:menuitem value="Xóa thông tin" icon="fa fa-edit" process="@this"
-                                    update="tblSearchResult growl">
-                        </p:menuitem>
+
                     </p:menuButton>
                 </p:column>
             </p:dataTable>

@@ -67,3 +67,8 @@
  .ui-menu .ui-menu-list .ui-menuitem {
     margin-bottom :5px !important;
 }
+
+.input{
+    width: 80% !important;
+    float: right;
+}

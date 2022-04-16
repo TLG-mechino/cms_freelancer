@@ -29,46 +29,46 @@
 
                     <p:outputPanel>
                         <p:outputLabel value="Mã dịch vụ:" styleClass="requireLabel"/>
-                        <p:inputText placeholder="Nhập mã dịch vụ" maxlength="20"
+                        <p:inputText placeholder="Nhập mã dịch vụ" maxlength="20" styleClass="input"
                                      value="#{serviceConfigController.serviceConfigDto.code}" id="code"
                                      onchange="this.value = this.value.trim()"
                                      onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();"/>
                     </p:outputPanel>
 
                     <p:outputPanel>
-                        <p:outputLabel value="Tên dịch vụ Tiếng Việt:" styleClass="requireLabel"/>
-                        <p:inputText placeholder="Nhập tên dịch vụ Tiếng Việt" maxlength="20"
+                        <p:outputLabel value="Tên Tiếng Việt:" styleClass="requireLabel"/>
+                        <p:inputText placeholder="Nhập tên dịch vụ Tiếng Việt" maxlength="20" styleClass="input"
                                      value="#{serviceConfigController.serviceConfigDto.nameVn}"/>
                     </p:outputPanel>
 
                     <p:outputPanel>
-                        <p:outputLabel value="Tên dịch vụ Tiếng Anh:" styleClass="requireLabel"/>
-                        <p:inputText placeholder="Nhập tên dịch vụ Tiếng Anh" maxlength="20"
+                        <p:outputLabel value="Tên Tiếng Anh:" styleClass="requireLabel"/>
+                        <p:inputText placeholder="Nhập tên dịch vụ Tiếng Anh" maxlength="20" styleClass="input"
                                      value="#{serviceConfigController.serviceConfigDto.nameEn}"/>
                     </p:outputPanel>
 
                     <p:outputPanel>
                         <p:outputLabel value="Mô tả thông tin:"/>
-                        <p:inputTextarea placeholder="Nhập mô tả thông tin dịch vụ" rows="5" maxlength="100"
+                        <p:inputTextarea placeholder="Nhập mô tả thông tin dịch vụ" rows="5" maxlength="100" styleClass="input"
                                          value="#{serviceConfigController.serviceConfigDto.description}"/>
                     </p:outputPanel>
 
                     <p:outputPanel>
                         <p:outputLabel value="Chọn màu: "/>
-                        <p:colorPicker value="#{serviceConfigController.serviceConfigDto.color}" styleClass="color-picker-custom"
+                        <p:colorPicker value="#{serviceConfigController.serviceConfigDto.color}" styleClass="color-picker-custom input"
                                        style="width: auto; display: inline-flex; margin-left: 20px;"/>
                     </p:outputPanel>
 
                     <p:outputPanel>
                         <p:outputLabel value="Phí dịch vụ:" styleClass="requireLabel"/>
-                        <p:inputNumber placeholder="Nhập phí dịch vụ"
+                        <p:inputNumber placeholder="Nhập phí dịch vụ" styleClass="input"
                                        onchange="this.value = this.value.trim()" maxlength="12" decimalPlaces="0"
                                        value="#{serviceConfigController.serviceConfigDto.money}" minValue="0"/>
                     </p:outputPanel>
 
                     <p:outputPanel>
                         <p:outputLabel value="Lượt đăng bài:" styleClass="requireLabel"/>
-                        <p:selectOneRadio id="console"
+                        <p:selectOneRadio id="console" styleClass="input"
                                           value="#{serviceConfigController.serviceConfigDto.limitPost}"
                                           unselectable="true">
                             <p:ajax update="inputPost" process="@this"/>
@@ -80,7 +80,7 @@
                     <p:outputPanel id="inputPost">
                         <p:outputLabel value="Số lượt đăng bài:" styleClass="requireLabel"
                                        rendered="#{serviceConfigController.serviceConfigDto.limitPost eq 'false'}"/>
-                        <p:inputNumber placeholder="Nhập số lượt đăng bài"
+                        <p:inputNumber placeholder="Nhập số lượt đăng bài" styleClass="input"
                                        onchange="this.value = this.value.trim()" maxlength="12"
                                        value="#{serviceConfigController.serviceConfigDto.post}" minValue="0"
                                        decimalPlaces="0"
@@ -90,7 +90,7 @@
 
                     <p:outputPanel>
                         <p:outputLabel value="Lượt bình luận:" styleClass="requireLabel"/>
-                        <p:selectOneRadio value="#{serviceConfigController.serviceConfigDto.limitComment}"
+                        <p:selectOneRadio value="#{serviceConfigController.serviceConfigDto.limitComment}" styleClass="input"
                                           unselectable="true">
                             <p:ajax update="inputComment" process="@this"/>
                             <f:selectItem itemLabel="Không giới hạn" itemValue="true"/>
@@ -101,7 +101,7 @@
                     <p:outputPanel id="inputComment">
                         <p:outputLabel value="Số lượt bình luận:" styleClass="requireLabel"
                                        rendered="#{serviceConfigController.serviceConfigDto.limitComment eq 'false'}"/>
-                        <p:inputNumber placeholder="Nhập số lượt bình luận"
+                        <p:inputNumber placeholder="Nhập số lượt bình luận" styleClass="input"
                                        onchange="this.value = this.value.trim()" maxlength="12"
                                        value="#{serviceConfigController.serviceConfigDto.comment}" minValue="0"
                                        maxValue="100" decimalPlaces="0"
@@ -110,7 +110,7 @@
 
                     <p:outputPanel>
                         <p:outputLabel value="Lượt hiển thị ưu tiên:" styleClass="requireLabel"/>
-                        <p:selectOneRadio value="#{serviceConfigController.serviceConfigDto.limitShow}"
+                        <p:selectOneRadio value="#{serviceConfigController.serviceConfigDto.limitShow}" styleClass="input"
                                           unselectable="true">
                             <p:ajax update="inputShow" process="@this"/>
                             <f:selectItem itemLabel="Không giới hạn" itemValue="true"/>
@@ -121,7 +121,7 @@
                     <p:outputPanel id="inputShow">
                         <p:outputLabel value="Số lượt hiển thị ưu tiên:" styleClass="requireLabel"
                                        rendered="#{serviceConfigController.serviceConfigDto.limitShow eq 'false'}"/>
-                        <p:inputNumber placeholder="Nhập số lượt hiển thị ưu tiên"
+                        <p:inputNumber placeholder="Nhập số lượt hiển thị ưu tiên" styleClass="input"
                                        onchange="this.value = this.value.trim()" maxlength="12"
                                        value="#{serviceConfigController.serviceConfigDto.show}" minValue="0"
                                        maxValue="100" decimalPlaces="0"
@@ -130,10 +130,10 @@
 
                     <p:outputPanel>
                         <p:outputLabel value="Phí giao dịch:" styleClass="requireLabel"/>
-                        <p:selectOneRadio value="#{serviceConfigController.serviceConfigDto.limitTransaction}"
+                        <p:selectOneRadio value="#{serviceConfigController.serviceConfigDto.limitTransaction}" styleClass="input"
                                           unselectable="true">
                             <p:ajax update="inputTransaction" process="@this"/>
-                            <f:selectItem itemLabel="Miễn phí" itemValue="true"/>
+                            <f:selectItem itemLabel="Không tính phí" itemValue="true"/>
                             <f:selectItem itemLabel="Tính phí" itemValue="false"/>
                         </p:selectOneRadio>
                     </p:outputPanel>
@@ -141,7 +141,7 @@
                     <p:outputPanel id="inputTransaction">
                         <p:outputLabel value="Phí giao dịch:" styleClass="requireLabel"
                                        rendered="#{serviceConfigController.serviceConfigDto.limitTransaction eq 'false'}"/>
-                        <p:inputNumber placeholder="Nhập phí giao dịch"
+                        <p:inputNumber placeholder="Nhập phí giao dịch" styleClass="input"
                                        onchange="this.value = this.value.trim()" maxlength="12"
                                        value="#{serviceConfigController.serviceConfigDto.transaction}" minValue="0"
                                        maxValue="100" decimalPlaces="0"
@@ -150,7 +150,7 @@
 
                     <p:outputPanel>
                         <p:outputLabel value="Trạng thái:" styleClass="requireLabel"/>
-                        <p:selectOneMenu value="#{serviceConfigController.serviceConfigDto.status}">
+                        <p:selectOneMenu value="#{serviceConfigController.serviceConfigDto.status}" styleClass="input">
                             <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
                             <f:selectItem itemLabel="Không hoạt động"
                                           itemValue="#{DbConstant.INACTIVE_STATUS}"/>

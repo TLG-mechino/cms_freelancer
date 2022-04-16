@@ -13,12 +13,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.controller.common.BaseController;
-
 import vn.compedia.website.dto.JobDto;
 import vn.compedia.website.dto.JobSearchDto;
-
 import vn.compedia.website.model.Job;
-
 import vn.compedia.website.repository.JobRepository;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.FacesUtil;
@@ -35,11 +32,8 @@ import java.util.Map;
 @NoArgsConstructor
 @Named
 @Scope(value = "session")
-public class MnJobController extends BaseController {
-
-    private static Logger logger = LoggerFactory.getLogger(MnJobController.class);
-    @Inject
-    private AuthorizationController authorizationController;
+public class MnJobRecipientController extends BaseController {
+    private static Logger logger = LoggerFactory.getLogger(MnJobRecipientController.class);
 
     @Inject
     private MnUserController userController;
@@ -84,7 +78,7 @@ public class MnJobController extends BaseController {
                 }
                 searchDto.setSortOrder(sort);
                 BeanUtils.copyProperties(searchDto, searchDtoTemp);
-                return jobRepository.getAllJobRpByUserName(userController.getUserDtoDetails().getId(), searchDto);
+                return jobRepository.getAllJobRecipient(userController.getUserDtoDetails().getId(), searchDto);
             }
 
             @Override
@@ -99,7 +93,7 @@ public class MnJobController extends BaseController {
                 return null;
             }
         };
-        int count = jobRepository.countSearchRpByUserName(userController.getUserDtoDetails().getId(), searchDto).intValue();
+        int count = jobRepository.countSearchRecipient(userController.getUserDtoDetails().getId(), searchDto).intValue();
         lazyDataModel.setRowCount(count);
         FacesUtil.updateView("searchForm");
     }
@@ -118,6 +112,6 @@ public class MnJobController extends BaseController {
 
     @Override
     protected String getMenuId() {
-        return Constant.MN_JOB;
+        return Constant.MN_JOB_RECIPIENT;
     }
 }

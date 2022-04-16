@@ -12,4 +12,8 @@ public interface JobRepositoryCustom {
 
     BigInteger countSearchRpByUserName(String username, JobSearchDto jobSearchDto);
 
+    List<JobDto> getAllJobRecipient(String username, JobSearchDto jobSearchDto);
+
+    BigInteger countSearchRecipient(String username, JobSearchDto jobSearchDto);
+
 }

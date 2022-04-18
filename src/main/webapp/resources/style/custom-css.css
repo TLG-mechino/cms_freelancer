@@ -1,52 +1,69 @@
-.container{
+.container {
     display: flex;
 }
-.container .container-left{
-    width: 25%;
+
+.container .container-left {
+    width: 15%;
+    border: 1px solid #E9E9E9 !important;
+    border-radius: 8px !important;
 }
-.container .container-right{
-    width: 75%
+
+.container .container-right {
+    width: 100%;
+    border: 1px solid #E9E9E9 !important;
+    border-radius: 8px !important;
 }
-.container .container-left .ui-menu{
+
+.container .container-left .ui-menu {
     border: 1px solid #7e7e7e;
     border-radius: 25px;
 }
-.container .container-right .ui-panelgrid-cell{
+
+.container .container-right .ui-panelgrid-cell {
     /*min-width: 200px;*/
     margin-left: 20px;
 }
-.container .container-right .ui-panelgrid-cell input{
+
+.container .container-right .ui-panelgrid-cell input {
     min-width: 100px;
     margin-left: 20px;
 }
-.container .container-left{
+
+.container .container-left {
     margin-right: 15px;
 }
-.container .container-right .ui-grid-row{
+
+.container .container-right .ui-grid-row {
     margin-bottom: 20px;
 }
 
-.container-evaluate-detail{
+.container-evaluate-detail {
 
 }
-.container-evaluate-detail .card-list{
+
+.container-evaluate-detail .card-list {
     width: 100%;
 }
-.container-evaluate-detail .card-list .ui-g{
+
+.container-evaluate-detail .card-list .ui-g {
     width: 100%;
 }
-.container-evaluate-detail .card-list .ui-panelgrid .ui-panelgrid-content .ui-g .ui-panelgrid-cell .ui-outputpanel .card{
+
+.container-evaluate-detail .card-list .ui-panelgrid .ui-panelgrid-content .ui-g .ui-panelgrid-cell .ui-outputpanel .card {
     display: flex;
     width: 100%;
 }
-.container-evaluate-detail .card-list .ui-panelgrid .ui-panelgrid-content .ui-g .ui-panelgrid-cell .ui-outputpanel .card .p-d-flex{
+
+.container-evaluate-detail .card-list .ui-panelgrid .ui-panelgrid-content .ui-g .ui-panelgrid-cell .ui-outputpanel .card .p-d-flex {
     display: block;
     width: 20%;
 }
-.container-evaluate-detail .card-list .ui-panelgrid .ui-panelgrid-content .ui-g .ui-panelgrid-cell .ui-outputpanel .card .p-d-flex label:last-child{
+
+.container-evaluate-detail .card-list .ui-panelgrid .ui-panelgrid-content .ui-g .ui-panelgrid-cell .ui-outputpanel .card .p-d-flex label:last-child {
     width: 100%;
 }
-.container-evaluate-detail .card-list .ui-panelgrid .ui-panelgrid-content .ui-g .ui-panelgrid-cell{
+
+.container-evaluate-detail .card-list .ui-panelgrid .ui-panelgrid-content .ui-g .ui-panelgrid-cell {
     display: block;
     width: 100%;
 }
@@ -61,14 +78,16 @@
 .active-menuitem-user {
     background-color: #FF3408 !important;
 }
+
 .active-menuitem-user a {
     color: White !important
 }
- .ui-menu .ui-menu-list .ui-menuitem {
-    margin-bottom :5px !important;
+
+.ui-menu .ui-menu-list .ui-menuitem {
+    margin-top: 15px !important;
 }
 
-.input{
+.input {
     width: 80% !important;
     float: right;
 }

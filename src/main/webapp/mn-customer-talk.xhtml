@@ -15,7 +15,6 @@
         <p:dialog widgetVar="inforDialog" width="600" header="#{customerTalkController.titleDialog} thông tin đánh giá của khách hàng"
                   modal="true" id="inforDialogId">
             <h:form id="dlForm" prependId="false">
-                <p:scrollPanel mode="native" style="width: 100%; max-height: 500px; border: none">
                     <div class="ui-fluid">
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
                                      layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
@@ -58,7 +57,6 @@
                                              actionListener="#{customerTalkController.resetAll()}"/>
                         </p:outputPanel>
                     </div>
-                </p:scrollPanel>
             </h:form>
         </p:dialog>
 
@@ -80,7 +78,7 @@
                 <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
                     <div class="ui-input-icon-left" style="width: 100%; display: flex;">
                         <i class="fa fa-search"/>
-                        <p:inputText placeholder="Nhập tiêu đề, mã hashtag, mô tả, người tạo" style="width: 97%"
+                        <p:inputText placeholder="Nhập họ tên, vị trí công việc" style="width: 97%"
                                      onblur="this.value = this.value.trim()" maxlength="100"
                                      onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
                                      value="#{customerTalkController.searchDto.keyword}"

@@ -109,7 +109,7 @@ public class ComplainRepositoryImpl implements ComplainRepositoryCustom {
             sb.append(" AND c.STATUS =:status ");
         }
         if (null != searchDto.getComplainType()) {
-            sb.append(" AND c.complain_type = :complainType");
+            sb.append(" AND c.complain_type_id = :complainType");
         }
     }
 

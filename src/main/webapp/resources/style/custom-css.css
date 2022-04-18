@@ -4,14 +4,10 @@
 
 .container .container-left {
     width: 15%;
-    border: 1px solid #E9E9E9 !important;
-    border-radius: 8px !important;
 }
 
 .container .container-right {
     width: 100%;
-    border: 1px solid #E9E9E9 !important;
-    border-radius: 8px !important;
 }
 
 .container .container-left .ui-menu {
@@ -84,10 +80,13 @@
 }
 
 .ui-menu .ui-menu-list .ui-menuitem {
-    margin-top: 15px !important;
 }
 
 .input {
     width: 80% !important;
     float: right;
+}
+
+#menu-user li{
+    margin-top: 15px !important;
 }

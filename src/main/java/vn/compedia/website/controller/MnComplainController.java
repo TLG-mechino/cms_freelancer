@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -16,6 +18,7 @@ import vn.compedia.website.dto.ComplainDto;
 import vn.compedia.website.dto.ComplainSearchDto;
 import vn.compedia.website.model.Complain;
 import vn.compedia.website.model.ComplainType;
+import vn.compedia.website.model.Hashtag;
 import vn.compedia.website.repository.ComplainRepository;
 import vn.compedia.website.repository.ComplainTypeRepository;
 import vn.compedia.website.util.Constant;
@@ -102,9 +105,21 @@ public class MnComplainController extends BaseController {
         BeanUtils.copyProperties(complain, dto);
     }
 
+
     public void ComplainResolve(ComplainDto dto){
         complain.setStatus(dto.getStatus());
         complain.setNote(dto.getNote());
+        if (dto.getStatus() == null) {
+            FacesUtil.addErrorMessage("Bạn vui lòng chọn trạng thái ");
+            FacesUtil.updateView("growl");
+            return;
+        }
+
+        if (StringUtils.isBlank(dto.getNote().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập ghi chú  ");
+            FacesUtil.updateView("growl");
+            return;
+        }
         complainRepository.save(complain);
         FacesUtil.addSuccessMessage("Lưu thành công");
         FacesUtil.closeDialog("inforDialog");

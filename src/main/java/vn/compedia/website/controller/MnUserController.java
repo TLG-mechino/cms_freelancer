@@ -129,6 +129,20 @@ public class MnUserController extends BaseController {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập email ");
             return false;
         }
+        if (!userDtoDetails.getEmail().matches(Constant.EMAIL_PATTERN)) {
+            FacesUtil.addErrorMessage("Địa chỉ email không đúng định dạng");
+            return false;
+        }
+        if(!userDtoDetails.getEmail().matches(Constant.PHONE_PATTERN)){
+            FacesUtil.addErrorMessage("Số điện thoại không đúng định dạng");
+            return false;
+        }
+        Account checkEmail = accountRepository.findAccountByEmail(userDtoDetails.getEmail());
+        if (checkEmail != null) {
+            FacesUtil.addErrorMessage("Địa chỉ email đã tồn tại");
+            FacesUtil.updateView("growl");
+            return false;
+        }
         if (StringUtils.isBlank(userDtoDetails.getFacebookLink().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập link facebook ");
             return false;

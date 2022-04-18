@@ -126,6 +126,11 @@ public class MnTestController extends BaseController {
         FacesUtil.updateView("inforDialogId");
     }
 
+    public void resetListImage(){
+        uploadMultipleImageFileNameController.resetAll(null);
+        FacesUtil.updateView("inforDialogId");
+    }
+
     public void onSearch() {
         lazyDataModel = new LazyDataModel<ExamDto>() {
             @Override
@@ -294,6 +299,7 @@ public class MnTestController extends BaseController {
             return;
         }
         examDto = new ExamDto();
+        uploadMultipleImage = new ArrayList<>();
         listExamFile = examFileRepository.findAllByExamId(object.getExamId());
         listExamFile.forEach(var -> {
             if (var.getType() == 1) {
@@ -304,6 +310,7 @@ public class MnTestController extends BaseController {
         BeanUtils.copyProperties(object, examDto);
         titleDialog = "Sửa";
         FacesUtil.updateView("inforDialogId");
+        onSearch();
     }
 
     public void onDelete(Long examId) {

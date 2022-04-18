@@ -206,7 +206,6 @@ public class ServiceConfigController extends BaseController {
         serviceConfigDto.setUpdateBy(authorizationController.getAccountDto().getUsername());
 
         BeanUtils.copyProperties(serviceConfigDto, packageService);
-        packageService.setColor("#"+serviceConfigDto.getColor());
         serviceConfigRepository.save(packageService);
         FacesUtil.addSuccessMessage("Lưu thành công");
         FacesUtil.closeDialog("inforDialog");

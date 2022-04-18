@@ -16,10 +16,13 @@ public interface AccountRepository extends CrudRepository<Account, Long>, Accoun
 
     Account findAccountByPhone(String phone);
 
+    @Query("select ac.email from Account ac where ac.accountId = :accountId")
+    String findEmail(@Param("accountId") Long accountId);
+
     @Query("select ac from Account ac where ac.accountId <> :accountId and ac.username = :username")
     Account findAccountByUsernameExists(@Param("accountId") Long accountId, @Param("username") String username);
 
-    @Query("select ac from Account ac where ac.accountId <> :accountId and ac.email = :email")
+    @Query("select ac from Account ac where ac.accountId <> :accountId and ac.email = :email ")
     Account findAccountByEmailExists(@Param("accountId") Long accountId, @Param("email") String email);
 
     @Query("select ac from Account ac where ac.accountId <> :accountId and ac.phone = :phone")

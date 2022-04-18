@@ -31,6 +31,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Setter
@@ -58,6 +59,7 @@ public class MnUserController extends BaseController {
     private UserSearchDto searchUserDto;
     private UserSearchDto searchUserTemp;
     private UserDto userDtoDetails;
+    private String emailTemp;
 
     public void initData() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -71,6 +73,7 @@ public class MnUserController extends BaseController {
         searchUserTemp = new UserSearchDto();
         account = new Account();
         user = new User();
+        emailTemp = new String();
         onSearch();
 
     }
@@ -115,6 +118,7 @@ public class MnUserController extends BaseController {
     }
 
     public boolean validateDate() {
+
         if (StringUtils.isBlank(userDtoDetails.getFullName().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập họ tên");
             return false;
@@ -138,7 +142,8 @@ public class MnUserController extends BaseController {
             return false;
         }
         Account checkEmail = accountRepository.findAccountByEmail(userDtoDetails.getEmail());
-        if (checkEmail != null) {
+        emailTemp = accountRepository.findEmail(userDtoDetails.getAccountId());
+        if (checkEmail != null && !Objects.equals(checkEmail.getEmail(), emailTemp)) {
             FacesUtil.addErrorMessage("Địa chỉ email đã tồn tại");
             FacesUtil.updateView("growl");
             return false;

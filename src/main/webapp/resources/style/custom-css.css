@@ -88,5 +88,14 @@
 }
 
 #menu-user li{
-    margin-top: 15px !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
 }
+
+#menu-user li a{
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+}
+
+
+

@@ -135,6 +135,11 @@ public class CustomerTalkController extends BaseController {
             return false;
         }
 
+        if (!customerTalkDto.getFullName().matches(Constant.FULL_NAME_PATTERN)) {
+            FacesUtil.addErrorMessage("Họ tên không đúng định dạng");
+            return false;
+        }
+
         if (StringUtils.isBlank(customerTalkDto.getContent().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập nội dung");
             return false;

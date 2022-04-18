@@ -73,6 +73,10 @@ public class MnAccountController extends BaseController {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập họ và tên");
             return false;
         }
+        if (!accountDto.getFullName().matches(Constant.FULL_NAME_PATTERN)) {
+            FacesUtil.addErrorMessage("Họ tên không đúng định dạng");
+            return false;
+        }
 
         if (StringUtils.isBlank(accountDto.getEmail())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập địa chỉ email");

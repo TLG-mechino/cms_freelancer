@@ -179,7 +179,7 @@ public class MnTestController extends BaseController {
     }
 
     public boolean isValidateExam(String exam) {
-        String regex = "([A-Z]+)(\\d+)";
+        String regex = "(.*)([A-Z]+)(\\d+)(.*)";
 
         Pattern p = Pattern.compile(regex);
 
@@ -191,6 +191,12 @@ public class MnTestController extends BaseController {
     }
 
     public boolean validateDate() {
+
+        if (StringUtils.isBlank(examDto.getCode().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập mã bài test ");
+            return false;
+        }
+
         if (!isValidateExam(examDto.getCode())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập mã bài test phải bao gồm một chữ cái và một số");
             return false;

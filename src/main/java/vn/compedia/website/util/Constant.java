@@ -28,6 +28,7 @@ public class Constant {
     public static String EMAIL_PATTERN = "^(?=.{1,64}@)[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*@"
             + "[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     public static String PHONE_PATTERN = "(84|0[3|5|7|8|9])+([0-9]{8})\\b";
+    public static String FULL_NAME_PATTERN = "^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s|_]+$";
 
     // Id screen
     public static final String DASHBOARD = "dashboard";

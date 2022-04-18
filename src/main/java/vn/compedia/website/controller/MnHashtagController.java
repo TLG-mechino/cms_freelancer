@@ -109,7 +109,7 @@ public class MnHashtagController extends BaseController {
     }
 
     public boolean isValidateHashTag(String hashtag) {
-        String regex = "([A-Z]+)(\\d+)";
+        String regex = "(.*)([A-Z]+)(\\d+)(.*)";
 
         Pattern p = Pattern.compile(regex);
 
@@ -121,8 +121,14 @@ public class MnHashtagController extends BaseController {
     }
 
     public boolean validateDate() {
+
+        if (StringUtils.isBlank(hashtagDto.getCode().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập mã hashtag ");
+            return false;
+        }
+
         if (!isValidateHashTag(hashtagDto.getCode())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập mã hashtag phải bao gồm một chữ cái và một số");
+            FacesUtil.addErrorMessage("Mã hashtag phải bao gồm một chữ cái và một số");
             return false;
         }
 

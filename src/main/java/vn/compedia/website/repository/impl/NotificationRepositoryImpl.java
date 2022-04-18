@@ -88,7 +88,7 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
             sb.append(" AND lower(n.CONTENT) LIKE lower(:keyword)) " );
         }
         if (searchDto.getStatus() != null) {
-            sb.append(" AND j.STATUS =:status ");
+            sb.append(" AND n.STATUS =:status ");
         }
     }
 

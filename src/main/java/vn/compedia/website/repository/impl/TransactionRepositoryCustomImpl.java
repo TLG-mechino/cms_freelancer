@@ -201,7 +201,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     public Query createQuery(StringBuilder sb, TransactionSearchDto searchDto) {
         Query query = entityManager.createNativeQuery(sb.toString());
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
-            query.setParameter("keyword", "%" + searchDto.getKeyword().trim().toUpperCase() + "%");
+            query.setParameter("keyword", "%" + searchDto.getKeyword().trim() + "%");
         }
         if (searchDto.getPaymentTypeSearch() != null) {
             query.setParameter("paymentTypeSearch", searchDto.getPaymentTypeSearch());
@@ -224,9 +224,6 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             query.setParameter("keyword", "%" + searchDto.getKeyword().trim() + "%");
         }
-        if (searchDto.getStatus() != null) {
-            query.setParameter("status", searchDto.getStatus());
-        }
         if (searchDto.getPaymentTypeSearch() != null) {
             query.setParameter("paymentTypeSearch", searchDto.getPaymentTypeSearch());
         }
@@ -235,6 +232,9 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         }
         if (searchDto.getGreatMoney() != null) {
             query.setParameter("greatMoney", searchDto.getGreatMoney());
+        }
+        if (searchDto.getStatus() != null) {
+            query.setParameter("status", searchDto.getStatus());
         }
         return query;
 
@@ -261,11 +261,11 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
 
     public void appendQueryByUserName(StringBuilder sb, TransactionSearchDto SearchDto) {
         sb.append(" FROM transaction t LEFT JOIN payment_type pt ON t.PAYMENT_TYPE_ID = pt.PAYMENT_TYPE_ID WHERE t.SENDER =:username or t.RECIPIENT =:username ");
-        if (SearchDto.getKeyword() != null) {
-            sb.append(" AND (t.TITLE_TRANSACTION LIKE :keyword) ");
-        }
         if (StringUtils.isNotBlank(SearchDto.getKeyword())) {
             sb.append(" AND (t.CODE LIKE :keyword OR t.SENDER LIKE :keyword OR t.RECIPIENT LIKE :keyword) ");
+        }
+        if (SearchDto.getPaymentTypeSearch() != null) {
+            sb.append(" AND t.PAYMENT_TYPE_ID = :paymentTypeSearch ");
         }
         if (SearchDto.getLessMoney() != null) {
             sb.append(" AND t.AMOUNT_OF_MONEY >= :lessMoney ");

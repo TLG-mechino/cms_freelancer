@@ -26,9 +26,6 @@ public class PackageService extends BaseModel {
     @Column(name = "MONEY")
     private Double money;
 
-    @Column(name = "DESCRIPTION")
-    private String description;
-
     @Column(name = "STATUS")
     private Integer status;
 
@@ -37,6 +34,12 @@ public class PackageService extends BaseModel {
 
     @Column(name = "NAME_VN", length = 100)
     private String nameVn;
+
+    @Column(name = "DESCRIPTION_VN")
+    private String descriptionVn;
+
+    @Column(name = "DESCRIPTION_EN")
+    private String descriptionEn;
 
     @Column(name = "LIMIT_POST")
     private Boolean limitPost;

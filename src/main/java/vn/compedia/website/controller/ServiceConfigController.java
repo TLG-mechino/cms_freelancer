@@ -121,7 +121,7 @@ public class ServiceConfigController extends BaseController {
     }
 
     public boolean isValidatePackageService(String packageService) {
-        String regex = "([A-Z]+)(\\d+)";
+        String regex = "(.*)([A-Z]+)(\\d+)(.*)";
 
         Pattern p = Pattern.compile(regex);
 
@@ -133,6 +133,12 @@ public class ServiceConfigController extends BaseController {
     }
 
     public boolean validateDate() {
+
+        if(StringUtils.isBlank(serviceConfigDto.getCode().trim())){
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập mã dịch vụ ");
+            return false;
+        }
+
         if (!isValidatePackageService(serviceConfigDto.getCode().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập mã dịch vụ phải bao gồm một chữ cái và một số");
             return false;
@@ -156,6 +162,16 @@ public class ServiceConfigController extends BaseController {
             return false;
         }
 
+        if (serviceConfigDto.getMoney() == null) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập phí dịch vụ ");
+            return false;
+        }
+
+        if (StringUtils.isBlank(serviceConfigDto.getNameEn().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập Tên Tiếng Anh ");
+            return false;
+        }
+
         if(serviceConfigDto.getLimitPost() == false && serviceConfigDto.getPost() == null){
             FacesUtil.addErrorMessage("Bạn vui lòng nhập số lượng đăng bài ");
             return false;
@@ -173,16 +189,6 @@ public class ServiceConfigController extends BaseController {
 
         if(serviceConfigDto.getLimitTransaction() == false && serviceConfigDto.getTransaction() == null){
             FacesUtil.addErrorMessage("Bạn vui lòng nhập phần trăm chiết khấu giao dịch");
-            return false;
-        }
-
-        if (StringUtils.isBlank(serviceConfigDto.getNameEn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập Tên Tiếng Anh ");
-            return false;
-        }
-
-        if (serviceConfigDto.getMoney() == null) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập phí dịch vụ ");
             return false;
         }
 

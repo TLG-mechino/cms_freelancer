@@ -29,7 +29,7 @@
 
                     <p:outputPanel>
                         <p:outputLabel value="Mã dịch vụ:" styleClass="requireLabel"/>
-                        <p:inputText placeholder="Nhập mã dịch vụ" maxlength="20" styleClass="input"
+                        <p:inputText placeholder="Nhập mã dịch vụ" maxlength="10" styleClass="input"
                                      value="#{serviceConfigController.serviceConfigDto.code}" id="code"
                                      onchange="this.value = this.value.trim()"
                                      onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();"/>
@@ -48,9 +48,15 @@
                     </p:outputPanel>
 
                     <p:outputPanel>
-                        <p:outputLabel value="Mô tả thông tin:"/>
-                        <p:inputTextarea placeholder="Nhập mô tả thông tin dịch vụ" rows="5" maxlength="100" styleClass="input"
-                                         value="#{serviceConfigController.serviceConfigDto.description}"/>
+                        <p:outputLabel value="Mô tả Tiếng Việt:"/>
+                        <p:inputTextarea placeholder="Nhập mô tả thông tin Tiếng Việt" rows="5" maxlength="100" styleClass="input"
+                                         value="#{serviceConfigController.serviceConfigDto.descriptionVn}"/>
+                    </p:outputPanel>
+
+                    <p:outputPanel>
+                        <p:outputLabel value="Mô tả Tiếng Anh:"/>
+                        <p:inputTextarea placeholder="Nhập mô tả thông tin Tiếng Anh" rows="5" maxlength="100" styleClass="input"
+                                         value="#{serviceConfigController.serviceConfigDto.descriptionEn}"/>
                     </p:outputPanel>
 
                     <p:outputPanel>
@@ -109,7 +115,7 @@
                     </p:outputPanel>
 
                     <p:outputPanel>
-                        <p:outputLabel value="Lượt hiển thị ưu tiên:" styleClass="requireLabel"/>
+                        <p:outputLabel value="Lượt hiển thị:" styleClass="requireLabel"/>
                         <p:selectOneRadio value="#{serviceConfigController.serviceConfigDto.limitShow}" styleClass="input"
                                           unselectable="true">
                             <p:ajax update="inputShow" process="@this"/>
@@ -119,7 +125,7 @@
                     </p:outputPanel>
 
                     <p:outputPanel id="inputShow">
-                        <p:outputLabel value="Số lượt hiển thị ưu tiên:" styleClass="requireLabel"
+                        <p:outputLabel value="Số lượt hiển thị:" styleClass="requireLabel"
                                        rendered="#{serviceConfigController.serviceConfigDto.limitShow eq 'false'}"/>
                         <p:inputNumber placeholder="Nhập số lượt hiển thị ưu tiên" styleClass="input"
                                        onchange="this.value = this.value.trim()" maxlength="12"
@@ -245,8 +251,12 @@
                     <p:outputLabel value="#{resultDto.nameEn}"/>
                 </p:column>
 
-                <p:column headerText="Mô tả" style="text-align: left" sortBy="#{resultDto.description}">
-                    <p:outputLabel value="#{commonController.abbreviate(resultDto.description, 30)}"/>
+                <p:column headerText="Mô tả Tiếng Việt" style="text-align: left" sortBy="#{resultDto.description}">
+                    <p:outputLabel value="#{commonController.abbreviate(resultDto.descriptionVn, 30)}"/>
+                </p:column>
+
+                <p:column headerText="Mô tả Tiếng Anh" style="text-align: left" sortBy="#{resultDto.description}">
+                    <p:outputLabel value="#{commonController.abbreviate(resultDto.descriptionEn, 30)}"/>
                 </p:column>
 
                 <p:column headerText="Phí dịch vụ" style="text-align: left" sortBy="#{resultDto.money}">

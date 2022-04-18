@@ -37,7 +37,8 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
                 "       s.SHOW, " +
                 "       s.TRANSACTION, " +
                 "       s.MONEY, " +
-                "       s.DESCRIPTION, " +
+                "       s.DESCRIPTION_VN, " +
+                "       s.DESCRIPTION_EN, " +
                 "       s.STATUS, " +
                 "       s.USERNAME, " +
                 "       s.CREATE_DATE, " +
@@ -102,13 +103,14 @@ public class ServiceConfigRepositoryImpl implements ServiceConfigRepositoryCusto
             dto.setShow(ValueUtil.getIntegerByObject(obj[10]));
             dto.setTransaction(ValueUtil.getIntegerByObject(obj[11]));
             dto.setMoney(ValueUtil.getDoubleByObject(obj[12]));
-            dto.setDescription(ValueUtil.getStringByObject(obj[13]));
-            dto.setStatus(ValueUtil.getIntegerByObject(obj[14]));
-            dto.setUsername(ValueUtil.getStringByObject(obj[15]));
-            dto.setCreateDate(ValueUtil.getDateByObject(obj[16]));
-            dto.setUpdateDate(ValueUtil.getDateByObject(obj[17]));
-            dto.setUpdateBy(ValueUtil.getStringByObject(obj[18]));
-            dto.setColor(ValueUtil.getStringByObject(obj[19]));
+            dto.setDescriptionVn(ValueUtil.getStringByObject(obj[13]));
+            dto.setDescriptionEn(ValueUtil.getStringByObject(obj[14]));
+            dto.setStatus(ValueUtil.getIntegerByObject(obj[15]));
+            dto.setUsername(ValueUtil.getStringByObject(obj[16]));
+            dto.setCreateDate(ValueUtil.getDateByObject(obj[17]));
+            dto.setUpdateDate(ValueUtil.getDateByObject(obj[18]));
+            dto.setUpdateBy(ValueUtil.getStringByObject(obj[19]));
+            dto.setColor(ValueUtil.getStringByObject(obj[20]));
             list.add(dto);
         }
         return list;

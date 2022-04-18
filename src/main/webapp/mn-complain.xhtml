@@ -139,7 +139,7 @@
                 </p:column>
 
                 <p:column headerText="Ghi chú" style="text-align: left" sortBy="#{resultDto.note}">
-                    <p:outputLabel value="#{resultDto.note}"/>
+                    <p:outputLabel value="#{commonController.abbreviate(resultDto.note, 30)}"/>
                 </p:column>
 
                 <p:column headerText="Thời gian khiếu nại" style="text-align: left" sortBy="#{resultDto.createDate}">

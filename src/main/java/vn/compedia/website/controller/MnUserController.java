@@ -133,7 +133,7 @@ public class MnUserController extends BaseController {
             FacesUtil.addErrorMessage("Địa chỉ email không đúng định dạng");
             return false;
         }
-        if(!userDtoDetails.getEmail().matches(Constant.PHONE_PATTERN)){
+        if(!userDtoDetails.getPhone().matches(Constant.PHONE_PATTERN)){
             FacesUtil.addErrorMessage("Số điện thoại không đúng định dạng");
             return false;
         }

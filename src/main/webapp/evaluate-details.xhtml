@@ -18,7 +18,7 @@
                     <p:link styleClass="title-color-left ui-sm-12">Đánh giá bài test > Chi tiết đánh giá</p:link>
 
                     <div style="float: right">
-                        <p:button value="Quay lại" styleClass="ui-button-outlined ui-button-secondary"
+                        <p:button value="Quay lại" styleClass="ui-button-outlined ui-button-secondary button-back"
                                   icon="fa fa-arrow-left"
                                   outcome="/evaluate-test.xhtml"/>
                     </div>
@@ -59,15 +59,15 @@
                              emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
                              currentPageReportTemplate="Tổng số bản ghi: #{mnTestEvaluateController.examFileList.size()}">
 
-                    <p:column headerText="STT" width="30" style="text-align: center">
+                    <p:column headerText="STT" width="80" style="text-align: center">
                         <p:outputLabel value="#{rowIndex + 1}"/>
                     </p:column>
 
-                    <p:column headerText="Hình ảnh " style="text-align: right" width="120">
-                        <p:graphicImage id="image" name="#{resultDto.filePath}"
+                    <p:column headerText="Hình ảnh " style="text-align: left" width="200">
+                        <p:graphicImage id="image" name="#{resultDto.filePath}" style="width: 100px !important;"
                                         rendered="#{not empty resultDto.filePath}"
                                         styleClass="image-in-table"/>
-                        <p:graphicImage id="no-image" name="images/no-image.png"
+                        <p:graphicImage id="no-image" name="images/no-image.png" style="width: 100px !important;"
                                         rendered="#{empty resultDto.filePath}"
                                         styleClass="image-in-table"/>
                         <p:overlayPanel for="image" hideEffect="fade" rendered="#{not empty resultDto.filePath}">
@@ -75,7 +75,7 @@
                         </p:overlayPanel>
                     </p:column>
 
-                    <p:column headerText="Tên file " style="text-align: right">
+                    <p:column headerText="Tên file " style="text-align: left;" >
                         <p:outputLabel value="#{resultDto.fileName}"/>
                     </p:column>
 
@@ -93,7 +93,7 @@
 
                     <p:outputLabel value="Ghi chú : " styleClass="filter-item-label requireLabel"/>
                     <p:inputTextarea value="#{mnTestEvaluateController.userExamDtoDetail.note}"
-                                     placeholder="Nhập ghi chú" rows="5"/>
+                                     placeholder="Nhập ghi chú" rows="5" maxlength="200"/>
 
                     <p:outputLabel value="Số điểm đánh giá : " styleClass="filter-item-label requireLabel"/>
                     <p:inputNumber value="#{mnTestEvaluateController.userExamDtoDetail.score}"

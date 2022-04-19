@@ -109,7 +109,7 @@ public class MnHashtagController extends BaseController {
     }
 
     public boolean isValidateHashTag(String hashtag) {
-        String regex = "(.*)([A-Z]+)(\\d+)(.*)";
+        String regex = "(.*)(?=.*[A-Z]+)(?=.*[0-9]+)(.*)";
 
         Pattern p = Pattern.compile(regex);
 

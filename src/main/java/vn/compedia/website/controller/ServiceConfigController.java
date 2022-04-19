@@ -121,7 +121,7 @@ public class ServiceConfigController extends BaseController {
     }
 
     public boolean isValidatePackageService(String packageService) {
-        String regex = "(.*)([A-Z]+)(\\d+)(.*)";
+        String regex = "(.*)(?=.*[A-Z]+)(?=.*[0-9]+)(.*)";
 
         Pattern p = Pattern.compile(regex);
 

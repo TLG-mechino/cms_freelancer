@@ -185,7 +185,7 @@ public class MnTestController extends BaseController {
     }
 
     public boolean isValidateExam(String exam) {
-        String regex = "(.*)([A-Z]+)(\\d+)(.*)";
+        String regex = "(.*)(?=.*[A-Z]+)(?=.*[0-9]+)(.*)";
 
         Pattern p = Pattern.compile(regex);
 

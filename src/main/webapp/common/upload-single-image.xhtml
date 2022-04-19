@@ -14,9 +14,10 @@
                   onstart="PF('statusDialog').show();"
                   oncomplete="PF('statusDialog').hide();"
                   listener="#{uploadSingleImageController.onUploadImage}"
+                  styleClass="file-upload-custom"
                   update="singleImage #{Constant.ERROR_GROWL_ID}"/>
 
-    <p:outputLabel
+    <p:outputLabel style="font-style: italic; font-size: 14px; font-family: 'Times New Roman';"
             value="(*) Hệ thống chỉ hỗ trợ upload file có định dạng: jpg, JPG, jpeg, JPEG, png, PNG. Dung lượng tối đa 50 Mb"/>
 
     <p:outputPanel id="singleImage" style="margin-top: 5px !important;" styleClass="ui-no-margin-padding">

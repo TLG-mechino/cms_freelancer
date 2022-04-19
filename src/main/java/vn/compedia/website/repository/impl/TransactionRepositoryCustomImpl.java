@@ -352,13 +352,6 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             sb.append(" ORDER BY t.TRANSACTION_ID DESC ");
         }
         Query query = createQuery(sb, SearchDto);
-        if (SearchDto.getPageSize() > 0) {
-            query.setFirstResult(SearchDto.getPageIndex());
-            query.setMaxResults(SearchDto.getPageSize());
-        } else {
-            query.setFirstResult(0);
-            query.setMaxResults(Integer.MAX_VALUE);
-        }
         List<Object[]> resultList = query.getResultList();
         List<TransactionDto> list = new ArrayList<>();
         for (Object[] result : resultList) {

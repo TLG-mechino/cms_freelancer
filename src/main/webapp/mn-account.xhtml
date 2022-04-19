@@ -36,8 +36,8 @@
                             <p:outputLabel value="Số điện thoại:" styleClass="requireLabel"/>
                             <p:inputText placeholder="Nhập số điện thoại" maxlength="11"
                                          onchange="this.value = this.value.trim()"
-                                           onkeyup="this.value = this.value.replace(/\D/g, '');"
-                                           value="#{mnAccountController.accountDto.phone}" minValue="0" decimalPlaces="0">
+                                         onkeyup="this.value = this.value.replace(/\D/g, '');"
+                                         value="#{mnAccountController.accountDto.phone}" minValue="0" decimalPlaces="0">
 
                             </p:inputText>
 
@@ -47,7 +47,8 @@
                                          onkeyup="this.value=this.value.replace(/[^\w\d\.\_]/g, '').toLowerCase();"
                                          disabled="#{mnAccountController.accountDto.accountId ne null}"
                                          value="#{mnAccountController.accountDto.username}">
-                                <p:ajax event="change" update="username" listener="#{mnAccountController.removeChar()}"/>
+                                <p:ajax event="change" update="username"
+                                        listener="#{mnAccountController.removeChar()}"/>
                             </p:inputText>
 
                             <p:outputLabel value="Trạng thái:" styleClass="requireLabel"/>
@@ -91,7 +92,8 @@
                 <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
                     <div class="ui-input-icon-left" style="width: 100%; display: flex;">
                         <i class="fa fa-search"/>
-                        <p:inputText placeholder="Nhập họ và tên, địa chỉ email, số điện thoại, tên đăng nhập" style="width: 97%"
+                        <p:inputText placeholder="Nhập họ và tên, địa chỉ email, số điện thoại, tên đăng nhập"
+                                     style="width: 97%"
                                      onblur="this.value = this.value.trim()" maxlength="100"
                                      onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
                                      value="#{mnAccountController.searchDto.keyword}"

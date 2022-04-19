@@ -123,9 +123,17 @@ public class MnUserController extends BaseController {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập họ tên");
             return false;
         }
+        if(!userDtoDetails.getFullName().matches(Constant.FULL_NAME_PATTERN)){
+            FacesUtil.addErrorMessage("Họ và tên không đúng định dạng");
+            return false;
+        }
 
         if (StringUtils.isBlank(userDtoDetails.getPhone().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập số điện thoại ");
+            return false;
+        }
+        if(!userDtoDetails.getPhone().matches(Constant.PHONE_PATTERN)){
+            FacesUtil.addErrorMessage("Số điện thoại không đúng định dạng");
             return false;
         }
 
@@ -137,10 +145,6 @@ public class MnUserController extends BaseController {
             FacesUtil.addErrorMessage("Địa chỉ email không đúng định dạng");
             return false;
         }
-        if(!userDtoDetails.getPhone().matches(Constant.PHONE_PATTERN)){
-            FacesUtil.addErrorMessage("Số điện thoại không đúng định dạng");
-            return false;
-        }
         Account checkEmail = accountRepository.findAccountByEmail(userDtoDetails.getEmail());
         emailTemp = accountRepository.findEmail(userDtoDetails.getAccountId());
         if (checkEmail != null && !Objects.equals(checkEmail.getEmail(), emailTemp)) {
@@ -150,6 +154,10 @@ public class MnUserController extends BaseController {
         }
         if (StringUtils.isBlank(userDtoDetails.getFacebookLink().trim())) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập link facebook ");
+            return false;
+        }
+        if(!userDtoDetails.getFacebookLink().matches(Constant.LINK_FACEBOOK_PATTERN)){
+            FacesUtil.addErrorMessage("Link Facebook không đúng định dạng");
             return false;
         }
         if (StringUtils.isBlank(userDtoDetails.getAddress().trim())) {

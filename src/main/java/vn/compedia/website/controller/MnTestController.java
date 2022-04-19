@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -259,16 +260,14 @@ public class MnTestController extends BaseController {
     }
 
     private void onSaveExamTest(Exam exam) {
+        List<ExamFile> listFileSave = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(uploadMultipleImageFileNameController.getUploadMultipleFileDto().getListToDelete())) {
-            uploadMultipleImageFileNameController.getUploadMultipleFileDto().getListToDelete().forEach(var -> {
-                examFileRepository.deleteById(var.getId());
-            });
+            examFileRepository.deleteAllByListId(uploadMultipleImageFileNameController.getUploadMultipleFileDto().getListToDelete().stream().map(UploadWithFilenameDto::getId).collect(Collectors.toList()));
         }
         uploadMultipleImageFileNameController.getUploadMultipleFileDto().getListToShow().forEach(var -> {
-            listExamFile.add(copyValue(var, new ExamFile(), exam));
+            listFileSave.add(copyValue(var, new ExamFile(), exam));
         });
-
-        examFileRepository.saveAll(listExamFile);
+        examFileRepository.saveAll(listFileSave);
     }
 
     public void onSave() {
@@ -301,11 +300,11 @@ public class MnTestController extends BaseController {
         examDto = new ExamDto();
         uploadMultipleImage = new ArrayList<>();
         listExamFile = examFileRepository.findAllByExamId(object.getExamId());
-        listExamFile.forEach(var -> {
-            if (var.getType() == 1) {
-                uploadMultipleImage.add(copyValue(var, new UploadWithFilenameDto()));
-            }
+
+        listExamFile.stream().filter(var -> var.getType() == 1).forEach(var -> {
+            uploadMultipleImage.add(copyValue(var, new UploadWithFilenameDto()));
         });
+
         uploadMultipleImageFileNameController.getUploadMultipleFileDto().setListToShow(uploadMultipleImage);
         BeanUtils.copyProperties(object, examDto);
         titleDialog = "Sửa";

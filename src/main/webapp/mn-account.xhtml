@@ -96,7 +96,7 @@
                                      onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
                                      value="#{mnAccountController.searchDto.keyword}"
                                      styleClass="border-input" onchange="this.value = this.value.trim()">
-                            <p:ajax event="change" update="searchForm"
+                            <p:ajax event="blur" update="searchForm"
                                     listener="#{mnAccountController.onSearch()}"/>
                         </p:inputText>
                     </div>

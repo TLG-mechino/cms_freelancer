@@ -40,6 +40,7 @@
                                  layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
                         <p:outputLabel value="Họ và Tên:" styleClass="requireLabel"/>
                         <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
+                                     placeholder="Nhập họ và tên"
                                      value="#{mnUserController.userDtoDetails.fullName}" id="fullName">
                         </p:inputText>
 
@@ -52,14 +53,17 @@
 
                         <p:outputLabel value="Email:" styleClass="requireLabel"/>
                         <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
+                                     placeholder="Nhập địa chỉ email"
                                      value="#{mnUserController.userDtoDetails.email}"/>
 
                         <p:outputLabel value="Link facebook:" styleClass="requireLabel"/>
                         <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
+                                     placeholder="Nhập link facebook"
                                      value="#{mnUserController.userDtoDetails.facebookLink}"/>
 
                         <p:outputLabel value="Địa chỉ:" styleClass="requireLabel"/>
                         <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
+                                     placeholder="Nhập địa chỉ"
                                      value="#{mnUserController.userDtoDetails.address}"/>
 
                         <p:outputLabel value="Tổng điểm:" styleClass="requireLabel"/>
@@ -72,10 +76,12 @@
 
                         <p:outputLabel value="Kinh nghiệm làm việc (năm):" styleClass="requireLabel"/>
                         <p:inputNumber maxlength="3" onchange="this.value = this.value.trim()" size="60" minValue="0" maxValue="100"
+                                       placeholder="Nhập số năm kinh nghiệm làm việc"
                                      value="#{mnUserController.userDtoDetails.experienceAmount}"/>
 
                         <p:outputLabel value="Số giờ làm việc:" styleClass="requireLabel"/>
                         <p:inputNumber maxlength="2" onchange="this.value = this.value.trim()" size="60" minValue="0" maxValue="100"
+                                       placeholder="Nhập số giờ làm việc"
                                      value="#{mnUserController.userDtoDetails.workingHours}"/>
 
                     </p:panelGrid>

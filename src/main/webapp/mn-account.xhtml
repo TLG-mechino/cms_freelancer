@@ -98,7 +98,7 @@
                                      onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
                                      value="#{mnAccountController.searchDto.keyword}"
                                      styleClass="border-input" onchange="this.value = this.value.trim()">
-                            <p:ajax event="blur" update="searchForm"
+                            <p:ajax event="change" update="searchForm"
                                     listener="#{mnAccountController.onSearch()}"/>
                         </p:inputText>
                     </div>
@@ -113,6 +113,7 @@
                         <f:selectItem itemLabel="Tất cả" itemValue=""/>
                         <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
                         <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
+
                     </p:selectOneMenu>
 
                     <p:commandButton value="Bỏ lọc" update="searchForm"
@@ -121,7 +122,8 @@
 
                     <p:commandButton value="Lọc" update="tblSearchResult"
                                      icon="fa fa-search" styleClass="margin-right-10 filter-btn" id="search"
-                                     actionListener="#{mnAccountController.onSearch()}"/>
+                                     actionListener="#{mnAccountController.onSearch()}">
+                    </p:commandButton>
                 </p:overlayPanel>
             </p:panelGrid>
 

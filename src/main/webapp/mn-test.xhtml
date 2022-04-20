@@ -62,7 +62,8 @@
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Loại kỹ năng:" styleClass="requireLabel"/>
-                            <p:selectOneMenu value="#{mnTestController.examDto.hashtagId}" >
+                            <p:selectOneMenu id="advanced" value="#{mnTestController.examDto.hashtagId}" effect="fade"
+                                             filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Chọn kỹ năng" itemValue=""/>
                                 <f:selectItems value="#{mnTestController.listHashtag}" />
                             </p:selectOneMenu>
@@ -225,5 +226,6 @@
 
             </p:dataTable>
         </h:form>
+
     </ui:define>
 </ui:composition>

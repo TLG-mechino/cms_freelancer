@@ -2204,7 +2204,7 @@ body .ui-selectonemenu-panel {
   background-color: #ffffff;
 }
 body .ui-selectonemenu-panel .ui-selectonemenu-filter-container {
-  padding: 6px 12px;
+  padding: 6px 6px;
 }
 body .ui-selectonemenu-panel .ui-selectonemenu-filter-container .ui-selectonemenu-filter {
   width: 100%;

@@ -131,7 +131,7 @@ public class CustomerTalkController extends BaseController {
         }
 
         if (StringUtils.isBlank(customerTalkDto.getFullName().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập Họ Tên khách hàng ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập họ tên khách hàng ");
             return false;
         }
 

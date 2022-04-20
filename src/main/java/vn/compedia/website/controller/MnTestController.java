@@ -239,6 +239,10 @@ public class MnTestController extends BaseController {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập mô tả Tiếng Anh ");
             return false;
         }
+        if(examDto.getTime() == null){
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập thời gian làm bài ");
+            return false;
+        }
         if (CollectionUtils.isEmpty(uploadMultipleImageFileNameController.getUploadMultipleFileDto().getListToShow())) {
             FacesUtil.addErrorMessage("Bạn vui lòng chọn hình ảnh bài test");
             FacesUtil.updateView("growl");

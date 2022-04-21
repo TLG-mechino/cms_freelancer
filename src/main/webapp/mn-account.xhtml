@@ -105,7 +105,7 @@
                 </p:outputPanel>
 
                 <p:commandButton id="basic" value="Bộ lọc" type="button" iconPos="right" icon="fa fa-caret-down"
-                                 styleClass="filter-search ui-sm-12"/>
+                                 styleClass="filter-search ui-sm-12" onclick="addOrRemoveClass()"/>
 
                 <p:overlayPanel for="basic" styleClass="filter-panel" >
                     <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
@@ -114,7 +114,6 @@
                         <f:selectItem itemLabel="Tất cả" itemValue=""/>
                         <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
                         <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
-
                     </p:selectOneMenu>
 
                     <p:commandButton value="Bỏ lọc" update="searchForm"
@@ -186,8 +185,27 @@
                         </p:menuitem>
                     </p:menuButton>
                 </p:column>
-
             </p:dataTable>
         </h:form>
+
+        <script>
+            $(document).keyup(function(event) {
+                var element = document.getElementById("search");
+                var activePanel = element.classList.contains("open-panel");
+                if (activePanel &amp;&amp; event.which === 13) {
+                    element.onclick();
+                }
+            });
+
+            function addOrRemoveClass() {
+                var element = document.getElementById("search");
+                if(element.classList.contains("open-panel")) {
+                    element.classList.remove("open-panel");
+                } else {
+                    element.classList.add("open-panel");
+                }
+            }
+        </script>
+
     </ui:define>
 </ui:composition>

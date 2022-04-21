@@ -53,7 +53,7 @@
                     </p:outputPanel>
 
                     <p:commandButton id="basic" value="Bộ lọc" type="button" iconPos="right" icon="fa fa-caret-down"
-                                     styleClass="filter-search ui-sm-12"/>
+                                     styleClass="filter-search ui-sm-12" onclick="addOrRemoveClass()"/>
 
                     <p:overlayPanel for="basic" styleClass="filter-panel">
                         <p:outputLabel value="Giá dự án" styleClass="filter-item-label"/>
@@ -143,7 +143,6 @@
             </h:form>
         </div>
 
-
         <script>
             setTimeout(function () {
                 document.getElementById('id-2-4').classList.add('active-menuitem');
@@ -153,6 +152,23 @@
                 document.getElementById('id-2').classList.add('active-menuitem');
                 $('#id-2').addClass('active-menuitem');
             }, 500);
+
+            $(document).keyup(function(event) {
+                var element = document.getElementById("search");
+                var activePanel = element.classList.contains("open-panel");
+                if (activePanel &amp;&amp; event.which === 13) {
+                    element.onclick();
+                }
+            });
+
+            function addOrRemoveClass() {
+                var element = document.getElementById("search");
+                if(element.classList.contains("open-panel")) {
+                    element.classList.remove("open-panel");
+                } else {
+                    element.classList.add("open-panel");
+                }
+            }
         </script>
     </ui:define>
 </ui:composition>

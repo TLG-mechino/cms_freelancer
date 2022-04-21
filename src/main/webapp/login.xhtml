@@ -40,7 +40,7 @@
                                 <div class="ui-g-12">
                                     <p:outputLabel value="Tên đăng nhập" for="username"/>
                                     <p:inputText id="username" value="#{authorizationController.accountDto.username}"
-                                                 autofocus="" style="margin-top: 10px"/>
+                                                 autofocus="" style="margin-top: 10px" onblur="this.value = this.value.trim()"/>
                                 </div>
                                 <div class="ui-g-12">
                                     <p:outputLabel value="Mật khẩu" for="password"/>

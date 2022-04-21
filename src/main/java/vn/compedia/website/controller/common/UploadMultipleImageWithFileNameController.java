@@ -56,18 +56,20 @@ public class UploadMultipleImageWithFileNameController extends BaseController {
                 return;
             }
 
-            if (uploadMultipleFileDto.getListToShow().size() > 10) {
-                setErrorForm("Số lượng file úa lớn. Số lượng cho phép là <= 10");
+            if (uploadMultipleFileDto.getListToShow().size() > 9) {
+                setErrorForm("Số lượng file quá lớn. Số lượng cho phép là <= 10");
+                return;
             }
+            else {
+                String image = FileUtil.saveImageFile(e.getFile());
+                String fileName = e.getFile().getFileName();
+                UploadWithFilenameDto uploadWithFilenameDto = new UploadWithFilenameDto();
+                uploadWithFilenameDto.setFileName(fileName);
+                uploadWithFilenameDto.setFilePath(image);
 
-            String image = FileUtil.saveImageFile(e.getFile());
-            String fileName = e.getFile().getFileName();
-            UploadWithFilenameDto uploadWithFilenameDto = new UploadWithFilenameDto();
-            uploadWithFilenameDto.setFileName(fileName);
-            uploadWithFilenameDto.setFilePath(image);
-
-            uploadMultipleFileDto.getListToShow().add(uploadWithFilenameDto);
-            uploadMultipleFileDto.getListToAdd().add(uploadWithFilenameDto);
+                uploadMultipleFileDto.getListToShow().add(uploadWithFilenameDto);
+                uploadMultipleFileDto.getListToAdd().add(uploadWithFilenameDto);
+            }
         } catch (Exception ex) {
             log.error("Error", ex);
         }

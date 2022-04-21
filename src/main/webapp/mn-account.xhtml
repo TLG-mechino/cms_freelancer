@@ -107,9 +107,10 @@
                 <p:commandButton id="basic" value="Bộ lọc" type="button" iconPos="right" icon="fa fa-caret-down"
                                  styleClass="filter-search ui-sm-12"/>
 
-                <p:overlayPanel for="basic" styleClass="filter-panel">
+                <p:overlayPanel for="basic" styleClass="filter-panel" >
                     <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
-                    <p:selectOneMenu styleClass="filter-item" value="#{mnAccountController.searchDto.status}">
+                    <p:selectOneMenu styleClass="filter-item" value="#{mnAccountController.searchDto.status}"
+                                     onchange="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}" >
                         <f:selectItem itemLabel="Tất cả" itemValue=""/>
                         <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
                         <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
@@ -122,7 +123,8 @@
 
                     <p:commandButton value="Lọc" update="tblSearchResult"
                                      icon="fa fa-search" styleClass="margin-right-10 filter-btn" id="search"
-                                     actionListener="#{mnAccountController.onSearch()}">
+                                     actionListener="#{mnAccountController.onSearch()}"
+                                     onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}">
                     </p:commandButton>
                 </p:overlayPanel>
             </p:panelGrid>

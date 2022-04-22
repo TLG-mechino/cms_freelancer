@@ -96,33 +96,33 @@
                         <p:outputLabel value="#{rowIndex + 1}"/>
                     </p:column>
 
-                    <p:column headerText="Tên dự án" style="text-align: left" sortBy="#{resultDto.name}">
+                    <p:column headerText="Tên dự án" style="text-align: left; width: 150px" sortBy="#{resultDto.name}">
                         <p:outputLabel value="#{resultDto.name}"/>
                     </p:column>
 
-                    <p:column headerText="Người thực hiện" style="text-align: left" sortBy="#{resultDto.username}">
+                    <p:column headerText="Người thực hiện" style="text-align: left; width: 120px" sortBy="#{resultDto.username}">
                         <p:outputLabel value="#{resultDto.username}"/>
                     </p:column>
 
-                    <p:column headerText="Mô tả" style="text-align: left" sortBy="#{resultDto.description}">
+                    <p:column headerText="Mô tả" style="text-align: center; width: 400px" sortBy="#{resultDto.description}">
                         <p:outputLabel value="#{resultDto.description}"/>
                     </p:column>
 
-                    <p:column headerText="Giá thấp nhất" style="text-align: left" sortBy="#{resultDto.moneyFrom}">
+                    <p:column headerText="Giá thấp nhất" style="text-align: right; width: 120px" sortBy="#{resultDto.moneyFrom}">
                         <p:outputLabel value="#{resultDto.moneyFrom}">
                             <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
                                              pattern="###,### đ"/>
                         </p:outputLabel>
                     </p:column>
 
-                    <p:column headerText="Giá cao nhất" style="text-align: left" sortBy="#{resultDto.moneyTo}">
+                    <p:column headerText="Giá cao nhất" style="text-align: right; width: 120px" sortBy="#{resultDto.moneyTo}">
                         <p:outputLabel value="#{resultDto.moneyTo}">
                             <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
                                              pattern="###,### đ"/>
                         </p:outputLabel>
                     </p:column>
 
-                    <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
+                    <p:column headerText="Trạng thái" style="text-align: left; width: 100px" sortBy="#{resultDto.status}">
                         <p:outputLabel value="Hoạt động" rendered="#{resultDto.status eq 1}"/>
                         <p:outputLabel value="Không hoạt động"
                                        rendered="#{resultDto.status eq 0}"/>

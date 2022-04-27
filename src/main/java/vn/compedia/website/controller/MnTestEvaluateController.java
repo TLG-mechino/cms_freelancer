@@ -25,6 +25,7 @@ import vn.compedia.website.model.ExamType;
 import vn.compedia.website.model.UserExam;
 import vn.compedia.website.repository.*;
 import vn.compedia.website.util.Constant;
+import vn.compedia.website.util.DbConstant;
 import vn.compedia.website.util.FacesUtil;
 
 import javax.faces.context.FacesContext;
@@ -195,10 +196,11 @@ public class MnTestEvaluateController extends BaseController {
         }
         userExam.setScore(object.getScore());
         userExam.setNote(object.getNote());
+        userExam.setStatus(DbConstant.COMPLETE_EVALUATE_SCORE);
         userExam.setSubmitTime(object.getSubmitTime());
         userExamRepository.save(userExam);
         titleDialog = "Sửa";
-        FacesUtil.addSuccessMessage("Sửa thông tin thành công");
+        FacesUtil.addSuccessMessage("Đánh giá bài làm thành công");
         FacesUtil.updateView("growl");
     }
 

@@ -28,7 +28,7 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
     }
 
     @Override
-    public List<AccountDto> search(AccountSearchDto searchDto, Integer type) {
+    public List<AccountDto> search(AccountSearchDto searchDto, Integer type)    {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT a.ACCOUNT_ID, " +
                 "       a.USERNAME, " +

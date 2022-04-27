@@ -18,4 +18,7 @@ public class DbConstant {
     public static final int ACCOUNT_CMS = 2;
     public static final int ACCOUNT_USER = 1;
 
+    //Evaluate Score
+    public static final int COMPLETE_EVALUATE_SCORE = 3;
+
 }

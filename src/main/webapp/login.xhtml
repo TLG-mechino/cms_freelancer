@@ -40,7 +40,8 @@
                                 <div class="ui-g-12">
                                     <p:outputLabel value="Tên đăng nhập" for="username"/>
                                     <p:inputText id="username" value="#{authorizationController.accountDto.username}"
-                                                 autofocus="" style="margin-top: 10px" onblur="this.value = this.value.trim()"/>
+                                                 autofocus="" style="margin-top: 10px"
+                                                 onblur="this.value = this.value.trim()"/>
                                 </div>
                                 <div class="ui-g-12">
                                     <p:outputLabel value="Mật khẩu" for="password"/>
@@ -85,7 +86,8 @@
 
     <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
 
-    <p:dialog modal="true" widgetVar="statusDialog" showHeader="false" resizable="false" draggable="false" closable="false">
+    <p:dialog modal="true" widgetVar="statusDialog" showHeader="false" resizable="false" draggable="false"
+              closable="false">
         <p:graphicImage value="/resources/images/arico-loading.gif" width="50" height="50"/>
     </p:dialog>
 

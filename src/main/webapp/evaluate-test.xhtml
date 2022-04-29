@@ -101,9 +101,11 @@
                     <p:outputLabel value="#{commonController.abbreviate(resultDto.note, 30)}"/>
                 </p:column>
                 <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
-                    <p:outputLabel value="Đã đánh giá" rendered="#{resultDto.status eq 1}"/>
+                    <p:outputLabel value="Đã đánh giá" rendered="#{resultDto.status eq 3}"/>
                     <p:outputLabel value="Chưa đánh giá"
-                                   rendered="#{resultDto.status eq 0}"/>
+                                   rendered="#{resultDto.status eq 2}"/>
+                    <p:outputLabel value="Đang làm bài"
+                                   rendered="#{resultDto.status eq 1}"/>
                 </p:column>
 
                 <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">

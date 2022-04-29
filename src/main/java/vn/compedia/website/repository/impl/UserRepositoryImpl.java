@@ -110,7 +110,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
         Query query = createQuery(sb,userSearchDto);
         if(userSearchDto.getPageSize() > 0) {
-            query.setFirstResult(userSearchDto.getPageIndex()*userSearchDto.getPageSize());
+            query.setFirstResult(userSearchDto.getPageIndex());
             query.setMaxResults(userSearchDto.getPageSize());
         } else {
             query.setFirstResult(0);

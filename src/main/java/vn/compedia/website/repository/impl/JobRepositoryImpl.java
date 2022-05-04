@@ -138,7 +138,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
         sb.append(" select j.JOB_ID, " +
                 "       j.NAME, " +
                 "       j.DESCRIPTION, " +
-                "       j.USERNAME, " +
+                "       b.USERNAME, " +
                 "       j.MONEY_FROM, " +
                 "       j.MONEY_TO, " +
                 "       j.CREATE_DATE, " +

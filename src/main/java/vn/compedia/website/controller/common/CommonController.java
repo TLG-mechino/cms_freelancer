@@ -63,8 +63,8 @@ public class CommonController implements Serializable {
         return FileUtil.isOfficeFileExt(fileName);
     }
 
-    public StreamedContent getFileDownload(String fileName) {
-        StreamedContent streamedContent = FileUtil.getDownloadFileFromDatabase(fileName);
+    public StreamedContent getFileDownload(String filePath) {
+        StreamedContent streamedContent = FileUtil.getDownloadFileFromDatabase(filePath);
         if (streamedContent == null) {
             FacesUtil.addErrorMessage("File không tồn tại");
         }

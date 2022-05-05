@@ -24,6 +24,7 @@ import vn.compedia.website.model.ExamFile;
 import vn.compedia.website.model.ExamType;
 import vn.compedia.website.model.UserExam;
 import vn.compedia.website.repository.*;
+import vn.compedia.website.service.NotificationSystemService;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.DbConstant;
 import vn.compedia.website.util.FacesUtil;
@@ -57,6 +58,8 @@ public class MnTestEvaluateController extends BaseController {
     private ExamFileRepository examFileRepository;
     @Autowired
     private UserExamRepository userExamRepository;
+    @Autowired
+    private NotificationSystemService notificationSystemService;
 
     private UserExam userExam;
     private String titleDialog;
@@ -202,6 +205,13 @@ public class MnTestEvaluateController extends BaseController {
         titleDialog = "Sửa";
         FacesUtil.addSuccessMessage("Đánh giá bài làm thành công");
         FacesUtil.updateView("growl");
+
+        //add notification
+        List<String> usernameList = new ArrayList<>();
+        usernameList.add(userExam.getUsername());
+        notificationSystemService.saveNotification(authorizationController.getAccountDto().getUsername(),"Điểm bài thi",
+                "Bài thi của bạn đã được chấm điểm", 8, userExam.getUserExamId(), usernameList);
+
     }
 
     @Override

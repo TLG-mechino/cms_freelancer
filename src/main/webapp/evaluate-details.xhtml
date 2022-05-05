@@ -63,18 +63,6 @@
                         <p:outputLabel value="#{rowIndex + 1}"/>
                     </p:column>
 
-                    <p:column headerText="Hình ảnh " style="text-align: left" width="200">
-                        <p:graphicImage id="image" name="#{resultDto.filePath}" style="width: 100px !important;"
-                                        rendered="#{not empty resultDto.filePath}"
-                                        styleClass="image-in-table"/>
-                        <p:graphicImage id="no-image" name="images/no-image.png" style="width: 100px !important;"
-                                        rendered="#{empty resultDto.filePath}"
-                                        styleClass="image-in-table"/>
-                        <p:overlayPanel for="image" hideEffect="fade" rendered="#{not empty resultDto.filePath}">
-                            <p:graphicImage name="#{resultDto.filePath}" width="300" height="auto"/>
-                        </p:overlayPanel>
-                    </p:column>
-
                     <p:column headerText="Tên file " style="text-align: left;" >
                         <p:outputLabel value="#{resultDto.fileName}"/>
                     </p:column>

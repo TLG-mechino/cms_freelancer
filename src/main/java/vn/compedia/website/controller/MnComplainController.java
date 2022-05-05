@@ -21,12 +21,14 @@ import vn.compedia.website.model.ComplainType;
 import vn.compedia.website.model.Hashtag;
 import vn.compedia.website.repository.ComplainRepository;
 import vn.compedia.website.repository.ComplainTypeRepository;
+import vn.compedia.website.service.NotificationSystemService;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.DbConstant;
 import vn.compedia.website.util.FacesUtil;
 
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +44,10 @@ public class MnComplainController extends BaseController {
     private ComplainRepository complainRepository;
     @Autowired
     private ComplainTypeRepository complainTypeRepository;
+    @Autowired
+    private NotificationSystemService notificationSystemService;
+    @Autowired
+    private AuthorizationController authorizationController;
 
     private Complain complain;
     private ComplainSearchDto searchDto;
@@ -103,6 +109,7 @@ public class MnComplainController extends BaseController {
     public void getComplainId(Long id){
         complain = complainRepository.findById(id).get();
         BeanUtils.copyProperties(complain, dto);
+
     }
 
 
@@ -124,6 +131,13 @@ public class MnComplainController extends BaseController {
         FacesUtil.addSuccessMessage("Lưu thành công");
         FacesUtil.closeDialog("inforDialog");
         FacesUtil.updateView("growl");
+
+        //add notification
+        List<String> usernameList = new ArrayList<>();
+        usernameList.add(complain.getUsername());
+        notificationSystemService.saveNotification(authorizationController.getAccountDto().getUsername(),"Đã tiếp nhận đơn khiếu nại",
+                "Đơn khiếu nại đã được tiếp nhận và xử lý", 12, complain.getComplainId(), usernameList);
+
     }
 
     public void onDelete(Long complainId) {

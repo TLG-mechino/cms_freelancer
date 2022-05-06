@@ -44,9 +44,11 @@
 
                     <p:outputLabel value="Trạng thái : " styleClass="filter-item-label"/>
                     <p:outputLabel value="Đã đánh giá"
-                                   rendered="#{mnTestEvaluateController.userExamDtoDetail.status eq 1}"/>
+                                   rendered="#{mnTestEvaluateController.userExamDtoDetail.status eq 3}"/>
                     <p:outputLabel value="Chưa đánh giá"
-                                   rendered="#{mnTestEvaluateController.userExamDtoDetail.status eq 0}"/>
+                                   rendered="#{mnTestEvaluateController.userExamDtoDetail.status eq 2}"/>
+                    <p:outputLabel value="Đang làm bài"
+                                   rendered="#{mnTestEvaluateController.userExamDtoDetail.status eq 1}"/>
                 </p:panelGrid>
 
                 <p:dataTable id="tblSearchResult" styleClass="margin-top-15 search-panel"

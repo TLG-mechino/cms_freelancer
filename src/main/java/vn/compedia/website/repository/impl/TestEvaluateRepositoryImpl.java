@@ -146,7 +146,7 @@ public class TestEvaluateRepositoryImpl implements TestEvaluateRepositoryCustom 
     public void appendQuery(StringBuilder sb, UserExamSearchDto searchDto) {
         sb.append(" from user_exam ue LEFT JOIN exam e ON ue.EXAM_ID = e.EXAM_ID ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
-            sb.append(" AND (lower(ue.USERNAME) LIKE :keyword " +
+            sb.append(" WHERE (lower(ue.USERNAME) LIKE :keyword " +
                     "OR lower(e.CODE) LIKE lower(:keyword)" +
                     "OR lower(ue.NOTE) LIKE lower(:keyword)) " );
         }

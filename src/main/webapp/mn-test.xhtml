@@ -26,22 +26,22 @@
                             </p:inputText>
 
                             <p:outputLabel value="Tiêu đề Tiếng Việt:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập tiêu đề tiếng việt" maxlength="50"
+                            <p:inputText placeholder="Nhập tiêu đề tiếng việt" maxlength="100"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.titleVn}"/>
 
                             <p:outputLabel value="Tiêu đề Tiếng Anh:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập tiêu đề tiếng anh" maxlength="50"
+                            <p:inputText placeholder="Nhập tiêu đề tiếng anh" maxlength="100"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.titleEn}"/>
 
                             <p:outputLabel value="Mô tả Tiếng Việt:" styleClass="requireLabel"/>
-                            <p:inputTextarea placeholder="Nhập mô tả tiếng việt" maxlength="100"
+                            <p:inputTextarea placeholder="Nhập mô tả tiếng việt" maxlength="500"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.descriptionVn}"/>
 
                             <p:outputLabel value="Mô tả Tiếng Anh:" styleClass="requireLabel"/>
-                            <p:inputTextarea placeholder="Nhập mô tả tiếng anh" maxlength="100"
+                            <p:inputTextarea placeholder="Nhập mô tả tiếng anh" maxlength="500"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.descriptionEn}"/>
 

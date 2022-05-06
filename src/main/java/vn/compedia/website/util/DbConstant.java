@@ -21,4 +21,9 @@ public class DbConstant {
     //Evaluate Score
     public static final int COMPLETE_EVALUATE_SCORE = 3;
 
+    //Status Evaluate Test
+    public static final int TESTING = 1;
+    public static final int TESTED = 2;
+    public static final int EVALUATED  = 3;
+
 }

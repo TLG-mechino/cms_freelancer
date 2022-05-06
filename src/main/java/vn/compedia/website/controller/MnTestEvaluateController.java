@@ -205,6 +205,7 @@ public class MnTestEvaluateController extends BaseController {
         titleDialog = "Sửa";
         FacesUtil.addSuccessMessage("Đánh giá bài làm thành công");
         FacesUtil.updateView("growl");
+        FacesUtil.redirect("/evaluate-test.xhtml");
 
         //add notification
         List<String> usernameList = new ArrayList<>();

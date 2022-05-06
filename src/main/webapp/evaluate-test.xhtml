@@ -48,8 +48,9 @@
                     <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
                     <p:selectOneMenu styleClass="filter-item" value="#{mnTestEvaluateController.searchDto.status}">
                         <f:selectItem itemLabel="Tất cả" itemValue=""/>
-                        <f:selectItem itemLabel="Đã đánh giá" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
-                        <f:selectItem itemLabel="Chưa đánh giá" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
+                        <f:selectItem itemLabel="Đang làm bài" itemValue="#{DbConstant.TESTING}" />
+                        <f:selectItem itemLabel="Đã đánh giá" itemValue="#{DbConstant.TESTED}"/>
+                        <f:selectItem itemLabel="Chưa đánh giá" itemValue="#{DbConstant.EVALUATED}"/>
                     </p:selectOneMenu>
 
                     <p:commandButton value="Bỏ lọc" update="searchForm"

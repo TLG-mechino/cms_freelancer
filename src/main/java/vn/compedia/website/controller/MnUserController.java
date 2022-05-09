@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
@@ -17,22 +18,18 @@ import vn.compedia.website.controller.common.BaseController;
 import vn.compedia.website.dto.AccountDto;
 import vn.compedia.website.dto.entity.UserDto;
 import vn.compedia.website.dto.search.UserSearchDto;
-import vn.compedia.website.model.Account;
-import vn.compedia.website.model.User;
-import vn.compedia.website.repository.AccountRepository;
-import vn.compedia.website.repository.UserRepository;
+import vn.compedia.website.model.*;
+import vn.compedia.website.repository.*;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.DbConstant;
 import vn.compedia.website.util.FacesUtil;
 import vn.compedia.website.util.StringUtil;
 
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Setter
 @Getter
@@ -51,13 +48,25 @@ public class MnUserController extends BaseController {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private ProvinceRepository provinceRepository;
+    @Autowired
+    private CommuneRepository communeRepository;
+    @Autowired
+    private DistrictRepository districtRepository;
+
 
     private User user;
+    private User userChangeProvince;
+    private User userChangeDistrict;
     private Account account;
     private String titleDialog;
     private LazyDataModel<UserDto>lazyDataModel;
     private UserSearchDto searchUserDto;
     private UserSearchDto searchUserTemp;
+    private List<SelectItem> listProvince;
+    private List<SelectItem> listDistrict;
+    private List<SelectItem> listCommune;
     private UserDto userDtoDetails;
     private String emailTemp;
 
@@ -73,7 +82,10 @@ public class MnUserController extends BaseController {
         searchUserTemp = new UserSearchDto();
         account = new Account();
         user = new User();
+        userChangeProvince = new User();
+        userChangeDistrict = new User();
         emailTemp = new String();
+
         onSearch();
 
     }
@@ -117,59 +129,12 @@ public class MnUserController extends BaseController {
         FacesUtil.updateView("searchForm");
     }
 
-    public boolean validateDate() {
-
-        if (StringUtils.isBlank(userDtoDetails.getFullName().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập họ tên");
-            return false;
-        }
-        if(!userDtoDetails.getFullName().matches(Constant.FULL_NAME_PATTERN)){
-            FacesUtil.addErrorMessage("Họ và tên không đúng định dạng");
-            return false;
-        }
-
-        if (StringUtils.isBlank(userDtoDetails.getPhone().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập số điện thoại ");
-            return false;
-        }
-        if(!userDtoDetails.getPhone().matches(Constant.PHONE_PATTERN)){
-            FacesUtil.addErrorMessage("Số điện thoại không đúng định dạng");
-            return false;
-        }
-
-        if (StringUtils.isBlank(userDtoDetails.getEmail().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập email ");
-            return false;
-        }
-        if (!userDtoDetails.getEmail().matches(Constant.EMAIL_PATTERN)) {
-            FacesUtil.addErrorMessage("Địa chỉ email không đúng định dạng");
-            return false;
-        }
+    public void onSave() {
         Account checkEmail = accountRepository.findAccountByEmail(userDtoDetails.getEmail());
         emailTemp = accountRepository.findEmail(userDtoDetails.getAccountId());
         if (checkEmail != null && !Objects.equals(checkEmail.getEmail(), emailTemp)) {
             FacesUtil.addErrorMessage("Địa chỉ email đã tồn tại");
             FacesUtil.updateView("growl");
-            return false;
-        }
-        if (StringUtils.isBlank(userDtoDetails.getFacebookLink().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập link facebook ");
-            return false;
-        }
-        if(!userDtoDetails.getFacebookLink().matches(Constant.LINK_FACEBOOK_PATTERN)){
-            FacesUtil.addErrorMessage("Link Facebook không đúng định dạng");
-            return false;
-        }
-        if (StringUtils.isBlank(userDtoDetails.getAddress().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập địa chỉ ");
-            return false;
-        }
-
-        return true;
-    }
-
-    public void onSave() {
-        if (!validateDate()) {
             return;
         }
         BeanUtils.copyProperties(userDtoDetails, user);
@@ -189,16 +154,18 @@ public class MnUserController extends BaseController {
         user = userRepository.findById(object.getId()).get();
         account = accountRepository.findById(object.getAccountId()).get();
         user.setFacebookLink(object.getFacebookLink());
-        user.setAddress(object.getAddress());
         user.setExperienceAmount(object.getExperienceAmount());
         user.setWorkingHours(object.getWorkingHours());
+        user.setProvinceId(object.getProvinceId());
+        user.setDistrictId(object.getDistrictId());
+        user.setCommuneId(object.getCommuneId());
+        user.setAddress(communeRepository.getNameByCommuneId(object.getCommuneId()) + ", " +
+                districtRepository.getNameByDistrictId(object.getDistrictId())+ ", " +
+                provinceRepository.getNameByProvinceId(object.getProvinceId()));
         account.setFullName(object.getFullName());
         account.setPhone(object.getPhone());
         account.setEmail(object.getEmail());
-        if (!validateDate()) {
-            FacesUtil.updateView("growl");
-            return;
-        }
+
         if(object.getExperienceAmount() == null){
             FacesUtil.addErrorMessage("Bạn vui lòng nhập số năm kinh nghiệm làm việc ");
             FacesUtil.updateView("growl");
@@ -206,6 +173,63 @@ public class MnUserController extends BaseController {
         }
         if(object.getWorkingHours() == null){
             FacesUtil.addErrorMessage("Bạn vui lòng nhập số giờ làm việc ");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        if (StringUtils.isBlank(object.getFullName().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập họ tên");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        if(!userDtoDetails.getFullName().matches(Constant.FULL_NAME_PATTERN)){
+            FacesUtil.addErrorMessage("Họ và tên không đúng định dạng");
+            FacesUtil.updateView("growl");
+            return;
+        }
+
+        if (StringUtils.isBlank(userDtoDetails.getPhone().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập số điện thoại ");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        if(!userDtoDetails.getPhone().matches(Constant.PHONE_PATTERN)){
+            FacesUtil.addErrorMessage("Số điện thoại không đúng định dạng");
+            FacesUtil.updateView("growl");
+            return;
+        }
+
+        if (StringUtils.isBlank(userDtoDetails.getEmail().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập email ");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        if (!userDtoDetails.getEmail().matches(Constant.EMAIL_PATTERN)) {
+            FacesUtil.addErrorMessage("Địa chỉ email không đúng định dạng");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        if (StringUtils.isBlank(userDtoDetails.getFacebookLink().trim())) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập link facebook ");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        if(!userDtoDetails.getFacebookLink().matches(Constant.LINK_FACEBOOK_PATTERN)){
+            FacesUtil.addErrorMessage("Link Facebook không đúng định dạng");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        if(object.getProvinceId() == null){
+            FacesUtil.addErrorMessage("Bạn vui lòng chọn Tỉnh/Thành phố");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        if(object.getDistrictId() == null){
+            FacesUtil.addErrorMessage("Bạn vui lòng chọn Quận/Huyện");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        if(object.getCommuneId() == null){
+            FacesUtil.addErrorMessage("Bạn vui lòng chọn Phường/Xã");
             FacesUtil.updateView("growl");
             return;
         }
@@ -219,7 +243,52 @@ public class MnUserController extends BaseController {
 
     public void findUserDtoById(Long accountId){
         userDtoDetails = userRepository.findUserDtoById(accountId);
+
+        listProvince = new ArrayList<>();
+        List<Province> dataProvince = (List<Province>) provinceRepository.findAll();
+        if (CollectionUtils.isNotEmpty(dataProvince)) {
+            for (Province province : dataProvince) {
+                listProvince.add(new SelectItem(province.getProvinceId(), province.getName()));
+            }
+        }
+        listDistrict = new ArrayList<>();
+        List<District> dataDistrict = districtRepository.findAllByProvinceId(userDtoDetails.getProvinceId());
+        if (CollectionUtils.isNotEmpty(dataDistrict)) {
+            for (District district : dataDistrict) {
+                listDistrict.add(new SelectItem(district.getDistrictId(), district.getName()));
+            }
+        }
+        listCommune = new ArrayList<>();
+        List<Commune> dataCommune = communeRepository.findAllByDistrictId(userDtoDetails.getDistrictId());
+        if(CollectionUtils.isNotEmpty(dataCommune)){
+            for (Commune commune : dataCommune){
+                listCommune.add(new SelectItem(commune.getCommuneId(), commune.getName()));
+            }
+        }
+
         FacesUtil.redirect("/user/profile.xhtml");
+    }
+
+    public void changeProvince(Long provinceId){
+        userDtoDetails.setCommuneId(0L);
+        listDistrict = new ArrayList<>();
+        List<District> dataDistrict = districtRepository.findAllByProvinceId(provinceId);
+        if (CollectionUtils.isNotEmpty(dataDistrict)) {
+            for (District district : dataDistrict) {
+                listDistrict.add(new SelectItem(district.getDistrictId(), district.getName()));
+            }
+        }
+
+    }
+
+    public void changeDistrict(Long districtId){
+        listCommune = new ArrayList<>();
+        List<Commune> dataCommune = communeRepository.findAllByDistrictId(districtId);
+        if(CollectionUtils.isNotEmpty(dataCommune)){
+            for (Commune commune : dataCommune){
+                listCommune.add(new SelectItem(commune.getCommuneId(), commune.getName()));
+            }
+        }
     }
 
     public void blockAccount(Long accountId){

@@ -33,13 +33,13 @@ public class User {
     private Integer moneyWallet;
 
     @Column(name = "PROVINCE_ID")
-    private Integer provinceId;
+    private Long provinceId;
 
     @Column(name = "DISTRICT_ID")
-    private Integer districtId;
+    private Long districtId;
 
     @Column(name = "COMMUNE_ID")
-    private Integer communeId;
+    private Long communeId;
 
     @Column(name = "EXPERIENCE_AMOUNT")
     private Integer experienceAmount;

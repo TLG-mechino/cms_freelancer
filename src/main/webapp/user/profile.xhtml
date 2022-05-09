@@ -29,7 +29,8 @@
                 <ui:include src="menu_user.xhtml"/>
             </div>
             <div class="container-right">
-                <h:form styleClass="ui-g-10" id="searchForm" prependId="false" style="background: #FFFFFF; border: 1px solid #E9E9E9; box-sizing: border-box; border-radius: 8px" >
+                <h:form styleClass="ui-g-10" id="searchForm" prependId="false"
+                        style="background: #FFFFFF; border: 1px solid #E9E9E9; box-sizing: border-box; border-radius: 8px">
                     <p:outputPanel>
                         <p:link styleClass="title-color-left ui-sm-12">Thông tin profile</p:link>
                     </p:outputPanel>
@@ -61,10 +62,33 @@
                                      placeholder="Nhập link facebook"
                                      value="#{mnUserController.userDtoDetails.facebookLink}"/>
 
-                        <p:outputLabel value="Địa chỉ:" styleClass="requireLabel"/>
-                        <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
-                                     placeholder="Nhập địa chỉ"
-                                     value="#{mnUserController.userDtoDetails.address}"/>
+                        <p:outputLabel value="Tỉnh/Thành phố:" styleClass="requireLabel"/>
+                        <p:selectOneMenu id="province" value="#{mnUserController.userDtoDetails.provinceId}"
+                                         effect="fade" style="width: 430px !important;left: 19px;"
+                                         filter="true" filterMatchMode="startsWith">
+                            <p:ajax event="change" update="searchForm"
+                                    listener="#{mnUserController.changeProvince(mnUserController.userDtoDetails.provinceId)}"/>
+                            <f:selectItem itemLabel="Chọn Tỉnh/Thành Phố" itemValue=""/>
+                            <f:selectItems value="#{mnUserController.listProvince}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Quận/Huyện:" styleClass="requireLabel"/>
+                        <p:selectOneMenu id="district" value="#{mnUserController.userDtoDetails.districtId}"
+                                         effect="fade" style="width: 430px !important;left: 19px;"
+                                         filter="true" filterMatchMode="startsWith">
+                            <p:ajax event="change" update="searchForm"
+                                    listener="#{mnUserController.changeDistrict(mnUserController.userDtoDetails.districtId)}"/>
+                            <f:selectItem itemLabel="Chọn Quận/Huyện" itemValue=""/>
+                            <f:selectItems value="#{mnUserController.listDistrict}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Phường/Xã:" styleClass="requireLabel"/>
+                        <p:selectOneMenu id="commune" value="#{mnUserController.userDtoDetails.communeId}"
+                                         effect="fade" style="width: 430px !important;left: 19px;"
+                                         filter="true" filterMatchMode="startsWith">
+                            <f:selectItem itemLabel="Chọn phường/xã" itemValue=""/>
+                            <f:selectItems value="#{mnUserController.listCommune}"/>
+                        </p:selectOneMenu>
 
                         <p:outputLabel value="Tổng điểm:" styleClass="requireLabel"/>
                         <p:inputText maxlength="100" onchange="this.value = this.value.trim()" size="60"
@@ -75,14 +99,16 @@
                                      value="#{mnUserController.userDtoDetails.moneyWallet}" disabled="true"/>
 
                         <p:outputLabel value="Kinh nghiệm làm việc (năm):" styleClass="requireLabel"/>
-                        <p:inputNumber maxlength="3" onchange="this.value = this.value.trim()" size="60" minValue="0" maxValue="100"
+                        <p:inputNumber maxlength="3" onchange="this.value = this.value.trim()" size="60" minValue="0"
+                                       maxValue="100"
                                        placeholder="Nhập số năm kinh nghiệm làm việc"
-                                     value="#{mnUserController.userDtoDetails.experienceAmount}"/>
+                                       value="#{mnUserController.userDtoDetails.experienceAmount}"/>
 
                         <p:outputLabel value="Số giờ làm việc:" styleClass="requireLabel"/>
-                        <p:inputNumber maxlength="2" onchange="this.value = this.value.trim()" size="60" minValue="0" maxValue="100"
+                        <p:inputNumber maxlength="2" onchange="this.value = this.value.trim()" size="60" minValue="0"
+                                       maxValue="100"
                                        placeholder="Nhập số giờ làm việc"
-                                     value="#{mnUserController.userDtoDetails.workingHours}"/>
+                                       value="#{mnUserController.userDtoDetails.workingHours}"/>
 
                     </p:panelGrid>
                     <hr class="hr-class"/>
@@ -94,15 +120,15 @@
         </div>
 
         <script>
-            setTimeout(function() {
+            setTimeout(function () {
                 document.getElementById('id-2-4').classList.add('active-menuitem');
                 $('#id-2-4').addClass('active-menuitem');
             }, 500);
-            setTimeout(function() {
+            setTimeout(function () {
                 document.getElementById('id-2').classList.add('active-menuitem');
                 $('#id-2').addClass('active-menuitem');
             }, 500);
-            setTimeout(function() {
+            setTimeout(function () {
                 document.getElementById('userId-1').classList.add('active-menuitem');
                 $('#userId-1').addClass('active-menuitem');
             }, 500);

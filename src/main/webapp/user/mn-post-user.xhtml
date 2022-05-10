@@ -99,7 +99,7 @@
 
                     <p:column headerText="Nội dung đăng" style="text-align: left"
                               sortBy="#{resultDto.content}">
-                        <p:outputLabel value="#{resultDto.content}"/>
+                        <p:outputLabel value="#{commonController.abbreviate(resultDto.content, 30)}"/>
                     </p:column>
 
                     <p:column headerText="File đính kèm" style="text-align: left" sortBy="#{resultDto.filePost}">

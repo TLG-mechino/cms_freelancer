@@ -105,7 +105,7 @@
                     </p:column>
 
                     <p:column headerText="Mô tả" style="text-align: center; width: 400px" sortBy="#{resultDto.description}">
-                        <p:outputLabel value="#{resultDto.description}"/>
+                        <p:outputLabel value="#{commonController.abbreviate(resultDto.description, 30)}"/>
                     </p:column>
 
                     <p:column headerText="Giá thấp nhất" style="text-align: right; width: 120px" sortBy="#{resultDto.moneyFrom}">

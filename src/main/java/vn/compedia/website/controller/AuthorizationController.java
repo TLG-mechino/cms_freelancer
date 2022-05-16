@@ -1,8 +1,12 @@
 package vn.compedia.website.controller;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Session;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -10,14 +14,18 @@ import vn.compedia.website.dto.AccountDto;
 import vn.compedia.website.jsf.CookieHelper;
 import vn.compedia.website.model.Account;
 import vn.compedia.website.repository.AccountRepository;
+import vn.compedia.website.service.NotificationSystemService;
+import vn.compedia.website.service.TokenService;
 import vn.compedia.website.util.*;
 
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,6 +38,10 @@ public class AuthorizationController implements Serializable {
 
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private TokenService tokenService;
+    @Autowired
+    private NotificationSystemService notificationSystemService;
 
     private List<String> myMenus;
     private boolean saveCookie;
@@ -102,10 +114,16 @@ public class AuthorizationController implements Serializable {
             FacesUtil.addErrorMessage("Tên đăng nhập hoặc mật khẩu không chính xác bạn vui lòng kiểm tra lại");
             return;
         }
+        if(account.getType() != 2){
+            FacesUtil.addErrorMessage("Tài khoản không có quyền truy cập");
+            return;
+        }
+        notificationSystemService.setAccountId(account.getAccountId());
         processLogin(account, saveCookie);
     }
 
     public void processLogin(Account account, Boolean saveCookie) {
+        account.setToken(tokenService.createToken(account).getAccessToken());
         role = Constant.LOGIN_ID;
         updateMenuByRole();
         if (saveCookie) {
@@ -123,10 +141,10 @@ public class AuthorizationController implements Serializable {
         if (accountDto.getFirstLogin() == DbConstant.FIRST_LOGIN) {
             FacesUtil.redirect("/cms/change-password.xhtml");
             account.setFirstLogin(DbConstant.NOT_FIRST_LOGIN);
-            accountRepository.save(account);
         } else {
             FacesUtil.redirect("/dashboard.xhtml");
         }
+        accountRepository.save(account);
     }
 
     public Boolean hasLogged() {

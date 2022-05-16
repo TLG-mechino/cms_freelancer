@@ -46,6 +46,9 @@ public class Account extends BaseModel {
     @Column(name = "TYPE")
     private int type;
 
+    @Column(name = "TOKEN")
+    private String token;
+
     public Account(Long accountId, String email, String username, String password, String salt, Integer status) {
         this.accountId = accountId;
         this.username = username;

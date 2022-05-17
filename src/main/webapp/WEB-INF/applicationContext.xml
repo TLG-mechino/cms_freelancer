@@ -47,19 +47,19 @@
     </bean>
 
     <!--for dev-->
-<!--    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-<!--        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
-<!--        <property name="url" value="jdbc:mysql://192.168.0.134:3306/freelancer_db?useUnicode=true&#38;characterEncoding=UTF-8"/>-->
-<!--        <property name="username" value="compedia_account"/>-->
-<!--        <property name="password" value="123456a@"/>-->
-<!--    </bean>-->
-
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://51.79.164.95:3306/vcs_freelancer_db?useUnicode=true&#38;characterEncoding=UTF-8"/>
-        <property name="username" value="vcs_freelancer_root"/>
-        <property name="password" value="KrIBXtuJTyq3"/>
+        <property name="url" value="jdbc:mysql://192.168.1.110:3306/vcs_freelancer_db?useUnicode=true&#38;characterEncoding=UTF-8"/>
+        <property name="username" value="compedia_account"/>
+        <property name="password" value="123456a@"/>
     </bean>
+
+<!--    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+<!--        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
+<!--        <property name="url" value="jdbc:mysql://51.79.164.95:3306/vcs_freelancer_db?useUnicode=true&#38;characterEncoding=UTF-8"/>-->
+<!--        <property name="username" value="vcs_freelancer_root"/>-->
+<!--        <property name="password" value="KrIBXtuJTyq3"/>-->
+<!--    </bean>-->
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

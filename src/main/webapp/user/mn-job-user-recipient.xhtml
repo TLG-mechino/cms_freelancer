@@ -122,10 +122,16 @@
                         </p:outputLabel>
                     </p:column>
 
-                    <p:column headerText="Trạng thái" style="text-align: left; width: 100px" sortBy="#{resultDto.status}">
-                        <p:outputLabel value="Hoạt động" rendered="#{resultDto.status eq 1}"/>
-                        <p:outputLabel value="Không hoạt động"
+                    <p:column headerText="Trạng thái" style="text-align: center; width: 100px" sortBy="#{resultDto.status}">
+                        <p:outputLabel value="Đã xóa"
+                                       rendered="#{resultDto.status eq -1}"/>
+                        <p:outputLabel value="Có hiệu lực" rendered="#{resultDto.status eq 1}"/>
+                        <p:outputLabel value="Không hiệu lực"
                                        rendered="#{resultDto.status eq 0}"/>
+                        <p:outputLabel value="Đang làm"
+                                       rendered="#{resultDto.status eq 2}"/>
+                        <p:outputLabel value="Đã hoàn thành"
+                                       rendered="#{resultDto.status eq 3}"/>
                     </p:column>
 
                     <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">

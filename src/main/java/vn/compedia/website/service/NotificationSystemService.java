@@ -1,5 +1,7 @@
 package vn.compedia.website.service;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -7,11 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import vn.compedia.website.controller.AuthorizationController;
 import vn.compedia.website.controller.RestClient;
-import vn.compedia.website.dto.AccountDto;
 import vn.compedia.website.model.Account;
 import vn.compedia.website.model.Notification;
 import vn.compedia.website.model.NotificationRef;
@@ -19,42 +17,36 @@ import vn.compedia.website.repository.AccountRepository;
 import vn.compedia.website.repository.NotificationRefRepository;
 import vn.compedia.website.repository.NotificationRepository;
 import vn.compedia.website.repository.RegisterNotificationRepository;
-import vn.compedia.website.util.PropertiesUtil;
-import vn.compedia.website.util.TokensCloak;
 
-import javax.inject.Inject;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Getter
+@Setter
 @Service
 public class NotificationSystemService {
 
     @Autowired
-    NotificationRepository notificationRepository;
-
-    public Long accountIdR;
-
+    private AccountRepository accountRepository;
     @Autowired
-    NotificationRefRepository notificationRefRepository;
-
+    private NotificationRepository notificationRepository;
     @Autowired
-    RegisterNotificationRepository registerNotificationRepository;
-
+    private NotificationRefRepository notificationRefRepository;
     @Autowired
-    AccountRepository accountRepository;
+    private RegisterNotificationRepository registerNotificationRepository;
 
-    private String url = PropertiesUtil.getProperty("api.notifications");
+    @Value("${api.notifications}")
+    private String url;
+    public Long accountId;
 
-    @Transactional
     public void saveNotification(String sender, String title, String content, Integer type, Long objectId, List<String> usernameList) {
-        Notification notification = new Notification(content, new Timestamp(new Date().getTime()),
-                sender, 0, title, objectId, type);
+        Notification notification = new Notification(content, new Timestamp(new Date().getTime()), sender, 1, title, objectId, type);
         notificationRepository.save(notification);
 
         List<NotificationRef> notificationRefList = new ArrayList<>();
-        for (String i: usernameList) {
+        for (String i : usernameList) {
             NotificationRef notificationRef = new NotificationRef();
             notificationRef.setNotificationId(notification.getId());
             notificationRef.setUsername(i);
@@ -62,22 +54,20 @@ public class NotificationSystemService {
             notificationRefList.add(notificationRef);
         }
         notificationRefRepository.saveAll(notificationRefList);
-        getToken(notification.getId());
+        pushNotification(notification.getId());
     }
 
-    public void setAccountId(Long accountId){
-        accountIdR = accountId;
-    }
-
-    public void getToken(Long notificationId) {
+    public void pushNotification(Long notificationId) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.add("Authorization", "Bearer " + accountRepository.findById(accountIdR).get().getToken());
-//        headers.add("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImZ1bGxOYW1lIjoiRG8gRGFuIiwiZW1haWwiOiJkb3RoaXRhbWRhbkBnbWFpbC5jb20iLCJpYXQiOjE2NTI2ODUxMDcsImV4cCI6MTY4NDI0MjcwN30.GzvGN2mKxRzSK77bCFlWM0fhdg5zqs53oY0H3753BDQ");
-        MultiValueMap<String, Long> mapParams = new LinkedMultiValueMap<String, Long>();
-        mapParams.add("notification_id", notificationId);
-        HttpEntity<MultiValueMap<String, Long>> request = new HttpEntity<>(mapParams, headers);
+
+        Account account = accountRepository.findById(accountId).orElse(null);
+        if (null == account) {
+            return;
+        }
+        headers.add("Authorization", "Bearer " + account.getToken());
+        HttpEntity<Long> request = new HttpEntity<>(headers);
         RestClient restClient = new RestClient();
-        TokensCloak tokensCloak = restClient.postFormDataParam(url, request, TokensCloak.class);
+        restClient.postFormData(url + "/" + notificationId, request, Object.class);
     }
 }

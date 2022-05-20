@@ -1,12 +1,8 @@
 package vn.compedia.website.controller;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.Session;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -21,11 +17,8 @@ import vn.compedia.website.util.*;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -114,7 +107,7 @@ public class AuthorizationController implements Serializable {
             FacesUtil.addErrorMessage("Tên đăng nhập hoặc mật khẩu không chính xác bạn vui lòng kiểm tra lại");
             return;
         }
-        if(account.getType() != 2){
+        if (account.getType() != 2) {
             FacesUtil.addErrorMessage("Tài khoản không có quyền truy cập");
             return;
         }
@@ -123,7 +116,6 @@ public class AuthorizationController implements Serializable {
     }
 
     public void processLogin(Account account, Boolean saveCookie) {
-        account.setToken(tokenService.createToken(account).getAccessToken());
         role = Constant.LOGIN_ID;
         updateMenuByRole();
         if (saveCookie) {
@@ -133,7 +125,7 @@ public class AuthorizationController implements Serializable {
                     Integer.parseInt(PropertiesUtil.getProperty("cookie.auth.expire")));
             CookieHelper.setCookie((HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse(),
                     Constant.COOKIE_PASSWORD,
-                    StringUtil.encryptPassword(account.getPassword()+account.getSalt()+account.getCreateDate()),
+                    StringUtil.encryptPassword(account.getPassword() + account.getSalt() + account.getCreateDate()),
                     Integer.parseInt(PropertiesUtil.getProperty("cookie.auth.expire")));
         }
         accountDto = new AccountDto();

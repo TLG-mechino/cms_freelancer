@@ -9,7 +9,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import vn.compedia.website.controller.RestClient;
+import vn.compedia.website.dto.LoginDTO;
 import vn.compedia.website.model.Account;
 import vn.compedia.website.model.Notification;
 import vn.compedia.website.model.NotificationRef;
@@ -39,6 +42,10 @@ public class NotificationSystemService {
 
     @Value("${api.notifications}")
     private String url;
+
+    @Value("${api.login}")
+    private String urlLogin;
+
     public Long accountId;
 
     public void saveNotification(String sender, String title, String content, Integer type, Long objectId, List<String> usernameList) {
@@ -60,7 +67,6 @@ public class NotificationSystemService {
     public void pushNotification(Long notificationId) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
         Account account = accountRepository.findById(accountId).orElse(null);
         if (null == account) {
             return;
@@ -70,4 +76,14 @@ public class NotificationSystemService {
         RestClient restClient = new RestClient();
         restClient.postFormData(url + "/" + notificationId, request, Object.class);
     }
+
+//    public void loginApi(LoginDTO loginDTO){
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        MultiValueMap<String, LoginDTO> mapParams = new LinkedMultiValueMap<>();
+//        mapParams.add("loginDto", loginDTO);
+//        HttpEntity<MultiValueMap<String, LoginDTO>> request = new HttpEntity<>(mapParams, headers);
+//        RestClient restClient = new RestClient();
+//        restClient.postFormData(urlLogin , request, Object.class);
+//    }
 }

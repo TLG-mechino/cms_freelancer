@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.dto.AccountDto;
+import vn.compedia.website.dto.LoginDTO;
 import vn.compedia.website.jsf.CookieHelper;
 import vn.compedia.website.model.Account;
 import vn.compedia.website.repository.AccountRepository;
@@ -113,6 +114,8 @@ public class AuthorizationController implements Serializable {
         }
         notificationSystemService.setAccountId(account.getAccountId());
         processLogin(account, saveCookie);
+//        LoginDTO loginDTO = new LoginDTO(account.getUsername(), account.getPassword());
+//        notificationSystemService.loginApi(loginDTO);
     }
 
     public void processLogin(Account account, Boolean saveCookie) {

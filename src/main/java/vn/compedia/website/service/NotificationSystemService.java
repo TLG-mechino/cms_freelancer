@@ -2,15 +2,13 @@ package vn.compedia.website.service;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import vn.compedia.website.controller.RestClient;
 import vn.compedia.website.dto.LoginDTO;
 import vn.compedia.website.model.Account;
@@ -77,13 +75,20 @@ public class NotificationSystemService {
         restClient.postFormData(url + "/" + notificationId, request, Object.class);
     }
 
-//    public void loginApi(LoginDTO loginDTO){
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        MultiValueMap<String, LoginDTO> mapParams = new LinkedMultiValueMap<>();
-//        mapParams.add("loginDto", loginDTO);
-//        HttpEntity<MultiValueMap<String, LoginDTO>> request = new HttpEntity<>(mapParams, headers);
+    public void loginApi(LoginDTO loginDTO) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        JSONObject object = new JSONObject();
+        object.put("username", loginDTO.getUsername());
+        object.put("password", loginDTO.getPassword());
+
+//        HttpEntity<String> request = new HttpEntity<>(object.toString(), headers);
 //        RestClient restClient = new RestClient();
-//        restClient.postFormData(urlLogin , request, Object.class);
-//    }
+//        restClient.postFormData(urlLogin, request, Object.class);
+
+        HttpEntity<Object> request = new HttpEntity<>(object.toString(), headers);
+        RestClient restClient = new RestClient();
+        restClient.postFormJson(urlLogin, request, Object.class);
+    }
 }

@@ -11,4 +11,10 @@ public class RestClient extends RestTemplate implements Serializable {
         logger.info("Send POST data: " + request);
         return this.postForObject(url, request, cls);
     }
+
+    public <T> T postFormJson(String url, Object request, Class<T> cls) {
+        logger.info("Send POST request url: " + url);
+        logger.info("Send POST data: " + request);
+        return (T) this.postForEntity(url, request, cls);
+    }
 }

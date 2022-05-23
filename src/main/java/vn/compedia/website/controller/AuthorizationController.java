@@ -112,10 +112,10 @@ public class AuthorizationController implements Serializable {
             FacesUtil.addErrorMessage("Tài khoản không có quyền truy cập");
             return;
         }
+        LoginDTO loginDTO = new LoginDTO(account.getUsername(), accountDto.getPassword());
+        notificationSystemService.loginApi(loginDTO);
         notificationSystemService.setAccountId(account.getAccountId());
         processLogin(account, saveCookie);
-//        LoginDTO loginDTO = new LoginDTO(account.getUsername(), account.getPassword());
-//        notificationSystemService.loginApi(loginDTO);
     }
 
     public void processLogin(Account account, Boolean saveCookie) {

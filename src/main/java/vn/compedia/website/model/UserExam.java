@@ -24,7 +24,7 @@ public class UserExam {
     private String username;
 
     @Column(name = "EXAM_ID")
-    private Integer examId;
+    private Long examId;
 
     @Column(name = "SUBMIT_TIME")
     private Date submitTime;

@@ -116,7 +116,7 @@ public class TestEvaluateRepositoryImpl implements TestEvaluateRepositoryCustom 
             for (Object[] obj : result) {
                 dto.setUserExamId(ValueUtil.getLongByObject(obj[0]));
                 dto.setUsername(ValueUtil.getStringByObject(obj[1]));
-                dto.setExamId(ValueUtil.getIntegerByObject(obj[2]));
+                dto.setExamId(ValueUtil.getLongByObject(obj[2]));
                 dto.setExamCode(ValueUtil.getStringByObject(obj[3]));
                 dto.setSubmitTime(ValueUtil.getDateByObject(obj[4]));
                 dto.setScore(ValueUtil.getDoubleByObject(obj[5]));

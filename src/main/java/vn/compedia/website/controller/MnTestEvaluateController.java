@@ -218,7 +218,7 @@ public class MnTestEvaluateController extends BaseController {
         List<String> usernameList = new ArrayList<>();
         usernameList.add(userExam.getUsername());
         notificationSystemService.saveNotification(authorizationController.getAccountDto().getUsername(),"Điểm bài thi",
-                "Bài thi của bạn đã được chấm điểm", 8, userExam.getUserExamId(), usernameList);
+                "Bài thi của bạn đã được chấm điểm", 8, userExam.getExamId(), usernameList);
 
     }
 

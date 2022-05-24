@@ -157,5 +157,4 @@ public class TestEvaluateRepositoryImpl implements TestEvaluateRepositoryCustom 
             sb.append(" AND ue.STATUS =:status ");
         }
     }
-
 }

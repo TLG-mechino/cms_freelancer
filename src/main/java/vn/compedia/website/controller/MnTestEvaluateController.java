@@ -197,6 +197,13 @@ public class MnTestEvaluateController extends BaseController {
             FacesUtil.updateView("growl");
             return;
         }
+
+        if(examFileRepository.findAllByUserExamId(object.getUserExamId()).isEmpty()){
+            FacesUtil.addErrorMessage("Bài thi chưa được nộp");
+            FacesUtil.updateView("growl");
+            return;
+        }
+
         userExam.setScore(object.getScore());
         userExam.setNote(object.getNote());
         userExam.setStatus(DbConstant.COMPLETE_EVALUATE_SCORE);

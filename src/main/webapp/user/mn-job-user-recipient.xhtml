@@ -65,8 +65,11 @@
                         <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
                         <p:selectOneMenu styleClass="filter-item" value="#{mnJobRecipientController.searchDto.status}">
                             <f:selectItem itemLabel="Tất cả" itemValue=""/>
-                            <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
-                            <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
+                            <f:selectItem itemLabel="Có hiệu lực" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
+                            <f:selectItem itemLabel="Không hiệu lực" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
+                            <f:selectItem itemLabel="Đang làm" itemValue="#{DbConstant.WORKING_JOB}"/>
+                            <f:selectItem itemLabel="Đã hoàn thành" itemValue="#{DbConstant.COMPLETE_JOB}"/>
+                            <f:selectItem itemLabel="Đã xóa" itemValue="#{DbConstant.DELETE_JOB}"/>
                         </p:selectOneMenu>
 
                         <p:commandButton value="Bỏ lọc" update="searchForm"

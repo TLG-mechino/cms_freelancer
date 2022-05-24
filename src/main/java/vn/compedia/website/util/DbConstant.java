@@ -26,4 +26,11 @@ public class DbConstant {
     public static final int TESTED = 2;
     public static final int EVALUATED  = 3;
 
+    //Job
+    public static final int DELETE_JOB = -1;
+    public static final int INACTIVE_JOB = 0;
+    public static final int ACTIVE_JOB = 1;
+    public static final int WORKING_JOB = 2;
+    public static final int COMPLETE_JOB = 3;
+
 }

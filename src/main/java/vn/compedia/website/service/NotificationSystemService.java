@@ -41,7 +41,7 @@ public class NotificationSystemService {
     @Value("${api.notifications}")
     private String url;
 
-    @Value("${api.login}")
+    @Value("${api.loginBackend}")
     private String urlLogin;
 
     public Long accountId;

@@ -39,9 +39,6 @@
                         <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>
                     </p:outputLabel>
 
-                    <p:outputLabel value="Số điểm đánh giá : " styleClass="filter-item-label"/>
-                    <p:outputLabel value="#{mnTestEvaluateController.userExamDtoDetail.score}"/>
-
                     <p:outputLabel value="Trạng thái : " styleClass="filter-item-label"/>
                     <p:outputLabel value="Đã đánh giá"
                                    rendered="#{mnTestEvaluateController.userExamDtoDetail.status eq 3}"/>
@@ -49,6 +46,12 @@
                                    rendered="#{mnTestEvaluateController.userExamDtoDetail.status eq 2}"/>
                     <p:outputLabel value="Đang làm bài"
                                    rendered="#{mnTestEvaluateController.userExamDtoDetail.status eq 1}"/>
+
+                    <p:outputLabel value="Số điểm để qua bài thi: " styleClass="filter-item-label"/>
+                    <p:outputLabel value="#{mnTestEvaluateController.userExamDtoDetail.examScore}"/>
+
+                    <p:outputLabel value="Số điểm tối đa: " styleClass="filter-item-label"/>
+                    <p:outputLabel value="#{mnTestEvaluateController.userExamDtoDetail.examMaxScore}"/>
                 </p:panelGrid>
 
                 <p:dataTable id="tblSearchResult" styleClass="margin-top-15 search-panel"

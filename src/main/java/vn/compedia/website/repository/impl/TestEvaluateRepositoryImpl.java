@@ -105,6 +105,8 @@ public class TestEvaluateRepositoryImpl implements TestEvaluateRepositoryCustom 
                 "       ue.SCORE, " +
                 "       ue.NOTE, " +
                 "       ue.STATUS, " +
+                "       e.SCORE as examScore, " +
+                "       e.MAX_SCORE, " +
                 "       COUNT(ef.EXAM_FILE_ID) as numberFile");
         sb.append(" from user_exam ue LEFT JOIN exam e ON ue.EXAM_ID = e.EXAM_ID " +
                 "LEFT JOIN exam_file ef ON ue.USER_EXAM_ID = ef.OBJECT_ID WHERE ue.USER_EXAM_ID = :userExamId AND ef.TYPE = 2");
@@ -122,7 +124,9 @@ public class TestEvaluateRepositoryImpl implements TestEvaluateRepositoryCustom 
                 dto.setScore(ValueUtil.getDoubleByObject(obj[5]));
                 dto.setNote(ValueUtil.getStringByObject(obj[6]));
                 dto.setStatus(ValueUtil.getIntegerByObject(obj[7]));
-                dto.setNumberFile(ValueUtil.getLongByObject(obj[8]));
+                dto.setExamScore(ValueUtil.getDoubleByObject(obj[8]));
+                dto.setExamMaxScore(ValueUtil.getDoubleByObject(obj[9]));
+                dto.setNumberFile(ValueUtil.getLongByObject(obj[10]));
             }
         }
         return dto;

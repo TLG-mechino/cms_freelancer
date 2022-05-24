@@ -26,7 +26,7 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
         sb.append(" select n.NOTIFICATION_ID, " +
                 "       n.CONTENT, " +
                 "       n.SENDING_TIME, " +
-                "       n.USERNAME, " +
+                "       nr.USERNAME, " +
                 "       n.STATUS ");
         appendQueryByUserName(sb, searchDto, username);
         if (searchDto.getSortField() != null) {
@@ -81,7 +81,7 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
     }
 
     public void appendQueryByUserName(StringBuilder sb, NotificationSearchDto searchDto, String username) {
-        sb.append(" FROM notification n WHERE n.USERNAME = :username ");
+        sb.append(" FROM notification n left join notification_ref nr on n.NOTIFICATION_ID = nr.NOTIFICATION_ID WHERE n.USERNAME = :username ");
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("username", username);
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {

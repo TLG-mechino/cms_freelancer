@@ -10,4 +10,6 @@ import vn.compedia.website.model.UserExam;
 public class UserExamDto extends UserExam {
     private String examCode;
     private Long numberFile;
+    private Double examScore;
+    private Double examMaxScore;
 }

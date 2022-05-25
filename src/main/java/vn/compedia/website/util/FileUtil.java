@@ -68,10 +68,10 @@ public class FileUtil {
     public static String getFolder(String folderName) {
         String todayFolder = DateUtil.getTodayFolder();
         String folder =
-                PropertiesUtil.getProperty("vn.cpa.static.location.upload") + "/" + FOLDER_NAME_PARENT
-                        + "/" + folderName
-                        + "/" + todayFolder
-                        + "/" ;
+                PropertiesUtil.getProperty("vn.cpa.static.location.upload") + File.separator + FOLDER_NAME_PARENT
+                        + File.separator + folderName
+                        + File.separator + todayFolder
+                        + File.separator ;
         File inFiles = new File(folder);
         if (!inFiles.exists() && !inFiles.mkdirs()) {
             log.error("Can't create folder");

@@ -221,6 +221,7 @@ public class MnTestEvaluateController extends BaseController {
                 hashTagUser.setStatus(1);
                 hashTagUser.setTested(1);
                 hashTagUser.setHashtagId(examRepository.findById(object.getExamId()).get().getHashtagId());
+                hashTagUserRepository.save(hashTagUser);
             }
         }
         else {

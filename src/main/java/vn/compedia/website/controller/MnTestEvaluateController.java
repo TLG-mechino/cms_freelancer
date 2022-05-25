@@ -19,10 +19,7 @@ import vn.compedia.website.controller.common.BaseController;
 import vn.compedia.website.controller.common.UploadMultipleImageWithFileNameController;
 import vn.compedia.website.controller.common.UploadSingleImageController;
 import vn.compedia.website.dto.*;
-import vn.compedia.website.model.Exam;
-import vn.compedia.website.model.ExamFile;
-import vn.compedia.website.model.ExamType;
-import vn.compedia.website.model.UserExam;
+import vn.compedia.website.model.*;
 import vn.compedia.website.repository.*;
 import vn.compedia.website.service.NotificationSystemService;
 import vn.compedia.website.util.Constant;
@@ -32,10 +29,7 @@ import vn.compedia.website.util.FacesUtil;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Setter
 @Getter
@@ -60,6 +54,10 @@ public class MnTestEvaluateController extends BaseController {
     private UserExamRepository userExamRepository;
     @Autowired
     private NotificationSystemService notificationSystemService;
+    @Autowired
+    private HashTagUserRepository hashTagUserRepository;
+    @Autowired
+    private ExamRepository examRepository;
 
     private UserExam userExam;
     private String titleDialog;
@@ -213,6 +211,27 @@ public class MnTestEvaluateController extends BaseController {
         FacesUtil.addSuccessMessage("Đánh giá bài làm thành công");
         FacesUtil.updateView("growl");
         FacesUtil.redirect("/evaluate-test.xhtml");
+
+
+        //save HashTagUser
+        if(object.getScore() >= examRepository.findById(object.getExamId()).get().getScore()){
+            if(!hashTagUserRepository.findByUsernameAndHashtagId(object.getUsername(),examRepository.findById(object.getExamId()).get().getHashtagId()).isPresent()){
+                HashtagUser hashTagUser = new HashtagUser();
+                hashTagUser.setUsername(object.getUsername());
+                hashTagUser.setStatus(1);
+                hashTagUser.setTested(1);
+                hashTagUser.setHashtagId(examRepository.findById(object.getExamId()).get().getHashtagId());
+            }
+        }
+        else {
+            if(examRepository.findAllByHashtagIdAndFinishExam(object.getUsername(), examRepository.findById(object.getExamId()).get().getHashtagId()).isEmpty()){
+                Optional<HashtagUser> hashtagUser = hashTagUserRepository.findByUsernameAndHashtagId(object.getUsername(),examRepository.findById(object.getExamId()).get().getHashtagId());
+                if(hashtagUser.isPresent()){
+                    hashTagUserRepository.delete(hashtagUser.get());
+                }
+            }
+        }
+
 
         //add notification
         List<String> usernameList = new ArrayList<>();

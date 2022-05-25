@@ -19,18 +19,25 @@ public class CustomerTalk {
     @Column(name = "customer_talk_id", nullable = false)
     private Long customerTalkId;
 
-    @Column(name = "position", length = 50)
-    private String position;
-
     @Column(name = "full_name", length = 50)
     private String fullName;
-
-    @Column(name = "content")
-    private String content;
 
     @Column(name = "status")
     private Integer status;
 
     @Column(name = "image_path", length = 200)
     private String imagePath;
+
+    @Column(name = "position_vn", length = 50)
+    private String positionVn;
+
+    @Column(name = "content_vn")
+    private String contentVn;
+
+    @Column(name = "position_en", length = 50)
+    private String positionEn;
+
+    @Column(name = "content_en", length = 50)
+    private String contentEn;
+
 }

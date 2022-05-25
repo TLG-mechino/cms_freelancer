@@ -18,10 +18,16 @@
                     <div class="ui-fluid">
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
                                      layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
-                            <p:outputLabel value="Vị trí công việc của khách hàng: " styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập vị trí công việc khách hàng" maxlength="50"
+                            <p:outputLabel value="Vị trí công việc của khách hàng Tiếng Việt: " styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập vị trí công việc khách hàng Tiếng Việt" maxlength="50"
                                          onchange="this.value = this.value.trim()"
-                                         value="#{customerTalkController.customerTalkDto.position}">
+                                         value="#{customerTalkController.customerTalkDto.positionVn}">
+                            </p:inputText>
+
+                            <p:outputLabel value="Vị trí công việc của khách hàng Tiếng Anh: " styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập vị trí công việc khách hàng Tiếng Anh" maxlength="50"
+                                         onchange="this.value = this.value.trim()"
+                                         value="#{customerTalkController.customerTalkDto.positionEn}">
                             </p:inputText>
 
                             <p:outputLabel value="Họ và Tên:" styleClass="requireLabel"/>
@@ -29,10 +35,15 @@
                                          onchange="this.value = this.value.trim()"
                                          value="#{customerTalkController.customerTalkDto.fullName}"/>
 
-                            <p:outputLabel value="Nội dung:" styleClass="requireLabel"/>
-                            <p:inputTextarea placeholder="Nhập nội dung" maxlength="200"
+                            <p:outputLabel value="Nội dung Tiếng Việt:" styleClass="requireLabel"/>
+                            <p:inputTextarea placeholder="Nhập nội dung Tiếng Việt" maxlength="200"
                                          onchange="this.value = this.value.trim()"
-                                         value="#{customerTalkController.customerTalkDto.content}"/>
+                                         value="#{customerTalkController.customerTalkDto.contentVn}"/>
+
+                            <p:outputLabel value="Nội dung Tiếng Anh:" styleClass="requireLabel"/>
+                            <p:inputTextarea placeholder="Nhập nội dung Tiếng Anh" maxlength="200"
+                                             onchange="this.value = this.value.trim()"
+                                             value="#{customerTalkController.customerTalkDto.contentEn}"/>
 
                             <p:outputLabel value="Tải ảnh lên: " styleClass="requireLabel"/>
                             <p:outputPanel styleClass="ui-g-12">
@@ -135,16 +146,24 @@
                     </p:overlayPanel>
                 </p:column>
 
-                <p:column headerText="Vị trí công việc" style="text-align: left" sortBy="#{resultDto.position}">
-                    <p:outputLabel value="#{resultDto.position}"/>
+                <p:column headerText="Vị trí công việc Tiếng Việt" style="text-align: left" sortBy="#{resultDto.positionVn}">
+                    <p:outputLabel value="#{resultDto.positionVn}"/>
+                </p:column>
+
+                <p:column headerText="Vị trí công việc Tiếng Anh" style="text-align: left" sortBy="#{resultDto.positionEn}">
+                    <p:outputLabel value="#{resultDto.positionEn}"/>
                 </p:column>
 
                 <p:column headerText="Họ và Tên" style="text-align: left; width: 250px" sortBy="#{resultDto.fullName}">
                     <p:outputLabel value="#{resultDto.fullName}"/>
                 </p:column>
 
-                <p:column headerText="Nội dung" style="text-align: left" sortBy="#{resultDto.content}">
-                    <p:outputLabel value="#{commonController.abbreviate(resultDto.content, 30)}"/>
+                <p:column headerText="Nội dung Tiếng Việt" style="text-align: left" sortBy="#{resultDto.contentVn}">
+                    <p:outputLabel value="#{commonController.abbreviate(resultDto.contentVn, 30)}"/>
+                </p:column>
+
+                <p:column headerText="Nội dung Tiếng Anh" style="text-align: left" sortBy="#{resultDto.contentEn}">
+                    <p:outputLabel value="#{commonController.abbreviate(resultDto.contentEn, 30)}"/>
                 </p:column>
 
                 <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">

@@ -51,13 +51,27 @@ public class FileUtil {
         return saveResize(uploadedFile, FOLDER_NAME_IMAGE);
     }
 
+    public static String buildFolderUpload(String folderName) {
+        String todayFolder = DateUtil.getTodayFolder();
+        String folderSave = PropertiesUtil.getProperty("vn.cpa.static.location.upload");
+        pathReturn = "";
+        pathReturn = pathReturn + File.separator + folderName
+                + File.separator + todayFolder
+                + File.separator;
+        // in project
+        return folderSave
+                + File.separator + folderName
+                + File.separator + todayFolder
+                + File.separator;
+    }
+
     public static String getFolder(String folderName) {
         String todayFolder = DateUtil.getTodayFolder();
-        String folder = FacesUtil.getServletContext().getRealPath(
-                File.separator + FOLDER_NAME_PARENT
-                        + File.separator + folderName
-                        + File.separator + todayFolder
-                        + File.separator);
+        String folder =
+                PropertiesUtil.getProperty("vn.cpa.static.location.upload") + "/" + FOLDER_NAME_PARENT
+                        + "/" + folderName
+                        + "/" + todayFolder
+                        + "/" ;
         File inFiles = new File(folder);
         if (!inFiles.exists() && !inFiles.mkdirs()) {
             log.error("Can't create folder");
@@ -111,7 +125,7 @@ public class FileUtil {
 
         String folder = getFolder(folderName);
         File file = new File(folder + File.separator + fileId + "." + FilenameUtils.getExtension(uploadedFile.getFileName()));
-        String path = folder + File.separator + fileId + "." + FilenameUtils.getExtension(uploadedFile.getFileName());
+        String path = folder + fileId + "." + FilenameUtils.getExtension(uploadedFile.getFileName());
         double percent = 0.86;
         try {
             if (file.exists()) {
@@ -426,18 +440,6 @@ public class FileUtil {
         return DateUtil.getCurrentDateStr();
     }
 
-    public static String buildFolderUpload(String folderName) {
-        String todayFolder = DateUtil.getTodayFolder();
-        String folderSave = PropertiesUtil.getProperty("vn.cpa.static.location.upload");
-        pathReturn = "";
-        pathReturn = pathReturn + File.separator + folderName
-                + File.separator + todayFolder
-                + File.separator;
-        // in project
-        return folderSave
-                + File.separator + folderName
-                + File.separator + todayFolder
-                + File.separator;
-    }
+
 
 }

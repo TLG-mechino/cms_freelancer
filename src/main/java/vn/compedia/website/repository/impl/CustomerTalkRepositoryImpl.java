@@ -24,9 +24,11 @@ public class CustomerTalkRepositoryImpl implements CustomerTalkRepositoryCustom 
     public List<CustomerTalkDto> search(CustomerTalkSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" select ct.customer_talk_id, " +
-                "       ct.position, " +
+                "       ct.position_vn, " +
+                "       ct.position_en, " +
                 "       ct.full_name, " +
-                "       ct.content, " +
+                "       ct.content_vn, " +
+                "       ct.content_en, " +
                 "       ct.image_path, " +
                 "       ct.status ");
         appendQuery(sb, searchDto);
@@ -63,11 +65,13 @@ public class CustomerTalkRepositoryImpl implements CustomerTalkRepositoryCustom 
         for (Object[] obj : resultList) {
             CustomerTalkDto dto = new CustomerTalkDto();
             dto.setCustomerTalkId(ValueUtil.getLongByObject(obj[0]));
-            dto.setPosition(ValueUtil.getStringByObject(obj[1]));
-            dto.setFullName(ValueUtil.getStringByObject(obj[2]));
-            dto.setContent(ValueUtil.getStringByObject(obj[3]));
-            dto.setImagePath(ValueUtil.getStringByObject(obj[4]));
-            dto.setStatus(ValueUtil.getIntegerByObject(obj[5]));
+            dto.setPositionVn(ValueUtil.getStringByObject(obj[1]));
+            dto.setPositionEn(ValueUtil.getStringByObject(obj[2]));
+            dto.setFullName(ValueUtil.getStringByObject(obj[3]));
+            dto.setContentVn(ValueUtil.getStringByObject(obj[4]));
+            dto.setContentEn(ValueUtil.getStringByObject(obj[5]));
+            dto.setImagePath(ValueUtil.getStringByObject(obj[6]));
+            dto.setStatus(ValueUtil.getIntegerByObject(obj[7]));
             list.add(dto);
         }
         return list;

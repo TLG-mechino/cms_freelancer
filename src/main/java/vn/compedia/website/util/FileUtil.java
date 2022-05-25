@@ -69,7 +69,7 @@ public class FileUtil {
         String todayFolder = DateUtil.getTodayFolder();
         String folder =
                 PropertiesUtil.getProperty("vn.cpa.static.location.upload") + File.separator + FOLDER_NAME_PARENT
-                        + File.separator + folderName
+//                        + File.separator + folderName
                         + File.separator + todayFolder
                         + File.separator ;
         File inFiles = new File(folder);
@@ -132,7 +132,7 @@ public class FileUtil {
                 file.delete();
             }
             resize(uploadedFile, path, percent);
-            return SEPARATOR + folderName + SEPARATOR + todayFolder + SEPARATOR + fileId + "." + FilenameUtils.getExtension(uploadedFile.getFileName());
+            return file.toString();
         } catch (IOException e) {
             log.error("Save file error", e);
             return null;

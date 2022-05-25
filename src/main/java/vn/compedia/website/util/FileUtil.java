@@ -132,7 +132,7 @@ public class FileUtil {
                 file.delete();
             }
             resize(uploadedFile, path, percent);
-            return file.toString();
+            return File.separator + todayFolder + File.separator + fileId + "." + FilenameUtils.getExtension(uploadedFile.getFileName());
         } catch (IOException e) {
             log.error("Save file error", e);
             return null;

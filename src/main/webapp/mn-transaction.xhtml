@@ -127,9 +127,7 @@
             </p:column>
 
             <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
-               <p:outputLabel value="Hoạt động" rendered="#{resultDto.status eq DbConstant.ACTIVE_STATUS}"/>
-               <p:outputLabel value="Không hoạt động"
-                              rendered="#{resultDto.status eq DbConstant.INACTIVE_STATUS}"/>
+               <p:outputLabel value="#{resultDto.status}" />
             </p:column>
 
          </p:dataTable>

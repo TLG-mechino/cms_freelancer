@@ -91,7 +91,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setCode(ValueUtil.getStringByObject(result[7]));
             dto.setTitle(ValueUtil.getStringByObject(result[8]));
             dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
-            dto.setStatus(ValueUtil.getIntegerByObject(result[10]));
+            dto.setStatus(ValueUtil.getStringByObject(result[10]));
             list.add(dto);
         }
         return list;
@@ -108,7 +108,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
                 "t.DISCOUNT_MONEY, " +
                 "t.FINAL_MONEY, " +
                 "t.CODE, " +
-                "t.PAYMENT_TYPE_ID, " +
+                "t.PAYMENT_TYPE, " +
                 "pt.NAME, " +
                 "t.STATUS, " +
                 "t.TITLE_TRANSACTION ");
@@ -142,7 +142,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
                 sb.append(" ORDER BY t.CODE ");
             }
             if (searchDto.getSortField().equals("paymentTypeId")) {
-                sb.append(" ORDER BY t.PAYMENT_TYPE_ID ");
+                sb.append(" ORDER BY t.PAYMENT_TYPE ");
             }
             if (searchDto.getSortField().equals("status")) {
                 sb.append(" ORDER BY t.STATUS ");
@@ -173,7 +173,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setCode(ValueUtil.getStringByObject(result[7]));
             dto.setPaymentTypeId(ValueUtil.getIntegerByObject(result[8]));
             dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
-            dto.setStatus(ValueUtil.getIntegerByObject(result[10]));
+            dto.setStatus(ValueUtil.getStringByObject(result[10]));
             dto.setTitle(ValueUtil.getStringByObject(result[11]));
             list.add(dto);
         }
@@ -241,12 +241,12 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     }
 
     public void appendQuery(StringBuilder sb, TransactionSearchDto searchDto) {
-        sb.append(" FROM transaction t LEFT JOIN payment_type pt ON t.PAYMENT_TYPE_ID = pt.PAYMENT_TYPE_ID WHERE 1 = 1 ");
+        sb.append(" FROM transaction t LEFT JOIN payment_type pt ON t.PAYMENT_TYPE = pt.PAYMENT_TYPE_ID WHERE 1 = 1 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (t.CODE LIKE :keyword OR t.SENDER LIKE :keyword OR t.RECIPIENT LIKE :keyword) ");
         }
         if (searchDto.getPaymentTypeSearch() != null) {
-            sb.append(" AND t.PAYMENT_TYPE_ID = :paymentTypeSearch ");
+            sb.append(" AND t.PAYMENT_TYPE = :paymentTypeSearch ");
         }
         if (searchDto.getLessMoney() != null) {
             sb.append(" AND t.AMOUNT_OF_MONEY >= :lessMoney ");
@@ -260,12 +260,12 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     }
 
     public void appendQueryByUserName(StringBuilder sb, TransactionSearchDto SearchDto) {
-        sb.append(" FROM transaction t LEFT JOIN payment_type pt ON t.PAYMENT_TYPE_ID = pt.PAYMENT_TYPE_ID WHERE t.SENDER = :username or t.RECIPIENT = :username ");
+        sb.append(" FROM transaction t LEFT JOIN payment_type pt ON t.PAYMENT_TYPE = pt.PAYMENT_TYPE_ID WHERE t.SENDER = :username or t.RECIPIENT = :username ");
         if (StringUtils.isNotBlank(SearchDto.getKeyword())) {
             sb.append(" AND (t.CODE LIKE :keyword OR t.SENDER LIKE :keyword OR t.RECIPIENT LIKE :keyword) ");
         }
         if (SearchDto.getPaymentTypeSearch() != null) {
-            sb.append(" AND t.PAYMENT_TYPE_ID = :paymentTypeSearch ");
+            sb.append(" AND t.PAYMENT_TYPE = :paymentTypeSearch ");
         }
         if (SearchDto.getLessMoney() != null) {
             sb.append(" AND t.AMOUNT_OF_MONEY >= :lessMoney ");
@@ -312,7 +312,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
                 "t.DISCOUNT_MONEY, " +
                 "t.FINAL_MONEY, " +
                 "t.CODE, " +
-                "t.PAYMENT_TYPE_ID, " +
+                "t.PAYMENT_TYPE, " +
                 "pt.NAME, " +
                 "t.STATUS ");
         appendQuery(sb, SearchDto);
@@ -366,12 +366,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setCode(ValueUtil.getStringByObject(result[7]));
             dto.setPaymentTypeId(ValueUtil.getIntegerByObject(result[8]));
             dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
-            dto.setStatus(ValueUtil.getIntegerByObject(result[10]));
-            if(dto.getStatus() == 1) {
-                dto.setStatusString("Hoạt động");
-            }else {
-                dto.setStatusString("Không hoạt động");
-            }
+            dto.setStatus(ValueUtil.getStringByObject(result[10]));
             list.add(dto);
         }
         return list;

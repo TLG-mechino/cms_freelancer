@@ -48,6 +48,6 @@ public class Transaction {
     private Integer paymentTypeId;
 
     @Column(name = "STATUS")
-    private Integer status;
+    private String status;
 
 }

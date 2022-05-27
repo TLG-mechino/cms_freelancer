@@ -24,7 +24,7 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
     public List<NotificationDto> getAllNotificationRpByUserName(String username, NotificationSearchDto searchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" select n.NOTIFICATION_ID, " +
-                "       n.CONTENT, " +
+                "       n.CONTENT_VN, " +
                 "       n.SENDING_TIME, " +
                 "       nr.USERNAME, " +
                 "       n.STATUS ");
@@ -61,7 +61,7 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
             for (Object[] obj : resultList) {
                 NotificationDto notification = new NotificationDto();
                 notification.setId(ValueUtil.getLongByObject(obj[0]));
-                notification.setContent(ValueUtil.getStringByObject(obj[1]));
+                notification.setContentVn(ValueUtil.getStringByObject(obj[1]));
                 notification.setSendingTime(ValueUtil.getDateByObject(obj[2]));
                 notification.setUsername(ValueUtil.getStringByObject(obj[3]));
                 notification.setStatus(ValueUtil.getIntegerByObject(obj[4]));

@@ -29,7 +29,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
                 "t.DISCOUNT_MONEY, " +
                 "t.FINAL_MONEY, " +
                 "t.CODE, " +
-                "t.TITLE_TRANSACTION, " +
+//                "t.TITLE_TRANSACTION, " +
                 "pt.NAME, " +
                 "t.STATUS ");
         appendQuery(sb, searchDto);
@@ -89,9 +89,9 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setDiscountMoney(ValueUtil.getDoubleByObject(result[5]));
             dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
             dto.setCode(ValueUtil.getStringByObject(result[7]));
-            dto.setTitle(ValueUtil.getStringByObject(result[8]));
-            dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
-            dto.setStatus(ValueUtil.getStringByObject(result[10]));
+//            dto.setTitle(ValueUtil.getStringByObject(result[8]));
+            dto.setPaymentTypeName(ValueUtil.getStringByObject(result[8]));
+            dto.setStatus(ValueUtil.getStringByObject(result[9]));
             list.add(dto);
         }
         return list;
@@ -110,8 +110,8 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
                 "t.CODE, " +
                 "t.PAYMENT_TYPE, " +
                 "pt.NAME, " +
-                "t.STATUS, " +
-                "t.TITLE_TRANSACTION ");
+                "t.STATUS " );
+//                "t.TITLE_TRANSACTION ");
         appendQueryByUserName(sb, searchDto);
         if (searchDto.getSortField() != null) {
             if (searchDto.getSortField().equals("transactionId")) {
@@ -174,7 +174,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setPaymentTypeId(ValueUtil.getIntegerByObject(result[8]));
             dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
             dto.setStatus(ValueUtil.getStringByObject(result[10]));
-            dto.setTitle(ValueUtil.getStringByObject(result[11]));
+//            dto.setTitle(ValueUtil.getStringByObject(result[11]));
             list.add(dto);
         }
         return list;

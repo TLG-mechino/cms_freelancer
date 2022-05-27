@@ -25,6 +25,7 @@ import vn.compedia.website.service.NotificationSystemService;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.DbConstant;
 import vn.compedia.website.util.FacesUtil;
+import vn.compedia.website.util.PropertiesUtil;
 
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -175,6 +176,11 @@ public class MnTestEvaluateController extends BaseController {
     public void findByIdAndExamCode(Long userExamId){
         userExamDtoDetail = testEvaluateRepository.findByIdAndExamCode(userExamId);
         examFileList = examFileRepository.findAllByUserExamId(userExamId);
+        for (ExamFile ef : examFileList) {
+            if(!Objects.equals(ef.getFilePath().substring(0, 4), "http")) {
+                ef.setFilePath(PropertiesUtil.getProperty("vn.compedia.static.context") + ef.getFilePath());
+            }
+        }
         FacesUtil.redirect("/evaluate-details.xhtml");
     }
 
@@ -238,7 +244,7 @@ public class MnTestEvaluateController extends BaseController {
         List<String> usernameList = new ArrayList<>();
         usernameList.add(userExam.getUsername());
         notificationSystemService.saveNotification(authorizationController.getAccountDto().getUsername(),"Điểm bài thi",
-                "Bài thi của bạn đã được chấm điểm", 8, userExam.getExamId(), usernameList);
+                "Bài thi của bạn đã được chấm điểm","Your test has been scored", "Your test has been scored", 8, userExam.getExamId(), usernameList);
 
     }
 

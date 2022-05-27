@@ -19,6 +19,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 public class FileUtil {
@@ -33,6 +34,9 @@ public class FileUtil {
     private static final String FOLDER_NAME_IMAGE = "upload";
     private static final String FOLDER_NAME_FILE = "upload_file";
     private static final String SEPARATOR = "/";
+    private String storagePath = null;
+    private String currentFolder = null;
+    private static StringBuilder builder = new StringBuilder();
     public static String pathReturn = "";
     public static String[] FILE_EXCEL = {"xls", "xlsx", "xlsm"};
     private static Logger log = LoggerFactory.getLogger(CommonUtil.class);
@@ -132,7 +136,7 @@ public class FileUtil {
                 file.delete();
             }
             resize(uploadedFile, path, percent);
-            return File.separator + todayFolder + File.separator + fileId + "." + FilenameUtils.getExtension(uploadedFile.getFileName());
+            return todayFolder + File.separator + fileId + "." + FilenameUtils.getExtension(uploadedFile.getFileName());
         } catch (IOException e) {
             log.error("Save file error", e);
             return null;

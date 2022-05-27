@@ -46,8 +46,8 @@ public class NotificationSystemService {
 
     public Long accountId;
 
-    public void saveNotification(String sender, String title, String content, Integer type, Long objectId, List<String> usernameList) {
-        Notification notification = new Notification(content, new Timestamp(new Date().getTime()), sender, 1, title, objectId, type);
+    public void saveNotification(String sender, String titleVn, String contentVn, String titleEn, String contentEn, Integer type, Long objectId, List<String> usernameList) {
+        Notification notification = new Notification(contentVn, new Timestamp(new Date().getTime()), sender, 1, objectId, titleVn, titleEn, contentEn, type);
         notificationRepository.save(notification);
 
         List<NotificationRef> notificationRefList = new ArrayList<>();

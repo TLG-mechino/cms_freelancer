@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface ExamRepository extends CrudRepository<Exam, Long>, ExamRepositoryCustom {
 
-    @Query(value = "select e.* from Exam e left join user_exam u on (u.USERNAME = :username and u.EXAM_ID = e.EXAM_ID) " +
+    @Query(value = "select e.* from exam e left join user_exam u on (u.USERNAME = :username and u.EXAM_ID = e.EXAM_ID) " +
             " where e.HASHTAG_ID = :hashtagId and u.score >= e.score", nativeQuery = true)
     List<Exam> findAllByHashtagIdAndFinishExam(@Param("username") String username, @Param("hashtagId") Long hashtagId);
 }

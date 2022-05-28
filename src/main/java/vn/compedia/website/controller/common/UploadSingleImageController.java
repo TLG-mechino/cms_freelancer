@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.FileUtil;
+import vn.compedia.website.util.PropertiesUtil;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -58,7 +59,7 @@ public class UploadSingleImageController extends BaseController {
     }
 
     public String getImagePath() {
-        return imagePath;
+        return PropertiesUtil.getProperty("vn.compedia.static.context") + imagePath;
     }
 
     public void setImagePath(String imagePath) {

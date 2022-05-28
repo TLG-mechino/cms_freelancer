@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import vn.compedia.website.util.DateUtil;
 import vn.compedia.website.util.FacesUtil;
 import vn.compedia.website.util.FileUtil;
+import vn.compedia.website.util.PropertiesUtil;
 
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -142,5 +143,9 @@ public class CommonController implements Serializable {
 
     public static String generateDateExport() {
         return DateUtil.generateDateExport();
+    }
+
+    public static String setUrlToShowImage(String filePath) {
+        return PropertiesUtil.getProperty("vn.compedia.static.context") + filePath;
     }
 }

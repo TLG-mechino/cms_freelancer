@@ -71,7 +71,7 @@ public class CustomerTalkRepositoryImpl implements CustomerTalkRepositoryCustom 
             dto.setFullName(ValueUtil.getStringByObject(obj[3]));
             dto.setContentVn(ValueUtil.getStringByObject(obj[4]));
             dto.setContentEn(ValueUtil.getStringByObject(obj[5]));
-            dto.setImagePath(PropertiesUtil.getProperty("vn.compedia.static.context") + ValueUtil.getStringByObject(obj[6]));
+            dto.setImagePath(ValueUtil.getStringByObject(obj[6]));
             dto.setStatus(ValueUtil.getIntegerByObject(obj[7]));
             list.add(dto);
         }

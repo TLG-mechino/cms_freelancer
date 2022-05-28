@@ -13,8 +13,8 @@ public class Constant {
     public static final String ERROR_MESSAGE_ID = "errorMsgDialog";
     public static final String TIME_ZONE_DEFAULT = "Asia/Ho_Chi_Minh";
     public static final String NO_IMAGE_URL = "/images/no-image.png";
-    public static final String TEMPLATE_EXPORT_TRANSACTION = "/WEB-INF/template/TransactionExport.xlsx";
     public static final String REPORT_EXPORT_TRANSACTION = "/WEB-INF/report/TransactionReport.xlsx";
+    public static final String TEMPLATE_EXPORT_TRANSACTION = "/WEB-INF/template/TransactionExport.xlsx";
 
     // Cookie
     public static final String COOKIE_ACCOUNT = "_JCA";
@@ -25,8 +25,7 @@ public class Constant {
     public static final int LOGIN_ID = 1;
 
     // Regex
-    public static String EMAIL_PATTERN = "^(?=.{1,64}@)[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*@"
-            + "[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    public static String EMAIL_PATTERN = "^(?=.{1,64}@)[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*@" + "[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     public static String PHONE_PATTERN = "(84|0[3|5|7|8|9])+([0-9]{8})\\b";
     public static String FULL_NAME_PATTERN = "^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s|_]+$";
     public static String LINK_FACEBOOK_PATTERN = "((http|https)://)?(www[.])?facebook.com/.+";
@@ -50,5 +49,4 @@ public class Constant {
     public static final String MN_TEST_EVALUATE = "mn-valuate-test";
     public static final String SYS_CONFIG = "sys-config";
     public static final String SERVICE_CONFIG = "service-config";
-
 }

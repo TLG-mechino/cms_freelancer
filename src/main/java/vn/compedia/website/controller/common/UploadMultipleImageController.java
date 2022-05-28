@@ -40,7 +40,7 @@ public class UploadMultipleImageController extends BaseController {
 
     public void onUploadImage(FileUploadEvent e) {
         try {
-            if (!FileUtil.isAcceptImageType(e.getFile())) {
+            if (FileUtil.isAcceptImageType(e.getFile())) {
                 setErrorForm("Bạn vui lòng chọn file ảnh có định dạng gif, jpg, jpeg, png");
                 return;
             }

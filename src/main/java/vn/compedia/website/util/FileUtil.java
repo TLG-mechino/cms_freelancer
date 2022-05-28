@@ -19,63 +19,27 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 public class FileUtil {
-
-    public final static String EXT_PDF = "pdf";
-    public final static String EXT_ZIP = "zip";
-    public final static String EXT_EXCEL = "xlsx,xls,XLSX,XLS";
-    public final static String EXT_AUDIO = "mp4,mp3,wma,wav,flac,aac,ogg";
-    public final static String EXT_OFFICE = "xls,xlsx,doc,docx,ppt";
-    public static final String FOLDER_STORAGE_FILE = "storage_file";
-    private static final String FOLDER_NAME_PARENT = "resources";
-    private static final String FOLDER_NAME_IMAGE = "upload";
-    private static final String FOLDER_NAME_FILE = "upload_file";
-    private static final String SEPARATOR = "/";
-    private String storagePath = null;
-    private String currentFolder = null;
-    private static StringBuilder builder = new StringBuilder();
-    public static String pathReturn = "";
-    public static String[] FILE_EXCEL = {"xls", "xlsx", "xlsm"};
     private static Logger log = LoggerFactory.getLogger(CommonUtil.class);
 
-    // Save file if success then return file path, else return null
+    public final static String EXT_PDF = "pdf";
+    private static final String SEPARATOR = "/";
+    public final static String EXT_EXCEL = "xlsx,xls,XLSX,XLS";
+    public final static String EXT_OFFICE = "xls,xlsx,doc,docx,ppt";
+
     public static String saveFile(UploadedFile uploadedFile) {
-        return save(uploadedFile, FOLDER_NAME_FILE);
+        return save(uploadedFile);
     }
 
-    // Save file if success then return file path, else return null
-    public static String saveFile(Part uploadedFile) {
-        return save(uploadedFile, FOLDER_NAME_FILE);
+    public static String saveImageFile(UploadedFile uploadedFile) {
+        return saveResize(uploadedFile);
     }
 
-    public static String saveImageFile(UploadedFile uploadedFile) throws IOException {
-        return saveResize(uploadedFile, FOLDER_NAME_IMAGE);
-    }
-
-    public static String buildFolderUpload(String folderName) {
+    public static String getFolder() {
         String todayFolder = DateUtil.getTodayFolder();
-        String folderSave = PropertiesUtil.getProperty("vn.cpa.static.location.upload");
-        pathReturn = "";
-        pathReturn = pathReturn + File.separator + folderName
-                + File.separator + todayFolder
-                + File.separator;
-        // in project
-        return folderSave
-                + File.separator + folderName
-                + File.separator + todayFolder
-                + File.separator;
-    }
-
-    public static String getFolder(String folderName) {
-        String todayFolder = DateUtil.getTodayFolder();
-        String folder =
-                PropertiesUtil.getProperty("vn.cpa.static.location.upload") + File.separator + FOLDER_NAME_PARENT
-//                        + File.separator + folderName
-                        + File.separator + todayFolder
-                        + File.separator ;
+        String folder = PropertiesUtil.getProperty("vn.compedia.static.location") + todayFolder + File.separator;
         File inFiles = new File(folder);
         if (!inFiles.exists() && !inFiles.mkdirs()) {
             log.error("Can't create folder");
@@ -83,57 +47,53 @@ public class FileUtil {
         return folder;
     }
 
-    public static String getAccpetFileString() {
-        return PropertiesUtil.getProperty("accept_file_types_pdf");
-    }
-
-    private static String save(Part uploadedFile, String folderName) {
+    private static String save(Part uploadedFile) {
         String todayFolder = DateUtil.getTodayFolder();
         String fileId = generateFileId();
 
-        String folder = getFolder(folderName);
+        String folder = getFolder();
         File file = new File(folder + File.separator + fileId + "." + FilenameUtils.getExtension(uploadedFile.getSubmittedFileName()));
         try {
-            if (file.exists()) {
-                file.delete();
+            if (file.exists() && file.delete()) {
+                log.info("Delete file with exists!");
             }
             FileUtils.copyInputStreamToFile(uploadedFile.getInputStream(), file);
-            return SEPARATOR + folderName + SEPARATOR + todayFolder + SEPARATOR + fileId + "." + FilenameUtils.getExtension(uploadedFile.getSubmittedFileName());
+            return todayFolder + SEPARATOR + fileId + "." + FilenameUtils.getExtension(uploadedFile.getSubmittedFileName());
         } catch (IOException e) {
             log.error("Save file error", e);
             return null;
         }
     }
 
-    private static String save(UploadedFile uploadedFile, String folderName) {
+    private static String save(UploadedFile uploadedFile) {
         String todayFolder = DateUtil.getTodayFolder();
         String fileId = generateFileId();
 
-        String folder = getFolder(folderName);
+        String folder = getFolder();
         File file = new File(folder + File.separator + fileId + "." + FilenameUtils.getExtension(uploadedFile.getFileName()));
         try {
-            if (file.exists()) {
-                file.delete();
+            if (file.exists() && file.delete()) {
+                log.info("Delete file with exists!");
             }
             FileUtils.copyInputStreamToFile(uploadedFile.getInputStream(), file);
-            return SEPARATOR + folderName + SEPARATOR + todayFolder + SEPARATOR + fileId + "." + FilenameUtils.getExtension(uploadedFile.getFileName());
+            return todayFolder + SEPARATOR + fileId + "." + FilenameUtils.getExtension(uploadedFile.getFileName());
         } catch (IOException e) {
             log.error("Save file error", e);
             return null;
         }
     }
 
-    private static String saveResize(UploadedFile uploadedFile, String folderName) throws IOException {
+    private static String saveResize(UploadedFile uploadedFile) {
         String todayFolder = DateUtil.getTodayFolder();
         String fileId = generateFileId();
 
-        String folder = getFolder(folderName);
+        String folder = getFolder();
         File file = new File(folder + File.separator + fileId + "." + FilenameUtils.getExtension(uploadedFile.getFileName()));
         String path = folder + fileId + "." + FilenameUtils.getExtension(uploadedFile.getFileName());
         double percent = 1;
         try {
-            if (file.exists()) {
-                file.delete();
+            if (file.exists() && file.delete()) {
+                log.info("Delete file with exists!");
             }
             resize(uploadedFile, path, percent);
             return todayFolder + File.separator + fileId + "." + FilenameUtils.getExtension(uploadedFile.getFileName());
@@ -152,52 +112,31 @@ public class FileUtil {
     }
 
     public static void resize(UploadedFile uploadedFile, String path, int scaledWidth, int scaledHeight) throws IOException {
-        // reads input image
+        // Reads input image
         byte[] image = uploadedFile.getContent();
         BufferedImage inputImage = ImageIO.read(new ByteArrayInputStream(image));
 
-        // creates output image
+        // Creates output image
         BufferedImage outputImage = new BufferedImage(scaledWidth,
                 scaledHeight, inputImage.getType());
 
-        // scales the input image to the output image
+        // Scales the input image to the output image
         Graphics2D g2d = outputImage.createGraphics();
         g2d.drawImage(inputImage, 0, 0, scaledWidth, scaledHeight, null);
         g2d.dispose();
 
-        // extracts extension of output file
-        String formatName = path.substring(path
-                .lastIndexOf(".") + 1);
+        // Extracts extension of output file
+        String formatName = path.substring(path.lastIndexOf(".") + 1);
 
-        // writes to output file
+        // Writes to output file
         ImageIO.write(outputImage, formatName, new File(path));
-    }
-
-    public static String copyFileToStorage(String srcFile) {
-        String todayFolder = DateUtil.getTodayFolder();
-        String fileId = generateFileId();
-
-        String folder = getFolder(FOLDER_STORAGE_FILE);
-        File file = new File(folder + File.separator + fileId + "." + FilenameUtils.getExtension(srcFile));
-        try {
-            if (file.exists()) {
-                file.delete();
-            }
-            String newFile = SEPARATOR + FOLDER_STORAGE_FILE + SEPARATOR + todayFolder + SEPARATOR + fileId + "." + FilenameUtils.getExtension(srcFile);
-            FileUtils.copyFile(new File(srcFile), file);
-            return newFile;
-        } catch (IOException e) {
-            log.error("Save file error", e);
-            return null;
-        }
     }
 
     public static void remove(String path) {
         try {
-            Files.deleteIfExists(Paths.get(FacesUtil.getServletContext().getRealPath(File.separator + FOLDER_NAME_PARENT + path)));
+            Files.deleteIfExists(Paths.get(FacesUtil.getServletContext().getRealPath(path)));
         } catch (Exception e) {
             log.error("Remove file error", e);
-            return;
         }
     }
 
@@ -208,27 +147,6 @@ public class FileUtil {
             }
         } catch (Exception e) {
             log.error("Remove file error", e);
-            return;
-        }
-    }
-
-    public static String clone(String databaseFilePath, boolean isImage) {
-        String oldPath = getFilePathFromDatabase(databaseFilePath);
-        String todayFolder = DateUtil.getTodayFolder();
-        String fileId = generateFileId();
-        String folder = isImage ? FOLDER_NAME_IMAGE : FOLDER_NAME_FILE;
-        String newRealPath = File.separator + folder + File.separator + todayFolder + File.separator + fileId + "." + FilenameUtils.getExtension(oldPath);
-        String newPath = SEPARATOR + folder + SEPARATOR + todayFolder + SEPARATOR + fileId + "." + FilenameUtils.getExtension(oldPath);
-        if (new File(FacesUtil.getServletContext().getRealPath(oldPath)).exists()) {
-            try {
-                Files.copy(Paths.get(FacesUtil.getServletContext().getRealPath(oldPath)), Paths.get(FacesUtil.getServletContext().getRealPath(getFilePathFromDatabase(newRealPath))));
-                return newPath;
-            } catch (IOException e) {
-                log.error("Clone file error", e);
-                return newPath;
-            }
-        } else {
-            return newPath;
         }
     }
 
@@ -245,6 +163,7 @@ public class FileUtil {
                     FacesContext.getCurrentInstance().getExternalContext().getMimeType(filePath),
                     FilenameUtils.getName(filePath));
         } catch (FileNotFoundException e) {
+            log.error("Download file error", e);
         }
         return null;
     }
@@ -262,29 +181,13 @@ public class FileUtil {
                     FacesContext.getCurrentInstance().getExternalContext().getMimeType(filePath),
                     FilenameUtils.getName(fileName != null ? fileName : filePath));
         } catch (FileNotFoundException e) {
-        }
-        return null;
-    }
-
-    public static FileInputStream getInputStream(String filePath) {
-        try {
-            return new FileInputStream(new File(filePath));
-        } catch (FileNotFoundException e) {
-
+            log.error("Download file error", e);
         }
         return null;
     }
 
     public static String getFilePathFromDatabase(String databaseFilePath) {
-        return SEPARATOR + FOLDER_NAME_PARENT + SEPARATOR + databaseFilePath;
-    }
-
-    // Get only file name
-    public static String getFilenameFromFilePath(String databaseFilePath) {
-        if (StringUtils.isBlank(databaseFilePath)) {
-            return "";
-        }
-        return databaseFilePath.substring(databaseFilePath.lastIndexOf(SEPARATOR) + 1);
+        return databaseFilePath;
     }
 
     // Create file id (unique)
@@ -312,10 +215,6 @@ public class FileUtil {
         return fileTypeList.contains(getFileExtFromFileName(fileName));
     }
 
-    public static String setWorkFolderExportDoc() {
-        return PropertiesUtil.getProperty("work_folder");
-    }
-
     public static boolean isAcceptFileType(String fileName) {
         String fileTypsString = getAcceptFileString();
         if (StringUtils.isBlank(fileTypsString) || StringUtils.isBlank(fileName)) {
@@ -323,10 +222,6 @@ public class FileUtil {
         }
         List<String> fileTypeList = Arrays.asList(fileTypsString.split(","));
         return fileTypeList.contains(getFileExtFromFileName(fileName));
-    }
-
-    public static boolean isAcceptFileType(UploadedFile uploadedFile) {
-        return !isAcceptFileType(uploadedFile.getFileName().toLowerCase());
     }
 
     public static String getAcceptFileString() {
@@ -337,13 +232,8 @@ public class FileUtil {
         return PropertiesUtil.getProperty("accept_file_audio_types");
     }
 
-    public static String getAcceptFileImageString() {
-        return PropertiesUtil.getProperty("accept_image_types");
-    }
-
-    // PDF
     public static boolean isAcceptFilePDFType(String fileName) {
-        String fileTypeString = getAccpetFilePDFString();
+        String fileTypeString = getAcceptFilePDFString();
         if (StringUtils.isBlank(fileTypeString) || StringUtils.isBlank(fileName)) {
             return false;
         }
@@ -352,7 +242,7 @@ public class FileUtil {
     }
 
     public static boolean isAcceptFilePDFAndDocxType(String fileName) {
-        String fileTypeString = getAccpetFilePDFAndDOCXString();
+        String fileTypeString = getAcceptFilePDFAndDOCXString();
         if (StringUtils.isBlank(fileTypeString) || StringUtils.isBlank(fileName)) {
             return false;
         }
@@ -360,37 +250,14 @@ public class FileUtil {
         return fileTypeList.contains(getFileExtFromFileName(fileName));
     }
 
-    public static boolean isAcceptFilePDFType(UploadedFile uploadedFile) {
-        return isAcceptFilePDFType(uploadedFile.getFileName().toLowerCase());
-    }
-
-    public static boolean isAcceptFilePDFAndDocxType(UploadedFile uploadedFile) {
-        return isAcceptFilePDFAndDocxType(uploadedFile.getFileName().toLowerCase());
-    }
-
-    public static String getAccpetFilePDFString() {
+    public static String getAcceptFilePDFString() {
         return PropertiesUtil.getProperty("accept_file_types_pdf");
     }
 
-    public static String getAccpetFilePDFAndDOCXString() {
+    public static String getAcceptFilePDFAndDOCXString() {
         return PropertiesUtil.getProperty("accept_file_types_pdf_docx");
     }
 
-    public static String getAccpetFileImageString() {
-        return PropertiesUtil.getProperty("accept_image_types");
-    }
-
-    public static void deleteFileByListPath(List<String> fileList) {
-        for (String filePath : fileList) {
-            File file = new File(filePath);
-            if (file.exists()) {
-                boolean a = file.delete();
-                System.out.println(a);
-            }
-        }
-    }
-
-    // Image
     public static boolean isAcceptImageType(String fileName) {
         String fileTypeString = getAcceptImageString();
         if (StringUtils.isBlank(fileTypeString) || StringUtils.isBlank(fileName)) {
@@ -401,19 +268,11 @@ public class FileUtil {
     }
 
     public static boolean isAcceptImageType(UploadedFile uploadedFile) {
-        return isAcceptImageType(uploadedFile.getFileName().toLowerCase());
+        return !isAcceptImageType(uploadedFile.getFileName().toLowerCase());
     }
 
     public static String getAcceptImageString() {
         return PropertiesUtil.getProperty("accept_image_types");
-    }
-
-    public static boolean isZipFileExt(String fileName) {
-        return StringUtils.equalsIgnoreCase(getFileExtFromFileName(fileName), EXT_ZIP);
-    }
-
-    public static boolean isAcceptFileZipType(UploadedFile uploadedFile) {
-        return isZipFileExt(uploadedFile.getFileName().toLowerCase());
     }
 
     public static boolean isAudioFileExt(String fileName) {
@@ -428,22 +287,4 @@ public class FileUtil {
     public static boolean isAcceptFileAudioType(UploadedFile uploadedFile) {
         return isAudioFileExt(uploadedFile.getFileName().toLowerCase());
     }
-
-    public static String createPathFileError() {
-        String fileId = FileUtil.generateFileIdTime() + RandomStringUtils.randomAlphanumeric(16);
-        String folder = FileUtil.buildFolderUpload(FileUtil.FOLDER_NAME_FILE);
-        File inFiles = new File(folder);
-        if (!inFiles.exists() && !inFiles.mkdirs()) {
-            log.error("Can't create folder");
-        }
-        pathReturn = pathReturn + fileId + "." + FILE_EXCEL[1];
-        return folder + fileId + "." + FILE_EXCEL[1];
-    }
-
-    public static String generateFileIdTime() {
-        return DateUtil.getCurrentDateStr();
-    }
-
-
-
 }

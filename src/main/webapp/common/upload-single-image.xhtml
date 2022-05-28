@@ -8,6 +8,7 @@
             content: '\f093' !important;
         }
     </style>
+
     <p:fileUpload id="imageId" mode="advanced"
                   auto="true" label="Tải File"
                   multiple="false"
@@ -23,7 +24,7 @@
     <p:outputPanel id="singleImage" style="margin-top: 5px !important;" styleClass="ui-no-margin-padding">
         <div class="ui-g-12 my-card-image-border" style="text-align: center;">
             <p:graphicImage style="width: 150px; height: 150px; object-fit: cover !important;"
-                            name="#{uploadSingleImageController.imagePath}"/>
+                            value="#{uploadSingleImageController.imagePath}"/>
             <br/>
             <p:commandButton
                     actionListener="#{uploadSingleImageController.onRemoveImage}"

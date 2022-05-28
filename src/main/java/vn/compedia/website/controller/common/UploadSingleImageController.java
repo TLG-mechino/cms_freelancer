@@ -38,7 +38,7 @@ public class UploadSingleImageController extends BaseController {
 
     public void onUploadImage(FileUploadEvent e) {
         try {
-            if (!FileUtil.isAcceptImageType(e.getFile())) {
+            if (FileUtil.isAcceptImageType(e.getFile())) {
                 setErrorForm("Loại file không được phép. Những file được phép " + FileUtil.getAcceptImageString().replaceAll(",", ", ").toUpperCase());
                 return;
             }
@@ -53,7 +53,7 @@ public class UploadSingleImageController extends BaseController {
         }
     }
 
-    public void onRemoveImage(String image) {
+    public void onRemoveImage() {
         imagePath = Constant.NO_IMAGE_URL;
         showDeleteButton = false;
     }
@@ -71,10 +71,7 @@ public class UploadSingleImageController extends BaseController {
     }
 
     public boolean isShowDeleteButtonDefault(String imagePath) {
-        if (StringUtils.isNotBlank(imagePath) && imagePath.contains("no-avatar.png")) {
-            return false;
-        }
-        return true;
+        return !StringUtils.isNotBlank(imagePath) || !imagePath.contains("no-image.png");
     }
 
     public void setShowDeleteButton(boolean showDeleteButton) {

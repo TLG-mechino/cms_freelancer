@@ -135,14 +135,14 @@
                 </p:column>
 
                 <p:column headerText="Hình ảnh đại diện" style="text-align: left" width="150">
-                    <p:graphicImage id="image" value= "#{resultDto.imagePath}" style="width: 120px"
-                                    rendered="#{not empty resultDto.imagePath}"
+                    <p:graphicImage id="image" value="#{commonController.setUrlToShowImage(resultDto.imagePath)}"
+                                    style="width: 120px" rendered="#{not empty resultDto.imagePath}"
                                     styleClass="image-in-table"/>
-                    <p:graphicImage id="no-image" value="images/no-image.png" style="width: 120px"
-                                    rendered="#{empty resultDto.imagePath}"
+                    <p:graphicImage id="no-image" value="#{commonController.setUrlToShowImage('images/no-image.png')}"
+                                    style="width: 120px" rendered="#{empty resultDto.imagePath}"
                                     styleClass="image-in-table"/>
                     <p:overlayPanel for="image" hideEffect="fade" rendered="#{not empty resultDto.imagePath}">
-                        <p:graphicImage name="#{resultDto.imagePath}" width="300" height="auto"/>
+                        <p:graphicImage value="#{commonController.setUrlToShowImage(resultDto.imagePath)}" width="300" height="auto"/>
                     </p:overlayPanel>
                 </p:column>
 

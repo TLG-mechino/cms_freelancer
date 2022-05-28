@@ -42,7 +42,7 @@ public class UploadMultipleImageWithFileNameController extends BaseController {
 
     public void onUploadImage(FileUploadEvent e) {
         try {
-            if (!FileUtil.isAcceptImageType(e.getFile())) {
+            if (FileUtil.isAcceptImageType(e.getFile())) {
                 setErrorForm("Loại file không được phép. Những file được phép " + FileUtil.getAcceptImageString().replaceAll(",", ", ").toUpperCase());
                 return;
             }

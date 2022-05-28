@@ -41,6 +41,7 @@ public class AuthorizationController implements Serializable {
     private boolean saveCookie;
     private AccountDto accountDto;
     private boolean checkNotify = false;
+    private String tokenResponse;
     private int role = Constant.NOT_LOGIN_ID;
 
     public void initData() {
@@ -113,8 +114,10 @@ public class AuthorizationController implements Serializable {
             return;
         }
         LoginDTO loginDTO = new LoginDTO(account.getUsername(), accountDto.getPassword());
-        notificationSystemService.loginApi(loginDTO);
+        notificationSystemService.setLoginDTO(loginDTO);
+//        tokenResponse = notificationSystemService.loginApi(loginDTO);
         notificationSystemService.setAccountId(account.getAccountId());
+//        notificationSystemService.setToken(tokenResponse);
         processLogin(account, saveCookie);
     }
 

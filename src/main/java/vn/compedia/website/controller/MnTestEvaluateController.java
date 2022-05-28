@@ -176,11 +176,11 @@ public class MnTestEvaluateController extends BaseController {
     public void findByIdAndExamCode(Long userExamId){
         userExamDtoDetail = testEvaluateRepository.findByIdAndExamCode(userExamId);
         examFileList = examFileRepository.findAllByUserExamId(userExamId);
-        for (ExamFile ef : examFileList) {
-            if(!Objects.equals(ef.getFilePath().substring(0, 4), "http")) {
-                ef.setFilePath(PropertiesUtil.getProperty("vn.compedia.static.context") + ef.getFilePath());
-            }
-        }
+//        for (ExamFile ef : examFileList) {
+//            if(!Objects.equals(ef.getFilePath().substring(0, 4), "http")) {
+//                ef.setFilePath(PropertiesUtil.getProperty("vn.compedia.static.context") + ef.getFilePath());
+//            }
+//        }
         FacesUtil.redirect("/evaluate-details.xhtml");
     }
 

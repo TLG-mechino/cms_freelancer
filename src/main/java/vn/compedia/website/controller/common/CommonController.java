@@ -65,7 +65,7 @@ public class CommonController implements Serializable {
     }
 
     public StreamedContent getFileDownload(String filePath) {
-        StreamedContent streamedContent = FileUtil.getDownloadFileFromDatabase(filePath);
+        StreamedContent streamedContent = FileUtil.getDownloadFileFromDatabase(setUrlToShowImage(filePath));
         if (streamedContent == null) {
             FacesUtil.addErrorMessage("File không tồn tại");
         }

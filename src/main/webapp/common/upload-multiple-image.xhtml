@@ -24,7 +24,7 @@
         <ui:repeat value="#{uploadMultipleImageWithFileNameController.uploadMultipleFileDto.listToShow}"
                    var="itemVar1" varStatus="status">
             <div class="ui-g-12 ui-lg-3 my-card-image-border" style="text-align: center;">
-                <p:graphicImage id="galery_image_#{status.index}" value="#{itemVar1.filePath}"
+                <p:graphicImage id="galery_image_#{status.index}" value="#{commonController.setUrlToShowImage(itemVar1.filePath)}"
                                 style="height: 100px; width: 100px; object-fit: cover !important;"/>
                 <br/>
                 <p:commandButton

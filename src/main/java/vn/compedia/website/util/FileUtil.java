@@ -39,7 +39,7 @@ public class FileUtil {
 
     public static String getFolder() {
         String todayFolder = DateUtil.getTodayFolder();
-        String folder = PropertiesUtil.getProperty("vn.compedia.static.location") + todayFolder + File.separator;
+        String folder = todayFolder + File.separator;
         File inFiles = new File(folder);
         if (!inFiles.exists() && !inFiles.mkdirs()) {
             log.error("Can't create folder");

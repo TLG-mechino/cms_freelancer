@@ -58,10 +58,6 @@ public class UploadSingleImageController extends BaseController {
         showDeleteButton = false;
     }
 
-    public String getImagePath() {
-        return PropertiesUtil.getProperty("vn.compedia.static.context") + imagePath;
-    }
-
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }

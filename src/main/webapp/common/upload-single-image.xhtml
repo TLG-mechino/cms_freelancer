@@ -24,7 +24,7 @@
     <p:outputPanel id="singleImage" style="margin-top: 5px !important;" styleClass="ui-no-margin-padding">
         <div class="ui-g-12 my-card-image-border" style="text-align: center;">
             <p:graphicImage style="width: 150px; height: 150px; object-fit: cover !important;"
-                            value="#{uploadSingleImageController.imagePath}"/>
+                            value="#{commonController.setUrlToShowImage(uploadSingleImageController.imagePath)}"/>
             <br/>
             <p:commandButton
                     actionListener="#{uploadSingleImageController.onRemoveImage}"

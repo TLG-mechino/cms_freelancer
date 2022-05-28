@@ -64,7 +64,7 @@
                              emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
                              currentPageReportTemplate="Tổng số bản ghi: #{mnTestEvaluateController.examFileList.size()}">
 
-                    <p:column headerText="STT" width="80" style="text-align: center">
+                    <p:column headerText="STT" width="30" style="text-align: center">
                         <p:outputLabel value="#{rowIndex + 1}"/>
                     </p:column>
 
@@ -72,12 +72,10 @@
                         <p:outputLabel value="#{resultDto.fileName}"/>
                     </p:column>
 
-                    <p:column headerText="Thao tác" width="100"
-                              styleClass="ui-button-raised ui-button-danger ui-button-flat"
-                              style="text-align: center" exportable="false">
-                        <p:commandButton value="Tải xuống" ajax="false">
-                            <p:fileDownload value="#{commonController.getFileDownload(resultDto.filePath)}"/>
-                        </p:commandButton>
+                    <p:column headerText="Thao tác" width="100" style="text-align: center" exportable="false"
+                              styleClass="ui-button-raised ui-button-danger ui-button-flat">
+                        <a href="#{commonController.setUrlToShowImage(resultDto.filePath)}"
+                           download="true" target="_blank" style="text-decoration: underline">Tải file | Xem file</a>
                     </p:column>
                 </p:dataTable>
 

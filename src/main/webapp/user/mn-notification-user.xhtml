@@ -95,16 +95,16 @@
                         <p:outputLabel value="#{rowIndex + 1}"/>
                     </p:column>
 
-                    <p:column headerText="Nội dung thông báo" style="text-align: left"
+                    <p:column headerText="Nội dung" style="text-align: left"
                               sortBy="#{resultDto.content}">
-                        <p:outputLabel value="#{resultDto.content}"/>
+                        <p:outputLabel value="#{resultDto.contentVn}"/>
                     </p:column>
 
                     <p:column headerText="Người nhận" style="text-align: left" sortBy="#{resultDto.username}">
                         <p:outputLabel value="#{resultDto.username}"/>
                     </p:column>
 
-                    <p:column headerText="Thời gian thông báo" style="text-align: left"
+                    <p:column headerText="Thời gian" style="text-align: left"
                               sortBy="#{resultDto.sendingTime}">
                         <p:outputLabel value="#{resultDto.sendingTime}">
                             <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>

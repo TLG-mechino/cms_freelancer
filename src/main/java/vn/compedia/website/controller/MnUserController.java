@@ -15,7 +15,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.controller.common.BaseController;
-import vn.compedia.website.dto.AccountDto;
 import vn.compedia.website.dto.entity.UserDto;
 import vn.compedia.website.dto.search.UserSearchDto;
 import vn.compedia.website.model.*;
@@ -29,7 +28,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Setter
 @Getter
@@ -39,36 +41,34 @@ import java.util.*;
 @Scope(value = "session")
 public class MnUserController extends BaseController {
     private static Logger logger = LoggerFactory.getLogger(MnUserController.class);
+
     @Inject
     private AuthorizationController authorizationController;
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private AccountRepository accountRepository;
-
-    @Autowired
-    private ProvinceRepository provinceRepository;
     @Autowired
     private CommuneRepository communeRepository;
     @Autowired
+    private ProvinceRepository provinceRepository;
+    @Autowired
     private DistrictRepository districtRepository;
 
-
     private User user;
+    private Account account;
+    private String emailTemp;
+    private String titleDialog;
+    private UserDto userDtoDetails;
     private User userChangeProvince;
     private User userChangeDistrict;
-    private Account account;
-    private String titleDialog;
-    private LazyDataModel<UserDto>lazyDataModel;
     private UserSearchDto searchUserDto;
     private UserSearchDto searchUserTemp;
     private List<SelectItem> listProvince;
     private List<SelectItem> listDistrict;
     private List<SelectItem> listCommune;
-    private UserDto userDtoDetails;
-    private String emailTemp;
+    private LazyDataModel<UserDto> lazyDataModel;
 
     public void initData() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -84,17 +84,11 @@ public class MnUserController extends BaseController {
         user = new User();
         userChangeProvince = new User();
         userChangeDistrict = new User();
-        emailTemp = new String();
-
+        emailTemp = "";
         onSearch();
-
-    }
-    @Override
-    protected String getMenuId() {
-        return Constant.MN_USER;
     }
 
-    public void onSearch(){
+    public void onSearch() {
         lazyDataModel = new LazyDataModel<UserDto>() {
             @Override
             public List<UserDto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, FilterMeta> filterBy) {
@@ -114,17 +108,17 @@ public class MnUserController extends BaseController {
 
             @Override
             public UserDto getRowData(String rowKey) {
-                List<UserDto>dtos = getWrappedData();
+                List<UserDto> dtos = getWrappedData();
                 Long value = Long.valueOf(rowKey);
-                for(UserDto userDto : dtos){
-                    if(userDto.getAccountId().equals(value)){
+                for (UserDto userDto : dtos) {
+                    if (userDto.getAccountId().equals(value)) {
                         return userDto;
                     }
                 }
                 return null;
             }
         };
-        int count = userRepository.countSearch(searchUserDto,DbConstant.ACCOUNT_USER);
+        int count = userRepository.countSearch(searchUserDto, DbConstant.ACCOUNT_USER);
         lazyDataModel.setRowCount(count);
         FacesUtil.updateView("searchForm");
     }
@@ -160,18 +154,18 @@ public class MnUserController extends BaseController {
         user.setDistrictId(object.getDistrictId());
         user.setCommuneId(object.getCommuneId());
         user.setAddress(communeRepository.getNameByCommuneId(object.getCommuneId()) + ", " +
-                districtRepository.getNameByDistrictId(object.getDistrictId())+ ", " +
+                districtRepository.getNameByDistrictId(object.getDistrictId()) + ", " +
                 provinceRepository.getNameByProvinceId(object.getProvinceId()));
         account.setFullName(object.getFullName());
         account.setPhone(object.getPhone());
         account.setEmail(object.getEmail());
 
-        if(object.getExperienceAmount() == null){
+        if (object.getExperienceAmount() == null) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập số năm kinh nghiệm làm việc ");
             FacesUtil.updateView("growl");
             return;
         }
-        if(object.getWorkingHours() == null){
+        if (object.getWorkingHours() == null) {
             FacesUtil.addErrorMessage("Bạn vui lòng nhập số giờ làm việc ");
             FacesUtil.updateView("growl");
             return;
@@ -181,7 +175,7 @@ public class MnUserController extends BaseController {
             FacesUtil.updateView("growl");
             return;
         }
-        if(!userDtoDetails.getFullName().matches(Constant.FULL_NAME_PATTERN)){
+        if (!userDtoDetails.getFullName().matches(Constant.FULL_NAME_PATTERN)) {
             FacesUtil.addErrorMessage("Họ và tên không đúng định dạng");
             FacesUtil.updateView("growl");
             return;
@@ -192,7 +186,7 @@ public class MnUserController extends BaseController {
             FacesUtil.updateView("growl");
             return;
         }
-        if(!userDtoDetails.getPhone().matches(Constant.PHONE_PATTERN)){
+        if (!userDtoDetails.getPhone().matches(Constant.PHONE_PATTERN)) {
             FacesUtil.addErrorMessage("Số điện thoại không đúng định dạng");
             FacesUtil.updateView("growl");
             return;
@@ -213,27 +207,26 @@ public class MnUserController extends BaseController {
             FacesUtil.updateView("growl");
             return;
         }
-        if(!userDtoDetails.getFacebookLink().matches(Constant.LINK_FACEBOOK_PATTERN)){
+        if (!userDtoDetails.getFacebookLink().matches(Constant.LINK_FACEBOOK_PATTERN)) {
             FacesUtil.addErrorMessage("Link Facebook không đúng định dạng");
             FacesUtil.updateView("growl");
             return;
         }
-        if(object.getProvinceId() == null){
+        if (object.getProvinceId() == null) {
             FacesUtil.addErrorMessage("Bạn vui lòng chọn Tỉnh/Thành phố");
             FacesUtil.updateView("growl");
             return;
         }
-        if(object.getDistrictId() == null){
+        if (object.getDistrictId() == null) {
             FacesUtil.addErrorMessage("Bạn vui lòng chọn Quận/Huyện");
             FacesUtil.updateView("growl");
             return;
         }
-        if(object.getCommuneId() == null){
+        if (object.getCommuneId() == null) {
             FacesUtil.addErrorMessage("Bạn vui lòng chọn Phường/Xã");
             FacesUtil.updateView("growl");
             return;
         }
-
         userRepository.save(user);
         accountRepository.save(account);
         titleDialog = "Sửa";
@@ -241,7 +234,7 @@ public class MnUserController extends BaseController {
         FacesUtil.updateView("growl");
     }
 
-    public void findUserDtoById(Long accountId){
+    public void findUserDtoById(Long accountId) {
         userDtoDetails = userRepository.findUserDtoById(accountId);
 
         listProvince = new ArrayList<>();
@@ -260,8 +253,8 @@ public class MnUserController extends BaseController {
         }
         listCommune = new ArrayList<>();
         List<Commune> dataCommune = communeRepository.findAllByDistrictId(userDtoDetails.getDistrictId());
-        if(CollectionUtils.isNotEmpty(dataCommune)){
-            for (Commune commune : dataCommune){
+        if (CollectionUtils.isNotEmpty(dataCommune)) {
+            for (Commune commune : dataCommune) {
                 listCommune.add(new SelectItem(commune.getCommuneId(), commune.getName()));
             }
         }
@@ -269,7 +262,7 @@ public class MnUserController extends BaseController {
         FacesUtil.redirect("/user/profile.xhtml");
     }
 
-    public void changeProvince(Long provinceId){
+    public void changeProvince(Long provinceId) {
         userDtoDetails.setCommuneId(0L);
         listDistrict = new ArrayList<>();
         List<District> dataDistrict = districtRepository.findAllByProvinceId(provinceId);
@@ -281,23 +274,23 @@ public class MnUserController extends BaseController {
 
     }
 
-    public void changeDistrict(Long districtId){
+    public void changeDistrict(Long districtId) {
         listCommune = new ArrayList<>();
         List<Commune> dataCommune = communeRepository.findAllByDistrictId(districtId);
-        if(CollectionUtils.isNotEmpty(dataCommune)){
-            for (Commune commune : dataCommune){
+        if (CollectionUtils.isNotEmpty(dataCommune)) {
+            for (Commune commune : dataCommune) {
                 listCommune.add(new SelectItem(commune.getCommuneId(), commune.getName()));
             }
         }
     }
 
-    public void blockAccount(Long accountId){
+    public void blockAccount(Long accountId) {
         Account account = accountRepository.findById(accountId).get();
         account.setStatus(0);
         accountRepository.save(account);
     }
 
-    public void reBlockAccount(Long accountId){
+    public void reBlockAccount(Long accountId) {
         Account account = accountRepository.findById(accountId).get();
         account.setStatus(1);
         accountRepository.save(account);
@@ -309,4 +302,8 @@ public class MnUserController extends BaseController {
         }
     }
 
+    @Override
+    protected String getMenuId() {
+        return Constant.MN_USER;
+    }
 }

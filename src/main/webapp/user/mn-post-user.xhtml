@@ -30,11 +30,12 @@
                 <ui:include src="menu_user.xhtml"/>
             </div>
 
-            <h:form styleClass="ui-g-12" id="searchForm" prependId="false" style="border: 1px solid #E9E9E9 !important;
-    border-radius: 8px !important;">
+            <h:form styleClass="ui-g-12" id="searchForm" prependId="false"
+                    style="border: 1px solid #E9E9E9 !important; border-radius: 8px !important;">
                 <p:outputPanel>
                     <p:link styleClass="title-color-left ui-sm-12">Thông tin bài đăng</p:link>
                 </p:outputPanel>
+
                 <hr class="hr-class"/>
                 <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
                              columnClasses="ui-grid-col-11 ui-no-margin-padding margin-right-10, ui-grid-col-1 ui-no-margin-padding">
@@ -76,7 +77,6 @@
                     </p:overlayPanel>
                 </p:panelGrid>
 
-
                 <hr class="hr-class"/>
 
                 <p:dataTable id="tblSearchResult" styleClass="margin-top-15 search-panel"
@@ -106,7 +106,7 @@
                         <p:outputLabel value="#{resultDto.filePost}"/>
                     </p:column>
 
-                    <p:column headerText="Thời gian thông báo" style="text-align: left"
+                    <p:column headerText="Thời gian" style="text-align: left"
                               sortBy="#{resultDto.postingTime}">
                         <p:outputLabel value="#{resultDto.postingTime}">
                             <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>
@@ -144,7 +144,7 @@
                 $('#id-2').addClass('active-menuitem');
             }, 500);
 
-            $(document).keyup(function(event) {
+            $(document).keyup(function (event) {
                 var element = document.getElementById("search");
                 var activePanel = element.classList.contains("open-panel");
                 if (activePanel &amp;&amp; event.which === 13) {
@@ -154,7 +154,7 @@
 
             function addOrRemoveClass() {
                 var element = document.getElementById("search");
-                if(element.classList.contains("open-panel")) {
+                if (element.classList.contains("open-panel")) {
                     element.classList.remove("open-panel");
                 } else {
                     element.classList.add("open-panel");

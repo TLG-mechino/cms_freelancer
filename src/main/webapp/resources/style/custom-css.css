@@ -15,16 +15,6 @@
     border-radius: 25px;
 }
 
-.container .container-right .ui-panelgrid-cell {
-    /*min-width: 200px;*/
-    margin-left: 20px;
-}
-
-.container .container-right .ui-panelgrid-cell input {
-    min-width: 100px;
-    margin-left: 20px;
-}
-
 .container .container-left {
     margin-right: 15px;
 }
@@ -67,7 +57,7 @@
 .button-back {
     border: 1px solid #7a7a7a !important;
     background-color: white !important;
-    border-radius: 10px !important;
+    border-radius: 5px !important;
     color: #7a7a7a !important;
 }
 
@@ -87,17 +77,16 @@
     float: right;
 }
 
-#menu-user li{
+#menu-user li {
     margin-top: 8px !important;
     margin-bottom: 8px !important;
 }
 
-#menu-user li a{
+#menu-user li a {
     margin-top: 2px !important;
     margin-bottom: 2px !important;
 }
 
-.ui-selectonemenu-filter-container span{
+.ui-selectonemenu-filter-container span {
 
 }
-

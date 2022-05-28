@@ -28,8 +28,8 @@
                 <ui:include src="/template/topbar.xhtml"/>
                 <ui:include src="menu_user.xhtml"/>
             </div>
-            <h:form styleClass="ui-g-12" id="searchForm" prependId="false" style="border: 1px solid #E9E9E9 !important;
-    border-radius: 8px !important;">
+            <h:form styleClass="ui-g-12" id="searchForm" prependId="false"
+                    style="border: 1px solid #E9E9E9 !important; border-radius: 8px !important;">
 
                 <p:outputPanel>
                     <p:link styleClass="title-color-left ui-sm-12">Thông tin dự án nhận</p:link>
@@ -82,7 +82,6 @@
                     </p:overlayPanel>
                 </p:panelGrid>
 
-
                 <hr class="hr-class"/>
 
                 <p:dataTable id="tblSearchResult" styleClass="margin-top-15 search-panel"
@@ -103,29 +102,29 @@
                         <p:outputLabel value="#{resultDto.name}"/>
                     </p:column>
 
-                    <p:column headerText="Người thực hiện" style="text-align: left; width: 120px" sortBy="#{resultDto.username}">
+                    <p:column headerText="Người thực hiện" style="text-align: left; width: 120px"
+                              sortBy="#{resultDto.username}">
                         <p:outputLabel value="#{resultDto.username}"/>
                     </p:column>
 
-                    <p:column headerText="Mô tả" style="text-align: center; width: 400px" sortBy="#{resultDto.description}">
-                        <p:outputLabel value="#{commonController.abbreviate(resultDto.description, 30)}"/>
-                    </p:column>
-
-                    <p:column headerText="Giá thấp nhất" style="text-align: right; width: 120px" sortBy="#{resultDto.moneyFrom}">
+                    <p:column headerText="Giá thấp nhất" style="text-align: right; width: 120px"
+                              sortBy="#{resultDto.moneyFrom}">
                         <p:outputLabel value="#{resultDto.moneyFrom}">
                             <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
                                              pattern="###,### $"/>
                         </p:outputLabel>
                     </p:column>
 
-                    <p:column headerText="Giá cao nhất" style="text-align: right; width: 120px" sortBy="#{resultDto.moneyTo}">
+                    <p:column headerText="Giá cao nhất" style="text-align: right; width: 120px"
+                              sortBy="#{resultDto.moneyTo}">
                         <p:outputLabel value="#{resultDto.moneyTo}">
                             <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
                                              pattern="###,### $"/>
                         </p:outputLabel>
                     </p:column>
 
-                    <p:column headerText="Trạng thái" style="text-align: center; width: 100px" sortBy="#{resultDto.status}">
+                    <p:column headerText="Trạng thái" style="text-align: center; width: 100px"
+                              sortBy="#{resultDto.status}">
                         <p:outputLabel value="Đã xóa"
                                        rendered="#{resultDto.status eq -1}"/>
                         <p:outputLabel value="Có hiệu lực" rendered="#{resultDto.status eq 1}"/>
@@ -162,7 +161,7 @@
                 $('#id-2').addClass('active-menuitem');
             }, 500);
 
-            $(document).keyup(function(event) {
+            $(document).keyup(function (event) {
                 var element = document.getElementById("search");
                 var activePanel = element.classList.contains("open-panel");
                 if (activePanel &amp;&amp; event.which === 13) {
@@ -172,7 +171,7 @@
 
             function addOrRemoveClass() {
                 var element = document.getElementById("search");
-                if(element.classList.contains("open-panel")) {
+                if (element.classList.contains("open-panel")) {
                     element.classList.remove("open-panel");
                 } else {
                     element.classList.add("open-panel");

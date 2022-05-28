@@ -30,11 +30,12 @@
                 <ui:include src="menu_user.xhtml"/>
             </div>
 
-            <h:form styleClass="ui-g-12" id="searchForm" prependId="false" style="border: 1px solid #E9E9E9 !important;
-    border-radius: 8px !important;">
+            <h:form styleClass="ui-g-12" id="searchForm" prependId="false"
+                    style="border: 1px solid #E9E9E9 !important; border-radius: 8px !important;">
                 <p:outputPanel>
                     <p:link styleClass="title-color-left ui-sm-12">Thông tin review đánh giá</p:link>
                 </p:outputPanel>
+
                 <hr class="hr-class"/>
                 <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
                              columnClasses="ui-grid-col-11 ui-no-margin-padding margin-right-10, ui-grid-col-1 ui-no-margin-padding">
@@ -85,7 +86,6 @@
                     </p:overlayPanel>
                 </p:panelGrid>
 
-
                 <hr class="hr-class"/>
 
                 <p:dataTable id="tblSearchResult" styleClass="margin-top-15 search-panel"
@@ -115,15 +115,11 @@
                         <p:outputLabel value="#{resultDto.title}"/>
                     </p:column>
 
-                    <p:column headerText="Nội dung đánh giá" style="text-align: left" sortBy="#{resultDto.content}">
-                        <p:outputLabel value="#{resultDto.content}"/>
-                    </p:column>
-
-                    <p:column headerText="Sao đánh giá" style="text-align: left" sortBy="#{resultDto.starAmount}">
+                    <p:column headerText="Số sao" style="text-align: left" sortBy="#{resultDto.starAmount}">
                         <p:outputLabel value="#{resultDto.starAmount} sao"/>
                     </p:column>
 
-                    <p:column headerText="Thời gian thông báo" style="text-align: left"
+                    <p:column headerText="Thời gian" style="text-align: left"
                               sortBy="#{resultDto.reviewTime}">
                         <p:outputLabel value="#{resultDto.reviewTime}">
                             <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>
@@ -132,8 +128,7 @@
 
                     <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
                         <p:outputLabel value="Hoạt động" rendered="#{resultDto.status eq 1}"/>
-                        <p:outputLabel value="Đã xóa"
-                                       rendered="#{resultDto.status eq 0}"/>
+                        <p:outputLabel value="Đã xóa" rendered="#{resultDto.status eq 0}"/>
                     </p:column>
 
                     <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">
@@ -161,7 +156,7 @@
                 $('#id-2').addClass('active-menuitem');
             }, 500);
 
-            $(document).keyup(function(event) {
+            $(document).keyup(function (event) {
                 var element = document.getElementById("search");
                 var activePanel = element.classList.contains("open-panel");
                 if (activePanel &amp;&amp; event.which === 13) {
@@ -171,7 +166,7 @@
 
             function addOrRemoveClass() {
                 var element = document.getElementById("search");
-                if(element.classList.contains("open-panel")) {
+                if (element.classList.contains("open-panel")) {
                     element.classList.remove("open-panel");
                 } else {
                     element.classList.add("open-panel");

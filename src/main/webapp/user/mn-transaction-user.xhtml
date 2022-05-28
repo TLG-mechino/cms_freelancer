@@ -130,7 +130,7 @@
                               sortBy="#{resultDto.amountOfMoney}">
                         <p:outputLabel value="#{resultDto.amountOfMoney}">
                             <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
-                                             pattern="###,### đ"/>
+                                             pattern="###,### $"/>
                         </p:outputLabel>
                     </p:column>
 
@@ -138,14 +138,14 @@
                               sortBy="#{resultDto.discountMoney}">
                         <p:outputLabel value="#{resultDto.discountMoney}">
                             <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
-                                             pattern="###,### đ"/>
+                                             pattern="###,### $"/>
                         </p:outputLabel>
                     </p:column>
 
                     <p:column headerText="Số tiền nhận được" style="text-align: left" sortBy="#{resultDto.finalMoney}">
                         <p:outputLabel value="#{resultDto.finalMoney}">
                             <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
-                                             pattern="###,### đ"/>
+                                             pattern="###,### $"/>
                         </p:outputLabel>
                     </p:column>
 

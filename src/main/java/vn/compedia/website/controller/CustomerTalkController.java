@@ -119,12 +119,12 @@ public class CustomerTalkController extends BaseController {
 
     public boolean validateDate() {
         if (StringUtils.isBlank(customerTalkDto.getPositionVn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập vị trí công việc của khách hàng Tiếng Việt");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập chức vụ tiếng việt");
             return false;
         }
 
         if (StringUtils.isBlank(customerTalkDto.getPositionEn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập vị trí công việc của khách hàng Tiếng Anh");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập chức vụ tiếng anh");
             return false;
         }
 
@@ -146,12 +146,12 @@ public class CustomerTalkController extends BaseController {
         }
 
         if (StringUtils.isBlank(customerTalkDto.getContentVn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập nội dung Tiếng Việt");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập nội dung tiếng việt");
             return false;
         }
 
         if (StringUtils.isBlank(customerTalkDto.getContentEn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập nội dung Tiếng Anh");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập nội dung tiếng anh");
             return false;
         }
 

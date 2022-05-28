@@ -126,7 +126,7 @@
                     <p:column headerText="Phí dịch vụ" style="text-align: left" sortBy="#{resultDto.money}">
                         <p:outputLabel value="#{resultDto.money}">
                             <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
-                                             pattern="###,### đ"/>
+                                             pattern="###,### $"/>
                         </p:outputLabel>
                     </p:column>
                     <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">

@@ -36,26 +36,26 @@
                     </p:outputPanel>
 
                     <p:outputPanel>
-                        <p:outputLabel value="Tên Tiếng Việt:" styleClass="requireLabel"/>
-                        <p:inputText placeholder="Nhập tên dịch vụ Tiếng Việt" maxlength="20" styleClass="input"
+                        <p:outputLabel value="Tên tiếng việt:" styleClass="requireLabel"/>
+                        <p:inputText placeholder="Nhập tên dịch vụ tiếng việt" maxlength="20" styleClass="input"
                                      value="#{serviceConfigController.serviceConfigDto.nameVn}"/>
                     </p:outputPanel>
 
                     <p:outputPanel>
-                        <p:outputLabel value="Tên Tiếng Anh:" styleClass="requireLabel"/>
-                        <p:inputText placeholder="Nhập tên dịch vụ Tiếng Anh" maxlength="20" styleClass="input"
+                        <p:outputLabel value="Tên tiếng anh:" styleClass="requireLabel"/>
+                        <p:inputText placeholder="Nhập tên dịch vụ tiếng anh" maxlength="20" styleClass="input"
                                      value="#{serviceConfigController.serviceConfigDto.nameEn}"/>
                     </p:outputPanel>
 
                     <p:outputPanel>
-                        <p:outputLabel value="Mô tả Tiếng Việt:"/>
-                        <p:inputTextarea placeholder="Nhập mô tả thông tin Tiếng Việt" rows="5" maxlength="100" styleClass="input"
+                        <p:outputLabel value="Mô tả tiếng việt:"/>
+                        <p:inputTextarea placeholder="Nhập mô tả thông tin tiếng việt" rows="5" maxlength="100" styleClass="input"
                                          value="#{serviceConfigController.serviceConfigDto.descriptionVn}"/>
                     </p:outputPanel>
 
                     <p:outputPanel>
-                        <p:outputLabel value="Mô tả Tiếng Anh:"/>
-                        <p:inputTextarea placeholder="Nhập mô tả thông tin Tiếng Anh" rows="5" maxlength="100" styleClass="input"
+                        <p:outputLabel value="Mô tả tiếng anh:"/>
+                        <p:inputTextarea placeholder="Nhập mô tả thông tin tiếng anh" rows="5" maxlength="100" styleClass="input"
                                          value="#{serviceConfigController.serviceConfigDto.descriptionEn}"/>
                     </p:outputPanel>
 
@@ -243,25 +243,17 @@
                     <p:outputLabel value="#{resultDto.code}"/>
                 </p:column>
 
-                <p:column headerText="Tên Tiếng Việt" style="text-align: left" sortBy="#{resultDto.name}">
+                <p:column headerText="Tên tiếng việt" style="text-align: left" sortBy="#{resultDto.name}">
                     <p:outputLabel value="#{resultDto.nameVn}"/>
                 </p:column>
 
-                <p:column headerText="Tên Tiếng Anh" style="text-align: left" sortBy="#{resultDto.name}">
+                <p:column headerText="Tên tiếng anh" style="text-align: left" sortBy="#{resultDto.name}">
                     <p:outputLabel value="#{resultDto.nameEn}"/>
-                </p:column>
-
-                <p:column headerText="Mô tả Tiếng Việt" style="text-align: left" sortBy="#{resultDto.description}">
-                    <p:outputLabel value="#{commonController.abbreviate(resultDto.descriptionVn, 30)}"/>
-                </p:column>
-
-                <p:column headerText="Mô tả Tiếng Anh" style="text-align: left" sortBy="#{resultDto.description}">
-                    <p:outputLabel value="#{commonController.abbreviate(resultDto.descriptionEn, 30)}"/>
                 </p:column>
 
                 <p:column headerText="Phí dịch vụ" style="text-align: left" sortBy="#{resultDto.money}">
                     <p:outputLabel value="#{resultDto.money}">
-                        <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency" pattern="###,### đ"/>
+                        <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency" pattern="###,### $"/>
                     </p:outputLabel>
                 </p:column>
 

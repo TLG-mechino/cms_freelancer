@@ -9,23 +9,23 @@
         <f:event type="preRenderView" listener="#{customerTalkController.initData()}"/>
     </f:metadata>
 
-    <ui:define name="title">Quản lý đánh giá của khách hàng</ui:define>
+    <ui:define name="title">Đánh giá của khách hàng</ui:define>
 
     <ui:define name="content">
-        <p:dialog widgetVar="inforDialog" width="600" header="#{customerTalkController.titleDialog} thông tin đánh giá của khách hàng"
+        <p:dialog widgetVar="inforDialog" width="700" header="#{customerTalkController.titleDialog} thông tin đánh giá của khách hàng"
                   modal="true" id="inforDialogId">
             <h:form id="dlForm" prependId="false">
                     <div class="ui-fluid">
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
                                      layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
-                            <p:outputLabel value="Vị trí công việc của khách hàng Tiếng Việt: " styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập vị trí công việc khách hàng Tiếng Việt" maxlength="50"
+                            <p:outputLabel value="Chức vụ tiếng việt: " styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập chức vụ tiếng việt" maxlength="50"
                                          onchange="this.value = this.value.trim()"
                                          value="#{customerTalkController.customerTalkDto.positionVn}">
                             </p:inputText>
 
-                            <p:outputLabel value="Vị trí công việc của khách hàng Tiếng Anh: " styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập vị trí công việc khách hàng Tiếng Anh" maxlength="50"
+                            <p:outputLabel value="Chức vụ tiếng anh: " styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập chức vụ tiếng anh" maxlength="50"
                                          onchange="this.value = this.value.trim()"
                                          value="#{customerTalkController.customerTalkDto.positionEn}">
                             </p:inputText>
@@ -35,13 +35,13 @@
                                          onchange="this.value = this.value.trim()"
                                          value="#{customerTalkController.customerTalkDto.fullName}"/>
 
-                            <p:outputLabel value="Nội dung Tiếng Việt:" styleClass="requireLabel"/>
-                            <p:inputTextarea placeholder="Nhập nội dung Tiếng Việt" maxlength="200"
+                            <p:outputLabel value="Nội dung tiếng việt:" styleClass="requireLabel"/>
+                            <p:inputTextarea placeholder="Nhập nội dung tiếng việt" maxlength="200"
                                          onchange="this.value = this.value.trim()"
                                          value="#{customerTalkController.customerTalkDto.contentVn}"/>
 
-                            <p:outputLabel value="Nội dung Tiếng Anh:" styleClass="requireLabel"/>
-                            <p:inputTextarea placeholder="Nhập nội dung Tiếng Anh" maxlength="200"
+                            <p:outputLabel value="Nội dung tiếng anh:" styleClass="requireLabel"/>
+                            <p:inputTextarea placeholder="Nhập nội dung tiếng anh" maxlength="200"
                                              onchange="this.value = this.value.trim()"
                                              value="#{customerTalkController.customerTalkDto.contentEn}"/>
 
@@ -146,24 +146,16 @@
                     </p:overlayPanel>
                 </p:column>
 
-                <p:column headerText="Vị trí công việc Tiếng Việt" style="text-align: left" sortBy="#{resultDto.positionVn}">
+                <p:column headerText="Chức vụ tiếng việt" style="text-align: left" sortBy="#{resultDto.positionVn}">
                     <p:outputLabel value="#{resultDto.positionVn}"/>
                 </p:column>
 
-                <p:column headerText="Vị trí công việc Tiếng Anh" style="text-align: left" sortBy="#{resultDto.positionEn}">
+                <p:column headerText="Chức vụ tiếng anh" style="text-align: left" sortBy="#{resultDto.positionEn}">
                     <p:outputLabel value="#{resultDto.positionEn}"/>
                 </p:column>
 
                 <p:column headerText="Họ và Tên" style="text-align: left; width: 250px" sortBy="#{resultDto.fullName}">
                     <p:outputLabel value="#{resultDto.fullName}"/>
-                </p:column>
-
-                <p:column headerText="Nội dung Tiếng Việt" style="text-align: left" sortBy="#{resultDto.contentVn}">
-                    <p:outputLabel value="#{commonController.abbreviate(resultDto.contentVn, 30)}"/>
-                </p:column>
-
-                <p:column headerText="Nội dung Tiếng Anh" style="text-align: left" sortBy="#{resultDto.contentEn}">
-                    <p:outputLabel value="#{commonController.abbreviate(resultDto.contentEn, 30)}"/>
                 </p:column>
 
                 <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">

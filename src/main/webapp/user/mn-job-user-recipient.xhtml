@@ -114,14 +114,14 @@
                     <p:column headerText="Giá thấp nhất" style="text-align: right; width: 120px" sortBy="#{resultDto.moneyFrom}">
                         <p:outputLabel value="#{resultDto.moneyFrom}">
                             <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
-                                             pattern="###,### đ"/>
+                                             pattern="###,### $"/>
                         </p:outputLabel>
                     </p:column>
 
                     <p:column headerText="Giá cao nhất" style="text-align: right; width: 120px" sortBy="#{resultDto.moneyTo}">
                         <p:outputLabel value="#{resultDto.moneyTo}">
                             <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
-                                             pattern="###,### đ"/>
+                                             pattern="###,### $"/>
                         </p:outputLabel>
                     </p:column>
 

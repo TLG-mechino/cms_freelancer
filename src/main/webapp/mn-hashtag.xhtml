@@ -26,23 +26,23 @@
                                 <p:ajax event="change" update="code" listener="#{mnHashtagController.removeChar()}"/>
                             </p:inputText>
 
-                            <p:outputLabel value="Tiêu đề Tiếng Việt:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập tiêu đề Tiếng Việt" maxlength="30"
+                            <p:outputLabel value="Tiêu đề tiếng việt:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập tiêu đề tiếng việt" maxlength="30"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnHashtagController.hashtagDto.titleVn}"/>
 
-                            <p:outputLabel value="Tiêu đề Tiếng Anh:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập tiêu đề Tiếng Anh" maxlength="30"
+                            <p:outputLabel value="Tiêu đề tiếng anh:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập tiêu đề tiếng anh" maxlength="30"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnHashtagController.hashtagDto.titleEn}"/>
 
-                            <p:outputLabel value="Mô tả Tiếng Việt:" styleClass="requireLabel"/>
-                            <p:inputTextarea placeholder="Nhập mô tả Tiếng Việt" maxlength="100"
+                            <p:outputLabel value="Mô tả tiếng việt:" styleClass="requireLabel"/>
+                            <p:inputTextarea placeholder="Nhập mô tả tiếng việt" maxlength="100"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnHashtagController.hashtagDto.descriptionVn}"/>
 
-                            <p:outputLabel value="Mô tả Tiếng Anh:" styleClass="requireLabel"/>
-                            <p:inputTextarea placeholder="Nhập mô tả Tiếng Anh" maxlength="100"
+                            <p:outputLabel value="Mô tả tiếng anh:" styleClass="requireLabel"/>
+                            <p:inputTextarea placeholder="Nhập mô tả tiếng anh" maxlength="100"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnHashtagController.hashtagDto.descriptionEn}"/>
 
@@ -135,23 +135,15 @@
                     <p:outputLabel value="#{resultDto.code}"/>
                 </p:column>
 
-                <p:column headerText="Tiêu đề Tiếng Việt" style="text-align: left" sortBy="#{resultDto.titleVn}">
+                <p:column headerText="Tiêu đề tiếng việt" style="text-align: left" sortBy="#{resultDto.titleVn}">
                     <p:outputLabel value="#{resultDto.titleVn}"/>
                 </p:column>
 
-                <p:column headerText="Tiêu đề Tiếng Anh" style="text-align: left" sortBy="#{resultDto.titleEn}">
+                <p:column headerText="Tiêu đề tiếng anh" style="text-align: left" sortBy="#{resultDto.titleEn}">
                     <p:outputLabel value="#{resultDto.titleEn}"/>
                 </p:column>
 
-                <p:column headerText="Mô tả Tiếng Việt" style="text-align: left" sortBy="#{resultDto.descriptionVn}">
-                    <p:outputLabel value="#{commonController.abbreviate(resultDto.descriptionVn, 30)}"/>
-                </p:column>
-
-                <p:column headerText="Mô tả Tiếng Anh" style="text-align: left" sortBy="#{resultDto.descriptionEn}">
-                    <p:outputLabel value="#{commonController.abbreviate(resultDto.descriptionEn, 30)}"/>
-                </p:column>
-
-                <p:column headerText="Người tạo" style="text-align: left" sortBy="#{resultDto.createBy}">
+                <p:column headerText="Người cập nhật" style="text-align: left" sortBy="#{resultDto.createBy}">
                     <p:outputLabel value="#{resultDto.createBy}"/>
                 </p:column>
 

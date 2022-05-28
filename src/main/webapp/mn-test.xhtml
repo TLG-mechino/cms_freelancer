@@ -25,22 +25,22 @@
                                 <p:ajax event="change" update="code" listener="#{mnTestController.removeChar()}"/>
                             </p:inputText>
 
-                            <p:outputLabel value="Tiêu đề Tiếng Việt:" styleClass="requireLabel"/>
+                            <p:outputLabel value="Tiêu đề tiếng việt:" styleClass="requireLabel"/>
                             <p:inputText placeholder="Nhập tiêu đề tiếng việt" maxlength="100"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.titleVn}"/>
 
-                            <p:outputLabel value="Tiêu đề Tiếng Anh:" styleClass="requireLabel"/>
+                            <p:outputLabel value="Tiêu đề tiếng anh:" styleClass="requireLabel"/>
                             <p:inputText placeholder="Nhập tiêu đề tiếng anh" maxlength="100"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.titleEn}"/>
 
-                            <p:outputLabel value="Mô tả Tiếng Việt:" styleClass="requireLabel"/>
+                            <p:outputLabel value="Mô tả tiếng việt:" styleClass="requireLabel"/>
                             <p:inputTextarea placeholder="Nhập mô tả tiếng việt" maxlength="500"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.descriptionVn}"/>
 
-                            <p:outputLabel value="Mô tả Tiếng Anh:" styleClass="requireLabel"/>
+                            <p:outputLabel value="Mô tả tiếng anh:" styleClass="requireLabel"/>
                             <p:inputTextarea placeholder="Nhập mô tả tiếng anh" maxlength="500"
                                          onchange="this.value = this.value.trim()"
                                          value="#{mnTestController.examDto.descriptionEn}"/>
@@ -169,15 +169,7 @@
                     <p:outputLabel value="#{resultDto.code}"/>
                 </p:column>
 
-                <p:column headerText="Tiêu đề Tiếng Việt" style="text-align: left" sortBy="#{resultDto.titleVn}">
-                    <p:outputLabel value="#{resultDto.titleVn}"/>
-                </p:column>
-
-                <p:column headerText="Tiêu đề Tiếng Anh" style="text-align: left" sortBy="#{resultDto.titleEn}">
-                    <p:outputLabel value="#{resultDto.titleEn}"/>
-                </p:column>
-
-                <p:column headerText="Số điểm để qua bài thi" style="text-align: center" sortBy="#{resultDto.score}">
+                <p:column headerText="Số điểm cần đạt" style="text-align: center" sortBy="#{resultDto.score}">
                     <p:outputLabel value="#{resultDto.score}" >
                         <f:convertNumber pattern="###,###"/>
                     </p:outputLabel>

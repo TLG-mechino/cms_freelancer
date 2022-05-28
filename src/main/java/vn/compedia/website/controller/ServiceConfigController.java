@@ -158,11 +158,11 @@ public class ServiceConfigController extends BaseController {
         }
 
         if (StringUtils.isBlank(serviceConfigDto.getNameVn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập Tên Tiếng Việt ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập Tên tiếng việt ");
             return false;
         }
         if (StringUtils.isBlank(serviceConfigDto.getNameEn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập Tên Tiếng Anh ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập Tên tiếng anh ");
             return false;
         }
 

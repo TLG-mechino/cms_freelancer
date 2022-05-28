@@ -130,7 +130,7 @@ public class FileUtil {
         String folder = getFolder(folderName);
         File file = new File(folder + File.separator + fileId + "." + FilenameUtils.getExtension(uploadedFile.getFileName()));
         String path = folder + fileId + "." + FilenameUtils.getExtension(uploadedFile.getFileName());
-        double percent = 0.86;
+        double percent = 1;
         try {
             if (file.exists()) {
                 file.delete();

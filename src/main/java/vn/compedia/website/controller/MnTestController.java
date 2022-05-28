@@ -222,21 +222,21 @@ public class MnTestController extends BaseController {
         }
 
         if (StringUtils.isBlank(examDto.getTitleVn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề Tiếng Việt ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề tiếng việt ");
             return false;
         }
 
         if (StringUtils.isBlank(examDto.getTitleEn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề Tiếng Anh ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập tiêu đề tiếng anh ");
             return false;
         }
 
         if (StringUtils.isBlank(examDto.getDescriptionVn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập mô tả Tiếng Việt ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập mô tả tiếng việt ");
             return false;
         }
         if (StringUtils.isBlank(examDto.getDescriptionEn().trim())) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập mô tả Tiếng Anh ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập mô tả tiếng anh ");
             return false;
         }
         if(examDto.getTime() == null){

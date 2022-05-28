@@ -12,7 +12,7 @@
     <ui:define name="title">Quản lý bài test</ui:define>
 
     <ui:define name="content">
-        <p:dialog widgetVar="inforDialog" width="600" header="#{mnTestController.titleDialog} thông tin bài test"
+        <p:dialog widgetVar="inforDialog" width="750" header="#{mnTestController.titleDialog} thông tin bài test"
                   modal="true" id="inforDialogId">
             <h:form id="dlForm" prependId="false">
                 <p:scrollPanel mode="native" style="width: 100%; max-height: 500px; border: none">
@@ -51,7 +51,7 @@
                                              value="#{mnTestController.examDto.time}" decimalPlaces="0" minValue="0" maxValue="1000"/>
 
                             <p:outputLabel value="Tài liệu bài test:" styleClass="requireLabel"/>
-                            <p:outputPanel styleClass="ui-g-12">
+                            <p:outputPanel>
                                 <ui:include src="/common/upload-multiple-image.xhtml"/>
                             </p:outputPanel>
 

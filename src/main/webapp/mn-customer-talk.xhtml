@@ -15,6 +15,7 @@
         <p:dialog widgetVar="inforDialog" width="700" header="#{customerTalkController.titleDialog} thông tin đánh giá của khách hàng"
                   modal="true" id="inforDialogId">
             <h:form id="dlForm" prependId="false">
+                <p:scrollPanel mode="native" style="width: 100%; max-height: 500px; border: none">
                     <div class="ui-fluid">
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-9"
                                      layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
@@ -46,7 +47,7 @@
                                              value="#{customerTalkController.customerTalkDto.contentEn}"/>
 
                             <p:outputLabel value="Tải ảnh lên: " styleClass="requireLabel"/>
-                            <p:outputPanel styleClass="ui-g-12">
+                            <p:outputPanel>
                                 <ui:include src="/common/upload-single-image.xhtml"/>
                             </p:outputPanel>
 
@@ -68,6 +69,7 @@
                                              actionListener="#{customerTalkController.resetAll()}"/>
                         </p:outputPanel>
                     </div>
+                </p:scrollPanel>
             </h:form>
         </p:dialog>
 

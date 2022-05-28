@@ -7,6 +7,7 @@
             content: '\f093' !important;
         }
     </style>
+
     <p:fileUpload id="ortherImage"
                   mode="advanced" dragDropSupport="true"
                   auto="true" multiple="true" cancelLabel="#{t['lbl.cancel']}"
@@ -14,18 +15,18 @@
                   label="Tải File" uploadLabel="Thêm ảnh"
                   onstart="PF('statusDialog').show();"
                   oncomplete="PF('statusDialog').hide();"
-                  styleClass="file-upload-custom"
+                  styleClass="file-upload-custom" style="margin-bottom: 10px;"
                   listener="#{uploadMultipleImageWithFileNameController.onUploadImage}"/>
 
-    <p:outputLabel style="font-style: italic; font-size: 14px; font-family: 'Times New Roman';"
+    <p:outputLabel style="font-style: italic; font-size: 14px;"
                    value="(*) Hệ thống chỉ hỗ trợ upload file có định dạng: jpg, JPG, jpeg, JPEG, png, PNG. Dung lượng tối đa 50 Mb"/>
 
     <p:outputPanel id="fileListPanel" style="margin-top: 5px !important;" styleClass="ui-no-margin-padding">
         <ui:repeat value="#{uploadMultipleImageWithFileNameController.uploadMultipleFileDto.listToShow}"
                    var="itemVar1" varStatus="status">
-            <div class="ui-g-12 ui-lg-3 my-card-image-border" style="text-align: center;">
+            <div class="ui-g-4" style="text-align: center;">
                 <p:graphicImage id="galery_image_#{status.index}" value="#{commonController.setUrlToShowImage(itemVar1.filePath)}"
-                                style="height: 100px; width: 100px; object-fit: cover !important;"/>
+                                style="width: 150px; height: 150px; object-fit: cover !important;"/>
                 <br/>
                 <p:commandButton
                         actionListener="#{uploadMultipleImageWithFileNameController.onRemoveImage(itemVar1)}"

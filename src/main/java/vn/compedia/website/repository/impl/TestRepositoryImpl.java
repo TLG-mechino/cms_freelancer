@@ -34,7 +34,7 @@ public class TestRepositoryImpl implements TestRepositoryCustom {
                 "       et.EXAM_TYPE_ID, " +
                 "       e.HASHTAG_ID, " +
                 "       e.TIME, " +
-                "       (select COUNT( ef.EXAM_FILE_ID) from exam_file ef WHERE e.EXAM_ID = ef.OBJECT_ID) as numberFile ");
+                "       (select COUNT( ef.EXAM_FILE_ID) from exam_file ef WHERE e.EXAM_ID = ef.OBJECT_ID) AND e.TYPE = 1 as numberFile ");
         appendQuery(sb, searchDto);
 
         if (searchDto.getSortField() != null) {

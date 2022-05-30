@@ -27,7 +27,7 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
                 "       n.CONTENT_VN, " +
                 "       n.SENDING_TIME, " +
                 "       nr.USERNAME, " +
-                "       n.STATUS ");
+                "       nr.STATUS ");
         appendQueryByUserName(sb, searchDto, username);
         if (searchDto.getSortField() != null) {
             if (searchDto.getSortField().equals("content")) {

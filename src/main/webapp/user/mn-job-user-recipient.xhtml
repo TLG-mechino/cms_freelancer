@@ -136,17 +136,6 @@
                                        rendered="#{resultDto.status eq 3}"/>
                     </p:column>
 
-                    <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">
-                        <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
-                            <p:menuitem value="Xóa thông tin" icon="fa fa-close"
-                                        update="searchForm growl" process="@this"
-                                        actionListener="#{mnJobRecipientController.onDelete(resultDto.id)}">
-                                <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"
-                                           message="Bạn có chắc chắn muốn xóa thông tin?"/>
-                            </p:menuitem>
-                        </p:menuButton>
-                    </p:column>
-
                 </p:dataTable>
             </h:form>
         </div>

@@ -141,17 +141,6 @@
                         <p:outputLabel value="#{resultDto.status}"/>
                     </p:column>
 
-                    <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">
-                        <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
-                            <p:menuitem value="Xóa thông tin" icon="fa fa-close"
-                                        update="searchForm growl" process="@this"
-                                        actionListener="#{mnTransactionUserController.onDelete(resultDto.transactionId)}">
-                                <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"
-                                           message="Bạn có chắc chắn muốn xóa thông tin?"/>
-                            </p:menuitem>
-                        </p:menuButton>
-                    </p:column>
-
                     <p:rowExpansion>
                         <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank"
                                      columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4">

@@ -99,7 +99,7 @@ public class MnTransactionUserController extends BaseController {
                 }
                 searchDto.setSortOrder(sort);
                 BeanUtils.copyProperties(searchDto, searchDtoTemp);
-                return transactionRepository.getAllByUserName(userController.getUserDtoDetails().getId(), searchDto);
+                return transactionRepository.getAllByUserName(userController.getUserDtoDetails().getFullName(), searchDto);
             }
 
             @Override

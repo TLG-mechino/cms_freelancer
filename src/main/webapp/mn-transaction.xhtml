@@ -115,7 +115,9 @@
             </p:column>
 
             <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
-               <p:outputLabel value="#{resultDto.status}" />
+               <p:outputLabel value="Thành công" rendered="#{resultDto.status eq 'Success'}"/>
+               <p:outputLabel value="Không thành công"
+                              rendered="#{resultDto.status eq 'Fail'}"/>
             </p:column>
 
          </p:dataTable>

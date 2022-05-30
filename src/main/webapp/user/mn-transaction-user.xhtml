@@ -181,7 +181,9 @@
                             </p:outputLabel>
 
                             <p:outputLabel value="Trạng thái giao dịch"/>
-                            <p:outputLabel value="#{resultDto.status}"/>
+                            <p:outputLabel value="Thành công" rendered="#{resultDto.status eq 'Success'}"/>
+                            <p:outputLabel value="Không thành công"
+                                           rendered="#{resultDto.status eq 'Fail'}"/>
                         </p:panelGrid>
                     </p:rowExpansion>
                 </p:dataTable>

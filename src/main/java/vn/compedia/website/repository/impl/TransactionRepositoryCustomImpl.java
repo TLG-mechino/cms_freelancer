@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import vn.compedia.website.dto.TransactionDto;
 import vn.compedia.website.dto.TransactionSearchDto;
 import vn.compedia.website.repository.TransactionRepositoryCustom;
+import vn.compedia.website.util.DbConstant;
 import vn.compedia.website.util.ValueUtil;
 
 import javax.persistence.EntityManager;
@@ -30,7 +31,6 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
                 "t.FINAL_MONEY, " +
                 "t.CODE, " +
                 "t.PAYMENT_TYPE, " +
-//                "t.TITLE_TRANSACTION, " +
                 "pt.NAME, " +
                 "t.STATUS ");
         appendQuery(sb, searchDto);
@@ -94,7 +94,6 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
             dto.setCode(ValueUtil.getStringByObject(result[7]));
             dto.setPaymentTypeId(ValueUtil.getStringByObject(result[8]));
-//            dto.setTitle(ValueUtil.getStringByObject(result[8]));
             dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
             dto.setStatus(ValueUtil.getStringByObject(result[10]));
             list.add(dto);
@@ -116,7 +115,6 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
                 "t.PAYMENT_TYPE, " +
                 "pt.NAME, " +
                 "t.STATUS " );
-//                "t.TITLE_TRANSACTION ");
         appendQueryByUserName(sb, searchDto);
         if (searchDto.getSortField() != null) {
             if (searchDto.getSortField().equals("transactionId")) {
@@ -179,7 +177,6 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setPaymentTypeId(ValueUtil.getStringByObject(result[8]));
             dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
             dto.setStatus(ValueUtil.getStringByObject(result[10]));
-//            dto.setTitle(ValueUtil.getStringByObject(result[11]));
             list.add(dto);
         }
         return list;
@@ -217,7 +214,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         if (searchDto.getGreatMoney() != null) {
             query.setParameter("greatMoney", searchDto.getGreatMoney());
         }
-        if (searchDto.getStatus() != null) {
+        if (StringUtils.isNotBlank(searchDto.getStatus())) {
             query.setParameter("status", searchDto.getStatus());
         }
         return query;
@@ -259,27 +256,27 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         if (searchDto.getGreatMoney() != null) {
             sb.append(" AND t.AMOUNT_OF_MONEY <= :greatMoney ");
         }
-        if (searchDto.getStatus() != null) {
-            sb.append(" AND t.STATUS LIKE :status ");
+        if (StringUtils.isNotBlank(searchDto.getStatus())) {
+            sb.append(" AND UPPER(t.STATUS) LIKE UPPER(:status) ");
         }
     }
 
-    public void appendQueryByUserName(StringBuilder sb, TransactionSearchDto SearchDto) {
+    public void appendQueryByUserName(StringBuilder sb, TransactionSearchDto searchDto) {
         sb.append(" FROM transaction t LEFT JOIN payment_type pt ON t.PAYMENT_TYPE = pt.PAYMENT_TYPE_ID WHERE t.SENDER = :username or t.RECIPIENT = :username ");
-        if (StringUtils.isNotBlank(SearchDto.getKeyword())) {
+        if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (t.CODE LIKE :keyword OR t.SENDER LIKE :keyword OR t.RECIPIENT LIKE :keyword) ");
         }
-        if (SearchDto.getPaymentTypeSearch() != null) {
+        if (searchDto.getPaymentTypeSearch() != null) {
             sb.append(" AND t.PAYMENT_TYPE = :paymentTypeSearch ");
         }
-        if (SearchDto.getLessMoney() != null) {
+        if (searchDto.getLessMoney() != null) {
             sb.append(" AND t.AMOUNT_OF_MONEY >= :lessMoney ");
         }
-        if (SearchDto.getGreatMoney() != null) {
+        if (searchDto.getGreatMoney() != null) {
             sb.append(" AND t.AMOUNT_OF_MONEY <= :greatMoney ");
         }
-        if (SearchDto.getStatus() != null) {
-            sb.append(" AND t.STATUS LIKE :status ");
+        if (StringUtils.isNotBlank(searchDto.getStatus())) {
+            sb.append(" AND UPPER(t.STATUS) LIKE UPPER(:status) ");
         }
     }
 
@@ -371,7 +368,13 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setCode(ValueUtil.getStringByObject(result[7]));
             dto.setPaymentTypeId(ValueUtil.getStringByObject(result[8]));
             dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
-            dto.setStatus(ValueUtil.getStringByObject(result[10]));
+
+            String status = ValueUtil.getStringByObject(result[10]);
+            if (status.toUpperCase().equals(DbConstant.SUCCESS.toUpperCase())) {
+                dto.setStatus("Thành công");
+            } else {
+                dto.setStatus("Thất bại");
+            }
             list.add(dto);
         }
         return list;

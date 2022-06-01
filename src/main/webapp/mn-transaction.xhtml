@@ -23,6 +23,7 @@
                </p:commandButton>
             </div>
          </p:outputPanel>
+
          <hr class="hr-class"/>
          <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
                       columnClasses="ui-grid-col-11 ui-no-margin-padding margin-right-10, ui-grid-col-1 ui-no-margin-padding">
@@ -54,11 +55,11 @@
                </p:panelGrid>
 
                <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
-                                   <p:selectOneMenu styleClass="filter-item" value="#{mnTransactionController.searchDto.status}">
-                                       <f:selectItem itemLabel="Tất cả" itemValue=""/>
-                                       <f:selectItem itemLabel="Thành công" itemValue="#{DbConstant.SUCCESS}"/>
-                                       <f:selectItem itemLabel="Thất bại" itemValue="#{DbConstant.FAIL}"/>
-                                   </p:selectOneMenu>
+               <p:selectOneMenu styleClass="filter-item" value="#{mnTransactionController.searchDto.status}">
+                  <f:selectItem itemLabel="Tất cả" itemValue=""/>
+                  <f:selectItem itemLabel="Thành công" itemValue="#{DbConstant.SUCCESS}"/>
+                  <f:selectItem itemLabel="Thất bại" itemValue="#{DbConstant.FAIL}"/>
+               </p:selectOneMenu>
 
                <p:commandButton value="Bỏ lọc" update="searchForm"
                                 icon="fa fa-refresh" styleClass="filter-btn"

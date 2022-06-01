@@ -10,7 +10,6 @@ import vn.compedia.website.model.Complain;
 @Setter
 
 public class ComplainDto extends Complain {
-    private String objectName;
     private String phone;
     private String complainTypeName;
 }

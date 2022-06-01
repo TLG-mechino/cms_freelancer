@@ -42,7 +42,7 @@ public class Complain{
     private Integer status;
 
     @Column(name = "OBJECT_ID")
-    private Long objectId;
+    private String objectId;
 
     @Column(name = "TYPE")
     private Integer type;

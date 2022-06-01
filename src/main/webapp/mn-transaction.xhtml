@@ -95,6 +95,10 @@
                <p:outputLabel value="#{resultDto.recipient}"/>
             </p:column>
 
+            <p:column headerText="Phương thức" style="text-align: left" sortBy="#{resultDto.paymentTypeId}">
+               <p:outputLabel value="#{resultDto.paymentTypeId}"/>
+            </p:column>
+
             <p:column headerText="Số tiền nhận" style="text-align: left" sortBy="#{resultDto.finalMoney}">
                <p:outputLabel value="#{resultDto.finalMoney}">
                   <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency" pattern="###,### $"/>

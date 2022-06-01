@@ -136,7 +136,8 @@ public class MnComplainController extends BaseController {
         List<String> usernameList = new ArrayList<>();
         usernameList.add(complain.getUsername());
         notificationSystemService.saveNotification(authorizationController.getAccountDto().getUsername(),"Đã tiếp nhận đơn khiếu nại",
-                "Đơn khiếu nại đã được tiếp nhận và xử lý","Complaint received", "Complaint has been received and handled", 12, complain.getComplainId(), usernameList);
+                "Đơn khiếu nại đã được tiếp nhận và xử lý","Complaint received", "Complaint has been received and handled",
+                12, complain.getComplainId(), usernameList);
 
     }
 

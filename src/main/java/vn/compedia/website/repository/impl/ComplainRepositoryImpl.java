@@ -21,7 +21,7 @@ public class ComplainRepositoryImpl implements ComplainRepositoryCustom {
     @Override
     public List<ComplainDto> search(ComplainSearchDto searchDto) {
         StringBuilder sb = new StringBuilder("");
-        sb.append("SELECT c.COMPLAIN_ID, c.USERNAME, u.PHONE, c.TITLE, c.CONTENT, c.NOTE, ct.NAME as complainTypeName, c.COMPLAIN_TYPE_ID, j.NAME as jobName, c.CREATE_DATE, c.STATUS ");
+        sb.append("SELECT c.COMPLAIN_ID, c.USERNAME, u.PHONE, c.TITLE, c.CONTENT, c.NOTE, ct.NAME as complainTypeName, c.COMPLAIN_TYPE_ID, c.CREATE_DATE, c.STATUS, c.OBJECT_ID ");
         appendQuery(sb, searchDto);
         if (searchDto.getSortField() != null) {
             if (searchDto.getSortField().equals("username")) {
@@ -35,9 +35,6 @@ public class ComplainRepositoryImpl implements ComplainRepositoryCustom {
             }
             if (searchDto.getSortField().equals("phone")) {
                 sb.append(" ORDER BY u.PHONE ");
-            }
-            if (searchDto.getSortField().equals("objectName")) {
-                sb.append(" ORDER BY j.NAME ");
             }
             if (searchDto.getSortField().equals("complainTypeName")) {
                 sb.append(" ORDER BY ct.NAME ");
@@ -77,9 +74,9 @@ public class ComplainRepositoryImpl implements ComplainRepositoryCustom {
             dto.setNote(ValueUtil.getStringByObject(obj[5]));
             dto.setComplainTypeName(ValueUtil.getStringByObject(obj[6]));
             dto.setComplainType(ValueUtil.getIntegerByObject(obj[7]));
-            dto.setObjectName(ValueUtil.getStringByObject(obj[8]));
-            dto.setCreateDate(ValueUtil.getDateByObject(obj[9]));
-            dto.setStatus(ValueUtil.getIntegerByObject(obj[10]));
+            dto.setCreateDate(ValueUtil.getDateByObject(obj[8]));
+            dto.setStatus(ValueUtil.getIntegerByObject(obj[9]));
+            dto.setObjectId(ValueUtil.getStringByObject(obj[10]));
             complainDtos.add(dto);
         }
         return complainDtos;
@@ -100,7 +97,7 @@ public class ComplainRepositoryImpl implements ComplainRepositoryCustom {
     }
 
     public void appendQuery(StringBuilder sb, ComplainSearchDto searchDto) {
-        sb.append(" FROM complain c INNER JOIN job j on c.OBJECT_ID = j.JOB_ID INNER JOIN account u on u.username = c.username " +
+        sb.append(" FROM complain c INNER JOIN account u on u.username = c.username " +
                 " INNER JOIN complain_type ct on ct.COMPLAIN_TYPE_ID = c.COMPLAIN_TYPE_ID where 1 = 1 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (lower(c.TITLE) LIKE :keyword OR lower(c.CONTENT) LIKE :keyword OR lower(c.USERNAME) LIKE :keyword) ");

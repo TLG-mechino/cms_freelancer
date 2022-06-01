@@ -29,6 +29,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
                 "t.DISCOUNT_MONEY, " +
                 "t.FINAL_MONEY, " +
                 "t.CODE, " +
+                "t.PAYMENT_TYPE, " +
 //                "t.TITLE_TRANSACTION, " +
                 "pt.NAME, " +
                 "t.STATUS ");
@@ -51,6 +52,9 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             }
             if (searchDto.getSortField().equals("discountMoney")) {
                 sb.append(" ORDER BY t.DISCOUNT_MONEY ");
+            }
+            if(searchDto.getSortField().equals("paymentTypeId")) {
+                sb.append(" ORDER BY t.PAYMENT_TYPE ");
             }
             if (searchDto.getSortField().equals("finalMoney")) {
                 sb.append(" ORDER BY t.FINAL_MONEY ");
@@ -89,9 +93,10 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setDiscountMoney(ValueUtil.getDoubleByObject(result[5]));
             dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
             dto.setCode(ValueUtil.getStringByObject(result[7]));
+            dto.setPaymentTypeId(ValueUtil.getStringByObject(result[8]));
 //            dto.setTitle(ValueUtil.getStringByObject(result[8]));
-            dto.setPaymentTypeName(ValueUtil.getStringByObject(result[8]));
-            dto.setStatus(ValueUtil.getStringByObject(result[9]));
+            dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
+            dto.setStatus(ValueUtil.getStringByObject(result[10]));
             list.add(dto);
         }
         return list;
@@ -171,7 +176,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setDiscountMoney(ValueUtil.getDoubleByObject(result[5]));
             dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
             dto.setCode(ValueUtil.getStringByObject(result[7]));
-            dto.setPaymentTypeId(ValueUtil.getIntegerByObject(result[8]));
+            dto.setPaymentTypeId(ValueUtil.getStringByObject(result[8]));
             dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
             dto.setStatus(ValueUtil.getStringByObject(result[10]));
 //            dto.setTitle(ValueUtil.getStringByObject(result[11]));
@@ -364,7 +369,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setDiscountMoney(ValueUtil.getDoubleByObject(result[5]));
             dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
             dto.setCode(ValueUtil.getStringByObject(result[7]));
-            dto.setPaymentTypeId(ValueUtil.getIntegerByObject(result[8]));
+            dto.setPaymentTypeId(ValueUtil.getStringByObject(result[8]));
             dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
             dto.setStatus(ValueUtil.getStringByObject(result[10]));
             list.add(dto);

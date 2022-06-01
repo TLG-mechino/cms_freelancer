@@ -23,10 +23,10 @@ public class Transaction {
     @Column(name = "TITLE_TRANSACTION")
     private String title;
 
-    @Column(name = "SENDER", length = 20)
+    @Column(name = "SENDER")
     private String sender;
 
-    @Column(name = "RECIPIENT", length = 20)
+    @Column(name = "RECIPIENT")
     private String recipient;
 
     @Column(name = "TRANSACTION_TIME")
@@ -45,7 +45,7 @@ public class Transaction {
     private String code;
 
     @Column(name = "PAYMENT_TYPE_ID")
-    private Integer paymentTypeId;
+    private String paymentTypeId;
 
     @Column(name = "STATUS")
     private String status;

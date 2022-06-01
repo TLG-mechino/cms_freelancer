@@ -110,16 +110,56 @@
                          emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
                          currentPageReportTemplate="Tổng số bản ghi: #{mnComplainController.lazyDataModel.rowCount}">
 
+                <p:column style="width: 20px;" exportable="false">
+                    <p:rowToggler/>
+                </p:column>
+
+                <p:rowExpansion>
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
+                                 columnClasses="ui-grid-col-2, ui-grid-col-10">
+
+                        <p:outputLabel value="Tiêu đề:"/>
+                        <p:outputLabel value="#{resultDto.title}"/>
+
+                        <p:outputLabel value="Nội dung:"/>
+                        <p:outputLabel value="#{resultDto.content}"/>
+
+                        <p:outputLabel value="Ghi chú:"/>
+                        <p:outputLabel value="#{commonController.abbreviate(resultDto.note, 30)}"/>
+                    </p:panelGrid>
+
+                    <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank"
+                                 columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+
+                        <p:outputLabel value="Số điện thoại:"/>
+                        <p:outputLabel value="#{resultDto.phone}"/>
+
+                        <p:outputLabel value="Loại khiếu nại:"/>
+                        <p:outputLabel value="#{resultDto.complainTypeName}"/>
+
+                        <p:outputLabel value="Người khiếu nại:"/>
+                        <p:outputLabel value="#{resultDto.username}"/>
+
+                        <p:outputLabel value="Đối tượng khiếu nại:"/>
+                        <p:outputLabel value="#{resultDto.objectId}"/>
+
+                        <p:outputLabel value="Thời gian khiếu nại:"/>
+                        <p:outputLabel value="#{resultDto.createDate}">
+                            <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Trạng thái:"/>
+                        <p:outputLabel value="Đã xử lý" rendered="#{resultDto.status eq 1}"/>
+                        <p:outputLabel value="Chưa xử lý" rendered="#{resultDto.status eq 0}"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+
                 <p:column headerText="STT" width="30" style="text-align: center">
                     <p:outputLabel value="#{rowIndex + 1}"/>
                 </p:column>
 
                 <p:column headerText="Tiêu đề" style="text-align: left" sortBy="#{resultDto.title}">
                     <p:outputLabel value="#{resultDto.title}"/>
-                </p:column>
-
-                <p:column headerText="Nội dung" style="text-align: left" sortBy="#{resultDto.content}">
-                    <p:outputLabel value="#{resultDto.content}"/>
                 </p:column>
 
                 <p:column headerText="Số điện thoại" style="text-align: left" sortBy="#{resultDto.phone}">
@@ -136,10 +176,6 @@
 
                 <p:column headerText="Đối tượng khiếu nại" style="text-align: left" sortBy="#{resultDto.objectName}">
                     <p:outputLabel value="#{resultDto.objectId}"/>
-                </p:column>
-
-                <p:column headerText="Ghi chú" style="text-align: left" sortBy="#{resultDto.note}">
-                    <p:outputLabel value="#{commonController.abbreviate(resultDto.note, 30)}"/>
                 </p:column>
 
                 <p:column headerText="Thời gian khiếu nại" style="text-align: left" sortBy="#{resultDto.createDate}">

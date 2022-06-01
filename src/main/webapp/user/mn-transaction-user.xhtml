@@ -145,42 +145,42 @@
                         <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank"
                                      columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4">
 
-                            <p:outputLabel value="Mã giao dịch"/>
+                            <p:outputLabel value="Mã giao dịch:"/>
                             <p:outputLabel value="#{resultDto.code}"/>
 
-                            <p:outputLabel value="Người gửi"/>
+                            <p:outputLabel value="Người gửi:"/>
                             <h:outputText value="#{resultDto.sender}"/>
 
-                            <p:outputLabel value="Người nhận"/>
+                            <p:outputLabel value="Người nhận:"/>
                             <h:outputText value="#{resultDto.recipient}"/>
 
-                            <p:outputLabel value="Phương thức"/>
+                            <p:outputLabel value="Phương thức:"/>
                             <h:outputText value="#{resultDto.paymentTypeName}"/>
 
-                            <p:outputLabel value="Số tiền giao dịch"/>
+                            <p:outputLabel value="Số tiền giao dịch:"/>
                             <p:outputLabel value="#{resultDto.amountOfMoney}">
                                 <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
                                                  pattern="###,### $"/>
                             </p:outputLabel>
 
-                            <p:outputLabel value="Số tiền chiết khấu"/>
+                            <p:outputLabel value="Số tiền chiết khấu:"/>
                             <p:outputLabel value="#{resultDto.discountMoney}">
                                 <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
                                                  pattern="###,### $"/>
                             </p:outputLabel>
 
-                            <p:outputLabel value="Số tiền nhận được"/>
+                            <p:outputLabel value="Số tiền nhận được:"/>
                             <p:outputLabel value="#{resultDto.finalMoney}">
                                 <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency"
                                                  pattern="###,### $"/>
                             </p:outputLabel>
 
-                            <p:outputLabel value="Thời gian giao dịch"/>
+                            <p:outputLabel value="Thời gian giao dịch:"/>
                             <p:outputLabel value="#{resultDto.transactionTime}">
                                 <f:convertDateTime pattern="HH:mm, dd/MM/yyyy"/>
                             </p:outputLabel>
 
-                            <p:outputLabel value="Trạng thái giao dịch"/>
+                            <p:outputLabel value="Trạng thái giao dịch:"/>
                             <p:outputLabel value="Thành công" rendered="#{resultDto.status eq 'Success'}"/>
                             <p:outputLabel value="Không thành công"
                                            rendered="#{resultDto.status eq 'Fail'}"/>

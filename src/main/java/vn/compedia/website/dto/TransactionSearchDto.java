@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransactionSearchDto extends BaseSearchDto{
-    private Integer status;
+    private String status;
     private Long paymentTypeSearch;
     private Double greatMoney;
     private Double lessMoney;

@@ -33,4 +33,7 @@ public class DbConstant {
     public static final int WORKING_JOB = 2;
     public static final int COMPLETE_JOB = 3;
 
+    public static final String SUCCESS = "Success";
+    public static final String FAIL = "Fail";
+
 }

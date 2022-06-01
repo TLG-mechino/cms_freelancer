@@ -260,7 +260,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             sb.append(" AND t.AMOUNT_OF_MONEY <= :greatMoney ");
         }
         if (searchDto.getStatus() != null) {
-            sb.append(" AND t.STATUS =:status ");
+            sb.append(" AND t.STATUS LIKE :status ");
         }
     }
 
@@ -279,7 +279,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             sb.append(" AND t.AMOUNT_OF_MONEY <= :greatMoney ");
         }
         if (SearchDto.getStatus() != null) {
-            sb.append(" AND t.STATUS =:status ");
+            sb.append(" AND t.STATUS LIKE :status ");
         }
     }
 

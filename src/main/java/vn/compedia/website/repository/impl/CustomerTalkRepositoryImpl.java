@@ -35,14 +35,17 @@ public class CustomerTalkRepositoryImpl implements CustomerTalkRepositoryCustom 
         appendQuery(sb, searchDto);
 
         if (searchDto.getSortField() != null) {
-            if (searchDto.getSortField().equals("position")) {
-                sb.append(" ORDER BY ct.position ");
+            if (searchDto.getSortField().equals("positionVn")) {
+                sb.append(" ORDER BY ct.position_vn ");
             }
             if (searchDto.getSortField().equals("fullName")) {
                 sb.append(" ORDER BY ct.full_name ");
             }
-            if (searchDto.getSortField().equals("content")) {
-                sb.append(" ORDER BY ct.content ");
+            if (searchDto.getSortField().equals("contentVn")) {
+                sb.append(" ORDER BY ct.content_vn ");
+            }
+            if (searchDto.getSortField().equals("contentEn")) {
+                sb.append(" ORDER BY ct.content_en ");
             }
             if (searchDto.getSortField().equals("status")) {
                 sb.append(" ORDER BY ct.status ");
@@ -102,7 +105,7 @@ public class CustomerTalkRepositoryImpl implements CustomerTalkRepositoryCustom 
     public void appendQuery(StringBuilder sb, CustomerTalkSearchDto searchDto) {
         sb.append(" from customer_talk ct WHERE 1 = 1 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
-            sb.append(" AND (lower(ct.position) LIKE lower(:keyword) " +
+            sb.append(" AND (lower(ct.position_vn) LIKE lower(:keyword) OR lower(ct.position_en) LIKE lower(:keyword) " +
                     " OR lower(ct.full_name) LIKE lower(:keyword))");
         }
         if (searchDto.getStatus() != null) {

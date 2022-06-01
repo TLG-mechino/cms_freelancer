@@ -42,7 +42,7 @@
                     <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
                         <div class="ui-input-icon-left" style="width: 100%; display: flex;">
                             <i class="fa fa-search"/>
-                            <p:inputText placeholder="Nhập tên dự án, tiêu đề"
+                            <p:inputText placeholder="Nhập tên dự án, nội dung"
                                          style="width: 97%"
                                          onblur="this.value = this.value.trim()" maxlength="100"
                                          onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
@@ -66,15 +66,6 @@
                                            placeholder="Nhập số sao đánh giá"
                                            decimalPlaces="0" size="42"/>
                         </div>
-
-                        <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
-                        <p:selectOneMenu styleClass="filter-item"
-                                         value="#{mnReviewController.searchDto.status}">
-                            <f:selectItem itemLabel="Tất cả" itemValue=""/>
-                            <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
-                            <f:selectItem itemLabel="Đã xóa"
-                                          itemValue="#{DbConstant.INACTIVE_STATUS}"/>
-                        </p:selectOneMenu>
 
                         <p:commandButton value="Bỏ lọc" update="searchForm"
                                          icon="fa fa-refresh" styleClass="filter-btn"

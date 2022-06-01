@@ -135,8 +135,8 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             if (searchDto.getSortField().equals("discountMoney")) {
                 sb.append(" ORDER BY t.DISCOUNT_MONEY ");
             }
-            if (searchDto.getSortField().equals("paymentTypeName")) {
-                sb.append(" ORDER BY pt.NAME ");
+            if (searchDto.getSortField().equals("paymentTypeId")) {
+                sb.append(" ORDER BY t.PAYMENT_TYPE ");
             }
             if (searchDto.getSortField().equals("finalMoney")) {
                 sb.append(" ORDER BY t.FINAL_MONEY ");
@@ -239,7 +239,6 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             query.setParameter("status", searchDto.getStatus());
         }
         return query;
-
     }
 
     public void appendQuery(StringBuilder sb, TransactionSearchDto searchDto) {
@@ -262,7 +261,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     }
 
     public void appendQueryByUserName(StringBuilder sb, TransactionSearchDto searchDto) {
-        sb.append(" FROM transaction t LEFT JOIN payment_type pt ON t.PAYMENT_TYPE = pt.PAYMENT_TYPE_ID WHERE t.SENDER = :username or t.RECIPIENT = :username ");
+        sb.append(" FROM transaction t LEFT JOIN payment_type pt ON t.PAYMENT_TYPE = pt.PAYMENT_TYPE_ID WHERE (t.SENDER = :username or t.RECIPIENT = :username) ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (t.CODE LIKE :keyword OR t.SENDER LIKE :keyword OR t.RECIPIENT LIKE :keyword) ");
         }
@@ -270,29 +269,29 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             sb.append(" AND t.PAYMENT_TYPE = :paymentTypeSearch ");
         }
         if (searchDto.getLessMoney() != null) {
-            sb.append(" AND t.AMOUNT_OF_MONEY >= :lessMoney ");
+            sb.append(" AND t.FINAL_MONEY >= :lessMoney ");
         }
         if (searchDto.getGreatMoney() != null) {
-            sb.append(" AND t.AMOUNT_OF_MONEY <= :greatMoney ");
+            sb.append(" AND t.FINAL_MONEY <= :greatMoney ");
         }
         if (StringUtils.isNotBlank(searchDto.getStatus())) {
             sb.append(" AND UPPER(t.STATUS) LIKE UPPER(:status) ");
         }
     }
 
-    public Query createQueryExport(StringBuilder sb, TransactionSearchDto SearchDto, Integer offset, Integer limit) {
+    public Query createQueryExport(StringBuilder sb, TransactionSearchDto searchDto, Integer offset, Integer limit) {
         Query query = entityManager.createNativeQuery(sb.toString());
-        if (SearchDto.getKeyword() != null) {
-            query.setParameter("keyword", "%" + SearchDto.getKeyword().trim() + "%");
+        if (StringUtils.isNotBlank(searchDto.getKeyword())) {
+            query.setParameter("keyword", "%" + searchDto.getKeyword().trim() + "%");
         }
-        if (SearchDto.getPaymentTypeSearch() != null) {
-            query.setParameter("paymentTypeSearch", SearchDto.getPaymentTypeSearch());
+        if (searchDto.getPaymentTypeSearch() != null) {
+            query.setParameter("paymentTypeSearch", searchDto.getPaymentTypeSearch());
         }
-        if (SearchDto.getLessMoney() != 0) {
-            query.setParameter("lessMoney", SearchDto.getLessMoney());
+        if (searchDto.getLessMoney() != 0) {
+            query.setParameter("lessMoney", searchDto.getLessMoney());
         }
-        if (SearchDto.getEndTime() != null) {
-            query.setParameter("greatMoney", SearchDto.getGreatMoney());
+        if (searchDto.getEndTime() != null) {
+            query.setParameter("greatMoney", searchDto.getGreatMoney());
         }
         if (offset != null) {
             query.setParameter("offset", offset);

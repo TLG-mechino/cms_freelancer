@@ -30,8 +30,8 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                 "       rv.STAR_AMOUNT," +
                 "       rv.STATUS," +
                 "       rv.REVIEW_TIME," +
-                "       result1.NAME," +
-                "       result1.JOB_ID,"+
+                "       j.NAME," +
+                "       j.JOB_ID,"+
                 "       rv.TITLE ");
         appendQueryByUserName(sb,reviewSearchDto, username);
         if (reviewSearchDto.getSortField() != null ) {
@@ -52,7 +52,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                 sb.append(" ORDER BY rv.REVIEW_TIME ");
             }
             if (reviewSearchDto.getSortField().equals("nameJob")) {
-                sb.append(" ORDER BY result1.NAME ");
+                sb.append(" ORDER BY j.NAME ");
             }
             if (reviewSearchDto.getSortField().equals("title")) {
                 sb.append(" ORDER BY rv.TITLE ");
@@ -102,13 +102,16 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
 
     private void appendQueryByUserName (StringBuilder sb , ReviewSearchDto dto, String username) {
         sb.append(" from review rv " +
-                "  inner join (select j.JOB_ID, j.NAME from job j where j.USERNAME = :username) result1" +
-                "   on rv.JOB_ID = result1.JOB_ID " +
-                " where 1 = 1 ");
+                "  left join job j on rv.JOB_ID = j.JOB_ID " +
+                "                left join bidders b on j.JOB_ID = b.JOB_ID " +
+                "                inner join bidders_detail bd on b.BIDDERS_ID = bd.BIDDERS_ID " +
+                "                inner join account acc on rv.USERNAME = acc.USERNAME " +
+                "                inner join user u on u.USERNAME = rv.USERNAME " +
+                "                where b.USERNAME LIKE :username ");
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("username",username);
         if (StringUtils.isNotBlank(dto.getKeyword())) {
-            sb.append(" and ( (lower(rv.TITLE) like lower(:keyword)) or (lower(result1.NAME) like lower(:keyword)) ) ");
+            sb.append(" and ( (lower(rv.CONTENT) like lower(:keyword)) or (lower(j.NAME) like lower(:keyword)) ) ");
         }
         if(dto.getStartAmount() != null){
             sb.append(" and rv.STAR_AMOUNT =:startAmount ");

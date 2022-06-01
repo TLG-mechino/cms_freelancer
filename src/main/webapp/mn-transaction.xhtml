@@ -56,8 +56,8 @@
                <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
                                    <p:selectOneMenu styleClass="filter-item" value="#{mnTransactionController.searchDto.status}">
                                        <f:selectItem itemLabel="Tất cả" itemValue=""/>
-                                       <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
-                                       <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
+                                       <f:selectItem itemLabel="Thành công" itemValue="#{DbConstant.SUCCESS}"/>
+                                       <f:selectItem itemLabel="Thất bại" itemValue="#{DbConstant.FAIL}"/>
                                    </p:selectOneMenu>
 
                <p:commandButton value="Bỏ lọc" update="searchForm"

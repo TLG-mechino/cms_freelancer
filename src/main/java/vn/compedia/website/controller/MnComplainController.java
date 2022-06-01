@@ -17,8 +17,10 @@ import vn.compedia.website.dto.AccountDto;
 import vn.compedia.website.dto.ComplainDto;
 import vn.compedia.website.dto.ComplainSearchDto;
 import vn.compedia.website.model.Complain;
+import vn.compedia.website.model.ComplainFile;
 import vn.compedia.website.model.ComplainType;
 import vn.compedia.website.model.Hashtag;
+import vn.compedia.website.repository.ComplainFileRepository;
 import vn.compedia.website.repository.ComplainRepository;
 import vn.compedia.website.repository.ComplainTypeRepository;
 import vn.compedia.website.service.NotificationSystemService;
@@ -45,15 +47,20 @@ public class MnComplainController extends BaseController {
     @Autowired
     private ComplainTypeRepository complainTypeRepository;
     @Autowired
-    private NotificationSystemService notificationSystemService;
+    private ComplainFileRepository complainFileRepository;
     @Autowired
     private AuthorizationController authorizationController;
+    @Autowired
+    private NotificationSystemService notificationSystemService;
+
+
 
     private Complain complain;
     private ComplainSearchDto searchDto;
     private ComplainDto dto;
     private LazyDataModel<ComplainDto> lazyDataModel;
     private List<ComplainType> complainTypes;
+    private List<ComplainFile> complainFiles;
 
     public void initData() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -66,6 +73,7 @@ public class MnComplainController extends BaseController {
         searchDto = new ComplainSearchDto();
         dto = new ComplainDto();
         complain = new Complain();
+        complainFiles = new ArrayList<>();
         complainTypes = complainTypeRepository.findAllByStatus(DbConstant.ACTIVE_STATUS);
         onSearch();
     }
@@ -111,6 +119,11 @@ public class MnComplainController extends BaseController {
         BeanUtils.copyProperties(complain, dto);
 
     }
+
+   public List<ComplainFile> ListFileAttack(Long complainId){
+       complainFiles = complainFileRepository.findAllByComplainId(complainId);
+       return complainFiles;
+   }
 
 
     public void ComplainResolve(ComplainDto dto){

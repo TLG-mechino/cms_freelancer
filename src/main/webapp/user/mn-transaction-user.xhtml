@@ -126,8 +126,8 @@
                     </p:column>
 
                     <p:column headerText="Phương thức" style="text-align: left"
-                              sortBy="#{resultDto.paymentTypeName}">
-                        <p:outputLabel value="#{resultDto.paymentTypeName}"/>
+                              sortBy="#{resultDto.paymentTypeId}">
+                        <p:outputLabel value="#{resultDto.paymentTypeId}"/>
                     </p:column>
 
                     <p:column headerText="Số tiền nhận" style="text-align: left" sortBy="#{resultDto.finalMoney}">
@@ -155,7 +155,7 @@
                             <h:outputText value="#{resultDto.recipient}"/>
 
                             <p:outputLabel value="Phương thức:"/>
-                            <h:outputText value="#{resultDto.paymentTypeName}"/>
+                            <h:outputText value="#{resultDto.paymentTypeId}"/>
 
                             <p:outputLabel value="Số tiền giao dịch:"/>
                             <p:outputLabel value="#{resultDto.amountOfMoney}">

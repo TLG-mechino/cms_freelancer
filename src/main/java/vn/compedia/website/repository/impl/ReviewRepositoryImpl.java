@@ -111,7 +111,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
             sb.append(" and ( (lower(rv.TITLE) like lower(:keyword)) or (lower(result1.NAME) like lower(:keyword)) ) ");
         }
         if(dto.getStartAmount() != null){
-            sb.append(" and rv.START_AMOUNT =:startAmount ");
+            sb.append(" and rv.STAR_AMOUNT =:startAmount ");
         }
         if (dto.getStatus() != null) {
             sb.append(" and rv.STATUS =:status ");

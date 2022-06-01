@@ -31,16 +31,16 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
         appendQueryByUserName(sb, searchDto, username);
         if (searchDto.getSortField() != null) {
             if (searchDto.getSortField().equals("content")) {
-                sb.append(" ORDER BY n.CONTENT");
+                sb.append(" ORDER BY n.CONTENT_VN");
             }
             if (searchDto.getSortField().equals("username")) {
-                sb.append(" ORDER BY n.USERNAME");
+                sb.append(" ORDER BY nr.USERNAME");
             }
             if (searchDto.getSortField().equals("sendingTime")) {
                 sb.append(" ORDER BY n.SENDING_TIME");
             }
             if (searchDto.getSortField().equals("status")) {
-                sb.append(" ORDER BY n.STATUS");
+                sb.append(" ORDER BY nr.STATUS");
             }
             sb.append(searchDto.getSortOrder());
         } else {
@@ -85,10 +85,10 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("username", username);
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
-            sb.append(" AND lower(n.CONTENT) LIKE lower(:keyword)) " );
+            sb.append(" AND lower(n.CONTENT_VN) LIKE lower(:keyword) " );
         }
         if (searchDto.getStatus() != null) {
-            sb.append(" AND n.STATUS =:status ");
+            sb.append(" AND nr.STATUS =:status ");
         }
     }
 

@@ -12,7 +12,6 @@
     <ui:define name="title">Quản lý khiếu nại</ui:define>
 
     <ui:define name="content">
-
         <p:dialog widgetVar="inforDialog" width="600" header="Giải quyết khiếu nại"
                   modal="true" id="inforDialogId">
             <h:form id="dlForm" prependId="false">
@@ -23,15 +22,17 @@
 
                             <p:outputLabel value="Trạng thái:" styleClass="requireLabel"/>
                             <p:selectOneMenu value="#{mnComplainController.dto.status}" style="">
-                                <f:selectItem itemLabel="Chọn trạng thái" />
-                                <f:selectItem itemLabel="Đã xử lý " itemValue="#{DbConstant.ACTIVE_STATUS}" rendered="#{mnComplainController.dto.status eq 1}"/>
-                                <f:selectItem itemLabel="Chưa xử lý" itemValue="#{DbConstant.INACTIVE_STATUS}" rendered="#{mnComplainController.dto.status eq 0}"/>
+                                <f:selectItem itemLabel="Chọn trạng thái"/>
+                                <f:selectItem itemLabel="Đã xử lý " itemValue="#{DbConstant.ACTIVE_STATUS}"
+                                              rendered="#{mnComplainController.dto.status eq 1}"/>
+                                <f:selectItem itemLabel="Chưa xử lý" itemValue="#{DbConstant.INACTIVE_STATUS}"
+                                              rendered="#{mnComplainController.dto.status eq 0}"/>
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Ghi chú:" styleClass="requireLabel"/>
                             <p:inputTextarea placeholder="Nhập ghi chú" maxlength="200"
-                                         onchange="this.value = this.value.trim()"
-                                         value="#{mnComplainController.dto.note}">
+                                             onchange="this.value = this.value.trim()"
+                                             value="#{mnComplainController.dto.note}">
                             </p:inputTextarea>
 
                         </p:panelGrid>
@@ -46,6 +47,29 @@
                                              update="dlForm searchForm growl"
                                              actionListener="#{mnComplainController.resetAll()}"/>
                         </p:outputPanel>
+                    </div>
+                </p:scrollPanel>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="fileDialog" width="600" header="Danh sách file đính kèm"
+                  modal="true" id="fileDialogId">
+            <h:form id="fileForm" prependId="false">
+                <p:scrollPanel mode="native" style="width: 100%; max-height: 500px; border: none">
+                    <div class="ui-fluid">
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4"
+                                     layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
+
+                            <ui:repeat value="#{mnComplainController.complainFiles}" var="item" varStatus="row">
+
+                                <p:outputLabel value="#{row.index}" style="margin-left: 50px;"/>
+
+                                <a href="#{commonController.setUrlToShowImage(item.filePath)}"
+                                   download="true" target="_blank" style="text-decoration: underline">
+                                    #{item.fileName}
+                                </a>0
+                            </ui:repeat>
+                        </p:panelGrid>
                     </div>
                 </p:scrollPanel>
             </h:form>
@@ -88,7 +112,9 @@
                     <p:outputLabel value="Loại khiếu nại" styleClass="filter-item-label"/>
                     <p:selectOneMenu styleClass="filter-item" value="#{mnComplainController.searchDto.complainType}">
                         <f:selectItem itemLabel="Tất cả" itemValue=""/>
-                        <f:selectItems value="#{mnComplainController.complainTypes}" itemValue="#{complainType.complainId}" itemLabel="#{complainType.name}" var="complainType" />
+                        <f:selectItems value="#{mnComplainController.complainTypes}"
+                                       itemValue="#{complainType.complainId}" itemLabel="#{complainType.name}"
+                                       var="complainType"/>
                     </p:selectOneMenu>
 
                     <p:commandButton value="Bỏ lọc" update="searchForm"
@@ -197,6 +223,11 @@
                                     actionListener="#{mnComplainController.getComplainId(resultDto.complainId)}">
                         </p:menuitem>
 
+                        <p:menuitem value="DS file đính kèm" icon="fa fa-list" process="@this"
+                                    oncomplete="PF('fileDialog').show()"
+                                    actionListener="#{mnComplainController.ListFileAttack(resultDto.complainId)}">
+                        </p:menuitem>
+
                         <p:menuitem value="Xóa thông tin" icon="fa fa-remove" process="@this"
                                     update="tblSearchResult growl"
                                     actionListener="#{mnComplainController.onDelete(resultDto.complainId)}">
@@ -210,8 +241,9 @@
                 </p:column>
             </p:dataTable>
         </h:form>
+
         <script>
-            $(document).keyup(function(event) {
+            $(document).keyup(function (event) {
                 var element = document.getElementById("search");
                 var activePanel = element.classList.contains("open-panel");
                 if (activePanel &amp;&amp; event.which === 13) {
@@ -221,7 +253,7 @@
 
             function addOrRemoveClass() {
                 var element = document.getElementById("search");
-                if(element.classList.contains("open-panel")) {
+                if (element.classList.contains("open-panel")) {
                     element.classList.remove("open-panel");
                 } else {
                     element.classList.add("open-panel");

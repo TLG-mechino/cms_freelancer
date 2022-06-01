@@ -44,17 +44,14 @@
                              styleClass="filter-search ui-sm-12" onclick="addOrRemoveClass()"/>
 
             <p:overlayPanel for="basic" styleClass="filter-panel" >
-               <p:outputLabel value="Phương thức thanh toán" styleClass="filter-item-label"/>
-               <p:selectOneMenu styleClass="filter-item" value="#{mnTransactionController.searchDto.paymentTypeSearch}">
-                  <f:selectItem itemLabel="Chọn phương thức thanh toán"/>
-                  <f:selectItems var="item" itemValue="#{item.paymentTypeId}" itemLabel="#{item.name}" value="#{mnTransactionController.paymentTypeList}" />
-               </p:selectOneMenu>
-
                <p:outputLabel value="Số tiền giao dịch" styleClass="filter-item-label"/>
-               <div class="filter-item">
-                  <p:inputNumber value="#{mnTransactionController.searchDto.lessMoney}"  decimalPlaces="0" size="12" placeholder="Từ"/>
-                  <p:inputNumber value="#{mnTransactionController.searchDto.greatMoney}" placeholder="Đến" decimalPlaces="0" size="12" style="margin-left: 20px"/>
-               </div>
+               <p:panelGrid columns="2" layout="grid" styleClass="form-input filter-item"
+                            columnClasses="ui-grid-col-6 padding-top-bot-left-0, ui-grid-col-6 padding-top-bot-0-right-4">
+                  <p:inputNumber value="#{mnTransactionController.searchDto.lessMoney}"
+                                 decimalPlaces="0" size="12" placeholder="Từ"/>
+                  <p:inputNumber value="#{mnTransactionController.searchDto.greatMoney}"
+                                 decimalPlaces="0" size="12" placeholder="Đến"/>
+               </p:panelGrid>
 
                <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
                                    <p:selectOneMenu styleClass="filter-item" value="#{mnTransactionController.searchDto.status}">
@@ -96,10 +93,6 @@
 
             <p:column headerText="Người nhận" style="text-align: left" sortBy="#{resultDto.recipient}">
                <p:outputLabel value="#{resultDto.recipient}"/>
-            </p:column>
-
-            <p:column headerText="Phương thức" style="text-align: left" sortBy="#{resultDto.paymentTypeName}">
-               <p:outputLabel value="#{resultDto.paymentTypeName}"/>
             </p:column>
 
             <p:column headerText="Số tiền nhận" style="text-align: left" sortBy="#{resultDto.finalMoney}">

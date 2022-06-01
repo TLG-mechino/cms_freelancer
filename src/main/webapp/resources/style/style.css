@@ -105,3 +105,25 @@ svg {
     line-height: 15px;
     margin-top: 20px;
 }
+
+.form-input {
+    width: 100% !important;
+}
+
+.padding-top-bot-left-0 {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+}
+
+.padding-top-bot-0-right-4 {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-right: 0 !important;
+    margin-right: 4px;
+}
+
+.filter-item {
+    width: 92%;
+    margin: 10px 0 10px 0;
+}

@@ -24,37 +24,57 @@
             <h:form id="dlForm" prependId="false">
                 <p:tabView>
                     <p:tab title="Thông tin chiết khấu">
-                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-6"
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-3"
                                      layout="grid" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Cấu hình thông tin chiết khấu:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập giá trị" maxlength="100"
-                                         onchange="this.value = this.value.trim()"
-                                         value=""/>
+                            <p:inputNumber placeholder="Nhập giá trị" maxlength="10"
+                                         onchange="this.value = this.value.trim()" symbol="  USD" symbolPosition="s" emptyValue="always"
+                                           thousandSeparator="." value="#{systemConfigController.bidFee}"/>
                         </p:panelGrid>
                         <hr class="hr-class"/>
                         <p:commandButton value="Lưu thông tin" styleClass="border-btn" icon="fa fa-save"
-                                         style="width: auto" oncomplete="PF('inforDialog').show()" update="dlForm"/>
+                                         style="width: auto" oncomplete="PF('inforDialog').show()" update="dlForm"
+                                         actionListener="#{systemConfigController.editBidFee(systemConfigController.bidFee)}"/>
+
                     </p:tab>
 
                     <p:tab title="Tham số hệ thống">
-                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-6"
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-3"
                                      layout="grid" styleClass="ui-panelgrid-blank">
-                            <p:outputLabel value="Tham số hệ thống 1:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập giá trị" maxlength="100"
+                            <p:outputLabel value="Số lượng dự án:" styleClass="requireLabel"/>
+                            <p:inputNumber placeholder="Nhập giá trị" maxlength="10"
                                          onchange="this.value = this.value.trim()"
-                                         value=""/>
-                            <p:outputLabel value="Tham số hệ thống 2:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập giá trị" maxlength="100"
+                                         value="#{systemConfigController.totalJob}"/>
+                            <p:outputLabel value="Số lượng người dùng:" styleClass="requireLabel"/>
+                            <p:inputNumber placeholder="Nhập giá trị" maxlength="10"
                                          onchange="this.value = this.value.trim()"
-                                         value=""/>
-                            <p:outputLabel value="Tham số hệ thống 3:" styleClass="requireLabel"/>
-                            <p:inputText placeholder="Nhập giá trị" maxlength="100"
+                                         value="#{systemConfigController.totalFreelancer}"/>
+                            <p:outputLabel value="Thời gian cấm thi (ngày):" styleClass="requireLabel"/>
+                            <p:inputNumber placeholder="Nhập giá trị" maxlength="10"
                                          onchange="this.value = this.value.trim()"
-                                         value=""/>
+                                         value="#{systemConfigController.blockTimeExam}"/>
                         </p:panelGrid>
                         <hr class="hr-class"/>
                         <p:commandButton value="Lưu thông tin" styleClass="border-btn" icon="fa fa-save"
-                                         style="width: auto" oncomplete="PF('inforDialog').show()" update="dlForm"/>
+                                         style="width: auto" oncomplete="PF('inforDialog').show()" update="dlForm"
+                                         actionListener="#{systemConfigController.edit(systemConfigController.totalJob,
+                                         systemConfigController.totalFreelancer, systemConfigController.blockTimeExam)}" />
+                    </p:tab>
+                    <p:tab title="Từ khóa bị cấm">
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-3"
+                                     layout="grid" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel value="Cấu hình từ khóa:" styleClass="requireLabel"/>
+                            <p:inputText placeholder="Nhập giá trị" maxlength="1000"
+                                           onchange="this.value = this.value.trim()"
+                                           value="#{systemConfigController.keyword}"/>
+                            <p:outputLabel />
+                            <p:outputLabel style="font-style: italic; font-size: 14px;"
+                                           value="(*) Các từ khóa cách nhau bởi dấu ',' "/>
+                        </p:panelGrid>
+                        <hr class="hr-class"/>
+                        <p:commandButton value="Lưu thông tin" styleClass="border-btn" icon="fa fa-save"
+                                         style="width: auto" oncomplete="PF('inforDialog').show()" update="dlForm"
+                                         actionListener="#{systemConfigController.editBanKeyword(systemConfigController.keyword)}"/>
                     </p:tab>
                 </p:tabView>
             </h:form>

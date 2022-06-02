@@ -36,4 +36,11 @@ public class DbConstant {
     public static final String SUCCESS = "Success";
     public static final String FAIL = "Fail";
 
+    //system config
+    public static final String BID_FEE = "BID_FEE";
+    public static final String BLOCK_TIME_EXAM = "BLOCK_TIME_EXAM";
+    public static final String TOTAL_JOB = "TOTAL_JOB";
+    public static final String TOTAL_FREELANCER = "TOTAL_FREELANCER";
+    public static final String BAN_KEYWORD = "BAN_KEYWORD";
+
 }

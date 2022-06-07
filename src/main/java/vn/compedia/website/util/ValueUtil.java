@@ -64,6 +64,19 @@ public class ValueUtil {
         }
     }
 
+    public static Integer isDivisible(Integer number) {
+        if (number % 5 == 1) {
+            return number + 19;
+        } else if (number % 5 == 2){
+            return number + 18;
+        } else if (number % 5 == 3){
+            return number + 17;
+        } else if (number % 5 == 4){
+            return number + 16;
+        }
+        return number + 20;
+    }
+
 
 //    public static List<Long> getListByObject(Object obj){
 //        if(obj == null || obj.toString().isEmpty()){

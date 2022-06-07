@@ -1,7 +1,9 @@
 package vn.compedia.website.repository;
 
+import org.springframework.data.repository.query.Param;
 import vn.compedia.website.dto.JobDto;
 import vn.compedia.website.dto.JobSearchDto;
+import vn.compedia.website.dto.response.TotalJobByDateResponse;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -15,5 +17,7 @@ public interface JobRepositoryCustom {
     List<JobDto> getAllJobRecipient(String username, JobSearchDto jobSearchDto);
 
     BigInteger countSearchRecipient(String username, JobSearchDto jobSearchDto);
+
+    List<TotalJobByDateResponse> countJobByDate(Integer month,Integer year);
 
 }

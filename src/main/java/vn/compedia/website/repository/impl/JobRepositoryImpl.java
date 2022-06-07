@@ -1,12 +1,14 @@
 package vn.compedia.website.repository.impl;
 
 import org.apache.commons.lang3.StringUtils;
-
 import org.springframework.util.CollectionUtils;
 import vn.compedia.website.dto.JobDto;
 import vn.compedia.website.dto.JobSearchDto;
+import vn.compedia.website.dto.response.TotalJobByDateResponse;
+import vn.compedia.website.mapper.EntityMapper;
 import vn.compedia.website.repository.JobRepositoryCustom;
 import vn.compedia.website.util.ValueUtil;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -25,7 +27,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
         sb.append(" select j.JOB_ID, " +
                 "       j.NAME, " +
                 "       j.DESCRIPTION, " +
-                "       j.USERNAME, " +
+                "       IF(b.USERNAME is not null, b.USERNAME, 'Chưa có người làm dự án'), " +
                 "       j.MONEY_FROM, " +
                 "       j.MONEY_TO, " +
                 "       j.CREATE_DATE, " +
@@ -96,17 +98,17 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
     public BigInteger countSearchRpByUserName(String username, JobSearchDto jobSearchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(j.JOB_ID) ");
-        appendQueryByUserName(sb,jobSearchDto, username);
-        Query query = createQueryByUserName(sb,jobSearchDto,username);
+        appendQueryByUserName(sb, jobSearchDto, username);
+        Query query = createQueryByUserName(sb, jobSearchDto, username);
         return (BigInteger) query.getSingleResult();
     }
 
     public void appendQueryByUserName(StringBuilder sb, JobSearchDto dto, String username) {
-        sb.append(" FROM job j WHERE j.USERNAME = :username ");
+        sb.append(" FROM job j left join bidders b on j.JOB_ID = b.JOB_ID WHERE j.USERNAME = :username ");
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("username", username);
         if (StringUtils.isNotBlank(dto.getKeyword())) {
-            sb.append(" AND lower(j.NAME) LIKE lower(:keyword) " );
+            sb.append(" AND lower(j.NAME) LIKE lower(:keyword) ");
         }
         if (dto.getMoney() != null) {
             sb.append(" AND j.MONEY_FROM <= :money AND j.MONEY_TO >= :money ");
@@ -138,7 +140,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
         sb.append(" select j.JOB_ID, " +
                 "       j.NAME, " +
                 "       j.DESCRIPTION, " +
-                "       b.USERNAME, " +
+                "       j.USERNAME, " +
                 "       j.MONEY_FROM, " +
                 "       j.MONEY_TO, " +
                 "       j.CREATE_DATE, " +
@@ -208,9 +210,22 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
     public BigInteger countSearchRecipient(String username, JobSearchDto jobSearchDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(j.JOB_ID) ");
-        appendQueryRecipient(sb,jobSearchDto, username);
-        Query query = createQueryByUserName(sb,jobSearchDto,username);
+        appendQueryRecipient(sb, jobSearchDto, username);
+        Query query = createQueryByUserName(sb, jobSearchDto, username);
         return (BigInteger) query.getSingleResult();
+    }
+
+    @Override
+    public List<TotalJobByDateResponse> countJobByDate(Integer month, Integer year) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("select count(j.JOB_ID) as total, date_format(j.CREATE_DATE, '%d')  as date " +
+                "             from job j " +
+                "             where date_format(j.CREATE_DATE, '%m') = :month and date_format(j.CREATE_DATE, '%Y') = :year group by date_format(j.CREATE_DATE, '%d')");
+        Query query = entityManager.createNativeQuery(sb.toString());
+        query.setParameter("month", month);
+        query.setParameter("year", year);
+        List result = EntityMapper.mapper(query, sb.toString(), TotalJobByDateResponse.class);
+        return result;
     }
 
     public void appendQueryRecipient(StringBuilder sb, JobSearchDto dto, String username) {
@@ -220,7 +235,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("username", username);
         if (StringUtils.isNotBlank(dto.getKeyword())) {
-            sb.append(" AND lower(j.NAME) LIKE lower(:keyword) " );
+            sb.append(" AND lower(j.NAME) LIKE lower(:keyword) ");
         }
         if (dto.getMoney() != null) {
             sb.append(" AND j.MONEY_FROM <= :money AND j.MONEY_TO >= :money ");

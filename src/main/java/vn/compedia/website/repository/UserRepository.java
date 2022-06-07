@@ -12,4 +12,7 @@ public interface UserRepository extends CrudRepository<User,String> ,UserReposit
     @Query(value = "select * from user u , account ac  where u.USERNAME = ac.USERNAME and u.USERNAME =:username and ac.STATUS = 1", nativeQuery = true)
     User getUsersByUserName(@Param("username")String username);
 
+    @Query("select count(u) from User u")
+    Integer totalUser();
+
 }

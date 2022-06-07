@@ -4,7 +4,10 @@ import com.ocpsoft.pretty.faces.util.StringUtils;
 import org.springframework.util.CollectionUtils;
 import vn.compedia.website.dto.UserExamDto;
 import vn.compedia.website.dto.entity.UserDto;
+import vn.compedia.website.dto.response.TotalJobByDateResponse;
+import vn.compedia.website.dto.response.TotalUserByDateResponse;
 import vn.compedia.website.dto.search.UserSearchDto;
+import vn.compedia.website.mapper.EntityMapper;
 import vn.compedia.website.repository.UserRepositoryCustom;
 import vn.compedia.website.util.DateUtil;
 import vn.compedia.website.util.DbConstant;
@@ -219,6 +222,21 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             }
         }
         return dto;
+    }
+
+    @Override
+    public List<TotalUserByDateResponse> countUserByDate(Integer month, Integer year) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" select count(u.USERNAME) as total, date_format(a.CREATE_DATE, '%d') as date " +
+                " from user u inner join account a on u.USERNAME = a.USERNAME " +
+                " where date_format(a.CREATE_DATE, '%m') = :month " +
+                "  and date_format(a.CREATE_DATE, '%Y') = :year " +
+                " group by date_format(a.CREATE_DATE, '%d') ");
+        Query query = entityManager.createNativeQuery(sb.toString());
+        query.setParameter("month", month);
+        query.setParameter("year", year);
+        List result = EntityMapper.mapper(query, sb.toString(), TotalUserByDateResponse.class);
+        return result;
     }
 
     public Query createQuery(StringBuilder sb , UserSearchDto dto){

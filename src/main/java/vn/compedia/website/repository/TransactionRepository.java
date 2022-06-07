@@ -14,4 +14,9 @@ public interface TransactionRepository extends CrudRepository<Transaction,Long>,
     @Query("select t from Transaction t where t.code = :code and t.transactionId <> :transactionId")
     List<Transaction> findByCodeExists(@Param("code") String code, @Param("transactionId") Long transactionId);
 
+    @Query("select count(t) from Transaction t")
+    Integer totalTransaction();
+
+    @Query("select sum(t.finalMoney) from Transaction t")
+    Double totalMoney();
 }

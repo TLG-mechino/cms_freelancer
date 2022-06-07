@@ -31,20 +31,20 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
         appendQueryByUserName(sb, searchDto, username);
         if (searchDto.getSortField() != null) {
             if (searchDto.getSortField().equals("content")) {
-                sb.append(" ORDER BY n.CONTENT_VN");
+                sb.append(" ORDER BY n.CONTENT_VN ");
             }
             if (searchDto.getSortField().equals("username")) {
-                sb.append(" ORDER BY nr.USERNAME");
+                sb.append(" ORDER BY nr.USERNAME ");
             }
             if (searchDto.getSortField().equals("sendingTime")) {
-                sb.append(" ORDER BY n.SENDING_TIME");
+                sb.append(" ORDER BY n.SENDING_TIME ");
             }
             if (searchDto.getSortField().equals("status")) {
-                sb.append(" ORDER BY nr.STATUS");
+                sb.append(" ORDER BY nr.STATUS ");
             }
             sb.append(searchDto.getSortOrder());
         } else {
-            sb.append(" ORDER BY n.NOTIFICATION_ID DESC");
+            sb.append(" ORDER BY n.NOTIFICATION_ID DESC ");
         }
         Query query = createQueryByUserName(sb, searchDto, username);
 

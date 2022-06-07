@@ -90,3 +90,8 @@
 .ui-selectonemenu-filter-container span {
 
 }
+
+.panel-dashboard {
+    border: 1px solid #aaaaaa !important;
+    padding: 20px 0px 20px 10px !important;
+}

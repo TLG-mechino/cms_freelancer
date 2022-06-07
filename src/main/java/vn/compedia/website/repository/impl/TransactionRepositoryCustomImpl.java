@@ -3,6 +3,9 @@ package vn.compedia.website.repository.impl;
 import org.apache.commons.lang3.StringUtils;
 import vn.compedia.website.dto.TransactionDto;
 import vn.compedia.website.dto.TransactionSearchDto;
+import vn.compedia.website.dto.response.TotalTransactionByDateResponse;
+import vn.compedia.website.dto.response.TotalUserByDateResponse;
+import vn.compedia.website.mapper.EntityMapper;
 import vn.compedia.website.repository.TransactionRepositoryCustom;
 import vn.compedia.website.util.DbConstant;
 import vn.compedia.website.util.ValueUtil;
@@ -198,6 +201,21 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         appendQuery(sb, searchDto);
         Query query = createQuery(sb, searchDto);
         return (BigInteger) query.getSingleResult();
+    }
+
+    @Override
+    public List<TotalTransactionByDateResponse> countTransactionByDate(Integer month, Integer year) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" select count(t.TRANSACTION_ID) as total, date_format(t.TRANSACTION_TIME, '%d') as date " +
+                " from transaction t " +
+                " where date_format(t.TRANSACTION_TIME, '%m') = :month " +
+                "  and date_format(t.TRANSACTION_TIME, '%Y') = :year " +
+                " group by date_format(t.TRANSACTION_TIME, '%d') ");
+        Query query = entityManager.createNativeQuery(sb.toString());
+        query.setParameter("month", month);
+        query.setParameter("year", year);
+        List result = EntityMapper.mapper(query, sb.toString(), TotalTransactionByDateResponse.class);
+        return result;
     }
 
     public Query createQuery(StringBuilder sb, TransactionSearchDto searchDto) {

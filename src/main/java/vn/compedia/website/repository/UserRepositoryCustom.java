@@ -1,6 +1,8 @@
 package vn.compedia.website.repository;
 
 import vn.compedia.website.dto.entity.UserDto;
+import vn.compedia.website.dto.response.TotalJobByDateResponse;
+import vn.compedia.website.dto.response.TotalUserByDateResponse;
 import vn.compedia.website.dto.search.UserSearchDto;
 import vn.compedia.website.model.User;
 
@@ -15,5 +17,7 @@ public interface UserRepositoryCustom {
     int countSearch(UserSearchDto userSearchDto, int type);
 
     UserDto findUserDtoById(Long accountId);
+
+    List<TotalUserByDateResponse> countUserByDate(Integer month, Integer year);
 
 }

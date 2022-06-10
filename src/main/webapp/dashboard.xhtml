@@ -19,25 +19,25 @@
         <div class="ui-fluid">
             <p:panelGrid columns="4" layout="grid"
                          columnClasses="ui-grid-col-3 ui-grid-col-3 ui-grid-col-3 ui-grid-col-3 ">
-                <p:panel style="border: 1px solid #aaaaaa !important; padding: 20px 0px 20px 10px !important;"
+                <p:panel style="border-radius: 8px; border: 1px solid #aaaaaa !important; padding: 20px 0px 20px 10px !important;"
                          columns="2" columnClasses="ui-grid-col-8 ui-grid-col-4">
                     <p:outputLabel value="Số lượng dự án : " styleClass="filter-item-label" />
                     <p:outputLabel value="#{dashboardController.totalJob}"/>
                 </p:panel>
 
-                <p:panel style="border: 1px solid #aaaaaa !important; padding: 20px 0px 20px 10px !important;"
+                <p:panel style="border-radius: 8px; border: 1px solid #aaaaaa !important; padding: 20px 0px 20px 10px !important;"
                          columns="2" columnClasses="ui-grid-col-8 ui-grid-col-4">
                     <p:outputLabel value="Số lượng người dùng : " styleClass="filter-item-label"/>
                     <p:outputLabel value="#{dashboardController.totalUser}"/>
                 </p:panel>
 
-                <p:panel style="border: 1px solid #aaaaaa !important; padding: 20px 0px 20px 10px !important;"
+                <p:panel style="border-radius: 8px; border: 1px solid #aaaaaa !important; padding: 20px 0px 20px 10px !important;"
                          columns="2" columnClasses="ui-grid-col-8 ui-grid-col-4">
                     <p:outputLabel value="Số lượng giao dịch : " styleClass="filter-item-label"/>
                     <p:outputLabel value="#{dashboardController.totalTransaction}"/>
                 </p:panel>
 
-                <p:panel style="border: 1px solid #aaaaaa !important; padding: 20px 0px 20px 10px !important;"
+                <p:panel style="border-radius: 8px; border: 1px solid #aaaaaa !important; padding: 20px 0px 20px 10px !important;"
                          columns="2" columnClasses="ui-grid-col-8 ui-grid-col-4">
                     <p:outputLabel value="Tổng số tiền giao dịch : " styleClass="filter-item-label"/>
                     <p:outputLabel value="#{dashboardController.totalMoney}"/>
@@ -45,7 +45,8 @@
             </p:panelGrid>
 
             <hr class="hr-class" style="margin-top: 10px"/>
-            <p:outputLabel value="Báo cáo thống kê hệ thống theo tháng" styleClass="filter-item-label" style="margin-left: 45%; font-size: 20px; line-height: 1.5" />
+            <p:outputLabel value="Báo cáo thống kê hệ thống theo tháng" styleClass="filter-item-label"
+                           style="display: flex; justify-content: center; font-size: 20px; line-height: 1.5" />
             <p:panelGrid columns="2" layout="grid" style="  margin-bottom: 20px;margin-top: 20px"
                          columnClasses="ui-grid-col-4 ui-grid-col-4 ">
                 <p:outputLabel value="Thống kê hoạt động hệ thống theo tháng : " styleClass="filter-item-label" style=" white-space: nowrap"/>

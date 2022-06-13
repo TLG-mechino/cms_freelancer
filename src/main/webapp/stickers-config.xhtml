@@ -1,0 +1,232 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/template.xhtml">
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{stickersConfigController.initData()}"/>
+    </f:metadata>
+
+    <ui:define name="title">Cấu hình dịch vụ</ui:define>
+
+    <ui:define name="head">
+        <style>
+            .color-picker-custom button {
+                background-color: transparent !important;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="content">
+        <p:dialog widgetVar="inforDialog" width="750" height="500" modal="true" id="inforDialogId"
+                  header="#{stickersConfigController.titleDialog} cấu hình dịch vụ">
+            <p:ajax event="close" update="searchForm dlForm" global="false"/>
+            <h:form id="dlForm" prependId="false" styleClass="ui-fluid">
+                <p:panelGrid columns="1" columnClasses="ui-grid-col-12"
+                             layout="grid" styleClass="ui-panelgrid-blank">
+
+                    <p:outputPanel>
+                        <p:outputLabel value="Mã dịch vụ:" styleClass="requireLabel"/>
+                        <p:inputText placeholder="Nhập mã dịch vụ" maxlength="10" styleClass="input"
+                                     value="#{stickersConfigController.stickersDto.code}" id="code"
+                                     onchange="this.value = this.value.trim()"
+                                     onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();"/>
+                    </p:outputPanel>
+
+                    <p:outputPanel>
+                        <p:outputLabel value="Tên tiếng việt:" styleClass="requireLabel"/>
+                        <p:inputText placeholder="Nhập tên dịch vụ tiếng việt" maxlength="20" styleClass="input"
+                                     value="#{stickersConfigController.stickersDto.nameVn}"/>
+                    </p:outputPanel>
+
+                    <p:outputPanel>
+                        <p:outputLabel value="Tên tiếng anh:" styleClass="requireLabel"/>
+                        <p:inputText placeholder="Nhập tên dịch vụ tiếng anh" maxlength="20" styleClass="input"
+                                     value="#{stickersConfigController.stickersDto.nameEn}"/>
+                    </p:outputPanel>
+
+                    <p:outputPanel>
+                        <p:outputLabel value="Mô tả tiếng việt:"/>
+                        <p:inputTextarea placeholder="Nhập mô tả thông tin tiếng việt" rows="5" maxlength="100" styleClass="input"
+                                         value="#{stickersConfigController.stickersDto.descriptionVn}"/>
+                    </p:outputPanel>
+
+                    <p:outputPanel>
+                        <p:outputLabel value="Mô tả tiếng anh:"/>
+                        <p:inputTextarea placeholder="Nhập mô tả thông tin tiếng anh" rows="5" maxlength="100" styleClass="input"
+                                         value="#{stickersConfigController.stickersDto.descriptionEn}"/>
+                    </p:outputPanel>
+
+                    <p:outputPanel>
+                        <p:outputLabel value="Chọn màu: "/>
+                        <p:colorPicker value="#{stickersConfigController.stickersDto.color}" styleClass="color-picker-custom input"
+                                       style="width: auto; display: inline-flex; margin-left: 20px;"/>
+                    </p:outputPanel>
+
+                    <p:outputPanel>
+                        <p:outputLabel value="Phí dịch vụ:" styleClass="requireLabel"/>
+                        <p:inputNumber placeholder="Nhập phí dịch vụ" styleClass="input"
+                                       onchange="this.value = this.value.trim()" maxlength="12" decimalPlaces="0"
+                                       value="#{stickersConfigController.stickersDto.money}" minValue="0"/>
+                    </p:outputPanel>
+
+                    <p:outputPanel>
+                        <p:outputLabel value="Chọn vị trí ưu tiên:" styleClass="requireLabel"/>
+                        <p:selectOneMenu value="#{stickersConfigController.stickersDto.position}" styleClass="input">
+                            <f:selectItem itemLabel="Chọn vị trí ưu tiên" itemValue=""/>
+                            <f:selectItems value="#{stickersConfigController.listPosition}"/>
+                        </p:selectOneMenu>
+                    </p:outputPanel>
+
+                    <p:outputPanel>
+                        <p:outputLabel value="Trạng thái:" styleClass="requireLabel"/>
+                        <p:selectOneMenu value="#{stickersConfigController.stickersDto.status}" styleClass="input">
+                            <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
+                            <f:selectItem itemLabel="Không hoạt động"
+                                          itemValue="#{DbConstant.INACTIVE_STATUS}"/>
+                        </p:selectOneMenu>
+                    </p:outputPanel>
+                </p:panelGrid>
+
+                <p:outputPanel>
+                    <p:commandButton value="Lưu" styleClass="save-btn"
+                                     icon="fa fa-save" update="dlForm tblSearchResult growl"
+                                     actionListener="#{stickersConfigController.onSave()}"/>
+
+                    <p:commandButton value="Hủy bỏ" styleClass="close-btn" icon="fa fa-close"
+                                     style="margin-right: 10px"
+                                     oncomplete="PF('inforDialog').hide()" update="searchForm"
+                                     actionListener="#{stickersConfigController.resetAll()}"/>
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+
+        <h:form styleClass="ui-g-12" id="searchForm" prependId="false">
+            <p:outputPanel>
+                <p:link styleClass="title-color-left ui-sm-12">Cấu hình dịch vụ</p:link>
+                <div style="float: right" class="ui-sm-12">
+                    <p:commandButton value="Thêm mới" styleClass="border-btn" icon="fa fa-plus"
+                                     oncomplete="PF('inforDialog').show()" update="dlForm"
+                                     actionListener="#{stickersConfigController.resetDialog()}"/>
+                </div>
+            </p:outputPanel>
+
+            <hr class="hr-class"/>
+
+            <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"
+                         columnClasses="ui-grid-col-11 ui-no-margin-padding margin-right-10, ui-grid-col-1 ui-no-margin-padding">
+                <p:outputPanel style="margin-right: 10px" styleClass="ui-sm-12">
+                    <div class="ui-input-icon-left" style="width: 100%; display: flex;">
+                        <i class="fa fa-search"/>
+                        <p:inputText placeholder="Nhập mã dịch vụ, tên dịch vụ" style="width: 97%"
+                                     onblur="this.value = this.value.trim()" maxlength="100"
+                                     onkeypress="if (event.keyCode == 13) {document.getElementById('search').click(); return false;}"
+                                     value="#{stickersConfigController.searchDto.keyword}"
+                                     styleClass="border-input" onchange="this.value = this.value.trim()">
+                            <p:ajax event="change" update="searchForm"
+                                    listener="#{stickersConfigController.onSearch()}"/>
+                        </p:inputText>
+                    </div>
+                </p:outputPanel>
+
+                <p:commandButton id="basic" value="Bộ lọc" type="button" iconPos="right" icon="fa fa-caret-down"
+                                 styleClass="filter-search ui-sm-12" onclick="addOrRemoveClass()"/>
+
+                <p:overlayPanel for="basic" styleClass="filter-panel">
+                    <p:outputLabel value="Trạng thái" styleClass="filter-item-label"/>
+                    <p:selectOneMenu styleClass="filter-item" value="#{stickersConfigController.searchDto.status}">
+                        <f:selectItem itemLabel="Tất cả" itemValue=""/>
+                        <f:selectItem itemLabel="Hoạt động" itemValue="#{DbConstant.ACTIVE_STATUS}"/>
+                        <f:selectItem itemLabel="Không hoạt động" itemValue="#{DbConstant.INACTIVE_STATUS}"/>
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Bỏ lọc" update="searchForm"
+                                     icon="fa fa-refresh" styleClass="filter-btn"
+                                     actionListener="#{stickersConfigController.resetAll()}"/>
+
+                    <p:commandButton value="Lọc" update="searchForm" id="search"
+                                     icon="fa fa-search" styleClass="margin-right-10 filter-btn"
+                                     actionListener="#{stickersConfigController.onSearch()}"/>
+                </p:overlayPanel>
+            </p:panelGrid>
+
+            <p:dataTable id="tblSearchResult" styleClass="margin-top-15" tableStyle="table-layout: auto;"
+                         widgetVar="dataTable" resizableColumns="true" paginator="true" rows="20"
+                         lazy="true" pageLinks="5" var="resultDto" paginatorPosition="bottom"
+                         paginatorAlwaysVisible="true" rowsPerPageTemplate="20,50,100"
+                         value="#{stickersConfigController.lazyDataModel}" rowKey="#{resultDto.stickersId}"
+                         paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         emptyMessage="Không có bản ghi nào" rowIndexVar="rowIndex"
+                         currentPageReportTemplate="Tổng số bản ghi: #{stickersConfigController.lazyDataModel.rowCount}">
+
+                <p:column headerText="STT" width="30" style="text-align: center">
+                    <p:outputLabel value="#{rowIndex + 1}"/>
+                </p:column>
+
+                <p:column headerText="Mã nhãn dự án" style="text-align: left" sortBy="#{resultDto.code}">
+                    <p:outputLabel value="#{resultDto.code}"/>
+                </p:column>
+
+                <p:column headerText="Tên tiếng việt" style="text-align: left" sortBy="#{resultDto.nameVn}">
+                    <p:outputLabel value="#{resultDto.nameVn}"/>
+                </p:column>
+
+                <p:column headerText="Tên tiếng anh" style="text-align: left" sortBy="#{resultDto.nameEn}">
+                    <p:outputLabel value="#{resultDto.nameEn}"/>
+                </p:column>
+
+                <p:column headerText="Vị trí ưu tiên" style="text-align: left" sortBy="#{resultDto.nameEn}">
+                    <p:outputLabel value="#{resultDto.position}"/>
+                </p:column>
+
+                <p:column headerText="Phí dịch vụ" style="text-align: left" sortBy="#{resultDto.money}">
+                    <p:outputLabel value="#{resultDto.money}">
+                        <f:convertNumber currencySymbol="đ" minFractionDigits="0" type="currency" pattern="###,### $"/>
+                    </p:outputLabel>
+                </p:column>
+
+                <p:column headerText="Trạng thái" style="text-align: left" sortBy="#{resultDto.status}">
+                    <p:outputLabel value="Hoạt động" rendered="#{resultDto.status eq DbConstant.ACTIVE_STATUS}"/>
+                    <p:outputLabel value="Không hoạt động"
+                                   rendered="#{resultDto.status eq DbConstant.INACTIVE_STATUS}"/>
+                </p:column>
+
+                <p:column headerText="Thao tác" width="70" style="text-align: center" exportable="false">
+                    <p:menuButton icon="fa fa-cog" style="width: 40px;" styleClass="menu-action">
+                        <p:menuitem value="Sửa thông tin" icon="fa fa-edit"
+                                    oncomplete="PF('inforDialog').show()" update="dlForm"
+                                    actionListener="#{stickersConfigController.onEdit(resultDto)}"/>
+
+                        <p:menuitem value="Xóa thông tin" icon="fa fa-close"
+                                    update="searchForm growl" process="@this"
+                                    actionListener="#{stickersConfigController.onDelete(resultDto.stickersId)}">
+                            <p:confirm header="Xác nhận thông tin" icon="fa fa-question-circle"
+                                       message="Bạn có chắc chắn muốn xóa thông tin?"/>
+                        </p:menuitem>
+                    </p:menuButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <script>
+            $(document).keyup(function(event) {
+                var element = document.getElementById("search");
+                var activePanel = element.classList.contains("open-panel");
+                if (activePanel &amp;&amp; event.which === 13) {
+                    element.onclick();
+                }
+            });
+
+            function addOrRemoveClass() {
+                var element = document.getElementById("search");
+                if(element.classList.contains("open-panel")) {
+                    element.classList.remove("open-panel");
+                } else {
+                    element.classList.add("open-panel");
+                }
+            }
+        </script>
+    </ui:define>
+</ui:composition>
+

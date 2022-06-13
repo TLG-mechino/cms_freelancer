@@ -27,7 +27,7 @@
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-3"
                                      layout="grid" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Cấu hình thông tin chiết khấu:" styleClass="requireLabel"/>
-                            <p:inputNumber placeholder="Nhập giá trị" maxlength="10"
+                            <p:inputNumber placeholder="Nhập giá trị" maxlength="10" minValue="0"
                                          onchange="this.value = this.value.trim()" symbol="  USD" symbolPosition="s" emptyValue="always"
                                            thousandSeparator="." value="#{systemConfigController.bidFee}"/>
                         </p:panelGrid>
@@ -42,15 +42,15 @@
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-3"
                                      layout="grid" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Số lượng dự án:" styleClass="requireLabel"/>
-                            <p:inputNumber placeholder="Nhập giá trị" maxlength="10"
+                            <p:inputNumber placeholder="Nhập giá trị" maxlength="10" minValue="0"
                                          onchange="this.value = this.value.trim()"
                                          value="#{systemConfigController.totalJob}"/>
                             <p:outputLabel value="Số lượng người dùng:" styleClass="requireLabel"/>
-                            <p:inputNumber placeholder="Nhập giá trị" maxlength="10"
+                            <p:inputNumber placeholder="Nhập giá trị" maxlength="10" minValue="0"
                                          onchange="this.value = this.value.trim()"
                                          value="#{systemConfigController.totalFreelancer}"/>
                             <p:outputLabel value="Thời gian cấm thi (ngày):" styleClass="requireLabel"/>
-                            <p:inputNumber placeholder="Nhập giá trị" maxlength="10"
+                            <p:inputNumber placeholder="Nhập giá trị" maxlength="10" minValue="0"
                                          onchange="this.value = this.value.trim()"
                                          value="#{systemConfigController.blockTimeExam}"/>
                         </p:panelGrid>
@@ -61,7 +61,7 @@
                                          systemConfigController.totalFreelancer, systemConfigController.blockTimeExam)}" />
                     </p:tab>
                     <p:tab title="Từ khóa bị cấm">
-                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-3"
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-6"
                                      layout="grid" styleClass="ui-panelgrid-blank">
                             <p:outputLabel value="Cấu hình từ khóa:" styleClass="requireLabel"/>
                             <p:inputText placeholder="Nhập giá trị" maxlength="1000"

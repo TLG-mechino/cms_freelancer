@@ -21,7 +21,7 @@ public class ComplainRepositoryImpl implements ComplainRepositoryCustom {
     @Override
     public List<ComplainDto> search(ComplainSearchDto searchDto) {
         StringBuilder sb = new StringBuilder("");
-        sb.append("SELECT c.COMPLAIN_ID, c.USERNAME, u.PHONE, c.TITLE, c.CONTENT, c.NOTE, ct.NAME as complainTypeName, c.COMPLAIN_TYPE_ID, c.CREATE_DATE, c.STATUS, c.OBJECT_ID ");
+        sb.append("SELECT c.COMPLAIN_ID, c.USERNAME, u.PHONE, c.TITLE, c.CONTENT, c.NOTE, ct.NAME_VN as complainTypeName, c.COMPLAIN_TYPE_ID, c.CREATE_DATE, c.STATUS, c.OBJECT_ID ");
         appendQuery(sb, searchDto);
         if (searchDto.getSortField() != null) {
             if (searchDto.getSortField().equals("username")) {
@@ -37,7 +37,7 @@ public class ComplainRepositoryImpl implements ComplainRepositoryCustom {
                 sb.append(" ORDER BY u.PHONE ");
             }
             if (searchDto.getSortField().equals("complainTypeName")) {
-                sb.append(" ORDER BY ct.NAME ");
+                sb.append(" ORDER BY ct.NAME_VN ");
             }
             if (searchDto.getSortField().equals("note")) {
                 sb.append(" ORDER BY c.NOTE ");
@@ -98,7 +98,7 @@ public class ComplainRepositoryImpl implements ComplainRepositoryCustom {
 
     public void appendQuery(StringBuilder sb, ComplainSearchDto searchDto) {
         sb.append(" FROM complain c INNER JOIN account u on u.username = c.username " +
-                " INNER JOIN complain_type ct on ct.COMPLAIN_TYPE_ID = c.COMPLAIN_TYPE_ID where 1 = 1 ");
+                " LEFT JOIN complain_type ct on ct.COMPLAIN_TYPE_ID = c.COMPLAIN_TYPE_ID where 1 = 1 ");
         if (StringUtils.isNotBlank(searchDto.getKeyword())) {
             sb.append(" AND (lower(c.TITLE) LIKE :keyword OR lower(c.CONTENT) LIKE :keyword OR lower(c.USERNAME) LIKE :keyword) ");
         }

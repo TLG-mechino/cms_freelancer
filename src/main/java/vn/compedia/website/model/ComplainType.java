@@ -23,9 +23,13 @@ public class ComplainType {
     @Column(name = "CODE")
     private String code;
 
-    @Column(name = "NAME")
-    private String name;
-
     @Column(name = "STATUS")
     private Integer status;
+
+    @Column(name = "NAME_VN", length = 100)
+    private String nameVn;
+
+    @Column(name = "NAME_EN", length = 100)
+    private String nameEn;
+
 }

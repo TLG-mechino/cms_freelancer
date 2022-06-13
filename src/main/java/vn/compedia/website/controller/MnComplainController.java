@@ -127,7 +127,7 @@ public class MnComplainController extends BaseController {
 
 
     public void ComplainResolve(ComplainDto dto){
-        complain.setStatus(dto.getStatus());
+        complain.setStatus(DbConstant.ACTIVE_STATUS       );
         complain.setNote(dto.getNote());
         if (dto.getStatus() == null) {
             FacesUtil.addErrorMessage("Bạn vui lòng chọn trạng thái ");

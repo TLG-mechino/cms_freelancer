@@ -85,6 +85,7 @@ public class AuthorizationController implements Serializable {
         myMenus.add(Constant.MN_TRANSACTION);
         myMenus.add(Constant.MN_CUSTOMER_TALK);
         myMenus.add(Constant.SERVICE_CONFIG);
+        myMenus.add(Constant.STICKERS_CONFIG);
     }
 
     public void login() {

@@ -24,10 +24,10 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
     @Override
     public List<JobDto> getAllJobRpByUserName(String username, JobSearchDto jobSearchDto) {
         StringBuilder sb = new StringBuilder();
-        sb.append(" select j.JOB_ID, " +
+        sb.append(" select distinct j.JOB_ID, " +
                 "       j.NAME, " +
                 "       j.DESCRIPTION, " +
-                "       IF(b.USERNAME is not null, b.USERNAME, 'Chưa có người làm dự án'), " +
+                "       IF(d.BIDDERS_DETAIL_ID is not null, b.USERNAME, 'Chưa có người làm dự án'), " +
                 "       j.MONEY_FROM, " +
                 "       j.MONEY_TO, " +
                 "       j.CREATE_DATE, " +
@@ -104,7 +104,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
     }
 
     public void appendQueryByUserName(StringBuilder sb, JobSearchDto dto, String username) {
-        sb.append(" FROM job j left join bidders b on j.JOB_ID = b.JOB_ID WHERE j.USERNAME = :username ");
+        sb.append(" FROM job j left join bidders b on j.JOB_ID = b.JOB_ID left join bidders_detail d on b.BIDDERS_ID = d.BIDDERS_ID WHERE j.USERNAME = :username ");
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("username", username);
         if (StringUtils.isNotBlank(dto.getKeyword())) {
@@ -137,7 +137,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
     @Override
     public List<JobDto> getAllJobRecipient(String username, JobSearchDto jobSearchDto) {
         StringBuilder sb = new StringBuilder();
-        sb.append(" select j.JOB_ID, " +
+        sb.append(" select distinct j.JOB_ID, " +
                 "       j.NAME, " +
                 "       j.DESCRIPTION, " +
                 "       j.USERNAME, " +

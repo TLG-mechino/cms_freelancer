@@ -64,7 +64,7 @@ public class DashboardController extends BaseController {
     public void initData() throws ParseException {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             resetAll();
-            initDashBoard();
+            initDashBoard(month);
         }
     }
 
@@ -90,7 +90,7 @@ public class DashboardController extends BaseController {
         listMoney = new ArrayList<>();
     }
 
-    public void initDashBoard() throws ParseException {
+    public void initDashBoard(Date month) throws ParseException {
 //        getDateOfMonth(month);
 //        lineModel = new LineChartModel();
 //        LineChartSeries s = new LineChartSeries();
@@ -132,9 +132,7 @@ public class DashboardController extends BaseController {
 //        lineModel.addSeries(s);
 //        lineModel.addSeries(u);
 //        lineModel.addSeries(t);
-        lineModel1 = initModel();
-
-//        lineModel1.setLegendPosition("e");
+        lineModel1 = initModel(month);
 
         Axis y = lineModel1.getAxis(AxisType.Y);
         y.setMin(0);
@@ -149,7 +147,7 @@ public class DashboardController extends BaseController {
         x.setTickInterval("2");
         x.setLabel("Ngày trong tháng");
 
-        zoomModel = initModel();
+        zoomModel = initModel(month);
         zoomModel.setTitle("Zoom");
         zoomModel.setZoom(true);
         zoomModel.setLegendPosition("e");
@@ -159,7 +157,7 @@ public class DashboardController extends BaseController {
 
     }
 
-    private LineChartModel initModel() throws ParseException {
+    private LineChartModel initModel(Date month) throws ParseException {
         getDateOfMonth(month);
         LineChartModel lineModel = new LineChartModel();
         listJob = jobRepository.countJobByDate(month.getMonth() + 1, month.getYear() + 1900);

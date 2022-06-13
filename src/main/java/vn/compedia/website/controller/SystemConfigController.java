@@ -5,15 +5,19 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import vn.compedia.website.controller.common.BaseController;
 import vn.compedia.website.model.ConfigSystem;
+import vn.compedia.website.model.Hashtag;
 import vn.compedia.website.repository.SystemConfigRepository;
 import vn.compedia.website.util.Constant;
 import vn.compedia.website.util.DbConstant;
+import vn.compedia.website.util.FacesUtil;
 
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -61,19 +65,81 @@ public class SystemConfigController extends BaseController {
         keyword = systemConfigRepository.getValue(DbConstant.BAN_KEYWORD);
     }
 
+    public boolean validateDate() {
+        if (bidFee == null) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập phí chiết khấu ");
+            return false;
+        }
+
+        if (totalJob == null) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập s ");
+            return false;
+        }
+
+        if (totalFreelancer == null) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập tổng số người dùng ");
+            return false;
+        }
+
+        if (blockTimeExam == null) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập thời gian cấm thi ");
+            return false;
+        }
+        if (StringUtils.isBlank(keyword)) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập từ khóa bị cấm ");
+            return false;
+        }
+
+        return true;
+    }
+
+
     public void editBidFee(Integer bidFee){
+        if (bidFee == null) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập phí chiết khấu ");
+            FacesUtil.updateView("growl");
+            return;
+        }
         configSystem = systemConfigRepository.findByCode(DbConstant.BID_FEE);
         configSystem.setValue(bidFee.toString());
         systemConfigRepository.save(configSystem);
+        FacesUtil.addSuccessMessage("Lưu thành công");
+        FacesUtil.closeDialog("inforDialog");
+        FacesUtil.updateView("growl");
     }
 
     public void editBanKeyword(String keyword){
+        if (StringUtils.isBlank(keyword)) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập từ khóa bị cấm ");
+            FacesUtil.updateView("growl");
+            return;
+        }
         configSystem = systemConfigRepository.findByCode(DbConstant.BAN_KEYWORD);
         configSystem.setValue(keyword);
         systemConfigRepository.save(configSystem);
+        FacesUtil.addSuccessMessage("Lưu thành công");
+        FacesUtil.closeDialog("inforDialog");
+        FacesUtil.updateView("growl");
     }
 
     public void edit(Integer totalJob, Integer totalFreelancer, Integer blockTimeExam){
+        if (totalJob == null) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập s ");
+            FacesUtil.updateView("growl");
+            return;
+        }
+
+        if (totalFreelancer == null) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập tổng số người dùng ");
+            FacesUtil.updateView("growl");
+            return;
+        }
+
+        if (blockTimeExam == null) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập thời gian cấm thi ");
+            FacesUtil.updateView("growl");
+            return;
+        }
         ConfigSystem csTotalJob = systemConfigRepository.findByCode(DbConstant.TOTAL_JOB);
         csTotalJob.setValue(totalJob.toString());
         configSystemList.add(csTotalJob);
@@ -85,6 +151,9 @@ public class SystemConfigController extends BaseController {
         configSystemList.add(csBlockTimeExam);
 
         systemConfigRepository.saveAll(configSystemList);
+        FacesUtil.addSuccessMessage("Lưu thành công");
+        FacesUtil.closeDialog("inforDialog");
+        FacesUtil.updateView("growl");
     }
 
     @Override

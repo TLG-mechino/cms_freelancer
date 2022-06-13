@@ -15,7 +15,7 @@ public interface JobRepository extends CrudRepository<Job,Long>, JobRepositoryCu
     @Query(value = "select * from job j where j.JOB_ID = :jobId", nativeQuery = true)
     Job getJobByJobId(@Param("jobId") Long jobId);
 
-    @Query("select count(j) from Job j")
+    @Query("select count(j) from Job j where j.status <> -1")
     Integer totalJob();
 
 //    @Query(value = "select count(j.JOB_ID) as total, date_format(j.CREATE_DATE, '%d')  as date " +

@@ -49,4 +49,5 @@ public class Constant {
     public static final String MN_TEST_EVALUATE = "mn-valuate-test";
     public static final String SYS_CONFIG = "sys-config";
     public static final String SERVICE_CONFIG = "service-config";
+    public static final String STICKERS_CONFIG = "stickers-config";
 }

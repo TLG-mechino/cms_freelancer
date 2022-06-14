@@ -42,5 +42,6 @@ public class DbConstant {
     public static final String TOTAL_JOB = "TOTAL_JOB";
     public static final String TOTAL_FREELANCER = "TOTAL_FREELANCER";
     public static final String BAN_KEYWORD = "BAN_KEYWORD";
+    public static final String TRANSACTION_FEE = "TRANSACTION_FEE";
 
 }

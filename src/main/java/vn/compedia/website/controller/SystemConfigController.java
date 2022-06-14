@@ -43,10 +43,12 @@ public class SystemConfigController extends BaseController {
     private Integer totalJob;
     private Integer totalFreelancer;
     private Integer bidFee;
+    private Integer transactionFee;
     private Integer blockTimeExam;
     private String keyword;
     private ConfigSystem configSystem;
     private List<ConfigSystem> configSystemList;
+    private List<ConfigSystem> listFee;
 
     public void initData() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -61,18 +63,24 @@ public class SystemConfigController extends BaseController {
         totalJob = Integer.parseInt(systemConfigRepository.getValue(DbConstant.TOTAL_JOB));
         totalFreelancer = Integer.parseInt(systemConfigRepository.getValue(DbConstant.TOTAL_FREELANCER));
         bidFee = Integer.parseInt(systemConfigRepository.getValue(DbConstant.BID_FEE));
+        transactionFee = Integer.parseInt(systemConfigRepository.getValue(DbConstant.TRANSACTION_FEE));
         blockTimeExam = Integer.parseInt(systemConfigRepository.getValue(DbConstant.BLOCK_TIME_EXAM));
         keyword = systemConfigRepository.getValue(DbConstant.BAN_KEYWORD);
     }
 
     public boolean validateDate() {
         if (bidFee == null) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập phí chiết khấu ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập phí chiết khấu đấu thầu ");
+            return false;
+        }
+
+        if (transactionFee == null) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập % chiết khấu giao dịch ");
             return false;
         }
 
         if (totalJob == null) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập s ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập tổng số dự án ");
             return false;
         }
 
@@ -96,12 +104,21 @@ public class SystemConfigController extends BaseController {
 
     public void editBidFee(Integer bidFee){
         if (bidFee == null) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập phí chiết khấu ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập phí chiết khấu đấu thầu ");
             FacesUtil.updateView("growl");
             return;
         }
-        configSystem = systemConfigRepository.findByCode(DbConstant.BID_FEE);
+        if (transactionFee == null) {
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập phần trăm chiết khấu giao dịch ");
+            FacesUtil.updateView("growl");
+            return;
+        }
+        ConfigSystem csBidFee = systemConfigRepository.findByCode(DbConstant.BID_FEE);
         configSystem.setValue(bidFee.toString());
+        listFee.add(csBidFee);
+        ConfigSystem csTransactionFee = systemConfigRepository.findByCode(DbConstant.TRANSACTION_FEE);
+        configSystem.setValue(transactionFee.toString());
+        listFee.add(csTransactionFee);
         systemConfigRepository.save(configSystem);
         FacesUtil.addSuccessMessage("Lưu thành công");
         FacesUtil.closeDialog("inforDialog");

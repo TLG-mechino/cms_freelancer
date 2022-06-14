@@ -27,7 +27,9 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
         sb.append(" select distinct j.JOB_ID, " +
                 "       j.NAME, " +
                 "       j.DESCRIPTION, " +
-                "       IF(d.BIDDERS_DETAIL_ID is not null, b.USERNAME, 'Chưa có người làm dự án'), " +
+                "       IF(j.STATUS = 1 or j.STATUS = 0 or j.STATUS = -1, 'Chưa có người làm dự án', (select b.USERNAME " +
+                "                                                                                              from bidders b " +
+                "                                                                                                       inner join bidders_detail bd on b.BIDDERS_ID = bd.BIDDERS_ID where b.JOB_ID = j.JOB_ID)) as username, " +
                 "       j.MONEY_FROM, " +
                 "       j.MONEY_TO, " +
                 "       j.CREATE_DATE, " +
@@ -44,7 +46,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
                 sb.append(" ORDER BY j.DESCRIPTION ");
             }
             if (jobSearchDto.getSortField().equals("username")) {
-                sb.append(" ORDER BY j.USERNAME ");
+                sb.append(" ORDER BY username ");
             }
             if (jobSearchDto.getSortField().equals("moneyFrom")) {
                 sb.append(" ORDER BY j.MONEY_FROM ");
@@ -104,7 +106,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
     }
 
     public void appendQueryByUserName(StringBuilder sb, JobSearchDto dto, String username) {
-        sb.append(" FROM job j left join bidders b on j.JOB_ID = b.JOB_ID left join bidders_detail d on b.BIDDERS_ID = d.BIDDERS_ID WHERE j.USERNAME = :username ");
+        sb.append(" FROM job j WHERE j.USERNAME = :username ");
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("username", username);
         if (StringUtils.isNotBlank(dto.getKeyword())) {

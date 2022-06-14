@@ -91,47 +91,6 @@ public class DashboardController extends BaseController {
     }
 
     public void initDashBoard(Date month) throws ParseException {
-//        getDateOfMonth(month);
-//        lineModel = new LineChartModel();
-//        LineChartSeries s = new LineChartSeries();
-//        LineChartSeries u = new LineChartSeries();
-//        LineChartSeries t = new LineChartSeries();
-//        listJob = jobRepository.countJobByDate(month.getMonth() + 1, month.getYear() + 1900);
-//        listUser = userRepository.countUserByDate(month.getMonth() + 1, month.getYear() + 1900);
-//        listTransaction = transactionRepository.countTransactionByDate(month.getMonth() + 1, month.getYear() + 1900);
-
-//        s.setLabel("Số lương dự án");
-//        u.setLabel("Số lượng người dùng");
-//        t.setLabel("Số lượng giao dịch");
-//
-//        for (int i = 1; i <= daysInMonth; i++) {
-//            s.set(i, 0);
-//            u.set(i, 0);
-//            t.set(i, 0);
-//        }
-//        List<Integer> listTotal = new ArrayList<>();
-//        if (!listJob.isEmpty()) {
-//            listJob.forEach(var -> {
-//                s.set(var.getDate(), var.getTotal());
-//                listTotal.add(var.getTotal());
-//            });
-//        }
-//        if (!listUser.isEmpty()) {
-//            listUser.forEach(var -> {
-//                u.set(var.getDate(), var.getTotal());
-//                listTotal.add(var.getTotal());
-//            });
-//        }
-//        if (!listTransaction.isEmpty()) {
-//            listTransaction.forEach(var -> {
-//                t.set(var.getDate(), var.getTotal());
-//                listTotal.add(var.getTotal());
-//            });
-//        }
-//
-//        lineModel.addSeries(s);
-//        lineModel.addSeries(u);
-//        lineModel.addSeries(t);
         lineModel1 = initModel(month);
 
         Axis y = lineModel1.getAxis(AxisType.Y);

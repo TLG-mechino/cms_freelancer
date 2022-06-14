@@ -24,12 +24,17 @@
             <h:form id="dlForm" prependId="false">
                 <p:tabView>
                     <p:tab title="Thông tin chiết khấu">
-                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3, ui-grid-col-3"
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-4, ui-grid-col-4"
                                      layout="grid" styleClass="ui-panelgrid-blank">
-                            <p:outputLabel value="Cấu hình thông tin chiết khấu:" styleClass="requireLabel"/>
+                            <p:outputLabel value="Cấu hình thông tin phí chiết khấu đấu thầu:" styleClass="requireLabel"/>
                             <p:inputNumber placeholder="Nhập giá trị" maxlength="10" minValue="0"
                                          onchange="this.value = this.value.trim()" symbol="  USD" symbolPosition="s" emptyValue="always"
                                            thousandSeparator="." value="#{systemConfigController.bidFee}"/>
+
+                            <p:outputLabel value="Cấu hình thông tin phần trăm giao dịch:" styleClass="requireLabel"/>
+                            <p:inputNumber placeholder="Nhập giá trị" maxlength="10" minValue="0"
+                                           onchange="this.value = this.value.trim()" symbol="  %" symbolPosition="s" emptyValue="always"
+                                           thousandSeparator="." value="#{systemConfigController.transactionFee}"/>
                         </p:panelGrid>
                         <hr class="hr-class"/>
                         <p:commandButton value="Lưu thông tin" styleClass="border-btn" icon="fa fa-save"

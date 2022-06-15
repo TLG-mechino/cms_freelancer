@@ -22,7 +22,7 @@ public class ComplainFile {
     private String filePath;
 
     @Column(name = "FILE_TYPE")
-    private Integer fileType;
+    private String fileType;
 
     @Column(name = "COMPLAIN_ID")
     private Long complainId;

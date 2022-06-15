@@ -94,7 +94,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setTransactionTime(ValueUtil.getDateByObject(result[3]));
             dto.setAmountOfMoney(ValueUtil.getDoubleByObject(result[4]));
             dto.setDiscountMoney(ValueUtil.getDoubleByObject(result[5]));
-            dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
+            dto.setFinalMoney(ValueUtil.getStringByObject(result[6]));
             dto.setCode(ValueUtil.getStringByObject(result[7]));
             dto.setPaymentTypeId(ValueUtil.getStringByObject(result[8]));
             dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
@@ -175,7 +175,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setTransactionTime(ValueUtil.getDateByObject(result[3]));
             dto.setAmountOfMoney(ValueUtil.getDoubleByObject(result[4]));
             dto.setDiscountMoney(ValueUtil.getDoubleByObject(result[5]));
-            dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
+            dto.setFinalMoney(ValueUtil.getStringByObject(result[6]));
             dto.setCode(ValueUtil.getStringByObject(result[7]));
             dto.setPaymentTypeId(ValueUtil.getStringByObject(result[8]));
             dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));
@@ -381,7 +381,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             dto.setTransactionTime(ValueUtil.getDateByObject(result[3]));
             dto.setAmountOfMoney(ValueUtil.getDoubleByObject(result[4]));
             dto.setDiscountMoney(ValueUtil.getDoubleByObject(result[5]));
-            dto.setFinalMoney(ValueUtil.getDoubleByObject(result[6]));
+            dto.setFinalMoney(ValueUtil.getStringByObject(result[6]));
             dto.setCode(ValueUtil.getStringByObject(result[7]));
             dto.setPaymentTypeId(ValueUtil.getStringByObject(result[8]));
             dto.setPaymentTypeName(ValueUtil.getStringByObject(result[9]));

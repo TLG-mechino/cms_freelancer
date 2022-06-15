@@ -69,6 +69,8 @@ public class DashboardController extends BaseController {
     }
 
     public Integer getDateOfMonth(Date month) throws ParseException {
+
+        Date m = month;
         Integer monInteger = month.getMonth() + 1;
         Integer yearInteger = month.getYear() + 1900;
         YearMonth yearMonthObject = YearMonth.of(yearInteger, monInteger);

@@ -9,7 +9,7 @@
         <f:event type="preRenderView" listener="#{stickersConfigController.initData()}"/>
     </f:metadata>
 
-    <ui:define name="title">Cấu hình dịch vụ</ui:define>
+    <ui:define name="title">Cấu hình nhãn dự án</ui:define>
 
     <ui:define name="head">
         <style>
@@ -74,10 +74,8 @@
 
                     <p:outputPanel>
                         <p:outputLabel value="Chọn vị trí ưu tiên:" styleClass="requireLabel"/>
-                        <p:selectOneMenu value="#{stickersConfigController.stickersDto.position}" styleClass="input">
-                            <f:selectItem itemLabel="Chọn vị trí ưu tiên" itemValue=""/>
-                            <f:selectItems value="#{stickersConfigController.listPosition}"/>
-                        </p:selectOneMenu>
+                        <p:inputNumber placeholder="Nhập vị trí ưu tiên tiếng anh" maxlength="5" styleClass="input" minValue="1"
+                                     value="#{stickersConfigController.stickersDto.position}"/>
                     </p:outputPanel>
 
                     <p:outputPanel>

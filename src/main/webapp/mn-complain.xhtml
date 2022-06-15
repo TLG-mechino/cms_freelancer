@@ -57,19 +57,17 @@
             <h:form id="fileForm" prependId="false">
                 <p:scrollPanel mode="native" style="width: 100%; max-height: 500px; border: none">
                     <div class="ui-fluid">
-                        <p:panelGrid columns="3" columnClasses="ui-grid-col-2, ui-grid-col-6, ui-grid-col-4"
-                                     layout="grid" styleClass="ui-panelgrid-blank" style="margin: 10px 0 10px 0">
-
                             <ui:repeat value="#{mnComplainController.complainFiles}" var="item" varStatus="row">
 
-                                <p:outputLabel value="#{row.index}" style="margin-left: 50px;"/>
+                                <p:outputLabel value="#{row.index + 1}." style="margin-right: 20px;"/>
 
                                 <a href="#{commonController.setUrlToShowImage(item.filePath)}"
-                                   download="true" target="_blank" style="text-decoration: underline">
+                                   download="true" target="_blank" style="text-decoration: underline; width: 100%">
                                     #{item.fileName}
-                                </a>0
+                                </a>
+
+                                <hr style="border-top: 1px dotted #7a7a7a;"/>
                             </ui:repeat>
-                        </p:panelGrid>
                     </div>
                 </p:scrollPanel>
             </h:form>
@@ -224,7 +222,7 @@
                         </p:menuitem>
 
                         <p:menuitem value="DS file đính kèm" icon="fa fa-list" process="@this"
-                                    oncomplete="PF('fileDialog').show()"
+                                    oncomplete="PF('fileDialog').show()" update="fileForm"
                                     actionListener="#{mnComplainController.ListFileAttack(resultDto.complainId)}">
                         </p:menuitem>
 

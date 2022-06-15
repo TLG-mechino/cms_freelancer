@@ -38,7 +38,7 @@
                         </p:panelGrid>
                         <hr class="hr-class"/>
                         <p:commandButton value="Lưu thông tin" styleClass="border-btn" icon="fa fa-save"
-                                         style="width: auto" oncomplete="PF('inforDialog').show()" update="dlForm"
+                                         style="width: auto" update="dlForm"
                                          actionListener="#{systemConfigController.editBidFee(systemConfigController.bidFee)}"/>
 
                     </p:tab>
@@ -61,7 +61,7 @@
                         </p:panelGrid>
                         <hr class="hr-class"/>
                         <p:commandButton value="Lưu thông tin" styleClass="border-btn" icon="fa fa-save"
-                                         style="width: auto" oncomplete="PF('inforDialog').show()" update="dlForm"
+                                         style="width: auto" update="dlForm"
                                          actionListener="#{systemConfigController.edit(systemConfigController.totalJob,
                                          systemConfigController.totalFreelancer, systemConfigController.blockTimeExam)}" />
                     </p:tab>
@@ -78,7 +78,7 @@
                         </p:panelGrid>
                         <hr class="hr-class"/>
                         <p:commandButton value="Lưu thông tin" styleClass="border-btn" icon="fa fa-save"
-                                         style="width: auto" oncomplete="PF('inforDialog').show()" update="dlForm"
+                                         style="width: auto" update="dlForm"
                                          actionListener="#{systemConfigController.editBanKeyword(systemConfigController.keyword)}"/>
                     </p:tab>
                 </p:tabView>

@@ -60,6 +60,7 @@ public class SystemConfigController extends BaseController {
     public void resetAll() {
         configSystem = new ConfigSystem();
         configSystemList = new ArrayList<>();
+        listFee = new ArrayList<>();
         totalJob = Integer.parseInt(systemConfigRepository.getValue(DbConstant.TOTAL_JOB));
         totalFreelancer = Integer.parseInt(systemConfigRepository.getValue(DbConstant.TOTAL_FREELANCER));
         bidFee = Integer.parseInt(systemConfigRepository.getValue(DbConstant.BID_FEE));
@@ -114,14 +115,13 @@ public class SystemConfigController extends BaseController {
             return;
         }
         ConfigSystem csBidFee = systemConfigRepository.findByCode(DbConstant.BID_FEE);
-        configSystem.setValue(bidFee.toString());
+        csBidFee.setValue(bidFee.toString());
         listFee.add(csBidFee);
         ConfigSystem csTransactionFee = systemConfigRepository.findByCode(DbConstant.TRANSACTION_FEE);
-        configSystem.setValue(transactionFee.toString());
+        csTransactionFee.setValue(transactionFee.toString());
         listFee.add(csTransactionFee);
         systemConfigRepository.save(configSystem);
         FacesUtil.addSuccessMessage("Lưu thành công");
-        FacesUtil.closeDialog("inforDialog");
         FacesUtil.updateView("growl");
     }
 
@@ -135,13 +135,12 @@ public class SystemConfigController extends BaseController {
         configSystem.setValue(keyword);
         systemConfigRepository.save(configSystem);
         FacesUtil.addSuccessMessage("Lưu thành công");
-        FacesUtil.closeDialog("inforDialog");
         FacesUtil.updateView("growl");
     }
 
     public void edit(Integer totalJob, Integer totalFreelancer, Integer blockTimeExam){
         if (totalJob == null) {
-            FacesUtil.addErrorMessage("Bạn vui lòng nhập s ");
+            FacesUtil.addErrorMessage("Bạn vui lòng nhập số lượng dự án ");
             FacesUtil.updateView("growl");
             return;
         }
@@ -169,7 +168,6 @@ public class SystemConfigController extends BaseController {
 
         systemConfigRepository.saveAll(configSystemList);
         FacesUtil.addSuccessMessage("Lưu thành công");
-        FacesUtil.closeDialog("inforDialog");
         FacesUtil.updateView("growl");
     }
 

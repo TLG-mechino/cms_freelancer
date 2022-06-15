@@ -120,14 +120,13 @@ public class MnComplainController extends BaseController {
 
     }
 
-   public List<ComplainFile> ListFileAttack(Long complainId){
+   public void ListFileAttack(Long complainId){
        complainFiles = complainFileRepository.findAllByComplainId(complainId);
-       return complainFiles;
    }
 
 
     public void ComplainResolve(ComplainDto dto){
-        complain.setStatus(DbConstant.ACTIVE_STATUS       );
+        complain.setStatus(DbConstant.ACTIVE_STATUS);
         complain.setNote(dto.getNote());
         if (dto.getStatus() == null) {
             FacesUtil.addErrorMessage("Bạn vui lòng chọn trạng thái ");

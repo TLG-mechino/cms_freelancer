@@ -39,7 +39,7 @@ public class Transaction {
     private Double discountMoney;
 
     @Column(name = "FINAL_MONEY")
-    private Double finalMoney;
+    private String finalMoney;
 
     @Column(name = "CODE", length = 20)
     private String code;
@@ -49,5 +49,23 @@ public class Transaction {
 
     @Column(name = "STATUS")
     private String status;
+
+    @Column(name = "PAYMENT_TYPE", length = 20)
+    private String paymentType;
+
+    @Column(name = "TYPE")
+    private Integer type;
+
+    @Column(name = "SENDER_EMAIL", length = 200)
+    private String senderEmail;
+
+    @Column(name = "CURRENCY", length = 10)
+    private String currency;
+
+    @Column(name = "FEE", length = 20)
+    private String fee;
+
+    @Column(name = "OBJECT_ID")
+    private Integer objectId;
 
 }

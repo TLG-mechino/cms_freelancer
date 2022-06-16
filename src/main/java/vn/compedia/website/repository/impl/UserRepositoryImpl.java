@@ -235,8 +235,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("month", month);
         query.setParameter("year", year);
-        List result = EntityMapper.mapper(query, sb.toString(), TotalUserByDateResponse.class);
-        return result;
+        return (List) EntityMapper.mapper(query, sb.toString(), TotalUserByDateResponse.class);
     }
 
     public Query createQuery(StringBuilder sb , UserSearchDto dto){

@@ -2,17 +2,12 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
                 template="/template/template.xhtml">
 
     <f:metadata>
         <f:event type="preRenderView" listener="#{dashboardController.initData()}"/>
     </f:metadata>
-
-    <style type="text/css">
-        .ui-chart {
-            margin-bottom: 50px;
-        }
-    </style>
 
     <ui:define name="title">Tổng quan thông tin</ui:define>
 
@@ -22,48 +17,58 @@
         </div>
 
         <hr class="hr-class" style="margin-top: 5px"/>
+
         <div class="ui-fluid">
             <p:panelGrid columns="4" layout="grid"
-                         columnClasses="ui-grid-col-3 ui-grid-col-3 ui-grid-col-3 ui-grid-col-3 ">
-                <p:panel style="border: 1px solid #aaaaaa !important; padding: 20px 0px 20px 10px !important; border-radius: 8px;"
-                         columns="2" columnClasses="ui-grid-col-8 ui-grid-col-4">
-                    <p:outputLabel value="Số lượng dự án : " styleClass="filter-item-label" />
-                    <p:outputLabel value="#{dashboardController.totalJob}"/>
+                         columnClasses="ui-grid-col-3 ui-grid-col-3 ui-grid-col-3 ui-grid-col-3">
+                <p:panel columns="2" columnClasses="ui-grid-col-8 ui-grid-col-4"
+                         style="border: 1px solid #FF3408 !important; padding: 20px 0 20px 10px !important; border-radius: 8px;">
+                    <p:outputLabel value="Số lượng dự án: " styleClass="filter-item-label"/>
+                    <p:outputLabel value="#{dashboardController.totalJob}" styleClass="amount-highlight">
+                        <f:convertNumber pattern="#,###"/>
+                    </p:outputLabel>
                 </p:panel>
 
-                <p:panel style="border-radius: 8px; border: 1px solid #aaaaaa !important; padding: 20px 0px 20px 10px !important;"
-                         columns="2" columnClasses="ui-grid-col-8 ui-grid-col-4">
-                    <p:outputLabel value="Số lượng người dùng : " styleClass="filter-item-label"/>
-                    <p:outputLabel value="#{dashboardController.totalUser}"/>
+                <p:panel columns="2" columnClasses="ui-grid-col-8 ui-grid-col-4"
+                         style="border: 1px solid #FF3408 !important; padding: 20px 0 20px 10px !important; border-radius: 8px;">
+                    <p:outputLabel value="Số lượng người dùng: " styleClass="filter-item-label"/>
+                    <p:outputLabel value="#{dashboardController.totalUser}" styleClass="amount-highlight">
+                        <f:convertNumber pattern="#,###"/>
+                    </p:outputLabel>
                 </p:panel>
 
-                <p:panel style="border-radius: 8px; border: 1px solid #aaaaaa !important; padding: 20px 0px 20px 10px !important;"
-                         columns="2" columnClasses="ui-grid-col-8 ui-grid-col-4">
-                    <p:outputLabel value="Số lượng giao dịch : " styleClass="filter-item-label"/>
-                    <p:outputLabel value="#{dashboardController.totalTransaction}"/>
+                <p:panel columns="2" columnClasses="ui-grid-col-8 ui-grid-col-4"
+                         style="border: 1px solid #FF3408 !important; padding: 20px 0 20px 10px !important; border-radius: 8px;">
+                    <p:outputLabel value="Số lượng giao dịch: " styleClass="filter-item-label"/>
+                    <p:outputLabel value="#{dashboardController.totalTransaction}" styleClass="amount-highlight">
+                        <f:convertNumber pattern="#,###"/>
+                    </p:outputLabel>
                 </p:panel>
 
-                <p:panel style="border-radius: 8px; border: 1px solid #aaaaaa !important; padding: 20px 0px 20px 10px !important;"
-                         columns="2" columnClasses="ui-grid-col-8 ui-grid-col-4">
-                    <p:outputLabel value="Tổng số tiền giao dịch : " styleClass="filter-item-label"/>
-                    <p:outputLabel value="#{dashboardController.totalMoney}"/>
+                <p:panel columns="2" columnClasses="ui-grid-col-8 ui-grid-col-4"
+                         style="border: 1px solid #FF3408 !important; padding: 20px 0 20px 10px !important; border-radius: 8px;">
+                    <p:outputLabel value="Tổng số tiền giao dịch: " styleClass="filter-item-label"/>
+                    <p:outputLabel value="#{dashboardController.totalMoney}" styleClass="amount-highlight">
+                        <f:convertNumber pattern="#,###" minFractionDigits="2"/>
+                    </p:outputLabel>
                 </p:panel>
             </p:panelGrid>
 
             <hr class="hr-class" style="margin-top: 10px"/>
-            <p:outputLabel value="Báo cáo thống kê hệ thống theo tháng" styleClass="filter-item-label"
-                           style="display: flex; justify-content: center; font-size: 20px; line-height: 1.5"/>
-            <p:panelGrid columns="2" layout="grid" style="  margin-bottom: 20px;margin-top: 20px"
-                         columnClasses="ui-grid-col-4 ui-grid-col-4 ">
-                <p:outputLabel value="Thống kê hoạt động hệ thống theo tháng : " styleClass="filter-item-label" style=" white-space: nowrap"/>
-                <p:datePicker id="month" view="month" value="#{dashboardController.month}" pattern="MM/yyyy" locale="vi"
-                              yearNavigator="true" style="width: 50%" >
-                    <p:ajax event="dateSelect" update="chart"
-                            listener="#{dashboardController.initDashBoard(dashboardController.month)}"/>
-                </p:datePicker>
-            </p:panelGrid>
 
-            <p:chart id="chart" type="line" model="#{dashboardController.lineModel1}" style="height:500px;width:100%" responsive="true" />
+            <div class="ui-g-12 card no-margin" style="margin-top: 5px;">
+                <h:form>
+                        <p:datePicker id="month" view="month" value="#{dashboardController.month}"
+                                      style="width: auto; float: right"
+                                      pattern="MM/yyyy" locale="vi" yearNavigator="true" showIcon="true">
+                            <p:ajax event="dateSelect" update="chart"
+                                    listener="#{dashboardController.createLineModel(dashboardController.month)}"/>
+                        </p:datePicker>
+                </h:form>
+
+                <p:lineChart id="chart" model="#{dashboardController.lineModel}" style="width: 100%; height: 500px;"
+                             widgetVar="lineChart"/>
+            </div>
         </div>
     </ui:define>
 

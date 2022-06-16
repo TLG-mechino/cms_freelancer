@@ -214,8 +214,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("month", month);
         query.setParameter("year", year);
-        List result = EntityMapper.mapper(query, sb.toString(), TotalTransactionByDateResponse.class);
-        return result;
+        return (List) EntityMapper.mapper(query, sb.toString(), TotalTransactionByDateResponse.class);
     }
 
     public Query createQuery(StringBuilder sb, TransactionSearchDto searchDto) {

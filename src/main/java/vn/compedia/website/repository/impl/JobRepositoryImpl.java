@@ -226,8 +226,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom {
         Query query = entityManager.createNativeQuery(sb.toString());
         query.setParameter("month", month);
         query.setParameter("year", year);
-        List result = EntityMapper.mapper(query, sb.toString(), TotalJobByDateResponse.class);
-        return result;
+        return (List) EntityMapper.mapper(query, sb.toString(), TotalJobByDateResponse.class);
     }
 
     public void appendQueryRecipient(StringBuilder sb, JobSearchDto dto, String username) {

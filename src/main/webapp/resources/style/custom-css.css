@@ -23,10 +23,6 @@
     margin-bottom: 20px;
 }
 
-.container-evaluate-detail {
-
-}
-
 .container-evaluate-detail .card-list {
     width: 100%;
 }
@@ -87,11 +83,13 @@
     margin-bottom: 2px !important;
 }
 
-.ui-selectonemenu-filter-container span {
-
-}
-
 .panel-dashboard {
     border: 1px solid #aaaaaa !important;
-    padding: 20px 0px 20px 10px !important;
+    padding: 20px 0 20px 10px !important;
+}
+
+.amount-highlight {
+    font-size: 16px;
+    font-weight: bold;
+    color: #FF3408;
 }

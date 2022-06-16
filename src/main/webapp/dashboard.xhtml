@@ -25,7 +25,7 @@
         <div class="ui-fluid">
             <p:panelGrid columns="4" layout="grid"
                          columnClasses="ui-grid-col-3 ui-grid-col-3 ui-grid-col-3 ui-grid-col-3 ">
-                <p:panel style="border: 1px solid #aaaaaa !important; padding: 20px 0px 20px 10px !important;"
+                <p:panel style="border: 1px solid #aaaaaa !important; padding: 20px 0px 20px 10px !important; border-radius: 8px;"
                          columns="2" columnClasses="ui-grid-col-8 ui-grid-col-4">
                     <p:outputLabel value="Số lượng dự án : " styleClass="filter-item-label" />
                     <p:outputLabel value="#{dashboardController.totalJob}"/>
@@ -52,12 +52,12 @@
 
             <hr class="hr-class" style="margin-top: 10px"/>
             <p:outputLabel value="Báo cáo thống kê hệ thống theo tháng" styleClass="filter-item-label"
-                           style="display: flex; justify-content: center; font-size: 20px; line-height: 1.5" />
+                           style="display: flex; justify-content: center; font-size: 20px; line-height: 1.5"/>
             <p:panelGrid columns="2" layout="grid" style="  margin-bottom: 20px;margin-top: 20px"
                          columnClasses="ui-grid-col-4 ui-grid-col-4 ">
                 <p:outputLabel value="Thống kê hoạt động hệ thống theo tháng : " styleClass="filter-item-label" style=" white-space: nowrap"/>
-                <p:datePicker id="month" view="month" value="#{dashboardController.month}" pattern="MM/yyyy"
-                              yearNavigator="true" yearRange="2022:2035" style="width: 50%" >
+                <p:datePicker id="month" view="month" value="#{dashboardController.month}" pattern="MM/yyyy" locale="vi"
+                              yearNavigator="true" style="width: 50%" >
                     <p:ajax event="dateSelect" update="chart"
                             listener="#{dashboardController.initDashBoard(dashboardController.month)}"/>
                 </p:datePicker>

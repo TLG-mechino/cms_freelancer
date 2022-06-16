@@ -30,7 +30,7 @@ public class User {
     private Integer totalScore;
 
     @Column(name = "MONEY_WALLET")
-    private Integer moneyWallet;
+    private Double moneyWallet;
 
     @Column(name = "PROVINCE_ID")
     private Long provinceId;

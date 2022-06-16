@@ -134,7 +134,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             userDto.setImagePath(null == ValueUtil.getStringByObject(obj[6]) ? null : ValueUtil.getStringByObject(obj[6]));
             userDto.setAddress(null == ValueUtil.getStringByObject(obj[7]) ? null : ValueUtil.getStringByObject(obj[7]));
             userDto.setTotalScore(null == ValueUtil.getIntegerByObject(obj[8]) ? null : ValueUtil.getIntegerByObject(obj[8]));
-            userDto.setMoneyWallet(null == ValueUtil.getIntegerByObject(obj[9]) ? null : ValueUtil.getIntegerByObject(obj[9]));
+            userDto.setMoneyWallet(null == ValueUtil.getDoubleByObject(obj[9]) ? null : ValueUtil.getDoubleByObject(obj[9]));
             userDto.setProvinceId(null == ValueUtil.getLongByObject(obj[10]) ? null : ValueUtil.getLongByObject(obj[10]));
             userDto.setDistrictId(null == ValueUtil.getLongByObject(obj[11]) ? null : ValueUtil.getLongByObject(obj[11]));
             userDto.setCommuneId(null == ValueUtil.getLongByObject(obj[12]) ? null : ValueUtil.getLongByObject(obj[12]));
@@ -203,7 +203,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                 dto.setFacebookLink(ValueUtil.getStringByObject(obj[4]));
                 dto.setAddress(ValueUtil.getStringByObject(obj[5]));
                 dto.setTotalScore(ValueUtil.getIntegerByObject(obj[6]));
-                dto.setMoneyWallet(ValueUtil.getIntegerByObject(obj[7]));
+                dto.setMoneyWallet(ValueUtil.getDoubleByObject(obj[7]));
                 dto.setProvinceId(ValueUtil.getLongByObject(obj[8]));
                 dto.setDistrictId(ValueUtil.getLongByObject(obj[9]));
                 dto.setCommuneId(ValueUtil.getLongByObject(obj[10]));

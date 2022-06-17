@@ -252,7 +252,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         if (searchDto.getGreatMoney() != null) {
             query.setParameter("greatMoney", searchDto.getGreatMoney());
         }
-        if (searchDto.getStatus() != null) {
+        if (StringUtils.isNotBlank(searchDto.getStatus())) {
             query.setParameter("status", searchDto.getStatus());
         }
         return query;

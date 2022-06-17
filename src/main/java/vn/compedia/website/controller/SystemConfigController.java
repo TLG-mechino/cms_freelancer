@@ -120,7 +120,7 @@ public class SystemConfigController extends BaseController {
         ConfigSystem csTransactionFee = systemConfigRepository.findByCode(DbConstant.TRANSACTION_FEE);
         csTransactionFee.setValue(transactionFee.toString());
         listFee.add(csTransactionFee);
-        systemConfigRepository.save(configSystem);
+        systemConfigRepository.saveAll(listFee);
         FacesUtil.addSuccessMessage("Lưu thành công");
         FacesUtil.updateView("growl");
     }

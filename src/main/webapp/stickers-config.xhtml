@@ -21,7 +21,7 @@
 
     <ui:define name="content">
         <p:dialog widgetVar="inforDialog" width="750" height="500" modal="true" id="inforDialogId"
-                  header="#{stickersConfigController.titleDialog} cấu hình dịch vụ">
+                  header="#{stickersConfigController.titleDialog} cấu hình nhãn dự án">
             <p:ajax event="close" update="searchForm dlForm" global="false"/>
             <h:form id="dlForm" prependId="false" styleClass="ui-fluid">
                 <p:panelGrid columns="1" columnClasses="ui-grid-col-12"
@@ -103,7 +103,7 @@
 
         <h:form styleClass="ui-g-12" id="searchForm" prependId="false">
             <p:outputPanel>
-                <p:link styleClass="title-color-left ui-sm-12">Cấu hình dịch vụ</p:link>
+                <p:link styleClass="title-color-left ui-sm-12">Cấu hình nhãn dự án</p:link>
                 <div style="float: right" class="ui-sm-12">
                     <p:commandButton value="Thêm mới" styleClass="border-btn" icon="fa fa-plus"
                                      oncomplete="PF('inforDialog').show()" update="dlForm"

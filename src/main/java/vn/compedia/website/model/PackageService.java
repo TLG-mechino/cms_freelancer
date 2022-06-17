@@ -1,10 +1,12 @@
 package vn.compedia.website.model;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.enterprise.inject.Default;
 import javax.persistence.*;
 
 @Entity

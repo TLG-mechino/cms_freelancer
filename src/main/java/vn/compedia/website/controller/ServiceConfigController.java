@@ -206,6 +206,19 @@ public class ServiceConfigController extends BaseController {
         serviceConfigDto.setUpdateBy(authorizationController.getAccountDto().getUsername());
 
         BeanUtils.copyProperties(serviceConfigDto, packageService);
+        if(packageService.getLimitComment() == true){
+            packageService.setComment(0);
+        }
+        if(packageService.getLimitPost() == true){
+            packageService.setPost(0);
+        }
+        if(packageService.getLimitShow() == true){
+            packageService.setShow(0);
+        }
+        if(packageService.getLimitTransaction() == true){
+            packageService.setTransaction(0);
+        }
+
         serviceConfigRepository.save(packageService);
         FacesUtil.addSuccessMessage("Lưu thành công");
         FacesUtil.closeDialog("inforDialog");

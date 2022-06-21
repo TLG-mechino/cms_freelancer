@@ -12,4 +12,5 @@ import vn.compedia.website.model.Complain;
 public class ComplainDto extends Complain {
     private String phone;
     private String complainTypeName;
+    private String objectName;
 }

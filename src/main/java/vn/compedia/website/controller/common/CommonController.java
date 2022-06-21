@@ -8,6 +8,8 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import vn.compedia.website.model.Job;
+import vn.compedia.website.repository.JobRepository;
 import vn.compedia.website.util.DateUtil;
 import vn.compedia.website.util.FacesUtil;
 import vn.compedia.website.util.FileUtil;

@@ -21,7 +21,9 @@ public class ComplainRepositoryImpl implements ComplainRepositoryCustom {
     @Override
     public List<ComplainDto> search(ComplainSearchDto searchDto) {
         StringBuilder sb = new StringBuilder("");
-        sb.append("SELECT c.COMPLAIN_ID, c.USERNAME, u.PHONE, c.TITLE, c.CONTENT, c.NOTE, ct.NAME_VN as complainTypeName, c.COMPLAIN_TYPE_ID, c.CREATE_DATE, c.STATUS, c.OBJECT_ID ");
+        sb.append("SELECT c.COMPLAIN_ID, c.USERNAME, u.PHONE, c.TITLE, c.CONTENT, c.NOTE, ct.NAME_VN as complainTypeName, c.COMPLAIN_TYPE_ID, c.CREATE_DATE, c.STATUS, c.OBJECT_ID, IF(CAST(c.TYPE AS INTEGER) = 3, " +
+                "          concat('Dự án: ',(select j.NAME from job j where j.JOB_ID = CAST(c.OBJECT_ID AS INTEGER)), ' -- đăng bởi: ', " +
+                "          (select a.FULL_NAME from job j inner join account a on j.USERNAME = a.USERNAME where j.JOB_ID = CAST(c.OBJECT_ID AS INTEGER))), c.OBJECT_ID) as objectName ");
         appendQuery(sb, searchDto);
         if (searchDto.getSortField() != null) {
             if (searchDto.getSortField().equals("username")) {
@@ -77,6 +79,7 @@ public class ComplainRepositoryImpl implements ComplainRepositoryCustom {
             dto.setCreateDate(ValueUtil.getDateByObject(obj[8]));
             dto.setStatus(ValueUtil.getIntegerByObject(obj[9]));
             dto.setObjectId(ValueUtil.getStringByObject(obj[10]));
+            dto.setObjectName(ValueUtil.getStringByObject(obj[11]));
             complainDtos.add(dto);
         }
         return complainDtos;
